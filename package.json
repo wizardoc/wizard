@@ -2,5 +2,15 @@
   "name": "wizard",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "lerna": "^3.13.3"
+  },
+  "workspaces":{
+    "packages": [
+      "client",
+      "node-middleware"
+    ]
+  }
 }
