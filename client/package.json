@@ -5,6 +5,7 @@
   "dependencies": {
     "mobx": "^5.9.4",
     "mobx-react": "^5.4.3",
+    "next": "^8.1.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts-ts": "3.1.0",
@@ -14,7 +15,8 @@
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "eject": "react-scripts-ts eject",
+    "dev":"next"
   },
   "devDependencies": {
     "@types/jest": "^24.0.11",
