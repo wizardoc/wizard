@@ -6,9 +6,9 @@
 - Modify record view
 - Multi-person writing
 ## Technology
-FN: `React` `Mobx` `Typescript` `styled-components`
-Middleware: `Node` -> `ssr`
-BN: `Goland`
-Cache DB: `Redis`
-Primary DB: `PostgreSQL`
+- FN: `React` `Mobx` `Typescript` `styled-components`
+- Middleware: `Node` -> `ssr`
+- BN: `Goland`
+- Cache DB: `Redis`
+- Primary DB: `PostgreSQL`
 
