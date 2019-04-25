@@ -16,7 +16,7 @@
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
-    "dev":"next"
+    "dev": "next"
   },
   "devDependencies": {
     "@types/jest": "^24.0.11",
