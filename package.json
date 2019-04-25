@@ -5,7 +5,13 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
-    "lerna": "^3.13.3"
+    "@magicspace/configs": "^0.1.47",
+    "lerna": "^3.13.3",
+    "tslint-language-service": "^0.9.9",
+    "typescript": "^3.0.1"
+  },
+  "dependencies": {
+    "prettier": "^1.17.0"
   },
   "workspaces":{
     "packages": [

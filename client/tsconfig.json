@@ -1,13 +1,15 @@
 {
+  "extends": "../node_modules/@magicspace/configs/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "build/dist",
     "module": "esnext",
-    "target": "es5",
-    "lib": ["es6", "dom"],
+    "target": "es6",
+    "lib": ["es6", "dom", "esnext", "es7"],
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
+    "types": ["node"],
     "moduleResolution": "node",
     "rootDir": "src",
     "forceConsistentCasingInFileNames": true,
@@ -17,11 +19,11 @@
     "importHelpers": true,
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "allowSyntheticDefaultImports": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   },
-  "include": [
-    "app/**/*.ts",
-  ],
   "exclude": [
     "node_modules",
     "build",
@@ -29,6 +31,8 @@
     "acceptance-tests",
     "webpack",
     "jest",
-    "src/setupTests.ts"
-  ]
+    "src/setupTests.ts",
+    "images.d.ts"
+  ],
+  "include": ["src/**/*"]
 }
