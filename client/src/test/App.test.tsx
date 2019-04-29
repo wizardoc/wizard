@@ -1,6 +1,8 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { App } from '../src/App';
+
+// tslint:disable-next-line:import-path-shallowest
+import { App } from '../app/App';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
