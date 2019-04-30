@@ -5,9 +5,10 @@
   "files.eol": "\n",
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
-  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.tsdk": "../node_modules/typescript/lib",
   "tslint.autoFixOnSave": true,
-  "tslint.configFile": "node_modules/@magicspace/configs/tslint-vscode.js",
+  "formattingToggle.activateFor": ["formatOnSave"],
+  "tslint.configFile": "../node_modules/@magicspace/configs/tslint-vscode.js",
   "[plaintext]": {
     "files.insertFinalNewline": false
   }
