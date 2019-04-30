@@ -32,6 +32,7 @@
     "@types/react-dom": "^16.8.4",
     "@types/react-loadable": "^5.5.1",
     "@types/react-router-dom": "^4.3.2",
+    "@types/styled-components": "^4.1.14",
     "jest": "^24.7.1",
     "prettier": "^1.17.0",
     "react-app-rewired": "1.6.2",
