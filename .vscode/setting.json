@@ -6,8 +6,8 @@
   "files.eol": "\n",
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
-  "typescript.tsdk": "../node_modules/typescript/lib",
-  "tslint.configFile": "../node_modules/@magicspace/configs/tslint-vscode.js",
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "tslint.configFile": "node_modules/@magicspace/configs/tslint-vscode.js",
   "[plaintext]": {
     "files.insertFinalNewline": false
   }
