@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "build/dist",
-    "module": "esnext",
+    "module": "commonjs",
     "target": "es6",
     "lib": ["es6", "dom", "esnext", "es7"],
     "sourceMap": true,
@@ -22,7 +22,12 @@
     "noUnusedLocals": true,
     "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "plugins": [
+      {
+        "name": "tslint-language-service"
+      }
+    ]
   },
   "exclude": [
     "node_modules",
