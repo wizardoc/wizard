@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import Loadable from 'react-loadable';
-import {Bundle, Manifest, getBundles} from 'react-loadable/webpack';
+import {Bundle, getBundles} from 'react-loadable/webpack';
 import {StaticRouter} from 'react-router';
 
-import stats from '../build/react-loadable.json';
-
+import stats from '../../build/react-loadable.json';
 // tslint:disable-next-line: import-path-shallowest
-import {AppRoutes} from './app/routes';
+import {AppRoutes} from '../app/routes';
 
 interface SSRPayload {
   html: string;
@@ -26,7 +25,7 @@ export class SSR {
       </Loadable.Capture>,
     );
 
-    const bundles: Bundle[] = getBundles(stats as Manifest, modules);
+    const bundles: Bundle[] = getBundles(stats as any, modules);
 
     return {
       html,

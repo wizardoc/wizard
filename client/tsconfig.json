@@ -1,7 +1,7 @@
 {
   "extends": "../node_modules/@magicspace/configs/tsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "",
     "outDir": "build/dist",
     "module": "commonjs",
     "target": "es6",
@@ -40,5 +40,5 @@
     "src/setupTests.ts",
     "images.d.ts"
   ],
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "src/ssr/@index-ssr.tsx"]
 }
