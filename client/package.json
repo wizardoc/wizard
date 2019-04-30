@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@loadable/component": "^5.9.0",
+    "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
     "loadable-components": "^2.2.3",
     "mobx": "^5.9.4",
