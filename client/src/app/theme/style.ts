@@ -14,7 +14,7 @@ export interface IThemeInterface {
   [index: string]: string;
 }
 
-export const theme = {}
+export const styledTheme = {}
 
 export default styled;
 export { css, createGlobalStyle, keyframes, ThemeProvider };
