@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "dist",
-    "module": "esnext",
+    "module": "commonjs",
     "target": "es6",
     "lib": ["es6", "dom", "esnext", "es7"],
     "sourceMap": true,
@@ -15,6 +15,7 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
+    "declaration": true,
     "importHelpers": true,
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
@@ -24,5 +25,5 @@
     "experimentalDecorators": true
   },
   "exclude": ["node_modules"],
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "index.js"]
 }
