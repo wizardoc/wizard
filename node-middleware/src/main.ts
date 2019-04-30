@@ -1,5 +1,13 @@
-import * as Path from 'path';
+import Koa, {Context} from 'koa';
+import Router from 'koa-router';
 
-export function a() {}
+const app = new Koa();
+const router = new Router();
 
-console.info(Path.join('aaa'));
+router.get('*', (context: Context) => {
+  context.body = 'hello';
+});
+
+app.use(router.routes());
+
+export {app};
