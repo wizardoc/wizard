@@ -95,7 +95,7 @@ export const HeaderBar = withStyles(styles)(
 
       return (
         <AppBar position="static">
-          <Toolbar>
+          <Toolbar variant="dense">
             <Typography variant="h6" color="inherit">
               Wizard
             </Typography>
