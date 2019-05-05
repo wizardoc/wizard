@@ -118,7 +118,7 @@ export const HeaderBar = withStyles(styles)(
                 <NotificationsIcon />
               </Badge>
             </IconButton>
-            <IconButton>
+            <IconButton color="inherit">
               <EditIcon />
             </IconButton>
             <IconButton
