@@ -10,3 +10,5 @@ export * from './theme';
 export * from './assets';
 export * from './constant';
 export * from './utils';
+export * from './components';
+export * from './store';

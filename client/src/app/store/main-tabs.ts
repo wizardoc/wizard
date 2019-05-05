@@ -5,7 +5,7 @@ export class MainTabs {
   tabTag: number = 0;
 
   @action
-  changeTab() {
+  changeTab(): void {
     this.tabTag = 1;
   }
 }
