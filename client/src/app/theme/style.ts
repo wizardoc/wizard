@@ -14,7 +14,9 @@ export interface IThemeInterface {
   [index: string]: string;
 }
 
-export const styledTheme = {}
+export const styledTheme = {
+  highRed: '#e91e63',
+};
 
 export default styled;
-export { css, createGlobalStyle, keyframes, ThemeProvider };
+export {css, createGlobalStyle, keyframes, ThemeProvider};
