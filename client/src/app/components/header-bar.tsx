@@ -21,6 +21,8 @@ import React, {Component, ReactNode} from 'react';
 import {GitHubSvg} from '../assets';
 import {Links} from '../constant';
 
+import {HeaderBarTabs} from './header-bar-tabs';
+
 const styles = (theme: Theme): StyleRules =>
   createStyles({
     search: {
@@ -97,6 +99,7 @@ export const HeaderBar = withStyles(styles)(
             <Typography variant="h6" color="inherit">
               Wizard
             </Typography>
+            <HeaderBarTabs />
             <div className={grow} />
             <div className={search}>
               <div className={searchIcon}>

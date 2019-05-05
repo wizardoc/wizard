@@ -1,5 +1,6 @@
 import {MuiThemeProvider} from '@material-ui/core';
 import React, {Component} from 'react';
+import {BrowserRouter} from 'react-router-dom';
 
 import {HeaderBar} from './components';
 import {BrowserRoutes} from './routes';
@@ -10,8 +11,11 @@ export class App extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <GlobalStyle />
-        <HeaderBar />
-        <BrowserRoutes />
+        <BrowserRouter>
+          <HeaderBar />
+
+          <BrowserRoutes />
+        </BrowserRouter>
       </MuiThemeProvider>
     );
   }
