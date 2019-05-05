@@ -4,18 +4,20 @@ import {BrowserRouter} from 'react-router-dom';
 
 import {HeaderBar} from './components';
 import {AppRoutes} from './routes';
-import {GlobalStyle, theme} from './theme';
+import {GlobalStyle, ThemeProvider, styledTheme, theme} from './theme';
 
 export class App extends Component {
   render(): React.ReactNode {
     return (
-      <MuiThemeProvider theme={theme}>
-        <GlobalStyle />
-        <BrowserRouter>
-          <HeaderBar />
-          <AppRoutes />
-        </BrowserRouter>
-      </MuiThemeProvider>
+      <ThemeProvider theme={styledTheme}>
+        <MuiThemeProvider theme={theme}>
+          <GlobalStyle />
+          <BrowserRouter>
+            <HeaderBar />
+            <AppRoutes />
+          </BrowserRouter>
+        </MuiThemeProvider>
+      </ThemeProvider>
     );
   }
 }
