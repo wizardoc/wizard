@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {BrowserRouter} from 'react-router-dom';
 
 import {HeaderBar} from './components';
-import {BrowserRoutes} from './routes';
+import {AppRoutes} from './routes';
 import {GlobalStyle, theme} from './theme';
 
 export class App extends Component {
@@ -13,8 +13,7 @@ export class App extends Component {
         <GlobalStyle />
         <BrowserRouter>
           <HeaderBar />
-
-          <BrowserRoutes />
+          <AppRoutes />
         </BrowserRouter>
       </MuiThemeProvider>
     );
