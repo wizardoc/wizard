@@ -1,6 +1,6 @@
 import {action, observable} from 'mobx';
 
-export class AccessDialog {
+export class AccessDialogStore {
   @observable
   private isViewRegisterDialog = false;
 
