@@ -24,12 +24,12 @@ const AccessTab = styled(Tab)<any>`
   color: white !important;
 `;
 
-const accessComponents = [Login, Register];
-
 @observer
 export class Access extends Component<RegisterProps> {
   @observable
   private tabTag = 1;
+
+  private accessComponents = [<Register />, <Login />];
 
   @InjectStore(AccessDialogStore)
   private accessDialogStore!: AccessDialogStore;
@@ -39,7 +39,7 @@ export class Access extends Component<RegisterProps> {
   }
 
   render(): ReactNode {
-    const viewComponent = accessComponents[this.tabTag];
+    const viewComponent = this.accessComponents[this.tabTag];
 
     return (
       <Dialog open={this.accessDialogStore.isAccessView}>
