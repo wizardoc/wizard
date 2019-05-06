@@ -1,7 +1,11 @@
 import React, {Component, ReactNode} from 'react';
 
-export class Doc extends Component {
-  render(): ReactNode {
-    return <div>Doc</div>;
-  }
-}
+import {RouterAnimation} from '../animations';
+
+export const Doc = RouterAnimation(
+  class extends Component {
+    render(): ReactNode {
+      return <div>Doc</div>;
+    }
+  },
+);
