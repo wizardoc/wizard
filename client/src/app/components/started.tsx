@@ -1,7 +1,10 @@
 import React, {Component, ReactNode} from 'react';
+import {RouteComponentProps, withRouter} from 'react-router';
+import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
-import {LoadingStore} from '../store';
+import {User} from '../services';
+import {AccessDialogStore} from '../store';
 import {ActionButton} from '../ui';
 import {InjectStore} from '../utils';
 
@@ -26,16 +29,32 @@ const GetStartedWrapper = styled.div`
   justify-content: center;
 `;
 
-export class Started extends Component {
-  @InjectStore(LoadingStore)
-  private loadingStore!: LoadingStore;
+interface StartedProps extends RouteComponentProps {}
+
+class TStarted extends Component<StartedProps> {
+  @InjectStore(AccessDialogStore)
+  private accessDialogStore!: AccessDialogStore;
+
+  @Inject
+  private userService!: User;
+
+  handleGetStartClick(): void {
+    const {isLogin} = this.userService;
+    const {history} = this.props;
+
+    if (isLogin) {
+      history.push('/doc');
+    } else {
+      this.accessDialogStore.loginDialogToggle();
+    }
+  }
 
   render(): ReactNode {
     return (
       <Wrapper>
         <StartPanel />
         <GetStartedWrapper>
-          <GetStarted onClick={() => this.loadingStore.loadingDialogToggle()}>
+          <GetStarted onClick={() => this.handleGetStartClick()}>
             立即开始!
           </GetStarted>
         </GetStartedWrapper>
@@ -43,3 +62,5 @@ export class Started extends Component {
     );
   }
 }
+
+export const Started = withRouter(TStarted);
