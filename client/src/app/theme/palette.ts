@@ -12,6 +12,6 @@ export const theme = createMuiTheme({
       main: '#f06292',
     },
     error: red,
-    type: 'dark', // mode: light dark
+    type: 'light', // mode: light dark
   },
 });
