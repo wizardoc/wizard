@@ -2,26 +2,14 @@ import {action, observable} from 'mobx';
 
 export class AccessDialogStore {
   @observable
-  private isViewRegisterDialog = false;
-
-  @observable
-  private isViewLoginDialog = false;
+  private isViewAccessDialog = false;
 
   @action
-  registerDialogToggle(): void {
-    this.isViewRegisterDialog = !this.isViewRegisterDialog;
+  accessDialogToggle(): void {
+    this.isViewAccessDialog = !this.isViewAccessDialog;
   }
 
-  @action
-  loginDialogToggle(): void {
-    this.isViewLoginDialog = !this.isViewLoginDialog;
-  }
-
-  get isRegisterView(): boolean {
-    return this.isViewRegisterDialog;
-  }
-
-  get isLoginView(): boolean {
-    return this.isViewLoginDialog;
+  get isAccessView(): boolean {
+    return this.isViewAccessDialog;
   }
 }

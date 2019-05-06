@@ -45,7 +45,7 @@ class TStarted extends Component<StartedProps> {
     if (isLogin) {
       history.push('/doc');
     } else {
-      this.accessDialogStore.loginDialogToggle();
+      this.accessDialogStore.accessDialogToggle();
     }
   }
 

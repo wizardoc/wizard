@@ -15,6 +15,7 @@ export interface IThemeInterface {
 }
 
 export const styledTheme = {
+  primaryColor: '#2196f3',
   highRed: '#e91e63',
   shallowGray: '#eeeeee',
   redLinearGradient: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
