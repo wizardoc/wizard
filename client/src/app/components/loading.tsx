@@ -13,11 +13,10 @@ import styled from 'styled-components';
 // tslint:disable-next-line:import-path-shallowest
 import LoadingImg from '../assets/static/loading.gif';
 import {LoadingStore} from '../store';
+import {DefaultDialogProps} from '../types/dialog';
 import {InjectStore} from '../utils';
 
-export interface LoadingDialogProps {
-  handleLoadingClose?(): void;
-}
+export interface LoadingDialogProps extends DefaultDialogProps {}
 
 const LoadingImage = styled.img`
   height: 250px;
@@ -33,12 +32,12 @@ export class Loading extends Component<LoadingDialogProps> {
   private loadingStore!: LoadingStore;
 
   render(): ReactNode {
-    const {handleLoadingClose = (): void => {}} = this.props;
+    const {handleDialogClose = (): void => {}} = this.props;
 
     return (
       <Dialog
         open={this.loadingStore.isView}
-        onClose={() => handleLoadingClose()}
+        onClose={() => handleDialogClose()}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
