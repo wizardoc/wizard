@@ -1,9 +1,9 @@
-import Axios from 'axios';
+// import Axios from 'axios';
 import {Injectable} from 'react-ts-di';
 
-import ServerConfig from '../configs/server-config.json';
+// import ServerConfig from '../configs/server-config.json';
 
-const {baseUrl, port} = ServerConfig;
+// const {baseUrl, port} = ServerConfig;
 
 export interface PostPayload<T = unknown> {
   [index: number]: T;
@@ -11,7 +11,7 @@ export interface PostPayload<T = unknown> {
 
 @Injectable()
 export class Request {
-  post<T>(url: string, data: PostPayload<T>) {
+  post<T>(_url: string, _data: PostPayload<T>) {
     // Axios.post(url, data);
   }
 }
