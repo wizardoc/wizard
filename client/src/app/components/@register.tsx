@@ -1,12 +1,20 @@
-import {TextField} from '@material-ui/core';
+import {IconButton, InputAdornment, TextField} from '@material-ui/core';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import CloseIcon from '@material-ui/icons/Close';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import {observable} from 'mobx';
+import {observer} from 'mobx-react';
 import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
+
+import {AccessDialogStore} from '../store';
+import {InjectStore} from '../utils';
 
 const Wrapper = styled.div`
   width: 100%;
   box-sizing: border-box;
   padding: 24px !important;
-  padding-bottom: 34px !important;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,10 +27,42 @@ const TextFieldWrapper = styled(TextField)<any>`
   margin-top: 15px !important;
 `;
 
+const Row = styled.div`
+  width: 100%;
+  display: flex;
+  margin-top: 26px;
+`;
+
+const ButtonsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+`;
+
+@observer
 export class Register extends Component {
+  @observable
+  private isViewPassword = false;
+
+  @InjectStore(AccessDialogStore)
+  private accessDialogStore!: AccessDialogStore;
+
+  handleCloseClick(): void {
+    this.accessDialogStore.accessDialogToggle();
+  }
+
+  handleViewPasswordClick(): void {
+    this.isViewPassword = !this.isViewPassword;
+  }
+
   render(): ReactNode {
     return (
       <Wrapper>
+        <TextFieldWrapper
+          label="昵称"
+          type="text"
+          autoComplete="new-password"
+        />
         <TextFieldWrapper
           label="账号"
           type="text"
@@ -30,9 +70,36 @@ export class Register extends Component {
         />
         <TextFieldWrapper
           label="密码"
-          type="password"
+          type={this.isViewPassword ? 'text' : 'password'}
+          autoComplete="new-password"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="显示密码"
+                  onClick={() => this.handleViewPasswordClick()}
+                >
+                  {this.isViewPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+        <TextFieldWrapper
+          label="邮箱"
+          type="email"
           autoComplete="new-password"
         />
+        <Row>
+          <ButtonsWrapper>
+            <IconButton onClick={() => this.handleCloseClick()}>
+              <CloseIcon fontSize="large" />
+            </IconButton>
+            <IconButton>
+              <ArrowForwardIcon fontSize="large" />
+            </IconButton>
+          </ButtonsWrapper>
+        </Row>
       </Wrapper>
     );
   }
