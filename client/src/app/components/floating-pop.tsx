@@ -5,13 +5,22 @@ import {observer} from 'mobx-react';
 import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 
+interface MenuIconWrapperProps {
+  isRotate?: boolean;
+}
+
 const Wrapper = styled.div`
   position: fixed;
   right: 50px;
   bottom: 50px;
 `;
 
-const MenuIcon = styled(AddIcon)<any>`
+// const MenuIcon = styled(AddIcon)<MenuIconProps>`
+//   transition: 0.8s all;
+//   transform: ${props => (props.isRotate ? 'rotate(405deg)' : 'rotate(0deg)')};
+// ` as React.ComponentType<IconProps & MenuIconProps>;
+
+const IconWrapper = styled.div<MenuIconWrapperProps>`
   transition: 0.8s all;
   transform: ${props => (props.isRotate ? 'rotate(405deg)' : 'rotate(0deg)')};
 `;
@@ -33,7 +42,9 @@ export class FloatingPop extends Component {
           aria-label="Add"
           onClick={() => this.handleFloatingPopClick()}
         >
-          <MenuIcon isRotate={this.isOpenMenu} />
+          <IconWrapper isRotate={this.isOpenMenu}>
+            <AddIcon />
+          </IconWrapper>
         </Fab>
       </Wrapper>
     );
