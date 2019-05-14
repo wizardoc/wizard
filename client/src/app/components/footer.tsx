@@ -1,5 +1,6 @@
-import {IconButton, SvgIcon} from '@material-ui/core';
+import {IconButton, SvgIcon, Typography} from '@material-ui/core';
 import {IconButtonProps} from '@material-ui/core/IconButton';
+import {TypographyProps} from '@material-ui/core/Typography';
 import {action, observable} from 'mobx';
 import {observer} from 'mobx-react';
 import React, {Component, ComponentType, ReactNode} from 'react';
@@ -31,9 +32,9 @@ const InnerWrapper = styled.div`
 `;
 
 const Shade = styled.div<ShadeProps>`
-  width: ${props => (props.isShutdown ? 0 : '110%')};
+  width: ${props => (props.isShutdown ? '110%' : 0)};
   height: 0;
-  padding-bottom: ${props => (props.isShutdown ? 0 : '110%')};
+  padding-bottom: ${props => (props.isShutdown ? '110%' : 0)};
   border-radius: 10000px;
   background: ${props => props.theme.primaryColor};
   transition: 0.3s all;
@@ -49,6 +50,10 @@ const CircleIconButtonWrapper = styled.div`
   left: 0;
   bottom: 0;
 ` as ComponentType<IconButtonProps>;
+
+const PrimaryTypography = styled(Typography)`
+  color: white !important;
+` as ComponentType<TypographyProps>;
 
 @observer
 export class Footer extends Component {
@@ -70,11 +75,13 @@ export class Footer extends Component {
         <InnerWrapper>
           <Shade isShutdown={this.isShutdown}>
             <CircleIconButtonWrapper>
+              <PrimaryTypography>Copyright</PrimaryTypography>
               <IconButton onClick={() => this.handleCircleClick()}>
                 <SvgIcon>
                   <Circle />
                 </SvgIcon>
               </IconButton>
+              <PrimaryTypography>Wizard</PrimaryTypography>
             </CircleIconButtonWrapper>
           </Shade>
         </InnerWrapper>
