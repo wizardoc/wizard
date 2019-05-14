@@ -3,6 +3,7 @@ import {StepperProps} from '@material-ui/core/Stepper';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import CloseIcon from '@material-ui/icons/Close';
+import FilterVintageIcon from '@material-ui/icons/FilterVintage';
 import {action, observable} from 'mobx';
 import {observer} from 'mobx-react';
 import React, {Component, ComponentType, ReactNode} from 'react';
@@ -17,12 +18,13 @@ import {Origanization} from './origanization';
 
 const Wrapper = styled.div`
   width: 100%;
-  box-sizing: border-box;
-  padding: 24px !important;
   display: flex;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
+  padding: 24px !important;
   flex-direction: column;
+  transition: 0.3s height;
 `;
 
 const Row = styled.div`
@@ -63,11 +65,22 @@ export class Register extends Component {
     this.currentIndex -= 1;
   }
 
+  isFinish(): boolean {
+    return this.currentIndex === this.registerBody.length - 1;
+  }
+
   handleCloseClick(): void {
     this.accessDialogStore.accessDialogToggle();
   }
 
   handleNextClick(): void {
+    if (this.isFinish()) {
+      // complete register logic
+
+      this.handleCloseClick();
+      return;
+    }
+
     this.nextStepToggle();
   }
 
@@ -111,8 +124,8 @@ export class Register extends Component {
               color="primary"
               onClick={() => this.handleNextClick()}
             >
-              下一步
-              <ArrowForwardIcon />
+              {this.isFinish() ? '完成注册' : '下一步'}
+              {this.isFinish() ? <FilterVintageIcon /> : <ArrowForwardIcon />}
             </Button>
           </ButtonsWrapper>
         </Row>
