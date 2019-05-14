@@ -1,6 +1,6 @@
 import React, {Component, ReactNode} from 'react';
 
-export class Complate extends Component {
+export class Complete extends Component {
   render(): ReactNode {
     return <div />;
   }
