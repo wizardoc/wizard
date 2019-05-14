@@ -17,8 +17,10 @@ import EditIcon from '@material-ui/icons/Edit';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import SearchIcon from '@material-ui/icons/Search';
 import React, {Component, ReactNode} from 'react';
+import styled from 'styled-components';
 
 import {GitHubSvg} from '../assets';
+import Wizard from '../assets/static/wizard.png';
 import {Links} from '../constant';
 
 import {HeaderBarTabs} from './header-bar-tabs';
@@ -76,6 +78,16 @@ const styles = (theme: Theme): StyleRules =>
 
 export interface HeaderBarProps extends WithStyles<typeof styles> {}
 
+const Logo = styled.img`
+  height: 32px;
+`;
+
+const Row = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const HeaderBar = withStyles(styles)(
   class extends Component<HeaderBarProps> {
     handleGithubIconClick() {
@@ -96,9 +108,14 @@ export const HeaderBar = withStyles(styles)(
       return (
         <AppBar position="static">
           <Toolbar variant="dense">
-            <Typography variant="h6" color="inherit">
-              Wizard
-            </Typography>
+            <Row>
+              <IconButton>
+                <Logo src={Wizard} />
+              </IconButton>
+              <Typography variant="h6" color="inherit">
+                Wizard
+              </Typography>
+            </Row>
             <HeaderBarTabs />
             <div className={grow} />
             <div className={search}>
