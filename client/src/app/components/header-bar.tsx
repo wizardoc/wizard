@@ -16,12 +16,15 @@ import {fade} from '@material-ui/core/styles/colorManipulator';
 import EditIcon from '@material-ui/icons/Edit';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import SearchIcon from '@material-ui/icons/Search';
+import {observer} from 'mobx-react';
 import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 
 import {GitHubSvg} from '../assets';
 import Wizard from '../assets/static/wizard.png';
 import {Links} from '../constant';
+import {RecentDrawer} from '../store';
+import {InjectStore} from '../utils';
 
 import {HeaderBarTabs} from './header-bar-tabs';
 
@@ -88,67 +91,77 @@ const Row = styled.div`
   align-items: center;
 `;
 
-export const HeaderBar = withStyles(styles)(
-  class extends Component<HeaderBarProps> {
-    handleGithubIconClick() {
-      window.open(Links.GitHub);
-    }
+@observer
+class THeaderBar extends Component<HeaderBarProps> {
+  @InjectStore(RecentDrawer)
+  private recentDrawer!: RecentDrawer;
 
-    render(): ReactNode {
-      const {classes} = this.props;
-      const {
-        grow,
-        search,
-        searchIcon,
-        inputRoot,
-        inputInput,
-        notifaction,
-      } = classes;
+  handleGithubIconClick(): void {
+    window.open(Links.GitHub);
+  }
 
-      return (
-        <AppBar position="static">
-          <Toolbar variant="dense">
-            <Row>
-              <IconButton>
-                <Logo src={Wizard} />
-              </IconButton>
-              <Typography variant="h6" color="inherit">
-                Wizard
-              </Typography>
-            </Row>
-            <HeaderBarTabs />
-            <div className={grow} />
-            <div className={search}>
-              <div className={searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="查询相关文档"
-                classes={{
-                  root: inputRoot,
-                  input: inputInput,
-                }}
-              />
+  handleLogoClick(): void {
+    this.recentDrawer.viewRecentDrawerToggle();
+
+    console.info(this.recentDrawer.isViewRencentDrawer);
+  }
+
+  render(): ReactNode {
+    const {classes} = this.props;
+    const {
+      grow,
+      search,
+      searchIcon,
+      inputRoot,
+      inputInput,
+      notifaction,
+    } = classes;
+
+    return (
+      <AppBar position="static">
+        <Toolbar variant="dense">
+          <Row>
+            <IconButton onClick={() => this.handleLogoClick()}>
+              <Logo src={Wizard} />
+            </IconButton>
+            <Typography variant="h6" color="inherit">
+              Wizard
+            </Typography>
+          </Row>
+          <HeaderBarTabs />
+          <div className={grow} />
+          <div className={search}>
+            <div className={searchIcon}>
+              <SearchIcon />
             </div>
-            <IconButton color="inherit" className={notifaction}>
-              <Badge>
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton color="inherit">
-              <EditIcon />
-            </IconButton>
-            <IconButton
-              color="inherit"
-              onClick={() => this.handleGithubIconClick()}
-            >
-              <SvgIcon>
-                <GitHubSvg />
-              </SvgIcon>
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-      );
-    }
-  },
-);
+            <InputBase
+              placeholder="查询相关文档"
+              classes={{
+                root: inputRoot,
+                input: inputInput,
+              }}
+            />
+          </div>
+          <IconButton color="inherit" className={notifaction}>
+            <Badge>
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          <IconButton color="inherit">
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            color="inherit"
+            onClick={() => this.handleGithubIconClick()}
+          >
+            <SvgIcon>
+              <GitHubSvg />
+            </SvgIcon>
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+    );
+  }
+}
+
+export const HeaderBar = withStyles(styles)(THeaderBar);
