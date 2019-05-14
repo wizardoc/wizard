@@ -1,5 +1,5 @@
 import {Fab} from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import MemoryIcon from '@material-ui/icons/Memory';
 import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 import React, {Component, ReactNode} from 'react';
@@ -21,6 +21,9 @@ const Wrapper = styled.div`
 // ` as React.ComponentType<IconProps & MenuIconProps>;
 
 const IconWrapper = styled.div<MenuIconWrapperProps>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   transition: 0.8s all;
   transform: ${props => (props.isRotate ? 'rotate(405deg)' : 'rotate(0deg)')};
 `;
@@ -43,7 +46,7 @@ export class FloatingPop extends Component {
           onClick={() => this.handleFloatingPopClick()}
         >
           <IconWrapper isRotate={this.isOpenMenu}>
-            <AddIcon />
+            <MemoryIcon />
           </IconWrapper>
         </Fab>
       </Wrapper>
