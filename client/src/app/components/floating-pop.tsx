@@ -12,7 +12,7 @@ interface MenuIconWrapperProps {
 const Wrapper = styled.div`
   position: fixed;
   right: 50px;
-  bottom: 50px;
+  bottom: 150px;
 `;
 
 // const MenuIcon = styled(AddIcon)<MenuIconProps>`
