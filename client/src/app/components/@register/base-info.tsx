@@ -1,6 +1,4 @@
 import {IconButton, InputAdornment, TextField} from '@material-ui/core';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import CloseIcon from '@material-ui/icons/Close';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import {observable} from 'mobx';
@@ -8,48 +6,16 @@ import {observer} from 'mobx-react';
 import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 
-import {AccessDialogStore} from '../store';
-import {InjectStore} from '../utils';
-
-const Wrapper = styled.div`
-  width: 100%;
-  box-sizing: border-box;
-  padding: 24px !important;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
-// TextFieldProps
 const TextFieldWrapper = styled(TextField)<any>`
   width: 70%;
   margin: 0 50px;
   margin-top: 15px !important;
 `;
 
-const Row = styled.div`
-  width: 100%;
-  display: flex;
-  margin-top: 26px;
-`;
-
-const ButtonsWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-evenly;
-`;
-
 @observer
-export class Register extends Component {
+export class BaseInfo extends Component {
   @observable
   private isViewPassword = false;
-
-  @InjectStore(AccessDialogStore)
-  private accessDialogStore!: AccessDialogStore;
-
-  handleCloseClick(): void {
-    this.accessDialogStore.accessDialogToggle();
-  }
 
   handleViewPasswordClick(): void {
     this.isViewPassword = !this.isViewPassword;
@@ -57,7 +23,7 @@ export class Register extends Component {
 
   render(): ReactNode {
     return (
-      <Wrapper>
+      <>
         <TextFieldWrapper
           label="昵称"
           type="text"
@@ -90,17 +56,7 @@ export class Register extends Component {
           type="email"
           autoComplete="new-password"
         />
-        <Row>
-          <ButtonsWrapper>
-            <IconButton onClick={() => this.handleCloseClick()}>
-              <CloseIcon fontSize="large" />
-            </IconButton>
-            <IconButton>
-              <ArrowForwardIcon fontSize="large" />
-            </IconButton>
-          </ButtonsWrapper>
-        </Row>
-      </Wrapper>
+      </>
     );
   }
 }
