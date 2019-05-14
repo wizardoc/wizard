@@ -5,7 +5,7 @@ export class RecentDrawer {
   isViewRencentDrawer = false;
 
   @action
-  viewRecentDrawerToggle(): void {
+  viewRecentDrawerToggle = (): void => {
     this.isViewRencentDrawer = !this.isViewRencentDrawer;
-  }
+  };
 }
