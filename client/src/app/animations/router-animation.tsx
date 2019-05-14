@@ -12,8 +12,6 @@ export function RouterAnimation(
     render(): ReactNode {
       const {match} = this.props;
 
-      console.info(match !== null);
-
       return (
         <CSSTransition
           in={match !== null}
