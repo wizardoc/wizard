@@ -6,6 +6,7 @@ import {
   SvgIcon,
   Theme,
   Toolbar,
+  Tooltip,
   Typography,
   WithStyles,
   createStyles,
@@ -61,7 +62,7 @@ const styles = (theme: Theme): StyleRules =>
       paddingTop: theme.spacing.unit,
       paddingRight: theme.spacing.unit,
       paddingBottom: theme.spacing.unit,
-      paddingLeft: theme.spacing.unit * 10,
+      paddingLeft: theme.spacing.unit * 9,
       transition: theme.transitions.create('width'),
       width: '100%',
       [theme.breakpoints.up('sm')]: {
@@ -142,22 +143,28 @@ class THeaderBar extends Component<HeaderBarProps> {
               }}
             />
           </div>
-          <IconButton color="inherit" className={notifaction}>
-            <Badge>
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <IconButton color="inherit">
-            <EditIcon />
-          </IconButton>
-          <IconButton
-            color="inherit"
-            onClick={() => this.handleGithubIconClick()}
-          >
-            <SvgIcon>
-              <GitHubSvg />
-            </SvgIcon>
-          </IconButton>
+          <Tooltip title="notify">
+            <IconButton color="inherit" className={notifaction}>
+              <Badge>
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="edit doc">
+            <IconButton color="inherit">
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Github repository">
+            <IconButton
+              color="inherit"
+              onClick={() => this.handleGithubIconClick()}
+            >
+              <SvgIcon>
+                <GitHubSvg />
+              </SvgIcon>
+            </IconButton>
+          </Tooltip>
         </Toolbar>
       </AppBar>
     );
