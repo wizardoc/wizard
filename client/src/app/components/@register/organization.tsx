@@ -1,6 +1,6 @@
 import React, {Component, ReactNode} from 'react';
 
-export class Origanization extends Component {
+export class Organization extends Component {
   render(): ReactNode {
     return <div />;
   }
