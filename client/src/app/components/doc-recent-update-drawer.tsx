@@ -27,11 +27,11 @@ export class DocRecentUpdateDrawer extends Component {
   private recentStore!: RecentDrawer;
 
   render(): ReactNode {
-    const {isViewRencentDrawer, viewRecentDrawerToggle} = this.recentStore;
+    const {isViewRecentDrawer, viewRecentDrawerToggle} = this.recentStore;
 
     return (
       <SwipeableDrawer
-        open={isViewRencentDrawer}
+        open={isViewRecentDrawer}
         onOpen={viewRecentDrawerToggle}
         onClose={viewRecentDrawerToggle}
       >

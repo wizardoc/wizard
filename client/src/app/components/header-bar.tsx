@@ -75,7 +75,7 @@ const styles = (theme: Theme): StyleRules =>
     grow: {
       flexGrow: 1,
     },
-    notifaction: {
+    notification: {
       marginLeft: theme.spacing.unit,
     },
   });
@@ -104,7 +104,7 @@ class THeaderBar extends Component<HeaderBarProps> {
   handleLogoClick(): void {
     this.recentDrawer.viewRecentDrawerToggle();
 
-    console.info(this.recentDrawer.isViewRencentDrawer);
+    console.info(this.recentDrawer.isViewRecentDrawer);
   }
 
   render(): ReactNode {
@@ -115,7 +115,7 @@ class THeaderBar extends Component<HeaderBarProps> {
       searchIcon,
       inputRoot,
       inputInput,
-      notifaction,
+      notification,
     } = classes;
 
     return (
@@ -144,7 +144,7 @@ class THeaderBar extends Component<HeaderBarProps> {
             />
           </div>
           <Tooltip title="notify">
-            <IconButton color="inherit" className={notifaction}>
+            <IconButton color="inherit" className={notification}>
               <Badge>
                 <NotificationsIcon />
               </Badge>

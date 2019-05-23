@@ -2,10 +2,10 @@ import {action, observable} from 'mobx';
 
 export class RecentDrawer {
   @observable
-  isViewRencentDrawer = false;
+  isViewRecentDrawer = false;
 
   @action
   viewRecentDrawerToggle = (): void => {
-    this.isViewRencentDrawer = !this.isViewRencentDrawer;
+    this.isViewRecentDrawer = !this.isViewRecentDrawer;
   };
 }

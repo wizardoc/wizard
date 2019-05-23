@@ -14,7 +14,7 @@ import {InjectStore} from '../../utils';
 
 import {BaseInfo} from './base-info';
 import {Complete} from './complete';
-import {Origanization} from './origanization';
+import {Organization} from './organization';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -30,7 +30,7 @@ const Wrapper = styled.div`
 const Row = styled.div`
   width: 100%;
   display: flex;
-  margin-top: 26px;
+  margin-top: 52px;
 `;
 
 const ButtonsWrapper = styled.div`
@@ -53,7 +53,7 @@ export class Register extends Component {
   @observable
   private currentIndex = 0;
 
-  private registerBody = [<BaseInfo />, <Complete />, <Origanization />];
+  private registerBody = [<BaseInfo />, <Organization />, <Complete />];
 
   @action
   nextStepToggle(): void {
@@ -101,15 +101,17 @@ export class Register extends Component {
         {this.registerBody[this.currentIndex]}
         <Row>
           <ButtonsWrapper>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => this.handleCloseClick()}
-            >
-              取消
-              <CloseIcon />
-            </Button>
-            {this.currentIndex > 0 && (
+            {!this.isFinish() && (
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => this.handleCloseClick()}
+              >
+                取消
+                <CloseIcon />
+              </Button>
+            )}
+            {this.currentIndex > 0 && !this.isFinish() && (
               <Button
                 variant="contained"
                 color="primary"
