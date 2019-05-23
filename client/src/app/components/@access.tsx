@@ -1,4 +1,4 @@
-import {Dialog, DialogContent, DialogTitle, Tab, Tabs} from '@material-ui/core';
+import {DialogContent, DialogTitle, Tab, Tabs} from '@material-ui/core';
 import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 import React, {ChangeEvent, Component, ReactNode} from 'react';
@@ -6,6 +6,8 @@ import styled from 'styled-components';
 
 import {AccessDialogStore} from '../store';
 import {DefaultDialogProps} from '../types/dialog';
+// tslint:disable-next-line:import-path-shallowest
+import {WizardDialog} from '../ui/dialog';
 import {InjectStore} from '../utils';
 
 import {Login} from './@login';
@@ -42,7 +44,7 @@ export class Access extends Component<RegisterProps> {
     const viewComponent = this.accessComponents[this.tabTag];
 
     return (
-      <Dialog open={this.accessDialogStore.isAccessView}>
+      <WizardDialog open={this.accessDialogStore.isAccessView}>
         <DialogTitleBlue>
           <Tabs
             value={this.tabTag}
@@ -53,7 +55,7 @@ export class Access extends Component<RegisterProps> {
           </Tabs>
         </DialogTitleBlue>
         <DialogContent>{viewComponent}</DialogContent>
-      </Dialog>
+      </WizardDialog>
     );
   }
 }
