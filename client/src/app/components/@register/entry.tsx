@@ -65,9 +65,6 @@ export class Register extends Component {
   @observable
   private currentIndex = 0;
 
-  @observable
-  private isAppear = true;
-
   private registerBody = [<BaseInfo />, <Organization />, <Complete />];
 
   @action
@@ -89,8 +86,6 @@ export class Register extends Component {
   }
 
   handleNextClick(): void {
-    this.isAppear = false;
-
     if (this.isFinish()) {
       // complete register logic
 
