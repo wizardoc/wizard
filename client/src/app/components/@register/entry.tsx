@@ -16,6 +16,10 @@ import {BaseInfo} from './base-info';
 import {Complete} from './complete';
 import {Organization} from './organization';
 
+export interface FormBodyProps {
+  index: number;
+}
+
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
@@ -25,6 +29,14 @@ const Wrapper = styled.div`
   padding: 24px !important;
   flex-direction: column;
   transition: 0.3s height;
+`;
+
+const RegisterBodyWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Row = styled.div`
@@ -53,6 +65,9 @@ export class Register extends Component {
   @observable
   private currentIndex = 0;
 
+  @observable
+  private isAppear = true;
+
   private registerBody = [<BaseInfo />, <Organization />, <Complete />];
 
   @action
@@ -74,6 +89,8 @@ export class Register extends Component {
   }
 
   handleNextClick(): void {
+    this.isAppear = false;
+
     if (this.isFinish()) {
       // complete register logic
 
@@ -98,7 +115,9 @@ export class Register extends Component {
             </Step>
           ))}
         </StepperWrapper>
-        {this.registerBody[this.currentIndex]}
+        <RegisterBodyWrapper>
+          {this.registerBody[this.currentIndex]}
+        </RegisterBodyWrapper>
         <Row>
           <ButtonsWrapper>
             {!this.isFinish() && (
