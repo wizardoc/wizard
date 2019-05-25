@@ -6,13 +6,12 @@
   "private": true,
   "devDependencies": {
     "@magicspace/configs": "^0.1.47",
-    "lerna": "^3.13.3",
-    "tslint-language-service": "^0.9.9",
-    "typescript": "3.1.0"
+    "lerna": "^3.13.3"
   },
   "dependencies": {
     "prettier": "^1.17.0",
-    "tslint": "^5.16.0"
+    "tslint": "^5.16.0",
+    "typescript": "3.3.3333"
   },
   "workspaces": {
     "packages": [
