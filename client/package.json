@@ -4,8 +4,9 @@
   "private": true,
   "dependencies": {
     "@loadable/component": "^5.9.0",
-    "@material-ui/core": "^3.9.3",
+    "@material-ui/core": "^4.0.0",
     "@material-ui/icons": "^3.0.2",
+    "@material-ui/lab": "^4.0.0-alpha.13",
     "animate.css": "^3.7.0",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
@@ -14,6 +15,7 @@
     "mobx-react": "^5.4.3",
     "next": "^8.1.0",
     "react": "^16.8.6",
+    "react-app-rewired": "1.6.2",
     "react-dom": "^16.8.6",
     "react-loadable": "^5.5.0",
     "react-router-dom": "^5.0.0",
@@ -42,7 +44,6 @@
     "jest": "^24.7.1",
     "mobx-react": "^5.4.3",
     "prettier": "^1.17.0",
-    "react-app-rewired": "^2.1.3",
     "tslint": "^5.16.0",
     "typescript": "^3.4.5",
     "webpack-node-externals": "^1.7.2"
