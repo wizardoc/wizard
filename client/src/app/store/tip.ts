@@ -1,6 +1,6 @@
 import {action, computed, observable} from 'mobx';
 
-export class Tip {
+export class TipStore {
   @observable
   private _isShowTip = false;
 
