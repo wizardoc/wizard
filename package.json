@@ -11,6 +11,7 @@
   "dependencies": {
     "prettier": "^1.17.0",
     "tslint": "5.11.0",
+    "tslint-language-service": "0.9.9",
     "typescript": "3.3.3333"
   },
   "workspaces": {
