@@ -4,7 +4,9 @@
     "no-void-expression": false,
     "no-implicit-dependencies": false,
     "no-conditional-assignment": false,
-    "no-unused-expression": false
+    "no-unused-expression": false,
+    "ordered-imports": false,
+    "object-literal-sort-keys": false
   },
   "linterOptions": {
     "exclude": ["node_modules/**"]
