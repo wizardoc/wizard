@@ -2,13 +2,20 @@ import {SnackbarContent, IconButton} from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
 import {SnackbarContentProps} from '@material-ui/core/SnackbarContent';
 import {observer} from 'mobx-react';
-import React, {Component, ComponentType, ReactNode, MouseEvent} from 'react';
+import React, {
+  Component,
+  ComponentType,
+  ReactNode,
+  MouseEvent,
+  FunctionComponent,
+} from 'react';
 import styled from 'styled-components';
 import InfoIcon from '@material-ui/icons/Info';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import WarningIcon from '@material-ui/icons/Warning';
 import ErrorIcon from '@material-ui/icons/Error';
 import CloseIcon from '@material-ui/icons/Close';
+import TagFacesIcon from '@material-ui/icons/TagFaces';
 
 import {TipStore} from '../store';
 import {InjectStore} from '../utils';
@@ -18,6 +25,7 @@ export const enum TipVariant {
   Info,
   Warning,
   Error,
+  Main,
 }
 
 interface TipProps extends SnackbarContentProps {
@@ -26,14 +34,16 @@ interface TipProps extends SnackbarContentProps {
   onClose?(e?: MouseEvent): void;
 }
 
-interface TipContentProps {
-  bgcolor: string;
+interface TipInnerContentProps {
+  bgcolor?: string;
 }
 
 interface Stuff {
-  color: string;
+  color?: string;
   icon: unknown;
 }
+
+interface TipContentProps extends TipProps {}
 
 const stuffs: Stuff[] = [
   {
@@ -52,11 +62,15 @@ const stuffs: Stuff[] = [
     color: '#d32f2f',
     icon: <ErrorIcon />,
   },
+  {
+    icon: <TagFacesIcon />,
+  },
 ];
 
-const TipContent = styled(SnackbarContent)<TipContentProps>`
-  background-color: ${({bgcolor}) => bgcolor} !important;
-` as ComponentType<SnackbarContentProps & TipContentProps>;
+const TipInnerContent = styled(SnackbarContent)<TipInnerContentProps>`
+  background-color: ${({bgcolor, theme}) =>
+    bgcolor || theme.primaryColor} !important;
+` as ComponentType<SnackbarContentProps & TipInnerContentProps>;
 
 const MessageContent = styled.div`
   display: flex;
@@ -67,7 +81,40 @@ const Message = styled.div`
   margin-left: 10px;
 `;
 
-// const MAX_EXIST_DURATION = 5 * 1000;
+export const TipContent: FunctionComponent<TipContentProps> = ({
+  message,
+  tipVariant,
+  onClose,
+}: TipContentProps) => {
+  const {color, icon} = stuffs[tipVariant];
+  const actions = [];
+
+  if (onClose) {
+    actions.push(
+      <IconButton
+        key="close"
+        aria-label="Close"
+        color="inherit"
+        onClick={onClose}
+      >
+        <CloseIcon />
+      </IconButton>,
+    );
+  }
+
+  return (
+    <TipInnerContent
+      bgcolor={color}
+      message={
+        <MessageContent>
+          {icon}
+          <Message>{message}</Message>
+        </MessageContent>
+      }
+      action={actions}
+    />
+  );
+};
 
 @observer
 export class Tip extends Component<TipProps> {
@@ -75,24 +122,14 @@ export class Tip extends Component<TipProps> {
   private tipStore!: TipStore;
 
   render(): ReactNode {
-    const {message, tipVariant, onClose} = this.props;
-    const {color, icon} = stuffs[tipVariant];
-    const actions = [];
+    const {onClose} = this.props;
+    let onCloseDup = onClose;
 
-    if (onClose) {
-      actions.push(
-        <IconButton
-          key="close"
-          aria-label="Close"
-          color="inherit"
-          onClick={e => {
-            onClose(e);
-            this.tipStore.tipToggle();
-          }}
-        >
-          <CloseIcon />
-        </IconButton>,
-      );
+    if (onCloseDup) {
+      onCloseDup = e => {
+        onClose!(e);
+        this.tipStore.tipToggle();
+      };
     }
 
     return (
@@ -103,16 +140,7 @@ export class Tip extends Component<TipProps> {
           horizontal: 'left',
         }}
       >
-        <TipContent
-          bgcolor={color}
-          message={
-            <MessageContent>
-              {icon}
-              <Message>{message}</Message>
-            </MessageContent>
-          }
-          action={actions}
-        />
+        <TipContent {...this.props} onClose={onCloseDup} />
       </Snackbar>
     );
   }
