@@ -67,7 +67,7 @@ const Message = styled.div`
   margin-left: 10px;
 `;
 
-const MAX_EXIST_DURATION = 5 * 1000;
+// const MAX_EXIST_DURATION = 5 * 1000;
 
 @observer
 export class Tip extends Component<TipProps> {
@@ -94,8 +94,6 @@ export class Tip extends Component<TipProps> {
         </IconButton>,
       );
     }
-
-    setTimeout(() => this.tipStore.tipToggle(), MAX_EXIST_DURATION);
 
     return (
       <Snackbar
