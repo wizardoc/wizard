@@ -44,8 +44,10 @@
     "jest": "^24.7.1",
     "mobx-react": "^5.4.3",
     "prettier": "^1.17.0",
-    "tslint": "^5.16.0",
-    "typescript": "^3.4.5",
     "webpack-node-externals": "^1.7.2"
+  },
+  "peerDependencies": {
+    "tslint": "*",
+    "typescript": "*"
   }
 }
