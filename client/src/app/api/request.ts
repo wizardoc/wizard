@@ -1,17 +1,41 @@
-// // import Axios from 'axios';
-// import {Injectable} from 'react-ts-di';
+import Axios, {AxiosPromise} from 'axios';
+import {Injectable} from 'react-ts-di';
 
-// // import ServerConfig from '../configs/server-config.json';
+import ServerConfig from '../configs/server-config.json';
 
-// // const {baseUrl, port} = ServerConfig;
+interface ServerConfig {
+  baseUrl: string;
+  port: number;
+  protocol: string;
+}
 
-// export interface PostPayload<T = unknown> {
-//   [index: number]: T;
-// }
+const {baseUrl, port, protocol} = ServerConfig as ServerConfig;
 
-// @Injectable()
-// export class Request {
-//   post<T>(_url: string, _data: PostPayload<T>) {
-//     // Axios.post(url, data);
-//   }
-// }
+export interface PostPayload<T = unknown> {
+  [index: number]: T;
+}
+
+@Injectable()
+export class Request {
+  private addr: string;
+
+  constructor() {
+    this.addr = `${protocol}://${baseUrl}:${port === 80 ? '' : port}/`;
+  }
+
+  private join(path: string) {
+    const parsedPath = path.replace(/^\/(.*)/, (_, cap) => cap);
+
+    return `${this.addr}${parsedPath}`;
+  }
+
+  get<T, R>(path: string, data: PostPayload<T>): AxiosPromise<R> {
+    return Axios.get(this.join(path), {
+      params: data,
+    });
+  }
+
+  post<T, R>(path: string, data: PostPayload<T>): AxiosPromise<R> {
+    return Axios.post(this.join(path), data);
+  }
+}
