@@ -23,12 +23,7 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "plugins": [
-      {
-        "name": "tslint-language-service"
-      }
-    ]
+    "experimentalDecorators": true
   },
   "exclude": [
     "node_modules",
