@@ -1,7 +1,10 @@
-import {AxiosPromise} from 'axios';
 import {Inject, Injectable} from 'react-ts-di';
 
 import {Request} from '../api';
+
+interface OrganizationNames {
+  organizeNames: string[];
+}
 
 @Injectable()
 export class Organization {
@@ -10,8 +13,12 @@ export class Organization {
 
   private organizationScope = 'organization';
 
-  getAllNames(): AxiosPromise<string[]> {
-    return this.request.get<string[]>(this.parseUrl('/name/all'));
+  async getAllNames(): Promise<string[]> {
+    const {
+      data: {organizeNames},
+    } = await this.request.get<OrganizationNames>(this.parseUrl('/name/all'));
+
+    return organizeNames;
   }
 
   private parseUrl(path: string): string {
