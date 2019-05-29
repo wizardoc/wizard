@@ -7,7 +7,7 @@
   "files.trimTrailingWhitespace": true,
   "typescript.tsdk": "node_modules/typescript/lib",
   "tslint.autoFixOnSave": true,
-  "tslint.configFile": "node_modules/@magicspace/configs/tslint-vscode.js",
+  "tslint.configFile": "node_modules/@magicspace/configs/tslint-prettier.js",
   "[plaintext]": {
     "files.insertFinalNewline": false
   }

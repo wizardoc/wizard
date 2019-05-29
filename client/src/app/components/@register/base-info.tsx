@@ -1,16 +1,17 @@
 import {IconButton, InputAdornment, TextField} from '@material-ui/core';
+import {TextFieldProps} from '@material-ui/core/TextField';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import {observable} from 'mobx';
 import {observer} from 'mobx-react';
-import React, {Component, ReactNode} from 'react';
+import React, {Component, ComponentType, ReactNode} from 'react';
 import styled from 'styled-components';
 
-const TextFieldWrapper = styled(TextField)<any>`
+export const TextFieldWrapper = styled(TextField)`
   width: 70%;
   margin: 0 50px;
   margin-top: 15px !important;
-`;
+` as ComponentType<TextFieldProps>;
 
 @observer
 export class BaseInfo extends Component {
