@@ -23,19 +23,19 @@ export class Request {
     this.addr = `${protocol}://${baseUrl}:${port === 80 ? '' : port}/`;
   }
 
-  private join(path: string) {
-    const parsedPath = path.replace(/^\/(.*)/, (_, cap) => cap);
-
-    return `${this.addr}${parsedPath}`;
-  }
-
-  get<T, R>(path: string, data?: PostPayload<T>): AxiosPromise<R> {
+  get<R, T = {}>(path: string, data?: PostPayload<T>): AxiosPromise<R> {
     return Axios.get(this.join(path), {
       params: {...data},
     });
   }
 
-  post<T, R>(path: string, data: PostPayload<T>): AxiosPromise<R> {
+  post<R, T>(path: string, data: PostPayload<T>): AxiosPromise<R> {
     return Axios.post(this.join(path), data);
+  }
+
+  private join(path: string): string {
+    const parsedPath = path.replace(/^\/(.*)/, (_, cap) => cap);
+
+    return `${this.addr}${parsedPath}`;
   }
 }
