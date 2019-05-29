@@ -24,13 +24,13 @@ export class Request {
   }
 
   get<R, T = {}>(path: string, data?: PostPayload<T>): AxiosPromise<R> {
-    return Axios.get(this.join(path), {
+    return Axios.get<R>(this.join(path), {
       params: {...data},
     });
   }
 
   post<R, T>(path: string, data: PostPayload<T>): AxiosPromise<R> {
-    return Axios.post(this.join(path), data);
+    return Axios.post<R>(this.join(path), data);
   }
 
   private join(path: string): string {
