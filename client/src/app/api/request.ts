@@ -29,9 +29,9 @@ export class Request {
     return `${this.addr}${parsedPath}`;
   }
 
-  get<T, R>(path: string, data: PostPayload<T>): AxiosPromise<R> {
+  get<T, R>(path: string, data?: PostPayload<T>): AxiosPromise<R> {
     return Axios.get(this.join(path), {
-      params: data,
+      params: {...data},
     });
   }
 
