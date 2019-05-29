@@ -145,7 +145,7 @@ class THeaderBar extends Component<HeaderBarProps> {
           </div>
           <Tooltip title="notify">
             <IconButton color="inherit" className={notification}>
-              <Badge>
+              <Badge badgeContent={10} max={99} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
