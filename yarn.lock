@@ -9883,6 +9883,11 @@ mobx-react@^5.4.3:
     hoist-non-react-statics "^3.0.0"
     react-lifecycles-compat "^3.0.2"
 
+mobx-utils@^5.4.0:
+  version "5.4.0"
+  resolved "http://119.23.73.70/mobx-utils/-/mobx-utils-5.4.0.tgz#ddc66e9edafedaa3762a42ec9da9c4c33ced74c4"
+  integrity sha512-VqGQhWegEmw7h+7B0Pn1kajl1T40xEUDM76enrBaIGfwWhZvqV2YhTqjXEuTmlLPXv7Ll/git/XL65XDFB/G7Q==
+
 mobx@^5.9.4:
   version "5.9.4"
   resolved "http://119.23.73.70/mobx/-/mobx-5.9.4.tgz#1dee92aba33f67b7baeeb679e3bd376a12e55812"
