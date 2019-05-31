@@ -29,11 +29,17 @@ export class BaseInfo extends Component {
           label="昵称"
           type="text"
           autoComplete="new-password"
+          inputProps={{
+            maxLength: 12,
+          }}
         />
         <TextFieldWrapper
           label="账号"
           type="text"
           autoComplete="new-password"
+          inputProps={{
+            maxLength: 20,
+          }}
         />
         <TextFieldWrapper
           label="密码"
@@ -50,6 +56,7 @@ export class BaseInfo extends Component {
                 </IconButton>
               </InputAdornment>
             ),
+            maxLength: 22,
           }}
         />
         <TextFieldWrapper
