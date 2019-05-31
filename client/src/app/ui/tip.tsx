@@ -1,21 +1,21 @@
-import {SnackbarContent, IconButton} from '@material-ui/core';
+import {IconButton, SnackbarContent} from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
 import {SnackbarContentProps} from '@material-ui/core/SnackbarContent';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import CloseIcon from '@material-ui/icons/Close';
+import ErrorIcon from '@material-ui/icons/Error';
+import InfoIcon from '@material-ui/icons/Info';
+import TagFacesIcon from '@material-ui/icons/TagFaces';
+import WarningIcon from '@material-ui/icons/Warning';
 import {observer} from 'mobx-react';
 import React, {
   Component,
   ComponentType,
-  ReactNode,
-  MouseEvent,
   FunctionComponent,
+  MouseEvent,
+  ReactNode,
 } from 'react';
 import styled from 'styled-components';
-import InfoIcon from '@material-ui/icons/Info';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import WarningIcon from '@material-ui/icons/Warning';
-import ErrorIcon from '@material-ui/icons/Error';
-import CloseIcon from '@material-ui/icons/Close';
-import TagFacesIcon from '@material-ui/icons/TagFaces';
 
 import {TipStore} from '../store';
 import {InjectStore} from '../utils';
