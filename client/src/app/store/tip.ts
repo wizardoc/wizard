@@ -27,6 +27,11 @@ export class TipStore {
     );
   }
 
+  @action
+  destroy(): void {
+    this._isShowTip = false;
+  }
+
   @computed
   get isShowTip(): boolean {
     return this._isShowTip;
