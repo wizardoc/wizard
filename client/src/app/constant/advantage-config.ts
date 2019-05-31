@@ -1,4 +1,9 @@
-export const advantageConfigs = [
+interface AdvantageConfig {
+  title: string;
+  content: string;
+}
+
+export const advantageConfigs: AdvantageConfig[] = [
   {
     title: '优势1...',
     content: '优势内容1...',
