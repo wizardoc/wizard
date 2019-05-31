@@ -7,6 +7,9 @@ import {User} from '../services';
 import {AccessDialogStore} from '../store';
 import {ActionButton} from '../ui';
 import {InjectStore} from '../utils';
+import {advantageConfigs} from '../constant';
+
+import {AdvantageCard} from './advantage-card';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -52,7 +55,11 @@ class TStarted extends Component<StartedProps> {
   render(): ReactNode {
     return (
       <Wrapper>
-        <StartPanel />
+        <StartPanel>
+          {advantageConfigs.map(e => (
+            <AdvantageCard title={e.title} content={e.content} />
+          ))}
+        </StartPanel>
         <GetStartedWrapper>
           <GetStarted onClick={() => this.handleGetStartClick()}>
             立即开始!
