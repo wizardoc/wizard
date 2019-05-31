@@ -5,3 +5,4 @@ export * from './footer';
 export * from './header-bar-tabs';
 export * from './header-bar';
 export * from './started';
+export * from './advantage-card';
