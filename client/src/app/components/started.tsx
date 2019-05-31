@@ -1,13 +1,13 @@
 import React, {Component, ReactNode} from 'react';
-import {RouteComponentProps, withRouter} from 'react-router';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
+import {advantageConfigs} from '../constant';
 import {User} from '../services';
 import {AccessDialogStore} from '../store';
 import {ActionButton} from '../ui';
 import {InjectStore} from '../utils';
-import {advantageConfigs} from '../constant';
 
 import {AdvantageCard} from './advantage-card';
 
@@ -56,8 +56,12 @@ class TStarted extends Component<StartedProps> {
     return (
       <Wrapper>
         <StartPanel>
-          {advantageConfigs.map(e => (
-            <AdvantageCard title={e.title} content={e.content} />
+          {advantageConfigs.map(config => (
+            <AdvantageCard
+              title={config.title}
+              key={config.title}
+              content={config.content}
+            />
           ))}
         </StartPanel>
         <GetStartedWrapper>
@@ -65,6 +69,7 @@ class TStarted extends Component<StartedProps> {
             立即开始!
           </GetStarted>
         </GetStartedWrapper>
+        g
       </Wrapper>
     );
   }

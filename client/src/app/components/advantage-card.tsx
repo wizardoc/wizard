@@ -1,11 +1,10 @@
-import React, {ReactNode, Component} from 'react';
 import {
+  Button,
   Card,
   CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
-  Button,
   Typography,
 } from '@material-ui/core';
 import {
@@ -14,6 +13,7 @@ import {
   createStyles,
   withStyles,
 } from '@material-ui/core/styles';
+import React, {Component, ReactNode} from 'react';
 
 const styles = (): StyleRules =>
   createStyles({
