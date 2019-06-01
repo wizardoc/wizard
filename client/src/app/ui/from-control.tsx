@@ -83,7 +83,7 @@ export class FromControl extends Component<FormControlProps> {
 
       if (rule) {
         const {trigger = 'onChange', validator} = rule;
-        let listener: (...args: unknown[]) => void;
+        let listener: (...args: unknown[]) => void = () => {};
 
         if (partProps[index][trigger]) {
           listener = partProps[index][trigger];
