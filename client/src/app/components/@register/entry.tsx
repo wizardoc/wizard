@@ -10,7 +10,6 @@ import React, {Component, ComponentType, ReactNode} from 'react';
 import styled from 'styled-components';
 
 import {AccessDialogStore, TipStore} from '../../store';
-import {Tip, TipVariant} from '../../ui';
 import {InjectStore} from '../../utils';
 
 import {BaseInfo} from './base-info';
@@ -67,12 +66,6 @@ export class Register extends Component {
   private tipStore!: TipStore;
 
   @observable
-  tipVariant: TipVariant = TipVariant.Success;
-
-  @observable
-  message: string = '';
-
-  @observable
   private currentIndex = 0;
 
   private registerBody = [<BaseInfo />, <Organization />, <Complete />];
@@ -85,13 +78,6 @@ export class Register extends Component {
   @action
   preStepToggle(): void {
     this.currentIndex -= 1;
-  }
-
-  @action
-  openTip(message: string, tipVariant: TipVariant): void {
-    this.message = message;
-    this.tipVariant = tipVariant;
-    this.tipStore.tipToggle();
   }
 
   isFinish(): boolean {
@@ -110,7 +96,6 @@ export class Register extends Component {
       return;
     }
 
-    this.openTip('asd', TipVariant.Error);
     this.nextStepToggle();
   }
 
@@ -163,7 +148,6 @@ export class Register extends Component {
             </Button>
           </ButtonsWrapper>
         </Row>
-        <Tip tipVariant={this.tipVariant} message={this.message} />
       </Wrapper>
     );
   }
