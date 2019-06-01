@@ -7,6 +7,7 @@ export class JoinExistOrganization extends Component {
     return (
       <>
         <TextFieldWrapper
+          name="choseOrganization"
           label="选择已存在的组织"
           type="text"
           autoComplete="new-password"

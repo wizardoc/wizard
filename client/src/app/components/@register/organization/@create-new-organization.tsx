@@ -7,6 +7,7 @@ export class CreateNewOrganization extends Component {
     return (
       <>
         <TextFieldWrapper
+          name="organizationName"
           label="组织名称"
           type="text"
           autoComplete="new-password"
@@ -15,6 +16,7 @@ export class CreateNewOrganization extends Component {
           }}
         />
         <TextFieldWrapper
+          name="organization-description"
           label="组织描述"
           type="text"
           autoComplete="new-password"
