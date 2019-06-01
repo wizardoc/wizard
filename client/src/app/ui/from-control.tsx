@@ -83,8 +83,17 @@ export class FromControl extends Component<FormControlProps> {
 
       if (rule) {
         const {trigger = 'onChange', validator} = rule;
+        let listener: (...args: unknown[]) => void;
 
-        partProps[index][trigger] = ({target: {value}}: ChangeEvent) => {
+        if (partProps[index][trigger]) {
+          listener = partProps[index][trigger];
+        }
+
+        partProps[index][trigger] = (e: ChangeEvent) => {
+          const {
+            target: {value},
+          } = e;
+
           const actuallyValidator: Validator =
             validator === 'required'
               ? (str: string) => (!!str && str !== '') || `${label} 为必填字段`
@@ -101,6 +110,7 @@ export class FromControl extends Component<FormControlProps> {
             partProps[index].error = false;
           }
 
+          listener(e);
           this.partProps[index] = partProps[index];
         };
       }
