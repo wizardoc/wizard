@@ -26,6 +26,7 @@ export class BaseInfo extends Component {
     return (
       <>
         <TextFieldWrapper
+          error
           label="昵称"
           type="text"
           autoComplete="new-password"
