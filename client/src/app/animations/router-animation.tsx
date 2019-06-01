@@ -1,4 +1,5 @@
 import React, {Component, ComponentClass, ReactNode} from 'react';
+// tslint:disable-next-line:no-implicit-dependencies
 import {CSSTransition} from 'react-transition-group';
 
 export interface RouterAnimationProps {
