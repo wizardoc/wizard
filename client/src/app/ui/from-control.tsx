@@ -23,6 +23,10 @@ interface ChangeEvent {
   target: {value: string};
 }
 
+interface FormInfo {
+  [index: string]: string;
+}
+
 export interface Rule {
   validator: Validator | DefaultValidator;
   trigger?: Trigger;
@@ -35,6 +39,7 @@ export interface Rules {
 export interface FormControlProps {
   rules: Rules;
   children: ReactNode[];
+  onSubmit?(formInfo: FormInfo): void;
 }
 
 const Wrapper = styled.div`
@@ -47,20 +52,19 @@ const Wrapper = styled.div`
 
 @observer
 export class FromControl extends Component<FormControlProps> {
-  @observable
-  message: string = 'aaa';
+  private formInfo: FormInfo = {};
 
   @observable
-  tipVariant: TipVariant = TipVariant.Success;
+  private message: string = '';
 
   @observable
-  isError: boolean = false;
+  private tipVariant: TipVariant = TipVariant.Success;
 
   @observable
-  partProps: FormTextFieldProps[] = [];
+  private partProps: FormTextFieldProps[] = [];
 
   @InjectStore(TipStore)
-  tipStore!: TipStore;
+  private tipStore!: TipStore;
 
   @action
   openTip(message: string, tipVariant: TipVariant): void {
@@ -103,11 +107,12 @@ export class FromControl extends Component<FormControlProps> {
 
           if (typeof result === 'string') {
             partProps[index].error = true;
-            // nodeProps = {error: this.isError, ...nodeProps};
 
             this.openTip(result, TipVariant.Error);
           } else {
             partProps[index].error = false;
+
+            this.formInfo[name] = value;
           }
 
           listener(e);
