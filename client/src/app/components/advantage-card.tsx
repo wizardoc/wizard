@@ -15,11 +15,40 @@ import {
 } from '@material-ui/core/styles';
 import React, {Component, ReactNode} from 'react';
 
+// todo 图片可配置化
+import RegisterSuccess from '../assets/static/register_successful.png';
+
 const styles = (): StyleRules =>
   createStyles({
     card: {
-      minWidth: 345,
-      display: 'inline-block',
+      width: 345,
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    cardActions: {
+      marginTop: 'auto',
+    },
+    cardImg: {
+      width: 180,
+      height: 180,
+      display: 'block',
+      margin: '0 auto',
+    },
+    cardTitle: {
+      textAlign: 'center',
+      fontSize: 18,
+      color: '#1f2f3d',
+      fontWeight: 400,
+    },
+    cardContent: {
+      textAlign: 'center',
+      fontSize: 14,
+      color: '#99a9bf',
+      padding: '0 25px',
+      lineHeight: '20px',
+    },
+    cardBtn: {
+      width: '100%',
     },
   });
 
@@ -36,23 +65,36 @@ export class TAdvantageCard extends Component<AdvantageCardProps> {
       <Card className={classes.card}>
         <CardActionArea>
           <CardMedia
+            className={classes.cardImg}
+            image={RegisterSuccess}
             component="img"
             alt="Contemplative Reptile"
             height="140"
-            image="/static/images/cards/contemplative-reptile.jpg"
             title="Contemplative Reptile"
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
+            <Typography
+              className={classes.cardTitle}
+              gutterBottom
+              variant="h5"
+              component="h2"
+            >
               {title}
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
+            <Typography
+              className={classes.cardContent}
+              variant="body2"
+              color="textSecondary"
+              component="p"
+            >
               {content}
             </Typography>
           </CardContent>
         </CardActionArea>
-        <CardActions>
-          <Button color="primary">查看详情</Button>
+        <CardActions className={classes.cardActions}>
+          <Button className={classes.cardBtn} color="primary">
+            查看详情
+          </Button>
         </CardActions>
       </Card>
     );
