@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: 60px;
   background: ${props => props.theme.dark};
-  position: absolute;
+  position: sticky;
   bottom: 0;
   left: 0;
   overflow: hidden;

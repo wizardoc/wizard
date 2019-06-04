@@ -19,6 +19,7 @@ const StartPanel = styled.div`
   display: flex;
   justify-content: space-around;
   padding: 15px 0;
+  height: 200px;
   background: ${props => props.theme.shallowGray};
 `;
 
@@ -29,9 +30,16 @@ const GetStarted = styled(ActionButton)<any>`
 
 const GetStartedWrapper = styled.div`
   width: 100%;
-  margin-top: 20px;
+  margin: 20px;
   display: flex;
   justify-content: center;
+`;
+
+const AdvantagePanel = styled.div`
+  display: flex;
+  justify-content: space-around;
+  padding: 15px 0;
+  background: ${props => props.theme.shallowGray};
 `;
 
 interface StartedProps extends RouteComponentProps {}
@@ -57,7 +65,13 @@ class TStarted extends Component<StartedProps> {
   render(): ReactNode {
     return (
       <Wrapper>
-        <StartPanel>
+        <StartPanel>todo: somethings text</StartPanel>
+        <GetStartedWrapper>
+          <GetStarted onClick={() => this.handleGetStartClick()}>
+            立即开始!
+          </GetStarted>
+        </GetStartedWrapper>
+        <AdvantagePanel>
           {advantageConfigs.map(config => (
             <AdvantageCard
               title={config.title}
@@ -65,13 +79,7 @@ class TStarted extends Component<StartedProps> {
               content={config.content}
             />
           ))}
-        </StartPanel>
-        <GetStartedWrapper>
-          <GetStarted onClick={() => this.handleGetStartClick()}>
-            立即开始!
-          </GetStarted>
-        </GetStartedWrapper>
-        g
+        </AdvantagePanel>
       </Wrapper>
     );
   }
