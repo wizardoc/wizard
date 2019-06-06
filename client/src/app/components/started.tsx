@@ -24,7 +24,7 @@ const StartPanel = styled.div`
 
 const GetStarted = styled(ActionButton)`
   width: 150px;
-  background: ${props => props.theme.redLinearGradient};
+  color: ${props => props.theme.primaryColor} !important;
 ` as ComponentType<ButtonProps>;
 
 const GetStartedWrapper = styled.div`
@@ -59,7 +59,11 @@ class TStarted extends Component<StartedProps> {
       <Wrapper>
         <StartPanel />
         <GetStartedWrapper>
-          <GetStarted onClick={() => this.handleGetStartClick()}>
+          <GetStarted
+            variant="outlined"
+            color="primary"
+            onClick={() => this.handleGetStartClick()}
+          >
             立即开始!
           </GetStarted>
         </GetStartedWrapper>
