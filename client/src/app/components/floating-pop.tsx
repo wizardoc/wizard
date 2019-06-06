@@ -25,7 +25,7 @@ interface FloatActions {
 const Wrapper = styled.div`
   position: fixed;
   right: 50px;
-  bottom: 150px;
+  bottom: 100px;
 `;
 
 // const MenuIcon = styled(AddIcon)<MenuIconProps>`
