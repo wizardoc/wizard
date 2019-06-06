@@ -10,6 +10,7 @@ const Cards = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-evenly;
+  padding: 10px 0;
 `;
 
 export class MainContent extends Component {
