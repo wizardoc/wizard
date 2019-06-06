@@ -1,31 +1,31 @@
-import React, {Component, ReactNode} from 'react';
+import {ButtonProps} from '@material-ui/core/Button';
+import React, {Component, ComponentType, ReactNode} from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
-import {advantageConfigs} from '../constant';
 import {User} from '../services';
 import {AccessDialogStore} from '../store';
 import {ActionButton} from '../ui';
 import {InjectStore} from '../utils';
 
-import {AdvantageCard} from './advantage-card';
+import {MainContent} from './main-content';
 
 const Wrapper = styled.div`
   width: 100%;
 `;
 
 const StartPanel = styled.div`
+  height: 300px;
   display: flex;
   justify-content: space-around;
-  padding: 15px 0;
-  background: ${props => props.theme.shallowGray};
+  background: ${props => props.theme.primaryColor};
 `;
 
-const GetStarted = styled(ActionButton)<any>`
+const GetStarted = styled(ActionButton)`
   width: 150px;
   background: ${props => props.theme.redLinearGradient};
-`;
+` as ComponentType<ButtonProps>;
 
 const GetStartedWrapper = styled.div`
   width: 100%;
@@ -57,21 +57,13 @@ class TStarted extends Component<StartedProps> {
   render(): ReactNode {
     return (
       <Wrapper>
-        <StartPanel>
-          {advantageConfigs.map(config => (
-            <AdvantageCard
-              title={config.title}
-              key={config.title}
-              content={config.content}
-            />
-          ))}
-        </StartPanel>
+        <StartPanel />
         <GetStartedWrapper>
           <GetStarted onClick={() => this.handleGetStartClick()}>
             立即开始!
           </GetStarted>
         </GetStartedWrapper>
-        g
+        <MainContent />
       </Wrapper>
     );
   }
