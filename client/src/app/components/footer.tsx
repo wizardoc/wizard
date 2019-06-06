@@ -15,7 +15,7 @@ interface ShadeProps {
 const Wrapper = styled.div`
   width: 100%;
   height: 60px;
-  background: ${props => props.theme.dark};
+  background: ${props => props.theme.primaryColor};
   position: absolute;
   bottom: 0;
   left: 0;
@@ -36,7 +36,7 @@ const Shade = styled.div<ShadeProps>`
   height: 0;
   padding-bottom: ${props => (props.isShutdown ? '110%' : 0)};
   border-radius: 10000px;
-  background: ${props => props.theme.primaryColor};
+  background: ${props => props.theme.dark};
   transition: 0.3s all;
 `;
 
