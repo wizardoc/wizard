@@ -3,6 +3,7 @@ import {observer} from 'mobx-react';
 import {SnackbarProvider, WithSnackbarProps, withSnackbar} from 'notistack';
 import React, {Component, FunctionComponent} from 'react';
 import {BrowserRouter} from 'react-router-dom';
+import styled from 'styled-components';
 
 import {
   Dialogs,
@@ -18,6 +19,13 @@ import {InjectStore} from './utils';
 
 const MAX_SNACK_BAR_COUNT = 5;
 
+const Wrapper = styled.div`
+  min-height: 100%;
+  position: relative;
+  box-sizing: border-box;
+  padding-bottom: 60px;
+`;
+
 @observer
 class TApp extends Component<WithSnackbarProps> {
   @InjectStore(TipStore)
@@ -30,11 +38,13 @@ class TApp extends Component<WithSnackbarProps> {
           <DocRecentUpdateDrawer />
           <GlobalStyle />
           <BrowserRouter>
-            <HeaderBar />
-            <FloatingPop />
-            <Dialogs />
-            <AppRoutes />
-            <Footer />
+            <Wrapper>
+              <HeaderBar />
+              <FloatingPop />
+              <Dialogs />
+              <AppRoutes />
+              <Footer />
+            </Wrapper>
           </BrowserRouter>
         </MuiThemeProvider>
       </ThemeProvider>
