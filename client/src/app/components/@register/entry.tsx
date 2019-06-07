@@ -10,6 +10,7 @@ import React, {Component, ComponentType, ReactNode} from 'react';
 import styled from 'styled-components';
 
 import {AccessDialogStore, TipStore} from '../../store';
+import {FormInfo, FullValidator, Rules} from '../../ui';
 import {InjectStore} from '../../utils';
 
 import {BaseInfo} from './base-info';
@@ -57,6 +58,21 @@ const StepperWrapper = styled(Stepper)`
 
 const steps = ['填写基本信息', '确定组织', '完成注册'];
 
+const baseInfoRule: Rules = {
+  name: {
+    validator: 'required',
+  },
+  username: {
+    validator: 'required',
+  },
+  password: {
+    validator: 'required',
+  },
+  email: {
+    validator: 'required',
+  },
+};
+
 @observer
 export class Register extends Component {
   @InjectStore(AccessDialogStore)
@@ -68,7 +84,23 @@ export class Register extends Component {
   @observable
   private currentIndex = 0;
 
-  private registerBody = [<BaseInfo />, <Organization />, <Complete />];
+  private formInfo: FormInfo = {};
+
+  private baseInfoValidator!: () => boolean;
+
+  private registerBody = [
+    <BaseInfo
+      baseInfoRule={baseInfoRule}
+      onDataUpdate={(formInfo: FormInfo): void =>
+        this.handleBaseInfoDataUpdate(formInfo)
+      }
+      getValidator={(validator: FullValidator): FullValidator =>
+        (this.baseInfoValidator = validator)
+      }
+    />,
+    <Organization />,
+    <Complete />,
+  ];
 
   @action
   nextStepToggle(): void {
@@ -89,6 +121,10 @@ export class Register extends Component {
   }
 
   handleNextClick(): void {
+    if (!this.baseInfoValidator()) {
+      return;
+    }
+
     if (this.isFinish()) {
       // complete register logic
 
@@ -101,6 +137,14 @@ export class Register extends Component {
 
   handlePreClick(): void {
     this.preStepToggle();
+  }
+
+  handleBaseInfoDataUpdate(formInfo: FormInfo): void {
+    this.formInfo = {...this.formInfo, ...formInfo};
+  }
+
+  resetFormData(): void {
+    this.formInfo = {};
   }
 
   render(): ReactNode {
@@ -154,5 +198,6 @@ export class Register extends Component {
 
   componentWillUnmount(): void {
     this.tipStore.destroy();
+    this.resetFormData();
   }
 }

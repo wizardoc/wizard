@@ -6,7 +6,20 @@ import {observer} from 'mobx-react';
 import React, {Component, ComponentType, ReactNode} from 'react';
 import styled from 'styled-components';
 
-import {FormTextField, FormTextFieldProps, FromControl} from '../../ui';
+import {
+  FormInfo,
+  FormTextField,
+  FormTextFieldProps,
+  FromControl,
+  FullValidator,
+  Rules,
+} from '../../ui';
+
+export interface BaseInfoProps {
+  baseInfoRule: Rules;
+  onDataUpdate(formInfo: FormInfo): void;
+  getValidator(validator: FullValidator): unknown;
+}
 
 export const TextFieldWrapper = styled(FormTextField)`
   width: 70%;
@@ -15,22 +28,18 @@ export const TextFieldWrapper = styled(FormTextField)`
 ` as ComponentType<FormTextFieldProps>;
 
 @observer
-export class BaseInfo extends Component {
+export class BaseInfo extends Component<BaseInfoProps> {
   @observable
   private isViewPassword = false;
 
-  handleViewPasswordClick(): void {
-    this.isViewPassword = !this.isViewPassword;
-  }
-
   render(): ReactNode {
+    const {baseInfoRule, onDataUpdate, getValidator} = this.props;
+
     return (
       <FromControl
-        rules={{
-          name: {
-            validator: 'required',
-          },
-        }}
+        onDataUpdate={onDataUpdate}
+        rules={baseInfoRule}
+        getValidator={getValidator}
       >
         <TextFieldWrapper
           name="name"
@@ -77,5 +86,9 @@ export class BaseInfo extends Component {
         />
       </FromControl>
     );
+  }
+
+  private handleViewPasswordClick(): void {
+    this.isViewPassword = !this.isViewPassword;
   }
 }
