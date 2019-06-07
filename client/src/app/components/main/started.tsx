@@ -1,13 +1,14 @@
-import {ButtonProps} from '@material-ui/core/Button';
+import {Card, CardActions, CardContent, Typography} from '@material-ui/core';
+import Button, {ButtonProps} from '@material-ui/core/Button';
 import React, {Component, ComponentType, ReactNode} from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
-import {User} from '../services';
-import {AccessDialogStore} from '../store';
-import {ActionButton} from '../ui';
-import {InjectStore} from '../utils';
+import {User} from '../../services';
+import {AccessDialogStore} from '../../store';
+import {ActionButton} from '../../ui';
+import {InjectStore} from '../../utils';
 
 import {MainContent} from './main-content';
 
@@ -57,7 +58,9 @@ class TStarted extends Component<StartedProps> {
   render(): ReactNode {
     return (
       <Wrapper>
-        <StartPanel />
+        <StartPanel>
+          <Typography>The awesome document management platform</Typography>
+        </StartPanel>
         <GetStartedWrapper>
           <GetStarted
             variant="outlined"
@@ -67,6 +70,14 @@ class TStarted extends Component<StartedProps> {
             立即开始!
           </GetStarted>
         </GetStartedWrapper>
+        <Card>
+          <CardContent>
+            <Typography>The awesome document management platform</Typography>
+          </CardContent>
+          <CardActions>
+            <Button>About Us</Button>
+          </CardActions>
+        </Card>
         <MainContent />
       </Wrapper>
     );

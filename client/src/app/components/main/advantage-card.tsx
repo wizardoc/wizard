@@ -16,7 +16,7 @@ import {
 import React, {Component, ReactNode} from 'react';
 
 // todo 图片可配置化
-import RegisterSuccess from '../assets/static/register_successful.png';
+import RegisterSuccess from '../../assets/static/register_successful.png';
 
 const styles = (): StyleRules =>
   createStyles({

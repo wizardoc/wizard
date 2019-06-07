@@ -2,7 +2,7 @@ import {Container} from '@material-ui/core';
 import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 
-import {advantageConfigs} from '../constant';
+import {advantageConfigs} from '../../constant';
 
 import {AdvantageCard} from './advantage-card';
 
