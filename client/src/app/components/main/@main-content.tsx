@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import {advantageConfigs} from '../../constant';
 
-import {AdvantageCard} from './advantage-card';
+import {AdvantageCard} from './@advantage-card';
 
 const Cards = styled.div`
   width: 100%;

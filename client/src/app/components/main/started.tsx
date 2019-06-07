@@ -10,7 +10,7 @@ import {AccessDialogStore} from '../../store';
 import {ActionButton} from '../../ui';
 import {InjectStore} from '../../utils';
 
-import {MainContent} from './main-content';
+import {MainContent} from './@main-content';
 
 const Wrapper = styled.div`
   width: 100%;
