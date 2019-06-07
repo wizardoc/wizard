@@ -1,5 +1,6 @@
 {
   "baseUrl": "localhost",
-  "port": 3000,
-  "protocol": "http"
+  "port": 8080,
+  "protocol": "http",
+  "mode": "dev"
 }
