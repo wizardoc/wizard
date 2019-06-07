@@ -1,10 +1,10 @@
 import {Typography, WithStyles, withStyles} from '@material-ui/core';
 import {StyleRules, createStyles} from '@material-ui/core/styles';
-import ToggleButton, {ToggleButtonProps} from '@material-ui/lab/ToggleButton';
+import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup, {
   ToggleButtonGroupProps,
 } from '@material-ui/lab/ToggleButtonGroup';
-import {action, observable} from 'mobx';
+import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 import React, {Component, ComponentType, ReactNode} from 'react';
 import {Inject} from 'react-ts-di';
@@ -28,11 +28,6 @@ const SelectGroup = styled(ToggleButtonGroup)`
   margin-top: 34px;
 ` as ComponentType<ToggleButtonGroupProps>;
 
-const SelectButton = styled(ToggleButton)<SelectButtonProps>`
-  background: ${props =>
-    props.isClicked ? CLICKED_COLOR : 'transparent'} !important;
-` as ComponentType<SelectButtonProps & ToggleButtonProps>;
-
 const RenderComponents = styled.div`
   width: 100%;
   display: flex;
@@ -41,10 +36,9 @@ const RenderComponents = styled.div`
   align-items: center;
 `;
 
-const CLICKED_COLOR = 'rgba(0, 0, 0, 0.05)';
-
-interface SelectButtonProps {
-  isClicked: boolean;
+const enum ORGANIZATION_TAB_NAME {
+  NEW_ORGANIZATION,
+  JOIN_EXIST_ORGANIZATION,
 }
 
 export interface OrganizationProps extends WithStyles<typeof styles> {}
@@ -55,7 +49,7 @@ export class TOrganization extends Component<OrganizationProps> {
   private organizationService!: organizationService;
 
   @observable
-  private isCreateOrganization = true;
+  private currentGroup = ORGANIZATION_TAB_NAME.NEW_ORGANIZATION;
 
   async componentDidMount(): Promise<void> {
     let a = await this.organizationService.getAllNames();
@@ -64,8 +58,6 @@ export class TOrganization extends Component<OrganizationProps> {
   }
 
   render(): ReactNode {
-    // const {classes} = this.props;
-
     return (
       <Wrapper>
         <TipContent
@@ -79,19 +71,17 @@ export class TOrganization extends Component<OrganizationProps> {
             </>
           }
         />
-        <SelectGroup>
-          <SelectButton
-            isClicked={this.isCreateOrganization}
-            onClick={() => this.changeSelectTab(true)}
-          >
+        <SelectGroup
+          exclusive
+          value={this.currentGroup}
+          onChange={(_, currentGroup) => (this.currentGroup = currentGroup)}
+        >
+          <ToggleButton value={ORGANIZATION_TAB_NAME.NEW_ORGANIZATION}>
             创建新的组织
-          </SelectButton>
-          <SelectButton
-            isClicked={!this.isCreateOrganization}
-            onClick={() => this.changeSelectTab(false)}
-          >
+          </ToggleButton>
+          <ToggleButton value={ORGANIZATION_TAB_NAME.JOIN_EXIST_ORGANIZATION}>
             加入已存在的组织
-          </SelectButton>
+          </ToggleButton>
         </SelectGroup>
         <RenderComponents>{this.renderComponent()}</RenderComponents>
       </Wrapper>
@@ -99,16 +89,11 @@ export class TOrganization extends Component<OrganizationProps> {
   }
 
   private renderComponent(): ReactNode {
-    return this.isCreateOrganization ? (
+    return this.currentGroup === ORGANIZATION_TAB_NAME.NEW_ORGANIZATION ? (
       <CreateNewOrganization />
     ) : (
       <JoinExistOrganization />
     );
-  }
-
-  @action
-  private changeSelectTab(val: boolean): void {
-    this.isCreateOrganization = val;
   }
 }
 
