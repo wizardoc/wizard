@@ -1,7 +1,7 @@
 import Axios, {AxiosPromise} from 'axios';
 import {Injectable} from 'react-ts-di';
 
-import ServerConfig from '../configs/server-config.json';
+import ServerConfig from '../.config/server-config.json';
 
 interface ServerConfig {
   baseUrl: string;
