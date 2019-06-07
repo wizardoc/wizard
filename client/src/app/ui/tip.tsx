@@ -1,4 +1,4 @@
-import {IconButton, SnackbarContent} from '@material-ui/core';
+import {IconButton, Slide, SnackbarContent} from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
 import {SnackbarContentProps} from '@material-ui/core/SnackbarContent';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
@@ -133,15 +133,22 @@ export class Tip extends Component<TipProps> {
     }
 
     return (
-      <Snackbar
-        open={this.tipStore.isShowTip}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
+      <Slide
+        in={this.tipStore.isShowTip}
+        direction="right"
+        mountOnEnter
+        unmountOnExit
       >
-        <TipContent {...this.props} onClose={onCloseDup} />
-      </Snackbar>
+        <Snackbar
+          open={true}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+        >
+          <TipContent {...this.props} onClose={onCloseDup} />
+        </Snackbar>
+      </Slide>
     );
   }
 }
