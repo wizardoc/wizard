@@ -1,5 +1,6 @@
-import {Card, CardActions, CardContent, Typography} from '@material-ui/core';
-import Button, {ButtonProps} from '@material-ui/core/Button';
+import {Typography} from '@material-ui/core';
+import {ButtonProps} from '@material-ui/core/Button';
+import {TypographyProps} from '@material-ui/core/Typography';
 import React, {Component, ComponentType, ReactNode} from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Inject} from 'react-ts-di';
@@ -35,6 +36,13 @@ const GetStartedWrapper = styled.div`
   justify-content: center;
 `;
 
+const CenterText = styled(Typography)`
+  display: flex;
+  align-items: center;
+  font-size: 25px !important;
+  color: white;
+` as ComponentType<TypographyProps>;
+
 interface StartedProps extends RouteComponentProps {}
 
 class TStarted extends Component<StartedProps> {
@@ -59,7 +67,7 @@ class TStarted extends Component<StartedProps> {
     return (
       <Wrapper>
         <StartPanel>
-          <Typography>The awesome document management platform</Typography>
+          <CenterText>The awesome document management platform</CenterText>
         </StartPanel>
         <GetStartedWrapper>
           <GetStarted
@@ -70,14 +78,6 @@ class TStarted extends Component<StartedProps> {
             立即开始!
           </GetStarted>
         </GetStartedWrapper>
-        <Card>
-          <CardContent>
-            <Typography>The awesome document management platform</Typography>
-          </CardContent>
-          <CardActions>
-            <Button>About Us</Button>
-          </CardActions>
-        </Card>
         <MainContent />
       </Wrapper>
     );

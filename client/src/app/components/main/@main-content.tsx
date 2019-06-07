@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import {advantageConfigs} from '../../constant';
 
+import {AboutUsCard} from './@about-us-card';
 import {AdvantageCard} from './@advantage-card';
 
 const Cards = styled.div`
@@ -17,6 +18,7 @@ export class MainContent extends Component {
   render(): ReactNode {
     return (
       <Container fixed>
+        <AboutUsCard />
         <Cards>
           {advantageConfigs.map(config => (
             <AdvantageCard
