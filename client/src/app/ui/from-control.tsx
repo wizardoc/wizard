@@ -18,12 +18,13 @@ import {Tip, TipVariant} from './tip';
 type Validator = (str: string) => true | string;
 type DefaultValidator = 'required';
 type Trigger = 'onChange' | 'onBlur' | 'onInput' | 'onFocus' | string;
+export type FullValidator = () => boolean;
 
-interface ChangeEvent {
+export interface ChangeEvent {
   target: {value: string};
 }
 
-interface FormInfo {
+export interface FormInfo {
   [index: string]: string;
 }
 
@@ -39,7 +40,8 @@ export interface Rules {
 export interface FormControlProps {
   rules: Rules;
   children: ReactNode[];
-  onSubmit?(formInfo: FormInfo): void;
+  onDataUpdate?(formInfo: FormInfo): void;
+  getValidator?(validator: FullValidator): unknown;
 }
 
 const Wrapper = styled.div`
@@ -49,6 +51,14 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+const getActuallyValidator = (
+  validator: Validator | DefaultValidator,
+  label: unknown,
+): Validator =>
+  validator === 'required'
+    ? (str: string) => (!!str && str !== '') || `${label} 为必填字段`
+    : validator;
 
 @observer
 export class FromControl extends Component<FormControlProps> {
@@ -74,7 +84,7 @@ export class FromControl extends Component<FormControlProps> {
   }
 
   render(): ReactNode {
-    const {children, rules} = this.props;
+    const {children, rules, onDataUpdate, getValidator} = this.props;
     const partProps: FormTextFieldProps[] = [];
 
     const formParts = Children.map(children, (child, index) => {
@@ -98,10 +108,10 @@ export class FromControl extends Component<FormControlProps> {
             target: {value},
           } = e;
 
-          const actuallyValidator: Validator =
-            validator === 'required'
-              ? (str: string) => (!!str && str !== '') || `${label} 为必填字段`
-              : validator;
+          const actuallyValidator: Validator = getActuallyValidator(
+            validator,
+            label,
+          );
 
           const result = actuallyValidator(value);
 
@@ -113,6 +123,11 @@ export class FromControl extends Component<FormControlProps> {
             partProps[index].error = false;
 
             this.formInfo[name] = value;
+
+            // process
+            if (onDataUpdate) {
+              onDataUpdate(this.formInfo);
+            }
           }
 
           listener(e);
@@ -125,6 +140,32 @@ export class FromControl extends Component<FormControlProps> {
         this.partProps[index] || partProps[index],
       );
     });
+
+    if (getValidator) {
+      getValidator(
+        (): boolean => {
+          if (!rules) {
+            return true;
+          }
+
+          let noError = true;
+
+          for (const name of Object.keys(rules)) {
+            const {validator} = rules[name] as Rule;
+            const result = getActuallyValidator(validator, name)(
+              this.formInfo[name] || '',
+            );
+
+            if (typeof result === 'string') {
+              this.tipStore.addTipToQueue(result, 'error');
+              noError = false;
+            }
+          }
+
+          return noError;
+        },
+      );
+    }
 
     return (
       <Wrapper>
