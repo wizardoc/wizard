@@ -9,13 +9,18 @@
 </p>
 
 # Wizard
+
 🍳A document of code manager platform.
+
 ## Features
+
 - Online document editing
 - Permission to operate
 - Modify record view
 - Multi-person writing
+
 ## Technology
+
 <div>
   <img src="https://github.com/wizaaard/wizard/blob/master/doc/react.png" height="80">
   <img src="https://github.com/wizaaard/wizard/blob/master/doc/golang.png" height="120">
@@ -28,12 +33,14 @@
 - Primary DB: `PostgreSQL`
 
 ## Dev
-  Client 文件目录结构: 
-  ```js
+
+Client 文件目录结构:
+
+```js
 ├── build // dist
 ├── public // 静态目录存放
-├── src 
-│   ├── app 
+├── src
+│   ├── app
 │   │   ├── ui // 业务无关组件
 │   │   ├── assets  // 静态素材
 │   │   ├── components // 业务组件
@@ -48,35 +55,42 @@
 │   ├── index.tsx // 启始文件，实际导出真实 index.tsx
 │   ├── ssr // 存放 ssr 必须文件
 │   └── test // jest 测试
-  ```
-  
- ## DI
- service 可通过封装的 `react-ts-di` 进行注入
- 
- ```ts
- @Injectable()
- class Foo {}
- 
- ------
- 
- @Inject
- foo!:Foo
- ```
- 
- store 通过 `InjectStore` 来进行注入，其实跟 `react-ts-di` 做了同样的事情，不过维护了两个单例池，考虑是否有必要单独抽出来
- ```ts
- export class MainTabs {
-  @observable
-  tabTag: number = 0;
+```
 
-  @action
-  changeTab(): void {
-    this.tabTag = 1;
-  }
+## DI
+
+service 可通过封装的 `react-ts-di` 进行注入
+
+```ts
+@Injectable()
+class Foo {}
+
+------
+
+@Inject
+foo!:Foo
+```
+
+store 通过 `InjectStore` 来进行注入，其实跟 `react-ts-di` 做了同样的事情，不过维护了两个单例池，考虑是否有必要单独抽出来
+
+```ts
+export class MainTabs {
+ @observable
+ tabTag: number = 0;
+
+ @action
+ changeTab(): void {
+   this.tabTag = 1;
+ }
 }
 
 ------
 
 @InjectStore
-tabs!: MainTabs 
- ```
+tabs!: MainTabs
+```
+
+## TODO
+
+- [ ] three.js 应用 - 衍生出一些小游戏彩蛋
+- [ ] three.js main panel
