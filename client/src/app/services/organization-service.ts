@@ -14,9 +14,9 @@ export class Organization {
   private organizationScope = 'organization';
 
   async getAllNames(): Promise<string[]> {
-    const {
-      data: {organizeNames},
-    } = await this.request.get<OrganizationNames>(this.parseUrl('/name/all'));
+    const {organizeNames} = await this.request.get<OrganizationNames>(
+      this.parseUrl('/name/all'),
+    );
 
     return organizeNames;
   }
