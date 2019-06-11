@@ -15,9 +15,6 @@ import {
 } from '@material-ui/core/styles';
 import React, {Component, ReactNode} from 'react';
 
-// todo 图片可配置化
-import RegisterSuccess from '../../assets/static/register_successful.png';
-
 const styles = (): StyleRules =>
   createStyles({
     card: {
@@ -55,18 +52,19 @@ const styles = (): StyleRules =>
 export interface AdvantageCardProps extends WithStyles<typeof styles> {
   title: string;
   content: string;
+  img: string;
 }
 
 export class TAdvantageCard extends Component<AdvantageCardProps> {
   render(): ReactNode {
-    const {classes, title, content} = this.props;
+    const {classes, title, content, img} = this.props;
 
     return (
       <Card className={classes.card}>
         <CardActionArea>
           <CardMedia
             className={classes.cardImg}
-            image={RegisterSuccess}
+            image={img}
             component="img"
             alt="Contemplative Reptile"
             height="140"
