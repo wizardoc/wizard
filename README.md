@@ -94,3 +94,4 @@ tabs!: MainTabs
 
 - [ ] three.js 应用 - 衍生出一些小游戏彩蛋
 - [ ] three.js main panel
+- [ ] 上传文件缓存
