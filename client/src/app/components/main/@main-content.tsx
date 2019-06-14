@@ -25,6 +25,7 @@ export class MainContent extends Component {
               title={config.title}
               key={config.title}
               content={config.content}
+              img={config.img}
             />
           ))}
         </Cards>
