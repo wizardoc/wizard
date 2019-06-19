@@ -11,6 +11,7 @@ import {AccessDialogStore} from '../../store';
 import {ActionButton} from '../../ui';
 import {InjectStore} from '../../utils';
 
+import {GithubBtn} from './@github-btn';
 import {MainContent} from './@main-content';
 
 const Wrapper = styled.div`
@@ -77,6 +78,7 @@ class TStarted extends Component<StartedProps> {
           >
             立即开始!
           </GetStarted>
+          <GithubBtn />
         </GetStartedWrapper>
         <MainContent />
       </Wrapper>
