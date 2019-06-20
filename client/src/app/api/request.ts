@@ -1,9 +1,10 @@
-import Axios, {AxiosPromise} from 'axios';
+import Axios from 'axios';
 import {Injectable} from 'react-ts-di';
 
 import ServerConfig from '../.config/server-config.json';
 
-import {getData} from './@interceptors';
+import {useReq, useRes} from './@attach-interceptor';
+import {getData, requestType} from './@interceptors';
 
 interface ServerConfig {
   baseUrl: string;
@@ -12,10 +13,14 @@ interface ServerConfig {
   mode: string;
 }
 
+export const enum ContentType {
+  Form = 'application/x-www-form-urlencoded',
+}
+
 const {baseUrl, port, protocol, mode} = ServerConfig as ServerConfig;
 
 export interface PostPayload<T = unknown> {
-  [index: number]: T;
+  [index: string]: T;
 }
 
 Axios.interceptors.response.use();
@@ -29,17 +34,24 @@ export class Request {
       mode === 'dev' ? 'apis/' : ''
     }`;
 
-    Axios.interceptors.response.use(getData);
+    useReq(requestType);
+    useRes(getData);
   }
 
   get<R, T = {}>(path: string, data?: PostPayload<T>): R {
-    return (Axios.get<R>(this.join(path), {
+    return Axios.get<R>(this.join(path), {
       params: {...data},
-    }) as unknown) as R;
+    }) as any;
   }
 
-  post<R, T>(path: string, data: PostPayload<T>): AxiosPromise<R> {
-    return Axios.post<R>(this.join(path), data);
+  post<R, T>(path: string, data: PostPayload<T>, contentType?: ContentType): R {
+    console.info(path, data);
+
+    return (Axios.post<R>(this.join(path), data, {
+      headers: {
+        'Content-Type': contentType || ContentType.Form,
+      },
+    }) as unknown) as R;
   }
 
   private join(path: string): string {
