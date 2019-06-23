@@ -1,6 +1,8 @@
 import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 
+import GithubPng from '../../assets/static/github.png';
+
 const Container = styled.div`
   height: 30px;
   margin-left: 10px;
@@ -21,19 +23,46 @@ const StarContainer = styled.a`
   text-decoration: none;
   white-space: nowrap;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    background-color: #ddd;
+    background-image: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      color-stop(0, #eee),
+      color-stop(100%, #ddd)
+    );
+    background-image: -webkit-linear-gradient(top, #eee 0, #ddd 100%);
+    background-image: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      color-stop(0, #eee),
+      to(#ddd)
+    );
+    background-image: linear-gradient(to bottom, #eee 0, #ddd 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#dddddd', GradientType=0);
+    border-color: #ccc;
+  }
 `;
 
 const GithubIcon = styled.span`
   width: 20px;
   height: 20px;
   margin-right: 4px;
-  // todo github icon
+  background-image: url(${GithubPng});
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  float: left;
 `;
 
 const GithubText = styled.span`
   font-size: 16px;
+  font-weight: 700;
   line-height: 22px;
 `;
 

@@ -35,6 +35,7 @@ const GetStartedWrapper = styled.div`
   margin: 20px;
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
 
 const CenterText = styled(Typography)`
