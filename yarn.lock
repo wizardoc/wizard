@@ -1949,6 +1949,14 @@
     "@types/koa-compose" "*"
     "@types/node" "*"
 
+"@types/material-ui@*":
+  version "0.21.6"
+  resolved "https://registry.npmjs.org/@types/material-ui/-/material-ui-0.21.6.tgz#047377ac49e623c2dafe47ccdf8713dcb02bd793"
+  integrity sha512-zq0FVny7dwE94CvY0Z7ejKcGD5IYjqHPZNkC2Wb4r8z/K+YuqRWKcIG7YP5flow46vVeOkojBPHDnic7wSv4yw==
+  dependencies:
+    "@types/react" "*"
+    "@types/react-addons-linked-state-mixin" "*"
+
 "@types/mime@*":
   version "2.0.1"
   resolved "http://119.23.73.70/@types%2fmime/-/mime-2.0.1.tgz#dc488842312a7f075149312905b5e3c0b054c79d"
@@ -1984,6 +1992,13 @@
   resolved "http://119.23.73.70/@types%2frange-parser/-/range-parser-1.2.3.tgz#7ee330ba7caafb98090bece86a5ee44115904c2c"
   integrity sha512-ewFXqrQHlFsgc09MK5jP5iR7vumV/BYayNC6PgJO2LPe8vrnNFyjQjSppfEngITi0qvfKtzFvgKymGheFM9UOA==
 
+"@types/react-addons-linked-state-mixin@*":
+  version "0.14.20"
+  resolved "https://registry.npmjs.org/@types/react-addons-linked-state-mixin/-/react-addons-linked-state-mixin-0.14.20.tgz#5f0cd884ace049d538982a3b254f4807b9395eb6"
+  integrity sha512-17M8ymjR/vvyaQnLNuLSQipxtUrxaIq19phbWKKz1drIXeVQx+AnqMVVVIClno/gPheJWcLVCbf+yXXbbRalIg==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-dom@^16.8.4":
   version "16.8.4"
   resolved "http://119.23.73.70/@types%2freact-dom/-/react-dom-16.8.4.tgz#7fb7ba368857c7aa0f4e4511c4710ca2c5a12a88"
@@ -1998,6 +2013,14 @@
   dependencies:
     "@types/react" "*"
     "@types/webpack" "*"
+
+"@types/react-material-ui-form-validator@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.npmjs.org/@types/react-material-ui-form-validator/-/react-material-ui-form-validator-2.0.2.tgz#23ae6aaf80d710211c82fce2e23d6cf961f07058"
+  integrity sha512-4ICzuNwOUyJzvUFWNkDFalid7FRz9yWVzOR0twE1C2c0WTt1tF1ONg4AIIUhQZ8M36FWmM96xsv3mDgaS8dC/g==
+  dependencies:
+    "@types/material-ui" "*"
+    "@types/react" "*"
 
 "@types/react-native@*":
   version "0.57.60"
