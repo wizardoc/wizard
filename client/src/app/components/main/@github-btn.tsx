@@ -25,6 +25,7 @@ const StarContainer = styled.a`
   cursor: pointer;
   display: flex;
   align-items: center;
+
   &:hover,
   &:focus {
     text-decoration: none;
@@ -80,6 +81,7 @@ const CountContainer = styled.a`
   white-space: nowrap;
   cursor: pointer;
   position: relative;
+
   &:before {
     left: -5px;
     margin-top: -6px;
@@ -94,6 +96,7 @@ const CountContainer = styled.a`
     border-style: solid;
     border-right-color: #fafafa;
   }
+
   &:after {
     left: -6px;
     margin-top: -7px;
