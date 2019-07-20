@@ -4,7 +4,9 @@ import {Redirect, Route, Switch} from 'react-router-dom';
 import {About} from '../pages/about';
 import {Doc} from '../pages/doc';
 import {Home} from '../pages/home';
+import {LoginPage} from '../pages/login-page';
 import {PageNotFound} from '../pages/page-not-found';
+import {RegisterPage} from '../pages/register-page';
 
 interface AppRoutesProps {
   initData?: unknown;
@@ -18,6 +20,8 @@ export const AppRoutes: FunctionComponent<AppRoutesProps> = (
     <Route exact path="/home" component={Home} />
     <Route exact path="/doc" component={Doc} />
     <Route exact path="/about" component={About} />
+    <Route exact path="/register" component={RegisterPage} />
+    <Route exact path="/login" component={LoginPage} />?
     <Route component={PageNotFound} />
   </Switch>
 );
