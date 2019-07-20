@@ -5,3 +5,5 @@ export * from './footer';
 export * from './header-bar-tabs';
 export * from './header-bar';
 export * from './main';
+export * from './register';
+export * from './login';
