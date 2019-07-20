@@ -11,7 +11,7 @@ import {WizardDialog} from '../ui/dialog';
 import {InjectStore} from '../utils';
 
 import {Login} from './@login';
-import {Register} from './@register';
+import {Register} from './register';
 
 interface RegisterProps extends DefaultDialogProps {}
 
