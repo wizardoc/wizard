@@ -1,6 +1,6 @@
-import {Typography} from '@material-ui/core';
+// import {Typography} from '@material-ui/core';
 import {ButtonProps} from '@material-ui/core/Button';
-import {TypographyProps} from '@material-ui/core/Typography';
+// import {TypographyProps} from '@material-ui/core/Typography';
 import React, {Component, ComponentType, ReactNode} from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Inject} from 'react-ts-di';
@@ -38,12 +38,12 @@ const GetStartedWrapper = styled.div`
   align-items: center;
 `;
 
-const CenterText = styled(Typography)`
-  display: flex;
-  align-items: center;
-  font-size: 25px !important;
-  color: white;
-` as ComponentType<TypographyProps>;
+// const CenterText = styled(Typography)`
+//   display: flex;
+//   align-items: center;
+//   font-size: 25px !important;
+//   color: white;
+// ` as ComponentType<TypographyProps>;
 
 interface StartedProps extends RouteComponentProps {}
 
@@ -69,7 +69,7 @@ class TStarted extends Component<StartedProps> {
     return (
       <Wrapper>
         <StartPanel>
-          <CenterText>The awesome document management platform</CenterText>
+          {/* <CenterText>The awesome document management platform</CenterText> */}
         </StartPanel>
         <GetStartedWrapper>
           <GetStarted
