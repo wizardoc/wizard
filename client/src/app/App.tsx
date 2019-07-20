@@ -15,11 +15,13 @@ import {
 import {AppRoutes} from './routes';
 import {TipStore} from './store';
 import {GlobalStyle, ThemeProvider, styledTheme, theme} from './theme';
+// import {GhostPage} from './ui';
 import {InjectStore} from './utils';
 
 const MAX_SNACK_BAR_COUNT = 5;
 
 const Wrapper = styled.div`
+  height: 100%;
   min-height: 100%;
   position: relative;
   box-sizing: border-box;
@@ -37,6 +39,7 @@ class TApp extends Component<WithSnackbarProps> {
         <MuiThemeProvider theme={theme}>
           <DocRecentUpdateDrawer />
           <GlobalStyle />
+          {/* <GhostPage /> */}
           <BrowserRouter>
             <Wrapper>
               <HeaderBar />
