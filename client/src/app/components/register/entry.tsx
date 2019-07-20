@@ -2,15 +2,15 @@ import {Button, Step, StepLabel, Stepper} from '@material-ui/core';
 import {StepperProps} from '@material-ui/core/Stepper';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import CloseIcon from '@material-ui/icons/Close';
+// import CloseIcon from '@material-ui/icons/Close';
 import FilterVintageIcon from '@material-ui/icons/FilterVintage';
 import {action, observable} from 'mobx';
 import {observer} from 'mobx-react';
 import React, {Component, ComponentType, ReactNode} from 'react';
 import styled from 'styled-components';
 
-import {AccessDialogStore, TipStore} from '../../store';
-import {FormInfo, FullValidator, Rules} from '../../ui';
+import {TipStore} from '../../store';
+import {FormInfo, Rules} from '../../ui';
 import {InjectStore} from '../../utils';
 
 import {BaseInfo} from './base-info';
@@ -27,7 +27,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  padding: 24px !important;
+  padding: 50px 24px !important;
   flex-direction: column;
   transition: 0.3s height;
 `;
@@ -53,7 +53,7 @@ const ButtonsWrapper = styled.div`
 `;
 
 const StepperWrapper = styled(Stepper)`
-  width: 100%;
+  width: 90%;
 ` as ComponentType<StepperProps>;
 
 const steps = ['填写基本信息', '确定组织', '完成注册'];
@@ -73,11 +73,12 @@ const baseInfoRule: Rules = {
   },
 };
 
+const NextStep = styled(Button)`
+  width: 200px;
+`;
+
 @observer
 export class Register extends Component {
-  @InjectStore(AccessDialogStore)
-  private accessDialogStore!: AccessDialogStore;
-
   @InjectStore(TipStore)
   private tipStore!: TipStore;
 
@@ -86,16 +87,11 @@ export class Register extends Component {
 
   private formInfo: FormInfo = {};
 
-  private baseInfoValidator!: () => boolean;
-
   private registerBody = [
     <BaseInfo
       baseInfoRule={baseInfoRule}
       onDataUpdate={(formInfo: FormInfo): void =>
         this.handleBaseInfoDataUpdate(formInfo)
-      }
-      getValidator={(validator: FullValidator): FullValidator =>
-        (this.baseInfoValidator = validator)
       }
     />,
     <Organization />,
@@ -116,15 +112,9 @@ export class Register extends Component {
     return this.currentIndex === this.registerBody.length - 1;
   }
 
-  handleCloseClick(): void {
-    this.accessDialogStore.accessDialogToggle();
-  }
+  handleCloseClick(): void {}
 
   handleNextClick(): void {
-    if (!this.baseInfoValidator()) {
-      return;
-    }
-
     if (this.isFinish()) {
       // complete register logic
 
@@ -162,7 +152,7 @@ export class Register extends Component {
         </RegisterBodyWrapper>
         <Row>
           <ButtonsWrapper>
-            {!this.isFinish() && (
+            {/* {!this.isFinish() && (
               <Button
                 variant="contained"
                 color="secondary"
@@ -171,7 +161,7 @@ export class Register extends Component {
                 取消
                 <CloseIcon />
               </Button>
-            )}
+            )} */}
             {this.currentIndex > 0 && !this.isFinish() && (
               <Button
                 variant="contained"
@@ -182,14 +172,14 @@ export class Register extends Component {
                 上一步
               </Button>
             )}
-            <Button
+            <NextStep
               variant="contained"
               color="primary"
               onClick={() => this.handleNextClick()}
             >
               {this.isFinish() ? '完成注册' : '下一步'}
               {this.isFinish() ? <FilterVintageIcon /> : <ArrowForwardIcon />}
-            </Button>
+            </NextStep>
           </ButtonsWrapper>
         </Row>
       </Wrapper>
