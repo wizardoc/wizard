@@ -1,10 +1,15 @@
 import {Button, Link} from '@material-ui/core';
 import {LinkProps} from '@material-ui/core/Link';
 import React, {Component, ComponentType, ReactNode} from 'react';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
 import styled from 'styled-components';
+
+import {USER} from '../constant';
 
 import {Password} from './access/password';
 import {UserName} from './access/username';
+
+interface TLoginProps extends RouteComponentProps {}
 
 const Wrapper = styled.div`
   display: flex;
@@ -23,10 +28,11 @@ const LoginButton = styled(ActionButton)`
 `;
 
 const RegisterLink = styled(Link)`
+  cursor: pointer !important;
   margin-top: 10px !important;
 ` as ComponentType<LinkProps>;
 
-export class Login extends Component {
+class TLogin extends Component<TLoginProps> {
   render(): ReactNode {
     return (
       <Wrapper>
@@ -35,8 +41,18 @@ export class Login extends Component {
         <LoginButton variant="contained" color="primary">
           登录
         </LoginButton>
-        <RegisterLink href="#">点我立即注册</RegisterLink>
+        <RegisterLink onClick={() => this.handleRegisterClick()}>
+          点我立即注册
+        </RegisterLink>
       </Wrapper>
     );
   }
+
+  handleRegisterClick(): void {
+    const {history} = this.props;
+
+    history.push(USER.REGISTER);
+  }
 }
+
+export const Login = withRouter(TLogin);
