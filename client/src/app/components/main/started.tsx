@@ -6,10 +6,9 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
+import {MAIN_PAGE, USER} from '../../constant';
 import {User} from '../../services';
-import {AccessDialogStore} from '../../store';
 import {ActionButton} from '../../ui';
-import {InjectStore} from '../../utils';
 
 import {GithubBtn} from './@github-btn';
 import {MainContent} from './@main-content';
@@ -48,9 +47,6 @@ const GetStartedWrapper = styled.div`
 interface StartedProps extends RouteComponentProps {}
 
 class TStarted extends Component<StartedProps> {
-  @InjectStore(AccessDialogStore)
-  private accessDialogStore!: AccessDialogStore;
-
   @Inject
   private userService!: User;
 
@@ -59,9 +55,9 @@ class TStarted extends Component<StartedProps> {
     const {history} = this.props;
 
     if (isLogin) {
-      history.push('/doc');
+      history.push(MAIN_PAGE.DOCUMENT);
     } else {
-      this.accessDialogStore.accessDialogToggle();
+      history.push(USER.REGISTER);
     }
   }
 
