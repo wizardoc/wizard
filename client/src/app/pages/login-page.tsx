@@ -46,7 +46,7 @@ export class LoginPage extends Component {
         <Box>
           <Banner>
             <Logo src={Wizard} />
-            <Title>Login</Title>
+            <Title>Wizard</Title>
           </Banner>
           <LoginBox>
             <Login />

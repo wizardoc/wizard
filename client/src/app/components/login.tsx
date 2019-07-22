@@ -1,5 +1,6 @@
 import {Button, Link} from '@material-ui/core';
-import React, {Component, ReactNode} from 'react';
+import {LinkProps} from '@material-ui/core/Link';
+import React, {Component, ComponentType, ReactNode} from 'react';
 import styled from 'styled-components';
 
 import {Password} from './access/password';
@@ -14,20 +15,16 @@ const Wrapper = styled.div`
 `;
 
 const ActionButton = styled(Button)`
-  width: 160px;
+  width: 180px;
 `;
 
-const LoginButton = styled(ActionButton)``;
-
-const ActionPlace = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+const LoginButton = styled(ActionButton)`
   margin-top: 30px !important;
-  box-sizing: border-box;
-  padding: 0 100px;
 `;
+
+const RegisterLink = styled(Link)`
+  margin-top: 10px !important;
+` as ComponentType<LinkProps>;
 
 export class Login extends Component {
   render(): ReactNode {
@@ -35,12 +32,10 @@ export class Login extends Component {
       <Wrapper>
         <UserName />
         <Password />
-        <ActionPlace>
-          <Link href="#">点我立即注册</Link>
-          <LoginButton variant="contained" color="primary">
-            登录
-          </LoginButton>
-        </ActionPlace>
+        <LoginButton variant="contained" color="primary">
+          登录
+        </LoginButton>
+        <RegisterLink href="#">点我立即注册</RegisterLink>
       </Wrapper>
     );
   }
