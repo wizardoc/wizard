@@ -7,7 +7,7 @@ interface OrganizationNames {
 }
 
 @Injectable()
-export class Organization {
+export class OrganizationService {
   @Inject
   private request!: Request;
 
