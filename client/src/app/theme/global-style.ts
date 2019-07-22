@@ -8,6 +8,7 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     overflow-x: hidden;
+    background: #eceff1;
   }
 
   #root {
