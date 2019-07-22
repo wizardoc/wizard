@@ -1,4 +1,4 @@
-import {Button} from '@material-ui/core';
+import {Button, Link} from '@material-ui/core';
 import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 
@@ -13,9 +13,20 @@ const Wrapper = styled.div`
   padding-bottom: 32px;
 `;
 
-const LoginButton = styled(Button)`
-  width: 120px;
+const ActionButton = styled(Button)`
+  width: 160px;
+`;
+
+const LoginButton = styled(ActionButton)``;
+
+const ActionPlace = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 30px !important;
+  box-sizing: border-box;
+  padding: 0 100px;
 `;
 
 export class Login extends Component {
@@ -24,9 +35,12 @@ export class Login extends Component {
       <Wrapper>
         <UserName />
         <Password />
-        <LoginButton variant="contained" color="primary">
-          登录
-        </LoginButton>
+        <ActionPlace>
+          <Link href="#">点我立即注册</Link>
+          <LoginButton variant="contained" color="primary">
+            登录
+          </LoginButton>
+        </ActionPlace>
       </Wrapper>
     );
   }
