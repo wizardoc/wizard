@@ -5,7 +5,7 @@
     "outDir": "build/dist",
     "module": "commonjs",
     "target": "es6",
-    "lib": ["es6", "dom", "esnext", "es7"],
+    "lib": ["es6", "dom", "esnext", "es7", "dom.iterable"],
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
