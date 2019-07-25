@@ -21,7 +21,6 @@ import {InjectStore} from './utils';
 const MAX_SNACK_BAR_COUNT = 5;
 
 const Wrapper = styled.div`
-  height: 100%;
   min-height: 100%;
   position: relative;
   box-sizing: border-box;

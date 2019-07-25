@@ -1,11 +1,11 @@
 // import {Typography} from '@material-ui/core';
 import {ButtonProps} from '@material-ui/core/Button';
-// import {TypographyProps} from '@material-ui/core/Typography';
 import React, {Component, ComponentType, ReactNode} from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
+import Main from '../../assets/static/main.png';
 import {MAIN_PAGE, USER} from '../../constant';
 import {User} from '../../services';
 import {ActionButton} from '../../ui';
@@ -24,9 +24,18 @@ const StartPanel = styled.div`
   background: ${props => props.theme.primaryColor};
 `;
 
-const GetStarted = styled(ActionButton)`
+const BaseButton = styled(ActionButton)`
   width: 150px;
-  color: ${props => props.theme.primaryColor} !important;
+  color: white !important;
+` as ComponentType<ButtonProps>;
+
+const GetStarted = styled(BaseButton)`
+  border-color: white !important;
+  margin-top: 60px !important;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.5) !important;
+  }
 ` as ComponentType<ButtonProps>;
 
 const GetStartedWrapper = styled.div`
@@ -36,6 +45,26 @@ const GetStartedWrapper = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+const WizardTitle = styled.p`
+  font-size: 70px;
+  color: white;
+  margin-top: 100px;
+  margin-bottom: 0;
+`;
+
+const Description = styled.p`
+  width: 400px;
+  margin-top: 5px;
+  line-height: 40px;
+  color: white;
+`;
+
+const MainImg = styled.img`
+  height: 100%;
+`;
+
+const WizardDescription = styled.div``;
 
 // const CenterText = styled(Typography)`
 //   display: flex;
@@ -65,6 +94,20 @@ class TStarted extends Component<StartedProps> {
     return (
       <Wrapper>
         <StartPanel>
+          <WizardDescription>
+            <WizardTitle>Wizard</WizardTitle>
+            <Description>
+              绝佳的文档管理平台，免费，开源，服务于技术开发者，让文档管理如此轻松!
+            </Description>
+            <GetStarted
+              variant="outlined"
+              color="primary"
+              onClick={() => this.handleGetStartClick()}
+            >
+              立即开始!
+            </GetStarted>
+          </WizardDescription>
+          <MainImg src={Main} />
           {/* <CenterText>The awesome document management platform</CenterText> */}
         </StartPanel>
         <GetStartedWrapper>
