@@ -28,6 +28,12 @@ const AboutUsWrapper = styled(Card)`
   width: 700px;
   display: flex;
   justify-content: space-between;
+  margin-top: 20px;
+  border: 1px solid;
+  box-shadow: none !important;
+  border-color: #cecece;
+  background-color: white;
+  padding-right: 20px;
 ` as ComponentType<CardProps>;
 
 const AboutUsActionButton = styled(Button)`
