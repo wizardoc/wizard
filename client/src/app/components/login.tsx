@@ -55,7 +55,7 @@ export class Login extends Component {
         <RegisterLink onClick={() => this.handleRegisterClick()}>
           点我立即注册
         </RegisterLink>
-        {this.userService.isLogin.toString()}
+        {userService.isLogin.toString()}
       </Wrapper>
     );
   }
