@@ -1,22 +1,55 @@
 import {AxiosRequestConfig, AxiosResponse} from 'axios';
-import * as Qs from 'qs';
+import * as QS from 'qs';
+
+import {LocalStorage} from '../utils';
 
 import {ContentType} from './request';
 
-export function getData<T = unknown>(res: AxiosResponse<T>): T {
-  return res.data;
+interface DataInterface {
+  data: unknown;
+  err: unknown;
+}
+
+interface Res {
+  data: DataInterface;
+}
+
+interface ResError {
+  code: number;
+  msg: string;
+}
+
+interface ResData<T> {
+  data: T;
+  err: ResError;
+}
+
+export function getData<T extends Res>(res: AxiosResponse<ResData<T>>): T {
+  return res.data.data;
 }
 
 export function requestType(
   config: AxiosRequestConfig,
 ): AxiosRequestConfig | Promise<AxiosRequestConfig> {
-  console.info(config);
   const dup = {...config};
   const {data} = dup;
   const contentType = config.headers['Content-Type'];
 
-  if (contentType === ContentType.Form) {
-    dup.data = Qs.stringify(data);
+  // parse request body use QS
+  if (
+    contentType === ContentType.Form &&
+    Object.prototype.toString.call(data) === '[object Object]'
+  ) {
+    dup.data = QS.stringify(data);
+  }
+
+  // attach jwt in authentication of header
+  const JWT = LocalStorage.getItem('jwt');
+
+  console.info(JWT);
+
+  if (JWT) {
+    dup.headers = {...dup.headers, Authentication: JWT};
   }
 
   return dup;
