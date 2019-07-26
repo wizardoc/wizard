@@ -19,7 +19,7 @@ const Wrapper = styled.div`
 `;
 
 const StartPanel = styled.div`
-  height: 500px;
+  height: 550px;
   display: flex;
   justify-content: space-around;
   background: ${props => props.theme.primaryColor};
