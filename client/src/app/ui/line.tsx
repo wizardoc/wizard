@@ -5,7 +5,7 @@ interface InnerLineProps {
   lineColor?: string;
 }
 
-interface LineProps extends InnerLineProps {}
+export interface LineProps extends InnerLineProps {}
 
 const InnerLine = styled.div<InnerLineProps>`
   width: 85%;
