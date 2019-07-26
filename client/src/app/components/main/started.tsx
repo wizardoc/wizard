@@ -10,6 +10,7 @@ import {MAIN_PAGE, USER} from '../../constant';
 import {User} from '../../services';
 import {ActionButton} from '../../ui';
 
+// import {GithubBtn} from './@github-btn';
 import {GithubBtn} from './@github-btn';
 import {MainContent} from './@main-content';
 
@@ -31,20 +32,25 @@ const BaseButton = styled(ActionButton)`
 
 const GetStarted = styled(BaseButton)`
   border-color: white !important;
-  margin-top: 60px !important;
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.5) !important;
   }
 ` as ComponentType<ButtonProps>;
 
-const GetStartedWrapper = styled.div`
-  width: 100%;
-  margin: 20px;
+const StartedWrapper = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
+  margin-top: 60px !important;
 `;
+
+// const GetStartedWrapper = styled.div`
+//   width: 100%;
+//   margin: 20px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// `;
 
 const WizardTitle = styled.p`
   font-size: 70px;
@@ -99,18 +105,21 @@ class TStarted extends Component<StartedProps> {
             <Description>
               绝佳的文档管理平台，免费，开源，服务于技术开发者，让文档管理如此轻松!
             </Description>
-            <GetStarted
-              variant="outlined"
-              color="primary"
-              onClick={() => this.handleGetStartClick()}
-            >
-              立即开始!
-            </GetStarted>
+            <StartedWrapper>
+              <GetStarted
+                variant="outlined"
+                color="primary"
+                onClick={() => this.handleGetStartClick()}
+              >
+                立即开始!
+              </GetStarted>
+              <GithubBtn />
+            </StartedWrapper>
           </WizardDescription>
           <MainImg src={Main} />
           {/* <CenterText>The awesome document management platform</CenterText> */}
         </StartPanel>
-        <GetStartedWrapper>
+        {/* <GetStartedWrapper>
           <GetStarted
             variant="outlined"
             color="primary"
@@ -119,7 +128,7 @@ class TStarted extends Component<StartedProps> {
             立即开始!
           </GetStarted>
           <GithubBtn />
-        </GetStartedWrapper>
+        </GetStartedWrapper> */}
         <MainContent />
       </Wrapper>
     );
