@@ -15,7 +15,7 @@ export interface IThemeInterface {
 }
 
 export const styledTheme = {
-  primaryColor: '#2196f3',
+  primaryColor: '#1976d2',
   secondaryColor: '#f06292',
   darkPrimaryColor: '#1565c0',
   dark: '#424242',
