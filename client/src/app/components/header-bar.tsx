@@ -1,5 +1,6 @@
 import {
   AppBar,
+  Avatar,
   Badge,
   IconButton,
   InputBase,
@@ -19,11 +20,14 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import SearchIcon from '@material-ui/icons/Search';
 import {observer} from 'mobx-react';
 import React, {Component, ReactNode} from 'react';
+import {Inject} from 'react-ts-di';
+// import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
 import {GitHubSvg} from '../assets';
 import Wizard from '../assets/static/wizard.png';
 import {Links} from '../constant';
+import {User} from '../services';
 import {RecentDrawer} from '../store';
 import {InjectStore} from '../utils';
 
@@ -92,10 +96,18 @@ const Row = styled.div`
   align-items: center;
 `;
 
+const AvatarWrapper = styled(Avatar)`
+  margin-left: 20px;
+  cursor: pointer;
+`;
+
 @observer
 class THeaderBar extends Component<HeaderBarProps> {
   @InjectStore(RecentDrawer)
   private recentDrawer!: RecentDrawer;
+
+  @Inject
+  private userService!: User;
 
   handleGithubIconClick(): void {
     window.open(Links.GitHub);
@@ -105,6 +117,12 @@ class THeaderBar extends Component<HeaderBarProps> {
     this.recentDrawer.viewRecentDrawerToggle();
 
     console.info(this.recentDrawer.isViewRecentDrawer);
+  }
+
+  get userName(): string {
+    const {userInfo} = this.userService;
+
+    return userInfo ? userInfo.username.slice(0, 2) : '';
   }
 
   render(): ReactNode {
@@ -165,6 +183,7 @@ class THeaderBar extends Component<HeaderBarProps> {
               </SvgIcon>
             </IconButton>
           </Tooltip>
+          <AvatarWrapper>{this.userName}</AvatarWrapper>
         </Toolbar>
       </AppBar>
     );
