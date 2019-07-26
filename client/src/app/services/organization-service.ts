@@ -1,6 +1,8 @@
 import {Inject, Injectable} from 'react-ts-di';
 
-import {Request} from '../api';
+import {HTTP} from '../api';
+import {TipStore} from '../store';
+import {InjectStore} from '../utils';
 
 interface OrganizationNames {
   organizeNames: string[];
@@ -8,24 +10,31 @@ interface OrganizationNames {
 
 @Injectable()
 export class OrganizationService {
+  @InjectStore(TipStore)
+  private tipStore!: TipStore;
+
   @Inject
-  private request!: Request;
+  private http!: HTTP;
 
   private organizationScope = 'organization';
 
   async getAllNames(): Promise<string[]> {
-    const {organizeNames} = await this.request.get<OrganizationNames>(
+    const {organizeNames} = await this.http.get<OrganizationNames>(
       this.parseUrl('/name/all'),
     );
 
     return organizeNames;
   }
 
-  createOrganization(name: string, description: string): void {
-    this.request.post<{}, string>(this.parseUrl('/new'), {
-      name,
-      description,
-    });
+  async createOrganization(name: string, description: string): Promise<void> {
+    try {
+      await this.http.post<{}, string>(this.parseUrl('/new'), {
+        name,
+        description,
+      });
+    } catch (e) {
+      this.tipStore.addTipToQueue('拉取信息失败', 'error');
+    }
   }
 
   async hasExistOrganization(organizationName: string): Promise<boolean> {
