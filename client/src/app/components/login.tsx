@@ -7,7 +7,7 @@ import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
 // import {USER} from '../constant';
-import {User, userService} from '../services';
+import {User} from '../services';
 
 import {Password} from './access/password';
 import {UserName} from './access/username';
@@ -48,24 +48,30 @@ export class Login extends Component {
         <LoginButton
           variant="contained"
           color="primary"
-          onClick={() => this.handleLoginClick()}
+          onClick={async (): Promise<void> => {
+            // this.handleLoginClick();
+            try {
+              await this.userService.login('zzhbbdbbd', 'www');
+            } catch (e) {
+              console.error(e);
+            }
+          }}
         >
           登录
         </LoginButton>
         <RegisterLink onClick={() => this.handleRegisterClick()}>
           点我立即注册
         </RegisterLink>
-        {userService.isLogin.toString()}
       </Wrapper>
     );
   }
 
   async handleLoginClick(): Promise<void> {
-    try {
-      await this.userService.login('zzhbbdbbd', 'www');
-    } catch (e) {
-      console.error(e);
-    }
+    // try {
+    //   await this.userService.login('zzhbbdbbd', 'www');
+    // } catch (e) {
+    //   console.error(e);
+    // }
   }
 
   handleRegisterClick(): void {

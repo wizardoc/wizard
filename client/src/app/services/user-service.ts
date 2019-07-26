@@ -1,11 +1,12 @@
-import {action, computed, observable, runInAction} from 'mobx';
+import {action, computed, observable} from 'mobx';
 import {Inject, Injectable} from 'react-ts-di';
 
 import {HTTP} from '../api';
 import {USER_API} from '../constant';
 // import {TipStore} from '../store';
 import {Optional} from '../types/type-utils';
-import {LocalStorage} from '../utils';
+
+import {JWT} from './jwt-service';
 
 export interface UserBaseInfo {
   displayName: string;
@@ -28,11 +29,16 @@ type RegisterData = Optional<ParsedRegisterData>;
 
 @Injectable()
 export class User {
-  // @InjectStore(TipStore)
-  // private tipStore!: TipStore;
+  @computed
+  get getIsLogin(): boolean {
+    console.info(this.isLogin);
+    return this.isLogin;
+  }
 
   @Inject
   private http!: HTTP;
+  @Inject
+  private jwt!: JWT;
 
   private registerData: RegisterData = {};
 
@@ -45,21 +51,39 @@ export class User {
   @observable
   isLogin: boolean = false;
 
+  constructor() {
+    // 刷新时带上 JWT 拿到用户的信息
+    this.initUserInfo();
+  }
+  // @InjectStore(TipStore)
+  // private tipStore!: TipStore;
+
+  @action
+  setUserInfo(userInfo: UserBaseInfo): void {
+    this.userInfo = userInfo;
+    this.isLogin = true;
+  }
+
+  @action
+  async initUserInfo(): Promise<void> {
+    try {
+      const {userInfo} = await this.http.get(USER_API.INFO);
+
+      this.setUserInfo(userInfo);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   @action
   async login(username: string, password: string): Promise<void> {
-    const {jwt, userInfo} = await this.http.post(USER_API.LOGIN, {
+    const {jwt: jwtString, userInfo} = await this.http.post(USER_API.LOGIN, {
       username,
       password,
     });
 
-    LocalStorage.setItem('jwt', jwt);
-
-    runInAction(() => {
-      console.info(this.isLogin);
-
-      this.userInfo = userInfo;
-      this.isLogin = true;
-    });
+    this.jwt.save(jwtString);
+    this.setUserInfo(userInfo);
   }
 
   async register(): Promise<void> {
@@ -93,12 +117,6 @@ export class User {
     };
   }
 
-  @computed
-  get getIsLogin(): boolean {
-    console.info(this.isLogin);
-    return this.isLogin;
-  }
-
   //   for (const key of this.registerData as Iterable<string>) {
   //     if (!key) {
   //       return false;
@@ -108,5 +126,3 @@ export class User {
   //   return true;
   // }
 }
-
-export const userService = new User();
