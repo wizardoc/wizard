@@ -15,11 +15,13 @@ import {
 } from '@material-ui/core';
 import {StyleRules} from '@material-ui/core/styles';
 import {fade} from '@material-ui/core/styles/colorManipulator';
+import {TypographyProps} from '@material-ui/core/Typography';
 import EditIcon from '@material-ui/icons/Edit';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import SearchIcon from '@material-ui/icons/Search';
 import {observer} from 'mobx-react';
-import React, {Component, ReactNode} from 'react';
+import React, {Component, ComponentType, ReactNode} from 'react';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Inject} from 'react-ts-di';
 // import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
@@ -84,7 +86,9 @@ const styles = (theme: Theme): StyleRules =>
     },
   });
 
-export interface HeaderBarProps extends WithStyles<typeof styles> {}
+type HOCProps = WithStyles<typeof styles> & RouteComponentProps;
+
+export interface HeaderBarProps extends HOCProps {}
 
 const Logo = styled.img`
   height: 32px;
@@ -100,6 +104,10 @@ const AvatarWrapper = styled(Avatar)`
   margin-left: 20px;
   cursor: pointer;
 `;
+
+const WizardTitle = styled(Typography)`
+  cursor: pointer;
+` as ComponentType<TypographyProps>;
 
 @observer
 class THeaderBar extends Component<HeaderBarProps> {
@@ -125,6 +133,12 @@ class THeaderBar extends Component<HeaderBarProps> {
     return userInfo ? userInfo.username.slice(0, 2) : '';
   }
 
+  handleWizardTitleClick(): void {
+    const {history} = this.props;
+
+    history.push('/');
+  }
+
   render(): ReactNode {
     const {classes} = this.props;
     const {
@@ -143,9 +157,13 @@ class THeaderBar extends Component<HeaderBarProps> {
             <IconButton onClick={() => this.handleLogoClick()}>
               <Logo src={Wizard} />
             </IconButton>
-            <Typography variant="h6" color="inherit">
+            <WizardTitle
+              variant="h6"
+              color="inherit"
+              onClick={() => this.handleWizardTitleClick()}
+            >
               Wizard
-            </Typography>
+            </WizardTitle>
           </Row>
           <HeaderBarTabs />
           <div className={grow} />
@@ -190,4 +208,4 @@ class THeaderBar extends Component<HeaderBarProps> {
   }
 }
 
-export const HeaderBar = withStyles(styles)(THeaderBar);
+export const HeaderBar = withStyles(styles)(withRouter(THeaderBar));
