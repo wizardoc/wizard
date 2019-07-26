@@ -51,10 +51,8 @@ export class TOrganization extends Component<OrganizationProps> {
   @observable
   private currentGroup = ORGANIZATION_TAB_NAME.NEW_ORGANIZATION;
 
-  async componentDidMount(): Promise<void> {
-    this.organizationService.createOrganization('zhangsan', '11111');
-
-    console.info('create success');
+  componentDidMount(): Promise<void> {
+    return this.organizationService.createOrganization('zhangsan', '11111');
   }
 
   render(): ReactNode {

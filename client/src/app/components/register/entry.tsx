@@ -7,8 +7,10 @@ import FilterVintageIcon from '@material-ui/icons/FilterVintage';
 import {action, observable} from 'mobx';
 import {observer} from 'mobx-react';
 import React, {Component, ComponentType, ReactNode} from 'react';
+import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
+import {User} from '../../services';
 import {TipStore} from '../../store';
 import {FormInfo, Rules} from '../../ui';
 import {InjectStore} from '../../utils';
@@ -82,21 +84,39 @@ export class Register extends Component {
   @InjectStore(TipStore)
   private tipStore!: TipStore;
 
+  @Inject
+  private userService!: User;
+
   @observable
   private currentIndex = 0;
 
   private formInfo: FormInfo = {};
 
   private registerBody = [
-    <BaseInfo
-      baseInfoRule={baseInfoRule}
-      onDataUpdate={(formInfo: FormInfo): void =>
-        this.handleBaseInfoDataUpdate(formInfo)
-      }
-    />,
-    <Organization />,
-    <Complete />,
+    {
+      viewer: (
+        <BaseInfo
+          baseInfoRule={baseInfoRule}
+          onDataUpdate={(formInfo: FormInfo): void =>
+            this.handleBaseInfoDataUpdate(formInfo)
+          }
+        />
+      ),
+      handler: this.userService.collectBaseInfo.bind(this),
+    },
+    {
+      viewer: <Organization />,
+      handler: this.userService.ensureOrganization.bind(this),
+    },
+    {
+      viewer: <Complete />,
+      handler: this.userService.register.bind(this),
+    },
   ];
+
+  get viewerBody(): any {
+    return this.registerBody[this.currentIndex];
+  }
 
   @action
   nextStepToggle(): void {
@@ -114,11 +134,16 @@ export class Register extends Component {
 
   handleCloseClick(): void {}
 
-  handleNextClick(): void {
+  async handleNextClick(): Promise<void> {
     if (this.isFinish()) {
       // complete register logic
+      try {
+        await this.userService.register();
+      } catch (e) {
+        console.error(e);
+      }
 
-      this.handleCloseClick();
+      // this.handleCloseClick();
       return;
     }
 
@@ -147,9 +172,7 @@ export class Register extends Component {
             </Step>
           ))}
         </StepperWrapper>
-        <RegisterBodyWrapper>
-          {this.registerBody[this.currentIndex]}
-        </RegisterBodyWrapper>
+        <RegisterBodyWrapper>{this.viewerBody.viewer}</RegisterBodyWrapper>
         <Row>
           <ButtonsWrapper>
             {/* {!this.isFinish() && (
