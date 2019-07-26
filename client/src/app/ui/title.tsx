@@ -7,10 +7,9 @@ const Wrapper = styled.div`
 `;
 
 const Text = styled.p`
-  margin-left: 30px;
   font-size: 50px;
   font-weight: 100;
-  margin: 0;
+  margin: 0 0 0 30px;
 `;
 
 const Block = styled.div`
