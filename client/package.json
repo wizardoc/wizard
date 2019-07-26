@@ -24,7 +24,7 @@
     "react-material-ui-form-validator": "^2.0.9",
     "react-router-dom": "^5.0.0",
     "react-scripts-ts": "3.1.0",
-    "react-ts-di": "^1.2.2",
+    "react-ts-di": "1.2.3",
     "rxjs": "^6.5.2",
     "styled-components": "^4.2.0",
     "uuid": "^3.3.2"

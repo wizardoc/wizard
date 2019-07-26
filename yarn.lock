@@ -11920,10 +11920,10 @@ react-transition-group@^4.0.0:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react-ts-di@^1.2.2:
-  version "1.2.2"
-  resolved "http://119.23.73.70/react-ts-di/-/react-ts-di-1.2.2.tgz#928eef1256648e5b9645558a62ba94e2bb625fa6"
-  integrity sha512-DYInejo6eGlQdRcOfOFwQtE73rF2J8ttpirK9ytExs3XoVeKbMlZIvdVn+uHeVw9VadaFdG8xA56RX+Uh7cQHA==
+react-ts-di@1.2.3:
+  version "1.2.3"
+  resolved "https://registry.npmjs.org/react-ts-di/-/react-ts-di-1.2.3.tgz#01a0e618099aa0b9095e939de3976764599baaac"
+  integrity sha512-7x4pePLu2ZP6wxoclATblr+QoZE9sgoN75cK0qxpjty7sTuXXNCcFlQju8rmo/pUmoJavaPkujKqsY+Nl2dLrA==
   dependencies:
     awesome-typescript-loader "^5.2.1"
     babel-loader "^8.0.5"
