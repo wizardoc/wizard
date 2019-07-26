@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
-    "@magicspace/configs": "^0.1.47",
+    "@magicspace/configs": "0.1.46",
     "lerna": "^3.13.3"
   },
   "dependencies": {

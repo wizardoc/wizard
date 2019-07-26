@@ -1673,6 +1673,14 @@
     "@babel/runtime" "^7.4.4"
     hoist-non-react-statics "^3.3.0"
 
+"@magicspace/configs@0.1.46":
+  version "0.1.46"
+  resolved "https://registry.npm.taobao.org/@magicspace/configs/download/@magicspace/configs-0.1.46.tgz#57b5324068a7eac9fcd0af2be0c8ba3f8bbd0435"
+  integrity sha1-V7UyQGin6sn80K8r4Mi6P4u9BDU=
+  dependencies:
+    "@magicspace/tslint-rules" "^0.1.41"
+    tslint-config-prettier "^1.10.0"
+
 "@magicspace/configs@^0.1.47":
   version "0.1.52"
   resolved "https://registry.npmjs.org/@magicspace/configs/-/configs-0.1.52.tgz#f0fd6422546ca921a9f28fc8d30bc16e7434f34d"
@@ -1682,10 +1690,10 @@
     resolve "^1.11.1"
     tslint-config-prettier "^1.18.0"
 
-"@magicspace/tslint-rules@^0.1.46":
+"@magicspace/tslint-rules@^0.1.41", "@magicspace/tslint-rules@^0.1.46":
   version "0.1.46"
-  resolved "https://registry.npmjs.org/@magicspace/tslint-rules/-/tslint-rules-0.1.46.tgz#12f1c1ca029e4a364d8496cc15614385211319a4"
-  integrity sha512-a4FtOtX97QroDV2+9s6RuhOYftFu5UzMPbIEm/SGI7doakrBv2CH9uS8vi/A3co5GJeuJfAQKb+5wUeHIzh2mg==
+  resolved "https://registry.npm.taobao.org/@magicspace/tslint-rules/download/@magicspace/tslint-rules-0.1.46.tgz#12f1c1ca029e4a364d8496cc15614385211319a4"
+  integrity sha1-EvHBygKeSjZNhJbMFWFDhSETGaQ=
   dependencies:
     lodash "^4.17.14"
     module-lens "^0.1.3"
