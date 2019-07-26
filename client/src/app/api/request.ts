@@ -23,31 +23,31 @@ export interface PostPayload<T = unknown> {
   [index: string]: T;
 }
 
-Axios.interceptors.response.use();
+useReq(requestType);
+useRes(getData as any);
 
 @Injectable()
-export class Request {
+export class HTTP {
   private addr: string;
 
   constructor() {
     this.addr = `${protocol}://${baseUrl}:${port === 80 ? '' : port}/${
       mode === 'dev' ? 'apis/' : ''
     }`;
-
-    useReq(requestType);
-    useRes(getData);
   }
 
   get<R, T = {}>(path: string, data?: PostPayload<T>): R {
-    return Axios.get<R>(this.join(path), {
+    return (Axios.get<R>(this.join(path), {
       params: {...data},
-    }) as any;
+    }) as unknown) as R;
   }
 
-  post<R, T>(path: string, data: PostPayload<T>, contentType?: ContentType): R {
-    console.info(path, data);
-
-    return (Axios.post<R>(this.join(path), data, {
+  post<R, T>(
+    path: string,
+    data?: PostPayload<T>,
+    contentType?: ContentType,
+  ): R {
+    return (Axios.post<R>(this.join(path), data || {}, {
       headers: {
         'Content-Type': contentType || ContentType.Form,
       },
