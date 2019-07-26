@@ -7,6 +7,7 @@ import React, {Component, ComponentType, ReactNode} from 'react';
 import styled from 'styled-components';
 
 import {Circle} from '../assets';
+import WhiteWizard from '../assets/static/wizard-white.jpg';
 
 interface ShadeProps {
   isShutdown?: boolean;
@@ -55,6 +56,16 @@ const PrimaryTypography = styled(Typography)`
   color: white !important;
 ` as ComponentType<TypographyProps>;
 
+const Wizard = styled.img`
+  width: 20px;
+  margin: 0 10px;
+`;
+
+const WizardWrapper = styled.div`
+  display: flex;
+  align-items: flex-start;
+`;
+
 @observer
 export class Footer extends Component {
   @observable
@@ -81,7 +92,11 @@ export class Footer extends Component {
                   <Circle />
                 </SvgIcon>
               </IconButton>
-              <PrimaryTypography>Wizard</PrimaryTypography>
+              <WizardWrapper>
+                <PrimaryTypography>Wizard</PrimaryTypography>
+                <Wizard src={WhiteWizard} />
+                <PrimaryTypography>Since 2019</PrimaryTypography>
+              </WizardWrapper>
             </CircleIconButtonWrapper>
           </Shade>
         </InnerWrapper>
