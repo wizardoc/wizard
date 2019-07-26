@@ -6,9 +6,7 @@ export interface RouterAnimationProps {
   match: unknown | null;
 }
 
-export function RouterAnimation(
-  RouteViewComponent: ComponentClass,
-): ComponentClass {
+export function RouterAnimation(RouteViewComponent: ComponentClass): any {
   return class extends Component<RouterAnimationProps> {
     render(): ReactNode {
       const {match} = this.props;

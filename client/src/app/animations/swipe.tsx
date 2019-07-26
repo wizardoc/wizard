@@ -1,6 +1,7 @@
 import 'animate.css/animate.min.css';
 
 import React, {Component, ComponentType, ReactNode} from 'react';
+// tslint:disable-next-line:no-implicit-dependencies
 import {CSSTransition} from 'react-transition-group';
 
 interface SwipeProps {
@@ -9,7 +10,7 @@ interface SwipeProps {
 
 export function SwipeAnimation<T = any>(
   MountedComponent: ComponentType<T>,
-): ComponentType {
+): unknown {
   return class extends Component<SwipeProps & T> {
     render(): ReactNode {
       const {isReverse = false} = this.props;
