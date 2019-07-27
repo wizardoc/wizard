@@ -15,7 +15,7 @@ import styled from 'styled-components';
 import {RecentDrawer} from '../store';
 import {InjectStore} from '../utils';
 
-const HEAD_PROMPT = '显示近期的文档动态';
+const HEAD_PROMPT = '显示近期的文档动态（保留 30 天）';
 
 const PrimaryPetsIconItem = styled(ListItemIcon)`
   color: ${props => props.theme.primaryColor} !important;
