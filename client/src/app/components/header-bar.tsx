@@ -30,7 +30,7 @@ import {GitHubSvg} from '../assets';
 import Wizard from '../assets/static/wizard.png';
 import {Links} from '../constant';
 import {User} from '../services';
-import {RecentDrawer} from '../store';
+import {ProfileStore, RecentDrawer} from '../store';
 import {InjectStore} from '../utils';
 
 import {HeaderBarTabs} from './header-bar-tabs';
@@ -114,6 +114,9 @@ class THeaderBar extends Component<HeaderBarProps> {
   @InjectStore(RecentDrawer)
   private recentDrawer!: RecentDrawer;
 
+  @InjectStore(ProfileStore)
+  private profileStore!: ProfileStore;
+
   @Inject
   private userService!: User;
 
@@ -127,16 +130,14 @@ class THeaderBar extends Component<HeaderBarProps> {
     console.info(this.recentDrawer.isViewRecentDrawer);
   }
 
-  get userName(): string {
-    const {userInfo} = this.userService;
-
-    return userInfo ? userInfo.username.slice(0, 2) : '';
-  }
-
   handleWizardTitleClick(): void {
     const {history} = this.props;
 
     history.push('/');
+  }
+
+  handleAvatarClick(): void {
+    this.profileStore.toggleViewProfilePanel();
   }
 
   render(): ReactNode {
@@ -201,7 +202,9 @@ class THeaderBar extends Component<HeaderBarProps> {
               </SvgIcon>
             </IconButton>
           </Tooltip>
-          <AvatarWrapper>{this.userName}</AvatarWrapper>
+          <AvatarWrapper onClick={() => this.handleAvatarClick()}>
+            {this.userService.avatar}
+          </AvatarWrapper>
         </Toolbar>
       </AppBar>
     );
