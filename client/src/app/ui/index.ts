@@ -8,3 +8,4 @@ export * from './line';
 export * from './title';
 export * from './center';
 export * from './drawer-header';
+export * from './upload';
