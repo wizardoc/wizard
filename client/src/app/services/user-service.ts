@@ -86,6 +86,17 @@ export class User {
     this.setUserInfo(userInfo);
   }
 
+  @computed
+  get avatar(): string {
+    if (!this.userInfo) {
+      return '';
+    }
+
+    const {avatar, username} = this.userInfo;
+
+    return avatar === '' || !avatar ? username.slice(0, 2) : avatar;
+  }
+
   async register(): Promise<void> {
     // if (this.checkInfoBeforeRegister()) {
     //   this.tipStore.addTipToQueue(REGISTER_COMPLETION_ERROR_MESSAGE, 'error');
