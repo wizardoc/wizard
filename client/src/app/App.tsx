@@ -11,6 +11,7 @@ import {
   FloatingPop,
   Footer,
   HeaderBar,
+  Profile,
 } from './components';
 import {AppRoutes} from './routes';
 import {TipStore} from './store';
@@ -40,6 +41,7 @@ class TApp extends Component<WithSnackbarProps> {
           <GlobalStyle />
           {/* <GhostPage /> */}
           <BrowserRouter>
+            <Profile />
             <Wrapper>
               <HeaderBar />
               <FloatingPop />
