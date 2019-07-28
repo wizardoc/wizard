@@ -10,21 +10,24 @@ interface FileInputable {
   value: unknown;
 }
 
+interface UploadProps {
+  onAfterRead(file: File): void;
+}
+
 const Wrapper = styled.div``;
 
 const UploadInput = styled.input`
   display: none;
 `;
 
-export class Upload extends Component {
+export class Upload extends Component<UploadProps> {
   @Inject
   private toast!: Toast;
 
   private uploadRef = createRef<HTMLInputElement>();
 
-  private uploadedFile: File | undefined;
-
   handleUploadChange({target}: ChangeEvent): void {
+    const {onAfterRead} = this.props;
     const fileInputable = (target as unknown) as FileInputable;
     const {files} = fileInputable;
     const file = files[0];
@@ -37,7 +40,7 @@ export class Upload extends Component {
       return;
     }
 
-    this.uploadedFile = file;
+    onAfterRead(file);
   }
 
   handleUploadBodyClick(): void {
