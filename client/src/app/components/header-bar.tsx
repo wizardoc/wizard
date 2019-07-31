@@ -202,9 +202,11 @@ class THeaderBar extends Component<HeaderBarProps> {
               </SvgIcon>
             </IconButton>
           </Tooltip>
-          <AvatarWrapper onClick={() => this.handleAvatarClick()}>
-            {this.userService.avatar}
-          </AvatarWrapper>
+          {this.userService.avatar !== '' && (
+            <AvatarWrapper onClick={() => this.handleAvatarClick()}>
+              {this.userService.avatar}
+            </AvatarWrapper>
+          )}
         </Toolbar>
       </AppBar>
     );
