@@ -1,4 +1,3 @@
-export * from './dialogs';
 export * from './doc-recent-update-drawer';
 export * from './floating-pop';
 export * from './footer';
@@ -8,3 +7,4 @@ export * from './main';
 export * from './register';
 export * from './login';
 export * from './user';
+export * from './common';
