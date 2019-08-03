@@ -3,8 +3,10 @@ import {Inject, Injectable} from 'react-ts-di';
 
 import {HTTP} from '../api';
 import {USER_API} from '../constant';
+import {LoadingStore} from '../store';
 // import {TipStore} from '../store';
 import {Optional} from '../types/type-utils';
+import {InjectStore} from '../utils';
 
 import {JWT} from './jwt-service';
 
@@ -39,6 +41,8 @@ export class User {
   private http!: HTTP;
   @Inject
   private jwt!: JWT;
+  @InjectStore(LoadingStore)
+  private loading!: LoadingStore;
 
   private registerData: RegisterData = {};
 
@@ -66,12 +70,16 @@ export class User {
 
   @action
   async initUserInfo(): Promise<void> {
+    this.loading.loadingDialogToggle();
+
     try {
       const {userInfo} = await this.http.get(USER_API.INFO);
 
       this.setUserInfo(userInfo);
     } catch (e) {
       console.error(e);
+    } finally {
+      this.loading.loadingDialogToggle();
     }
   }
 
