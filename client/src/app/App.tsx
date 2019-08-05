@@ -3,10 +3,11 @@ import {observer} from 'mobx-react';
 import {SnackbarProvider, WithSnackbarProps, withSnackbar} from 'notistack';
 import React, {Component, FunctionComponent} from 'react';
 import {BrowserRouter} from 'react-router-dom';
+import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
 import {
-  Dialogs,
+  CommonDialog,
   DocRecentUpdateDrawer,
   FloatingPop,
   Footer,
@@ -14,6 +15,7 @@ import {
   Profile,
 } from './components';
 import {AppRoutes} from './routes';
+import {DialogService} from './services';
 import {TipStore} from './store';
 import {GlobalStyle, ThemeProvider, styledTheme, theme} from './theme';
 // import {GhostPage} from './ui';
@@ -22,6 +24,7 @@ import {InjectStore} from './utils';
 const MAX_SNACK_BAR_COUNT = 5;
 
 const Wrapper = styled.div`
+  width: 100%;
   min-height: 100%;
   position: relative;
   box-sizing: border-box;
@@ -33,11 +36,23 @@ class TApp extends Component<WithSnackbarProps> {
   @InjectStore(TipStore)
   tipStore!: TipStore;
 
+  @Inject
+  dialogService!: DialogService;
+
   render(): React.ReactNode {
+    let dialogs: string[] = [];
+
+    for (const dialogID of this.dialogService.dialogs.keys()) {
+      dialogs.push(dialogID);
+    }
+
     return (
       <ThemeProvider theme={styledTheme}>
         <MuiThemeProvider theme={theme}>
           <DocRecentUpdateDrawer />
+          {dialogs.map(dialogID => (
+            <CommonDialog key={dialogID} dialogID={dialogID}></CommonDialog>
+          ))}
           <GlobalStyle />
           {/* <GhostPage /> */}
           <BrowserRouter>
@@ -45,7 +60,6 @@ class TApp extends Component<WithSnackbarProps> {
             <Wrapper>
               <HeaderBar />
               <FloatingPop />
-              <Dialogs />
               <AppRoutes />
               <Footer />
             </Wrapper>
