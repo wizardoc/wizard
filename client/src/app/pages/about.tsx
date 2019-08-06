@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import {RouterAnimation} from '../animations';
 import {PageHeader, TreeViewGenerator} from '../components';
-import {DocService} from '../services';
+import {DialogService, DocService} from '../services';
 import {marked} from '../utils';
 
 const Wrapper = styled.div``;
@@ -36,6 +36,9 @@ const PageContent = styled.div`
 @observer
 class TAbout extends Component {
   @Inject
+  dialogService!: DialogService;
+
+  @Inject
   docService!: DocService;
 
   @observable
@@ -62,7 +65,9 @@ class TAbout extends Component {
   }
 
   async componentDidMount(): Promise<void> {
+    this.dialogService.openLoading();
     this.content = await this.docService.getAboutWizard();
+    this.dialogService.closeLoading();
   }
 }
 

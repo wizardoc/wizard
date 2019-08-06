@@ -4,6 +4,8 @@ import {ComponentType} from 'react';
 import {Injectable} from 'react-ts-di';
 import UUID from 'uuid';
 
+import {Loading} from '../components';
+
 export interface CloseOptions {
   isDestroy: boolean;
 }
@@ -103,6 +105,23 @@ export class DialogService {
       this.content = content;
       this.isShow = true;
     });
+  }
+
+  /** loading */
+  openLoading(): void {
+    this.open(Loading, {
+      title: '',
+      componentProps: {},
+    });
+  }
+
+  closeLoading(): void {
+    if (!this.currentDialogID) {
+      return;
+    }
+
+    this.spurt();
+    this.dialogs.delete(this.currentDialogID);
   }
 
   /** throw value */
