@@ -4,3 +4,4 @@ export * from './main-tabs';
 export * from './recent-drawer';
 export * from './tip';
 export * from './profile-store';
+export * from './ui';
