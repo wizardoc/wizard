@@ -33,6 +33,7 @@ const Header = styled.div`
 
 const Title = styled(Typography)`
   font-weight: 300 !important;
+  font-size: 20px !important;
 ` as ComponentType<TypographyProps>;
 
 export const PageHeader: FunctionComponent<PageHeaderProps> = props => (
