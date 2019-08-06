@@ -1,3 +1,4 @@
+import {Fade} from '@material-ui/core';
 import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 import React, {Component, ReactNode} from 'react';
@@ -48,6 +49,9 @@ class TAbout extends Component {
   @observable
   content: string = '';
 
+  @observable
+  isMounted = false;
+
   render(): ReactNode {
     return (
       <Wrapper>
@@ -60,9 +64,11 @@ class TAbout extends Component {
               content={this.content}
             ></TreeViewGenerator>
           </Side>
-          <Content
-            dangerouslySetInnerHTML={{__html: marked(this.content)}}
-          ></Content>
+          <Fade in={this.isMounted} timeout={500}>
+            <Content
+              dangerouslySetInnerHTML={{__html: marked(this.content)}}
+            ></Content>
+          </Fade>
         </PageContent>
       </Wrapper>
     );
@@ -72,6 +78,7 @@ class TAbout extends Component {
     this.dialogService.openLoading();
     this.content = await this.docService.getAboutWizard();
     this.dialogService.closeLoading();
+    this.isMounted = true;
   }
 }
 
