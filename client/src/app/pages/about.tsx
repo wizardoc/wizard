@@ -15,9 +15,11 @@ const Side = styled.div`
   min-width: 290px;
   margin-right: 25px;
   padding: 10px;
-  min-height: 500px;
+  height: 500px;
   background: rgba(0, 0, 0, 0.04);
   color: rgba(0, 0, 0, 0.87) !important;
+  position: sticky;
+  top: 70px;
 `;
 
 const SideTitle = styled.p`
@@ -25,9 +27,11 @@ const SideTitle = styled.p`
   font-weight: 300;
 `;
 
-const Content = styled.div``;
+const Content = styled.div`
+  width: calc(100% - 310px);
+`;
+
 const PageContent = styled.div`
-  width: 100%;
   display: flex;
   padding: 25px;
   box-sizing: border-box;
