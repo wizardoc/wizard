@@ -12,7 +12,6 @@ import {ActionButton} from '../../ui';
 
 // import {GithubBtn} from './@github-btn';
 import {GithubBtn} from './@github-btn';
-import {MainContent} from './@main-content';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -129,7 +128,6 @@ class TStarted extends Component<StartedProps> {
           </GetStarted>
           <GithubBtn />
         </GetStartedWrapper> */}
-        <MainContent />
       </Wrapper>
     );
   }

@@ -3,20 +3,25 @@ import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 
 import {RouterAnimation} from '../animations';
-import {Started} from '../components';
+import {MainContent, Started} from '../components';
 
 const Wrapper = styled.div`
   width: 100%;
 `;
 
-export const Home = RouterAnimation(
-  class extends Component {
-    render(): ReactNode {
-      return (
-        <Wrapper>
-          <Started />
-        </Wrapper>
-      );
-    }
-  },
-);
+class THome extends Component {
+  render(): ReactNode {
+    console.info('wwww');
+
+    return (
+      <Wrapper>
+        <Started />
+        <MainContent />
+      </Wrapper>
+    );
+  }
+
+  componentWillUpdate(): void {}
+}
+
+export const Home = RouterAnimation(THome);
