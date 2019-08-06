@@ -1,13 +1,4 @@
 import {
-  Button,
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Typography,
-} from '@material-ui/core';
-import {
   StyleRules,
   WithStyles,
   createStyles,
@@ -22,30 +13,29 @@ const styles = (): StyleRules =>
       display: 'flex',
       flexDirection: 'column',
     },
-    cardActions: {
-      marginTop: 'auto',
-    },
-    cardImg: {
-      width: 180,
-      height: 180,
+    img: {
+      width: 50,
+      height: 50,
       display: 'block',
       margin: '0 auto',
     },
-    cardTitle: {
+    title: {
+      fontSize: 16,
+      lineHeight: '30px',
+      color: '#333',
+      opacity: 0.8,
       textAlign: 'center',
-      fontSize: 18,
-      color: '#1f2f3d',
-      fontWeight: 400,
+      marginTop: 15,
+      marginBottom: 0,
     },
-    cardContent: {
+    content: {
+      color: '#999',
+      fontSize: 12,
+      lineHeight: '26px',
       textAlign: 'center',
-      fontSize: 14,
-      color: '#99a9bf',
-      padding: '0 25px',
-      lineHeight: '20px',
-    },
-    cardBtn: {
-      width: '100%',
+      marginTop: 10,
+      marginBottom: 0,
+      padding: '0 20px',
     },
   });
 
@@ -60,41 +50,11 @@ export class TAdvantageCard extends Component<AdvantageCardProps> {
     const {classes, title, content, img} = this.props;
 
     return (
-      <Card className={classes.card}>
-        <CardActionArea>
-          <CardMedia
-            className={classes.cardImg}
-            image={img}
-            component="img"
-            alt="Contemplative Reptile"
-            height="140"
-            title="Contemplative Reptile"
-          />
-          <CardContent>
-            <Typography
-              className={classes.cardTitle}
-              gutterBottom
-              variant="h5"
-              component="h2"
-            >
-              {title}
-            </Typography>
-            <Typography
-              className={classes.cardContent}
-              variant="body2"
-              color="textSecondary"
-              component="p"
-            >
-              {content}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-        <CardActions className={classes.cardActions}>
-          <Button className={classes.cardBtn} color="primary">
-            查看详情
-          </Button>
-        </CardActions>
-      </Card>
+      <div className={classes.card}>
+        <img className={classes.img} src={img} />
+        <p className={classes.title}>{title}</p>
+        <p className={classes.content}>{content}</p>
+      </div>
     );
   }
 }

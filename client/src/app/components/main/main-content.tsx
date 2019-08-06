@@ -12,6 +12,7 @@ const Cards = styled.div`
   display: flex;
   justify-content: space-evenly;
   padding: 10px 0;
+  margin: 0 0 50px;
 `;
 
 export class MainContent extends Component {
