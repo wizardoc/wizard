@@ -7,9 +7,10 @@ type Direction = 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom';
 
 interface ScalableBoxProps {
   img?: string;
+  onBlockMove(data: Point[]): void;
 }
 
-interface Point {
+export interface Point {
   x: number;
   y: number;
 }
@@ -112,6 +113,21 @@ export class ScalableBox extends Component<ScalableBoxProps> {
     direction: this.direction,
   };
 
+  spurt(): void {
+    const {onBlockMove} = this.props;
+    const {x, y} = this.movePosition;
+    const {width, height} = this.boxSize;
+    const [resultX, resultY] = [x - 1, y - 1];
+    const [resultWidth, resultHeight] = [width + 128, height + 128];
+
+    onBlockMove([
+      {x: resultX, y: resultY},
+      {x: resultX + resultWidth, y: resultY},
+      {x: resultX + resultWidth, y: resultY + resultHeight},
+      {x: resultX, y: resultY + resultHeight},
+    ]);
+  }
+
   handleBoxMouseDown(e: MouseEvent<HTMLDivElement>): void {
     const {clientX, clientY} = e;
 
@@ -197,6 +213,7 @@ export class ScalableBox extends Component<ScalableBoxProps> {
     // reset
     this.isPress = false;
     this.originPosition = {...this.movePosition};
+    this.spurt();
   }
 
   blockMouseDown(
@@ -239,6 +256,7 @@ export class ScalableBox extends Component<ScalableBoxProps> {
         onMouseUp={(e: MouseEvent<HTMLDivElement>) => this.handleBoxMouseUp(e)}
       >
         <Wrapper
+          onMouseUp={() => this.spurt()}
           onMouseDown={(e: MouseEvent<HTMLDivElement>) =>
             this.handleBoxMouseDown(e)
           }
