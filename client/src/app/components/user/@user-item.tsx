@@ -104,6 +104,7 @@ class TUserItem extends Component<UserItemProps> {
       <List>
         {props.data.map(({icon, text, route, mode}) => (
           <ListItem
+            key={text}
             button
             onClick={(): void => {
               this.profileStore.toggleViewProfilePanel();
