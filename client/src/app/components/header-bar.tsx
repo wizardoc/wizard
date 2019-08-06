@@ -13,6 +13,7 @@ import {
   createStyles,
   withStyles,
 } from '@material-ui/core';
+import {AppBarProps} from '@material-ui/core/AppBar';
 import {StyleRules} from '@material-ui/core/styles';
 import {fade} from '@material-ui/core/styles/colorManipulator';
 import {TypographyProps} from '@material-ui/core/Typography';
@@ -30,10 +31,14 @@ import {GitHubSvg} from '../assets';
 import Wizard from '../assets/static/wizard.png';
 import {Links} from '../constant';
 import {User} from '../services';
-import {ProfileStore, RecentDrawer} from '../store';
+import {ProfileStore, RecentDrawer, UIControl} from '../store';
 import {InjectStore} from '../utils';
 
 import {HeaderBarTabs} from './header-bar-tabs';
+
+interface AppBarWrapperProps {
+  isMainPage: boolean;
+}
 
 const styles = (theme: Theme): StyleRules =>
   createStyles({
@@ -109,8 +114,15 @@ const WizardTitle = styled(Typography)`
   cursor: pointer;
 ` as ComponentType<TypographyProps>;
 
+const AppBarWrapper = styled(AppBar)<AppBarWrapperProps>`
+  ${props => !props.isMainPage && 'top: 0;position: sticky !important;'}
+` as ComponentType<AppBarProps & AppBarWrapperProps>;
+
 @observer
 class THeaderBar extends Component<HeaderBarProps> {
+  @InjectStore(UIControl)
+  private uiControl!: UIControl;
+
   @InjectStore(RecentDrawer)
   private recentDrawer!: RecentDrawer;
 
@@ -152,7 +164,7 @@ class THeaderBar extends Component<HeaderBarProps> {
     } = classes;
 
     return (
-      <AppBar position="static">
+      <AppBarWrapper position="static" isMainPage={this.uiControl.isMainPage}>
         <Toolbar variant="dense">
           <Row>
             <IconButton onClick={() => this.handleLogoClick()}>
@@ -208,7 +220,7 @@ class THeaderBar extends Component<HeaderBarProps> {
             </AvatarWrapper>
           )}
         </Toolbar>
-      </AppBar>
+      </AppBarWrapper>
     );
   }
 }
