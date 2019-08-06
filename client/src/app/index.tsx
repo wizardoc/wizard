@@ -1,4 +1,5 @@
 import 'animate.css/animate.min.css';
+import 'highlight.js/styles/atom-one-light.css';
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
