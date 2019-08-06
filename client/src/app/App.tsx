@@ -24,7 +24,6 @@ import {InjectStore} from './utils';
 const MAX_SNACK_BAR_COUNT = 5;
 
 const Wrapper = styled.div`
-  width: 100%;
   min-height: 100%;
   position: relative;
   box-sizing: border-box;
@@ -59,8 +58,8 @@ class TApp extends Component<WithSnackbarProps> {
             <Profile />
             <Wrapper>
               <HeaderBar />
-              <FloatingPop />
               <AppRoutes />
+              <FloatingPop />
               <Footer />
             </Wrapper>
           </BrowserRouter>
