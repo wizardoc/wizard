@@ -10,6 +10,12 @@ export const GlobalStyle = createGlobalStyle`
     overflow-x: hidden;
   }
 
+  pre {
+    background: #f8f8f8;
+    padding: 15px;
+    border-radius: 10px;
+  }
+
   #root {
     height: 100%;
   }
