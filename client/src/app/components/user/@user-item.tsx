@@ -20,8 +20,10 @@ import React, {
   ReactNode,
 } from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
+import {Toast, User} from '../../services';
 import {ProfileStore} from '../../store';
 import {InjectStore} from '../../utils';
 
@@ -34,6 +36,7 @@ interface SettingItem extends ItemMode {
   text: string;
   route: string;
   mode?: 'normal' | 'danger';
+  onClick?(): void;
 }
 
 interface ItemsProps {
@@ -54,6 +57,12 @@ const PrimaryListItemIcon = styled(ListItemIcon)<PrimaryListItemIconProps>`
 ` as ComponentType<ListItemIconProps & PrimaryListItemIconProps>;
 
 class TUserItem extends Component<UserItemProps> {
+  @Inject
+  private toast!: Toast;
+
+  @Inject
+  private userService!: User;
+
   @InjectStore(ProfileStore)
   private profileStore!: ProfileStore;
 
@@ -94,6 +103,10 @@ class TUserItem extends Component<UserItemProps> {
       text: '退出登录',
       route: '/',
       mode: 'danger',
+      onClick: () => {
+        this.userService.logout();
+        this.toast.success('退出登录成功');
+      },
     },
   ];
 
@@ -102,13 +115,14 @@ class TUserItem extends Component<UserItemProps> {
 
     const Items: FunctionComponent<ItemsProps> = props => (
       <List>
-        {props.data.map(({icon, text, route, mode}) => (
+        {props.data.map(({icon, text, route, mode, onClick = () => {}}) => (
           <ListItem
             key={text}
             button
             onClick={(): void => {
               this.profileStore.toggleViewProfilePanel();
               history.push(route);
+              onClick();
             }}
           >
             <PrimaryListItemIcon mode={mode}>{icon}</PrimaryListItemIcon>

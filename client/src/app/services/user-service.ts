@@ -122,4 +122,12 @@ export class User {
       organizationDescription,
     };
   }
+
+  logout(): void {
+    this.jwt.remove();
+
+    // reset userData
+    this.userInfo = undefined;
+    this.isLogin = false;
+  }
 }
