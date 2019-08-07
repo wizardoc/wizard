@@ -14,7 +14,29 @@ export interface TreeViewProps {
 }
 
 const StyledTreeItem = styled(TreeItem)`
-  font-size: 14px !important;
+  .MuiTreeItem-root:focus > .MuiTreeItem-content {
+    background: rgba(25, 118, 210, 0.08);
+  }
+
+  .MuiTreeItem-group {
+    border-left: 1px dashed rgb(0, 0, 0);
+    padding-left: 12px;
+    margin-left: 12px;
+  }
+
+  .MuiTreeItem-content {
+    border-radius: 5px;
+    padding: 5px 0 !important;
+
+    :hover {
+      background: rgba(25, 118, 210, 0.08);
+    }
+  }
+
+  .MuiTreeItem-label {
+    font-size: 14px !important;
+    padding-left: 5px;
+  }
 ` as ComponentType<TreeItemProps>;
 
 export class TreeViewGenerator extends Component<TreeViewProps> {
