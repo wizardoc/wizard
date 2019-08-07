@@ -6,9 +6,8 @@ import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
 import {RouterAnimation} from '../animations';
-import {PageHeader, TreeViewGenerator} from '../components';
+import {MDRender, PageHeader, TreeViewGenerator} from '../components';
 import {DialogService, DocService} from '../services';
-import {marked} from '../utils';
 
 const Wrapper = styled.div``;
 
@@ -28,7 +27,7 @@ const SideTitle = styled.p`
   font-weight: 300;
 `;
 
-const Content = styled.div`
+const Content = styled(MDRender)`
   width: calc(100% - 310px);
 `;
 
@@ -65,9 +64,7 @@ class TAbout extends Component {
             ></TreeViewGenerator>
           </Side>
           <Fade in={this.isMounted} timeout={500}>
-            <Content
-              dangerouslySetInnerHTML={{__html: marked(this.content)}}
-            ></Content>
+            <Content content={this.content}></Content>
           </Fade>
         </PageContent>
       </Wrapper>

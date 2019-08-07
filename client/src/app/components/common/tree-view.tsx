@@ -64,6 +64,10 @@ export class TreeViewGenerator extends Component<TreeViewProps> {
     );
   }
 
+  private handleTreeItemClick(text: string): void {
+    location.hash = text;
+  }
+
   private createTreeNode(node: TreeNode): ReactNode {
     const {children} = node;
 
@@ -72,6 +76,7 @@ export class TreeViewGenerator extends Component<TreeViewProps> {
         key={node.index}
         nodeId={node.index.toString()}
         label={node.text}
+        onClick={() => this.handleTreeItemClick(node.text)}
       >
         {!!children.length
           ? children.map(child => this.createTreeNode(child))
