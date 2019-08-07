@@ -32,4 +32,11 @@ export const GlobalStyle = createGlobalStyle`
       max-height: 500px;
     }
   }
+
+  .md-heading {
+    &:target {
+      padding-top: 70px;
+      margin-top: -70px;
+    }
+  }
 `;
