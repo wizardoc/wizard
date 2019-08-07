@@ -8,7 +8,11 @@ renderer.image = (href, _title, text): string =>
   <img class="md-img" src="${href}" alt="${text}" />
   </div>`;
 
-export const marked = Marked.setOptions({
+renderer.heading = (text: string, level: number): string => {
+  return `<h${level} id="${text}" class="md-heading">${text}</h${level}>`;
+};
+
+export const markdown = Marked.setOptions({
   renderer,
   gfm: true,
   tables: true,
