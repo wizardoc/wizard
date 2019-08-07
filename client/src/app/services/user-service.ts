@@ -27,8 +27,6 @@ type ParsedRegisterData = UserBaseInfo & OrganizationInfo;
 
 type RegisterData = Optional<ParsedRegisterData>;
 
-// const REGISTER_COMPLETION_ERROR_MESSAGE = '请确保信息填写是否完整';
-
 @Injectable()
 export class User {
   @computed
@@ -48,9 +46,6 @@ export class User {
 
   @observable
   userInfo: UserBaseInfo | undefined;
-  // private username: string | undefined;
-  // private role: string | undefined;
-  // private company: string | undefined;
 
   @observable
   isLogin: boolean = false;
@@ -59,8 +54,6 @@ export class User {
     // 刷新时带上 JWT 拿到用户的信息
     this.initUserInfo();
   }
-  // @InjectStore(TipStore)
-  // private tipStore!: TipStore;
 
   @action
   setUserInfo(userInfo: UserBaseInfo): void {
@@ -106,12 +99,6 @@ export class User {
   }
 
   async register(): Promise<void> {
-    // if (this.checkInfoBeforeRegister()) {
-    //   this.tipStore.addTipToQueue(REGISTER_COMPLETION_ERROR_MESSAGE, 'error');
-
-    //   return;
-    // }
-
     return this.http.post(USER_API.REGISTER, {
       displayName: 'Younccat',
       username: 'zzhbbdbbd',
@@ -135,13 +122,4 @@ export class User {
       organizationDescription,
     };
   }
-
-  //   for (const key of this.registerData as Iterable<string>) {
-  //     if (!key) {
-  //       return false;
-  //     }
-  //   }
-
-  //   return true;
-  // }
 }
