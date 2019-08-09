@@ -1,10 +1,15 @@
+import {TextFieldProps} from '@material-ui/core/TextField';
 import React, {FunctionComponent} from 'react';
 
 import {TextFieldWrapper} from '../register';
 
-export const UserName: FunctionComponent = () => (
+import {AccessProps} from './props';
+
+export const UserName: FunctionComponent<
+  AccessProps & TextFieldProps
+> = props => (
   <TextFieldWrapper
-    name="username"
+    {...props}
     label="账号"
     type="text"
     placeholder="请输入账号"

@@ -1,4 +1,5 @@
 import {IconButton, InputAdornment} from '@material-ui/core';
+import {TextFieldProps} from '@material-ui/core/TextField';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import {observable} from 'mobx';
@@ -7,15 +8,17 @@ import React, {Component, ReactNode} from 'react';
 
 import {TextFieldWrapper} from '../register';
 
+import {AccessProps} from './props';
+
 @observer
-export class Password extends Component {
+export class Password extends Component<AccessProps & TextFieldProps> {
   @observable
   private isViewPassword = false;
 
   render(): ReactNode {
     return (
       <TextFieldWrapper
-        name="password"
+        {...this.props}
         label="密码"
         type={this.isViewPassword ? 'text' : 'password'}
         autoComplete="new-password"
