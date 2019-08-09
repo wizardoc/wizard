@@ -13,6 +13,7 @@ import {
   Footer,
   HeaderBar,
   Profile,
+  SharePop,
 } from './components';
 import {AppRoutes} from './routes';
 import {DialogService} from './services';
@@ -60,6 +61,7 @@ class TApp extends Component<WithSnackbarProps> {
               <HeaderBar />
               <AppRoutes />
               <FloatingPop />
+              <SharePop />
               <Footer />
             </Wrapper>
           </BrowserRouter>
