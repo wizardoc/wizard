@@ -72,9 +72,11 @@ class TAbout extends Component {
   }
 
   async componentDidMount(): Promise<void> {
-    this.dialogService.openLoading();
-    this.content = await this.docService.getAboutWizard();
-    this.dialogService.closeLoading();
+    this.dialogService.loading(
+      async (): Promise<void> => {
+        this.content = await this.docService.getAboutWizard();
+      },
+    );
     this.isMounted = true;
   }
 }
