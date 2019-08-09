@@ -12,7 +12,6 @@ import styled from 'styled-components';
 
 import {User} from '../../services';
 import {TipStore} from '../../store';
-import {FormInfo, Rules} from '../../ui';
 import {InjectStore} from '../../utils';
 
 import {BaseInfo} from './base-info';
@@ -60,21 +59,6 @@ const StepperWrapper = styled(Stepper)`
 
 const steps = ['填写基本信息', '确定组织', '完成注册'];
 
-const baseInfoRule: Rules = {
-  name: {
-    validator: 'required',
-  },
-  username: {
-    validator: 'required',
-  },
-  password: {
-    validator: 'required',
-  },
-  email: {
-    validator: 'required',
-  },
-};
-
 const NextStep = styled(Button)`
   width: 200px;
 `;
@@ -90,18 +74,9 @@ export class Register extends Component {
   @observable
   private currentIndex = 0;
 
-  private formInfo: FormInfo = {};
-
   private registerBody = [
     {
-      viewer: (
-        <BaseInfo
-          baseInfoRule={baseInfoRule}
-          onDataUpdate={(formInfo: FormInfo): void =>
-            this.handleBaseInfoDataUpdate(formInfo)
-          }
-        />
-      ),
+      viewer: <BaseInfo />,
       handler: this.userService.collectBaseInfo.bind(this),
     },
     {
@@ -154,14 +129,6 @@ export class Register extends Component {
     this.preStepToggle();
   }
 
-  handleBaseInfoDataUpdate(formInfo: FormInfo): void {
-    this.formInfo = {...this.formInfo, ...formInfo};
-  }
-
-  resetFormData(): void {
-    this.formInfo = {};
-  }
-
   render(): ReactNode {
     return (
       <Wrapper>
@@ -211,6 +178,5 @@ export class Register extends Component {
 
   componentWillUnmount(): void {
     this.tipStore.destroy();
-    this.resetFormData();
   }
 }
