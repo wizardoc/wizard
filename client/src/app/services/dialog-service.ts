@@ -107,15 +107,22 @@ export class DialogService {
     });
   }
 
-  /** loading */
-  openLoading(): void {
+  async loading(
+    cb: (...args: unknown[]) => Promise<void> | void,
+  ): Promise<void> {
+    this.openLoading();
+    await cb();
+    this.closeLoading();
+  }
+
+  private openLoading(): void {
     this.open(Loading, {
       title: '',
       componentProps: {},
     });
   }
 
-  closeLoading(): void {
+  private closeLoading(): void {
     if (!this.currentDialogID) {
       return;
     }
