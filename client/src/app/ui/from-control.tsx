@@ -1,40 +1,61 @@
 import {FormHelperText} from '@material-ui/core';
+import {FormHelperTextProps} from '@material-ui/core/FormHelperText';
 import {observable} from 'mobx';
 import {observer} from 'mobx-react';
-import React, {Component, ReactElement, ReactNode, cloneElement} from 'react';
+import React, {
+  ChangeEvent,
+  Component,
+  ComponentType,
+  ReactElement,
+  ReactNode,
+  cloneElement,
+} from 'react';
+import styled from 'styled-components';
 
 type Validator = (
+  rule: Rule,
   value: string,
-  name: string,
   cb: (msg?: string) => void,
 ) => void;
 
-interface RuleBody {
+export interface Rule {
   errMsg?: string;
   trigger?: string;
   validator?: Validator;
+  required?: boolean;
 }
 
-interface Rule {
-  [index: string]: RuleBody;
+export interface Rules {
+  [index: string]: Rule;
 }
 
 interface FormControlProps {
-  rules: Rule;
+  rules: Rules;
   onFormDataChange(formData: unknown): void;
 }
 
-interface FieldInfo {
+interface ErrorInfo {
   errMsg: string;
 }
+
+interface FieldInfos {
+  [index: string]: unknown;
+}
+
+const ErrorHelpMessage = styled(FormHelperText)`
+  color: red !important;
+` as ComponentType<FormHelperTextProps>;
 
 @observer
 export class FormControl extends Component<FormControlProps> {
   @observable
-  private fieldInfos: {[index: string]: FieldInfo} = {};
+  private errorManager: {[index: string]: ErrorInfo} = {};
+
+  @observable
+  private fieldInfos: FieldInfos = {};
 
   render(): ReactNode {
-    const {children, rules} = this.props;
+    const {children, rules, onFormDataChange} = this.props;
 
     if (!children) {
       return <></>;
@@ -50,24 +71,18 @@ export class FormControl extends Component<FormControlProps> {
         'aria-describedby': 'component-error-text',
       });
       const {name} = part.props || {name: ''};
-      const rule = rules[name];
-
-      // no rule
-      if (!rule) {
-        return part;
-      }
+      const rule = rules[name] || {};
 
       let isError = false;
-      const {errMsg, trigger = 'change'} = rule;
+      const {errMsg, trigger = 'change', required} = rule;
       const listenerName = `on${trigger[0].toUpperCase()}${trigger.slice(1)}`;
       const setErrMsg = (msg?: string): void => {
-        const info = this.fieldInfos[name] || {};
+        const info = this.errorManager[name] || {};
 
         info.errMsg = msg || '';
 
-        this.fieldInfos[name] = info;
+        this.errorManager[name] = info;
       };
-
       const errorThrower = (msg?: string): void => {
         setErrMsg(msg);
 
@@ -75,37 +90,67 @@ export class FormControl extends Component<FormControlProps> {
       };
       const validator: Validator =
         rule.validator ||
-        ((value: string, name: string, cb: (errMsg?: string) => void): void => {
-          const throwErrMsg = errMsg || `${name} 不能为空`;
+        (required
+          ? (
+              _rule: Rule,
+              value: string,
+              cb: (errMsg?: string) => void,
+            ): void => {
+              const throwErrMsg = errMsg || `${name} 不能为空`;
 
-          if (!value || value === '') {
-            cb(throwErrMsg);
-          }
-        });
+              if (!value || value === '') {
+                cb(throwErrMsg);
+              }
+            }
+          : () => {});
       const originListener = part.props[listenerName] || ((): void => {});
+      const sysListener = (e: unknown): void => {
+        originListener(e);
+
+        isError = false;
+        validator(
+          rule,
+          (e as ChangeEvent<HTMLInputElement>).target.value,
+          errorThrower,
+        );
+
+        if (!isError) {
+          setErrMsg();
+        }
+      };
+
+      // 封装 onChange
+      const listeners = {
+        onChange: (e: ChangeEvent): void => {
+          if (listenerName === 'onChange') {
+            sysListener(e);
+          }
+
+          // 附上数据
+          this.fieldInfos[name] = (e as ChangeEvent<
+            HTMLInputElement
+          >).target.value;
+
+          onFormDataChange(this.fieldInfos);
+        },
+        ...(listenerName === 'onChange' ? {} : {[listenerName]: sysListener}),
+      };
 
       part = cloneElement(child, {
         ...part.props,
-        [listenerName]: (e: any) => {
-          originListener(e);
-
-          isError = false;
-          validator(e.target.value, name, errorThrower);
-
-          if (!isError) {
-            setErrMsg();
-          }
-        },
-        error: !['', undefined].includes((this.fieldInfos[name] || {}).errMsg),
+        ...listeners,
+        error: !['', undefined].includes(
+          (this.errorManager[name] || {}).errMsg,
+        ),
       });
 
       return (
-        <>
+        <div key={name}>
           {part}
-          <FormHelperText id="component-error-text">
-            {(this.fieldInfos[name] || {}).errMsg}
-          </FormHelperText>
-        </>
+          <ErrorHelpMessage id="component-error-text">
+            {(this.errorManager[name] || {}).errMsg}
+          </ErrorHelpMessage>
+        </div>
       );
     });
 
