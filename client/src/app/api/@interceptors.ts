@@ -1,6 +1,7 @@
 import {AxiosRequestConfig, AxiosResponse} from 'axios';
 import * as QS from 'qs';
 
+import {errorManager} from '../services';
 import {LocalStorage} from '../utils';
 
 import {ContentType} from './request';
@@ -25,7 +26,16 @@ interface ResData<T> {
 }
 
 export function getData<T extends Res>(res: AxiosResponse<ResData<T>>): T {
-  return res.data.data;
+  const {data, err} = res.data;
+
+  if (err) {
+    // process error
+    errorManager.spurtError(err.code);
+
+    throw new Error(errorManager.getErrorMessage(err.code));
+  }
+
+  return data;
 }
 
 export function requestType(
@@ -45,8 +55,6 @@ export function requestType(
 
   // attach jwt in authentication of header
   const JWT = LocalStorage.getItem('jwt');
-
-  console.info(JWT);
 
   if (JWT) {
     dup.headers = {...dup.headers, Authentication: JWT};

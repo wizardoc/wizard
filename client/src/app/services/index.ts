@@ -4,3 +4,4 @@ export * from './jwt-service';
 export * from './toast';
 export * from './dialog-service';
 export * from './doc-service';
+export * from './error-manager';
