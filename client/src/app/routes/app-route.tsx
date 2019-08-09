@@ -48,7 +48,7 @@ export class TAppRoutes extends Component<
     this.unListen = history.listen(loc => {
       const {pathname} = loc;
 
-      if (pathname === '/home') {
+      if (['/home', '/'].includes(pathname)) {
         this.uiControl.isMainPage = true;
       } else {
         this.uiControl.isMainPage = false;
