@@ -6,4 +6,5 @@ export enum USER {
 
 export enum MAIN_PAGE {
   DOCUMENT = '/doc',
+  ROOT = '/',
 }
