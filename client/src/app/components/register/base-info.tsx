@@ -2,14 +2,9 @@ import {observer} from 'mobx-react';
 import React, {Component, ComponentType, ReactNode} from 'react';
 import styled from 'styled-components';
 
-import {FormInfo, FormTextField, FormTextFieldProps, Rules} from '../../ui';
+import {FormTextField, FormTextFieldProps} from '../../ui';
 import {Password} from '../access/password';
 import {UserName} from '../access/username';
-
-export interface BaseInfoProps {
-  baseInfoRule: Rules;
-  onDataUpdate(formInfo: FormInfo): void;
-}
 
 export const TextFieldWrapper = styled(FormTextField)`
   width: 300px;
@@ -18,7 +13,7 @@ export const TextFieldWrapper = styled(FormTextField)`
 ` as ComponentType<FormTextFieldProps>;
 
 @observer
-export class BaseInfo extends Component<BaseInfoProps> {
+export class BaseInfo extends Component {
   render(): ReactNode {
     // const {baseInfoRule, onDataUpdate, getValidator} = this.props;
 
@@ -34,8 +29,8 @@ export class BaseInfo extends Component<BaseInfoProps> {
             maxLength: 12,
           }}
         />
-        <UserName />
-        <Password />
+        <UserName name="username" />
+        <Password name="password" />
         <TextFieldWrapper
           name="email"
           label="邮箱"
