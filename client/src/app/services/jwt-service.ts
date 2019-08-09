@@ -23,6 +23,10 @@ export class JWT {
     LocalStorage.removeItem(this.JWT_STORAGE_KEY);
   }
 
+  get isExist(): boolean {
+    return !!this._JWTString;
+  }
+
   get JWTString(): string | undefined {
     return this._JWTString;
   }

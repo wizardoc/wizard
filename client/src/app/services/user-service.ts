@@ -37,8 +37,10 @@ export class User {
 
   @Inject
   private http!: HTTP;
+
   @Inject
   private jwt!: JWT;
+
   @InjectStore(LoadingStore)
   private loading!: LoadingStore;
 
@@ -51,8 +53,10 @@ export class User {
   isLogin: boolean = false;
 
   constructor() {
-    // 刷新时带上 JWT 拿到用户的信息
-    this.initUserInfo();
+    if (this.jwt.isExist) {
+      // 刷新时带上 JWT 拿到用户的信息
+      this.initUserInfo();
+    }
   }
 
   @action
