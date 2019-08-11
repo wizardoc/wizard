@@ -1,62 +1,64 @@
+import {WithStyles, createStyles, withStyles} from '@material-ui/core';
+import {StyleRules} from '@material-ui/core/styles';
 import {action, observable} from 'mobx';
 import {observer} from 'mobx-react';
 import React, {Component, ReactNode} from 'react';
-import styled from 'styled-components';
 
 import QQIcon from '../assets/static/share/qq-transparent.png';
 import WechatIcon from '../assets/static/share/wechat-transparent.png';
 import WeiboIcon from '../assets/static/share/weibo-transparent.png';
 
-const Wrapper = styled.div`
-  position: fixed;
-  right: 50px;
-  bottom: 100px;
-`;
+const styles = (): StyleRules =>
+  createStyles({
+    wrapper: {
+      position: 'fixed',
+      right: '50px',
+      bottom: '100px',
+    },
+    iconWrapper: {
+      position: 'absolute',
+      width: '48px',
+      height: '48px',
+      backgroundColor: '#cd0000',
+      borderRadius: '50%',
+      transition: 'transform 0.5s',
+      top: '16px',
+      left: 0,
+      right: 0,
+      margin: 'auto',
+    },
+    img: {
+      display: 'block',
+      width: '30px',
+      height: '30px',
+      margin: '9px auto',
+    },
+    target: {
+      height: '130px',
+      maxWidth: '200px',
+      textAlign: 'center',
+      position: 'relative',
+      padding: '10px',
+      userSelect: 'none',
+    },
+    shareBtn: {
+      display: 'block',
+      width: '64px',
+      lineHeight: '64px',
+      backgroundColor: '#cd0000',
+      color: '#fff',
+      borderRadius: '50%',
+      margin: 'auto',
+      position: 'relative',
+      zIndex: 1,
+      cursor: 'pointer',
+    },
+  });
 
-const Target = styled.div`
-  height: 130px;
-  max-width: 200px;
-  text-align: center;
-  position: relative;
-  padding: 10px;
-  user-select: none;
-`;
-
-const ShareBtn = styled.label`
-  display: block;
-  width: 64px;
-  line-height: 64px;
-  background-color: #cd0000;
-  color: #fff;
-  border-radius: 50%;
-  margin: auto;
-  position: relative;
-  z-index: 1;
-  cursor: pointer;
-`;
-
-const IconWrapper = styled.span`
-  position: absolute;
-  width: 48px;
-  height: 48px;
-  background-color: #cd0000;
-  border-radius: 50%;
-  transition: transform 0.5s;
-  top: 16px;
-  left: 0;
-  right: 0;
-  margin: auto;
-`;
-
-const Img = styled.img`
-  display: block;
-  width: 30px;
-  height: 30px;
-  margin: 9px auto;
-`;
+export interface SharePopProps extends WithStyles<typeof styles> {}
 
 @observer
-export class SharePop extends Component {
+export class TSharePop extends Component<SharePopProps> {
   @observable
   private isOpenMenu = false;
 
@@ -66,8 +68,10 @@ export class SharePop extends Component {
   }
 
   render(): ReactNode {
+    const {classes} = this.props;
+
     return (
-      <Wrapper>
+      <div className={classes.wrapper}>
         <svg width="0" height="0">
           <defs>
             <filter id="goo">
@@ -86,19 +90,23 @@ export class SharePop extends Component {
             </filter>
           </defs>
         </svg>
-        <Target>
-          <ShareBtn onClick={() => this.menuToggle()}>分享</ShareBtn>
-          <IconWrapper className="icon-share-weibo">
-            <Img src={WeiboIcon} />
-          </IconWrapper>
-          <IconWrapper className="icon-share-wechat">
-            <Img src={WechatIcon} />
-          </IconWrapper>
-          <IconWrapper className="icon-share-qq">
-            <Img src={QQIcon} />
-          </IconWrapper>
-        </Target>
-      </Wrapper>
+        <div className={classes.target}>
+          <label className={classes.shareBtn} onClick={() => this.menuToggle()}>
+            分享
+          </label>
+          <span className={classes.iconWrapper}>
+            <img className={classes.img} src={WeiboIcon} />
+          </span>
+          <span className={classes.iconWrapper}>
+            <img className={classes.img} src={WechatIcon} />
+          </span>
+          <span className={classes.iconWrapper}>
+            <img className={classes.img} src={QQIcon} />
+          </span>
+        </div>
+      </div>
     );
   }
 }
+
+export const SharePop = withStyles(styles)(TSharePop);
