@@ -2,7 +2,7 @@ import {observer} from 'mobx-react';
 import React, {Component, ComponentType, ReactNode} from 'react';
 import styled from 'styled-components';
 
-import {FormTextField, FormTextFieldProps} from '../../ui';
+import {FormControl, FormTextField, FormTextFieldProps} from '../../ui';
 import {Password} from '../access/password';
 import {UserName} from '../access/username';
 
@@ -12,13 +12,34 @@ export const TextFieldWrapper = styled(FormTextField)`
   margin-top: 15px !important;
 ` as ComponentType<FormTextFieldProps>;
 
+export interface BaseInfoData {
+  name: string;
+  username: string;
+  password: string;
+  email: string;
+}
+
+export interface BaseInfoProps {
+  onBaseInfoChange(data: BaseInfoData): void;
+}
+
 @observer
-export class BaseInfo extends Component {
+export class BaseInfo extends Component<BaseInfoProps> {
   render(): ReactNode {
-    // const {baseInfoRule, onDataUpdate, getValidator} = this.props;
+    const {onBaseInfoChange} = this.props;
 
     return (
-      <>
+      <FormControl
+        rules={{
+          name: {required: true},
+          username: {required: true},
+          password: {required: true},
+          email: {required: true},
+        }}
+        onFormDataChange={(data: unknown) =>
+          onBaseInfoChange(data as BaseInfoData)
+        }
+      >
         <TextFieldWrapper
           name="name"
           label="昵称"
@@ -38,7 +59,7 @@ export class BaseInfo extends Component {
           placeholder="接收变更通知的邮箱"
           autoComplete="new-password"
         />
-      </>
+      </FormControl>
     );
   }
 }
