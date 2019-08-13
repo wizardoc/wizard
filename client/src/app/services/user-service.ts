@@ -2,6 +2,7 @@ import {action, computed, observable} from 'mobx';
 import {Inject, Injectable} from 'react-ts-di';
 
 import {HTTP} from '../api';
+import {BaseInfoData} from '../components';
 import {USER_API} from '../constant';
 import {LoadingStore} from '../store';
 // import {TipStore} from '../store';
@@ -23,9 +24,9 @@ interface OrganizationInfo {
   organizationDescription?: string;
 }
 
-type ParsedRegisterData = UserBaseInfo & OrganizationInfo;
+export type ParsedRegisterData = UserBaseInfo & OrganizationInfo;
 
-type RegisterData = Optional<ParsedRegisterData>;
+export type RegisterData = Optional<ParsedRegisterData>;
 
 @Injectable()
 export class User {
@@ -44,7 +45,7 @@ export class User {
   @InjectStore(LoadingStore)
   private loading!: LoadingStore;
 
-  private registerData: RegisterData = {};
+  registerData: RegisterData = {};
 
   @observable
   userInfo: UserBaseInfo | undefined;
@@ -102,17 +103,11 @@ export class User {
     return avatar === '' || !avatar ? username.slice(0, 2) : avatar;
   }
 
-  async register(): Promise<void> {
-    return this.http.post(USER_API.REGISTER, {
-      displayName: 'Younccat',
-      username: 'zzhbbdbbd',
-      password: 'zzh1997422',
-      email: 'zzhbbdbbd@163.com',
-      organizationName: 'wizard',
-    });
+  register(): void {
+    return this.http.post(USER_API.REGISTER, this.registerData);
   }
 
-  collectBaseInfo(baseInfo: UserBaseInfo): void {
+  collectBaseInfo(baseInfo: BaseInfoData): void {
     this.registerData = {...this.registerData, ...baseInfo};
   }
 
@@ -120,6 +115,8 @@ export class User {
     organizationName: string,
     organizationDescription?: string,
   ): void {
+    console.info(organizationName, organizationDescription);
+
     this.registerData = {
       ...this.registerData,
       organizationName,
