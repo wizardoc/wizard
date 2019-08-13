@@ -12,8 +12,8 @@ const styles = (): StyleRules =>
   createStyles({
     wrapper: {
       position: 'fixed',
-      right: '50px',
-      bottom: '100px',
+      right: '110px',
+      bottom: '90px',
     },
     iconWrapper: {
       position: 'absolute',
@@ -22,7 +22,7 @@ const styles = (): StyleRules =>
       backgroundColor: '#cd0000',
       borderRadius: '50%',
       transition: 'transform 0.5s',
-      top: '16px',
+      bottom: '16px',
       left: 0,
       right: 0,
       margin: 'auto',
@@ -34,24 +34,36 @@ const styles = (): StyleRules =>
       margin: '9px auto',
     },
     target: {
-      height: '130px',
-      maxWidth: '200px',
+      display: 'flex',
       textAlign: 'center',
       position: 'relative',
       padding: '10px',
       userSelect: 'none',
+      filter: 'url("#goo")',
+      width: '140px',
+      height: '120px',
+      justifyContent: 'center',
     },
     shareBtn: {
       display: 'block',
-      width: '64px',
-      lineHeight: '64px',
-      backgroundColor: '#cd0000',
+      width: '56px',
+      lineHeight: '56px',
+      backgroundColor: '#f06292',
       color: '#fff',
       borderRadius: '50%',
-      margin: 'auto',
+      marginTop: 'auto',
       position: 'relative',
       zIndex: 1,
       cursor: 'pointer',
+    },
+    weiboIcon: {
+      transform: `scale(1) translate(60px, -40px)`,
+    },
+    wechatIcon: {
+      transform: `scale(1) translate(0, -75px)`,
+    },
+    qqIcon: {
+      transform: `scale(1) translate(-60px, -40px)`,
     },
   });
 
@@ -94,13 +106,25 @@ export class TSharePop extends Component<SharePopProps> {
           <label className={classes.shareBtn} onClick={() => this.menuToggle()}>
             分享
           </label>
-          <span className={classes.iconWrapper}>
+          <span
+            className={`${classes.iconWrapper} ${
+              this.isOpenMenu ? classes.weiboIcon : ''
+            }`}
+          >
             <img className={classes.img} src={WeiboIcon} />
           </span>
-          <span className={classes.iconWrapper}>
+          <span
+            className={`${classes.iconWrapper} ${
+              this.isOpenMenu ? classes.wechatIcon : ''
+            }`}
+          >
             <img className={classes.img} src={WechatIcon} />
           </span>
-          <span className={classes.iconWrapper}>
+          <span
+            className={`${classes.iconWrapper} ${
+              this.isOpenMenu ? classes.qqIcon : ''
+            }`}
+          >
             <img className={classes.img} src={QQIcon} />
           </span>
         </div>
