@@ -10,16 +10,24 @@ import React, {Component, ComponentType, ReactNode} from 'react';
 import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
-import {User} from '../../services';
-import {TipStore} from '../../store';
-import {InjectStore} from '../../utils';
+import {
+  OrganizationService,
+  ParsedRegisterData,
+  Toast,
+  User,
+} from '../../services';
 
-import {BaseInfo} from './base-info';
+import {BaseInfo, BaseInfoData} from './base-info';
 import {Complete} from './complete';
 import {Organization} from './organization';
 
 export interface FormBodyProps {
   index: number;
+}
+
+export interface OrganizationData {
+  organizationName: string;
+  organizationDescription: string | undefined;
 }
 
 const Wrapper = styled.div`
@@ -65,27 +73,85 @@ const NextStep = styled(Button)`
 
 @observer
 export class Register extends Component {
-  @InjectStore(TipStore)
-  private tipStore!: TipStore;
+  @Inject
+  private toast!: Toast;
 
   @Inject
   private userService!: User;
 
+  @Inject
+  private organizationService!: OrganizationService;
+
   @observable
   private currentIndex = 0;
 
+  @observable
+  private baseInfo: BaseInfoData | undefined;
+
+  @observable
+  private organizationInfo: OrganizationData | undefined;
+
   private registerBody = [
     {
-      viewer: <BaseInfo />,
-      handler: this.userService.collectBaseInfo.bind(this),
+      viewer: (
+        <BaseInfo
+          onBaseInfoChange={(info: BaseInfoData): void =>
+            this.handleBaseInfoDataChange(info)
+          }
+        />
+      ),
+      handler: (): void =>
+        this.baseInfo && this.userService.collectBaseInfo(this.baseInfo),
     },
     {
-      viewer: <Organization />,
-      handler: this.userService.ensureOrganization.bind(this),
+      viewer: (
+        <Organization
+          onOrganizationInfoChange={(info: OrganizationData): void =>
+            this.handleOrganizationInfoChange(info)
+          }
+        />
+      ),
+      handler: async (): Promise<void> => {
+        if (!this.organizationInfo) {
+          return;
+        }
+
+        const {
+          organizationName,
+          organizationDescription,
+        } = this.organizationInfo;
+
+        await this.userService.register();
+
+        const registerData = this.userService
+          .registerData as ParsedRegisterData;
+
+        if (!registerData) {
+          this.toast.error('用户数据异常');
+
+          return;
+        }
+
+        // 加入现有组织
+        if (!organizationDescription) {
+          await this.organizationService.joinOrganization(
+            organizationName,
+            registerData.username,
+          );
+        } else {
+          await this.organizationService.createOrganization(
+            organizationName,
+            organizationDescription,
+            registerData.username,
+          );
+        }
+
+        this.toast.success('注册成功');
+      },
     },
     {
       viewer: <Complete />,
-      handler: this.userService.register.bind(this),
+      handler: (): void => {},
     },
   ];
 
@@ -108,6 +174,14 @@ export class Register extends Component {
   }
 
   handleCloseClick(): void {}
+
+  handleBaseInfoDataChange(info: BaseInfoData): void {
+    this.baseInfo = info;
+  }
+
+  handleOrganizationInfoChange(info: OrganizationData): void {
+    this.organizationInfo = info;
+  }
 
   async handleNextClick(): Promise<void> {
     if (this.isFinish()) {
@@ -142,16 +216,6 @@ export class Register extends Component {
         <RegisterBodyWrapper>{this.viewerBody.viewer}</RegisterBodyWrapper>
         <Row>
           <ButtonsWrapper>
-            {/* {!this.isFinish() && (
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={() => this.handleCloseClick()}
-              >
-                取消
-                <CloseIcon />
-              </Button>
-            )} */}
             {this.currentIndex > 0 && !this.isFinish() && (
               <Button
                 variant="contained"
@@ -165,7 +229,10 @@ export class Register extends Component {
             <NextStep
               variant="contained"
               color="primary"
-              onClick={() => this.handleNextClick()}
+              onClick={async () => {
+                await this.viewerBody.handler();
+                this.handleNextClick();
+              }}
             >
               {this.isFinish() ? '完成注册' : '下一步'}
               {this.isFinish() ? <FilterVintageIcon /> : <ArrowForwardIcon />}
@@ -174,9 +241,5 @@ export class Register extends Component {
         </Row>
       </Wrapper>
     );
-  }
-
-  componentWillUnmount(): void {
-    this.tipStore.destroy();
   }
 }

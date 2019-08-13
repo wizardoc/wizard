@@ -7,11 +7,10 @@ import ToggleButtonGroup, {
 import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 import React, {Component, ComponentType, ReactNode} from 'react';
-import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
-import {OrganizationService} from '../../../services';
 import {TipContent, TipVariant} from '../../../ui';
+import {OrganizationData} from '../entry';
 
 import {CreateNewOrganization} from './@create-new-organization';
 import {JoinExistOrganization} from './@join-exist-organization';
@@ -41,19 +40,16 @@ const enum ORGANIZATION_TAB_NAME {
   JOIN_EXIST_ORGANIZATION,
 }
 
-export interface OrganizationProps extends WithStyles<typeof styles> {}
+export interface OrganizationProps {
+  onOrganizationInfoChange(organizationInfo: OrganizationData): void;
+}
 
 @observer
-export class TOrganization extends Component<OrganizationProps> {
-  @Inject
-  private organizationService!: OrganizationService;
-
+export class TOrganization extends Component<
+  OrganizationProps & WithStyles<typeof styles>
+> {
   @observable
   private currentGroup = ORGANIZATION_TAB_NAME.NEW_ORGANIZATION;
-
-  componentDidMount(): Promise<void> {
-    return this.organizationService.createOrganization('zhangsan', '11111');
-  }
 
   render(): ReactNode {
     return (
@@ -88,9 +84,9 @@ export class TOrganization extends Component<OrganizationProps> {
 
   private renderComponent(): ReactNode {
     return this.currentGroup === ORGANIZATION_TAB_NAME.NEW_ORGANIZATION ? (
-      <CreateNewOrganization />
+      <CreateNewOrganization {...this.props} />
     ) : (
-      <JoinExistOrganization />
+      <JoinExistOrganization {...this.props} />
     );
   }
 }

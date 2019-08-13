@@ -41,7 +41,7 @@ export class BaseInfo extends Component<BaseInfoProps> {
         }
       >
         <TextFieldWrapper
-          name="name"
+          name="displayName"
           label="昵称"
           type="text"
           autoComplete="new-password"

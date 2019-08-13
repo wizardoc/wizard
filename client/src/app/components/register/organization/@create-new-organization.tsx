@@ -1,11 +1,27 @@
 import React, {Component, ReactNode} from 'react';
 
+import {FormControl} from '../../../ui';
 import {TextFieldWrapper} from '../base-info';
+import {OrganizationData} from '../entry';
 
-export class CreateNewOrganization extends Component {
+import {OrganizationProps} from './organization';
+
+interface CreateNewOrganizationProps extends OrganizationProps {}
+
+export class CreateNewOrganization extends Component<
+  CreateNewOrganizationProps
+> {
   render(): ReactNode {
     return (
-      <>
+      <FormControl
+        rules={{
+          organizationName: {required: true},
+          organizationDescription: {required: true},
+        }}
+        onFormDataChange={(info: unknown): void =>
+          this.props.onOrganizationInfoChange(info as OrganizationData)
+        }
+      >
         <TextFieldWrapper
           name="organizationName"
           label="组织名称"
@@ -16,7 +32,7 @@ export class CreateNewOrganization extends Component {
           }}
         />
         <TextFieldWrapper
-          name="organization-description"
+          name="organizationDescription"
           label="组织描述"
           type="text"
           autoComplete="new-password"
@@ -24,7 +40,7 @@ export class CreateNewOrganization extends Component {
             maxLength: 50,
           }}
         />
-      </>
+      </FormControl>
     );
   }
 }
