@@ -8,8 +8,8 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
-// import {USER} from '../constant';
-import {MAIN_PAGE} from '../constant';
+// import {USER} from '../constant';3ew
+import {MAIN_PAGE, USER} from '../constant';
 import {Toast, User} from '../services';
 import {FormControl, Line, Rules, Title} from '../ui';
 
@@ -144,8 +144,9 @@ export class TLogin extends Component<LoginProps & RouteComponentProps> {
   }
 
   handleRegisterClick(): void {
-    // const {history} = this.props;
-    // history.push(USER.REGISTER);
+    const {history} = this.props;
+
+    history.push(USER.REGISTER);
   }
 }
 
