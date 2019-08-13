@@ -4,6 +4,7 @@ import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 
 // import Wizard from '../assets/static/wizard.png';
+import {withSlide} from '../animations';
 import Wand from '../assets/static/wizard-white.jpg';
 import {Login} from '../components';
 import {Center} from '../ui';
@@ -90,29 +91,39 @@ const TipText = styled.div`
 //   margin-left: 20px !important;
 // ` as ComponentType<TypographyProps>;
 
-export class LoginPage extends Component {
+class LoginCard extends Component {
   render(): ReactNode {
     return (
+      <Box>
+        <LoginBox>
+          <Login />
+        </LoginBox>
+        <TipCard>
+          <WizardWrapper>
+            <Wizard src={Wand}></Wizard>
+          </WizardWrapper>
+          <TipHeader>
+            <Center lineColor="#fff">
+              <CenterText>ABOUT</CenterText>
+            </Center>
+          </TipHeader>
+          <TipBody>
+            <TipText>管理文档就像魔法一样...</TipText>
+            <TipText>哈！ 文档就管理好了！</TipText>
+          </TipBody>
+        </TipCard>
+      </Box>
+    );
+  }
+}
+
+export class LoginPage extends Component {
+  render(): ReactNode {
+    const Card = withSlide(LoginCard, 'left');
+
+    return (
       <LoginWrapper>
-        <Box>
-          <LoginBox>
-            <Login />
-          </LoginBox>
-          <TipCard>
-            <WizardWrapper>
-              <Wizard src={Wand}></Wizard>
-            </WizardWrapper>
-            <TipHeader>
-              <Center lineColor="#fff">
-                <CenterText>ABOUT</CenterText>
-              </Center>
-            </TipHeader>
-            <TipBody>
-              <TipText>管理文档就像魔法一样...</TipText>
-              <TipText>哈！ 文档就管理好了！</TipText>
-            </TipBody>
-          </TipCard>
-        </Box>
+        <Card></Card>
       </LoginWrapper>
     );
   }
