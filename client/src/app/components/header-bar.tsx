@@ -28,7 +28,7 @@ import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
 import {GitHubSvg} from '../assets';
-import Wizard from '../assets/static/wizard.png';
+import Wizard from '../assets/static/wizard-white.jpg';
 import {Links} from '../constant';
 import {User} from '../services';
 import {ProfileStore, RecentDrawer, UIControl} from '../store';
@@ -96,7 +96,7 @@ type HOCProps = WithStyles<typeof styles> & RouteComponentProps;
 export interface HeaderBarProps extends HOCProps {}
 
 const Logo = styled.img`
-  height: 32px;
+  height: 22px;
 `;
 
 const Row = styled.div`
