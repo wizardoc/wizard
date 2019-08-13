@@ -43,14 +43,6 @@ const StartedWrapper = styled.div`
   margin-top: 60px !important;
 `;
 
-// const GetStartedWrapper = styled.div`
-//   width: 100%;
-//   margin: 20px;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// `;
-
 const WizardTitle = styled.p`
   font-size: 70px;
   color: white;
@@ -71,13 +63,6 @@ const MainImg = styled.img`
 
 const WizardDescription = styled.div``;
 
-// const CenterText = styled(Typography)`
-//   display: flex;
-//   align-items: center;
-//   font-size: 25px !important;
-//   color: white;
-// ` as ComponentType<TypographyProps>;
-
 interface StartedProps extends RouteComponentProps {}
 
 class TStarted extends Component<StartedProps> {
@@ -91,7 +76,7 @@ class TStarted extends Component<StartedProps> {
     if (isLogin) {
       history.push(MAIN_PAGE.DOCUMENT);
     } else {
-      history.push(USER.REGISTER);
+      history.push(USER.LOGIN);
     }
   }
 
@@ -116,18 +101,7 @@ class TStarted extends Component<StartedProps> {
             </StartedWrapper>
           </WizardDescription>
           <MainImg src={Main} />
-          {/* <CenterText>The awesome document management platform</CenterText> */}
         </StartPanel>
-        {/* <GetStartedWrapper>
-          <GetStarted
-            variant="outlined"
-            color="primary"
-            onClick={() => this.handleGetStartClick()}
-          >
-            立即开始!
-          </GetStarted>
-          <GithubBtn />
-        </GetStartedWrapper> */}
       </Wrapper>
     );
   }
