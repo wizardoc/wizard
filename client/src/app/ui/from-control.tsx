@@ -42,6 +42,11 @@ interface FieldInfos {
   [index: string]: unknown;
 }
 
+const Wrapper = styled.div`
+  margin: 0 !important;
+  padding: 0 !important;
+`;
+
 const ErrorHelpMessage = styled(FormHelperText)`
   color: red !important;
 ` as ComponentType<FormHelperTextProps>;
@@ -145,12 +150,12 @@ export class FormControl extends Component<FormControlProps> {
       });
 
       return (
-        <div key={name}>
+        <Wrapper key={name}>
           {part}
           <ErrorHelpMessage id="component-error-text">
             {(this.errorManager[name] || {}).errMsg}
           </ErrorHelpMessage>
-        </div>
+        </Wrapper>
       );
     });
 
