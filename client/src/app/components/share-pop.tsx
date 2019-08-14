@@ -19,13 +19,14 @@ const styles = (): StyleRules =>
       position: 'absolute',
       width: '48px',
       height: '48px',
-      backgroundColor: '#cd0000',
+      backgroundColor: '#f06292',
       borderRadius: '50%',
       transition: 'transform 0.5s',
       bottom: '16px',
       left: 0,
       right: 0,
       margin: 'auto',
+      cursor: 'pointer',
     },
     img: {
       display: 'block',
@@ -56,13 +57,13 @@ const styles = (): StyleRules =>
       zIndex: 1,
       cursor: 'pointer',
     },
-    weiboIcon: {
+    weibo: {
       transform: `scale(1) translate(60px, -40px)`,
     },
-    wechatIcon: {
+    wechat: {
       transform: `scale(1) translate(0, -75px)`,
     },
-    qqIcon: {
+    qq: {
       transform: `scale(1) translate(-60px, -40px)`,
     },
   });
@@ -77,6 +78,21 @@ export class TSharePop extends Component<SharePopProps> {
   @action
   menuToggle(): void {
     this.isOpenMenu = !this.isOpenMenu;
+  }
+
+  @action
+  handleClickWeibo(): void {
+    console.info('111 click weibo');
+  }
+
+  @action
+  handleClickWechat(): void {
+    console.info('111 click wechat');
+  }
+
+  @action
+  handleClickQQ(): void {
+    console.info('111 click qq');
   }
 
   render(): ReactNode {
@@ -108,22 +124,25 @@ export class TSharePop extends Component<SharePopProps> {
           </label>
           <span
             className={`${classes.iconWrapper} ${
-              this.isOpenMenu ? classes.weiboIcon : ''
+              this.isOpenMenu ? classes.weibo : ''
             }`}
+            onClick={() => this.handleClickWeibo()}
           >
             <img className={classes.img} src={WeiboIcon} />
           </span>
           <span
             className={`${classes.iconWrapper} ${
-              this.isOpenMenu ? classes.wechatIcon : ''
+              this.isOpenMenu ? classes.wechat : ''
             }`}
+            onClick={() => this.handleClickWechat()}
           >
             <img className={classes.img} src={WechatIcon} />
           </span>
           <span
             className={`${classes.iconWrapper} ${
-              this.isOpenMenu ? classes.qqIcon : ''
+              this.isOpenMenu ? classes.qq : ''
             }`}
+            onClick={() => this.handleClickQQ()}
           >
             <img className={classes.img} src={QQIcon} />
           </span>
