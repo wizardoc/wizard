@@ -50,7 +50,7 @@ const IconWrapper = styled.span`
   position: absolute;
   width: 48px;
   height: 48px;
-  background-color: #f06292;
+  background-color: ${props => props.theme.secondaryColor};
   border-radius: 50%;
   transition: transform 0.5s;
   bottom: 16px;
@@ -71,8 +71,8 @@ const ShareButtonLabel = styled.label`
   display: block;
   width: 56px;
   line-height: 56px;
-  background-color: #f06292;
-  color: #fff;
+  background-color: ${props => props.theme.secondaryColor};
+  color: white;
   border-radius: 50%;
   margin-top: auto;
   position: relative;
