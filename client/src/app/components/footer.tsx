@@ -61,9 +61,15 @@ const Wizard = styled.img`
   margin: 0 10px;
 `;
 
-const WizardWrapper = styled.div`
+const WizardWrapperRight = styled.div`
+  flex: 1;
   display: flex;
   align-items: flex-start;
+`;
+
+const WizardWrapperLeft = styled.div`
+  flex: 1;
+  text-align: right;
 `;
 
 @observer
@@ -86,17 +92,19 @@ export class Footer extends Component {
         <InnerWrapper>
           <Shade isShutdown={this.isShutdown}>
             <CircleIconButtonWrapper>
-              <PrimaryTypography>Copyright</PrimaryTypography>
+              <WizardWrapperLeft>
+                <PrimaryTypography>Copyright</PrimaryTypography>
+              </WizardWrapperLeft>
               <IconButton onClick={() => this.handleCircleClick()}>
                 <SvgIcon>
                   <Circle />
                 </SvgIcon>
               </IconButton>
-              <WizardWrapper>
+              <WizardWrapperRight>
                 <PrimaryTypography>Wizard</PrimaryTypography>
                 <Wizard src={WhiteWizard} />
                 <PrimaryTypography>Since 2019</PrimaryTypography>
-              </WizardWrapper>
+              </WizardWrapperRight>
             </CircleIconButtonWrapper>
           </Shade>
         </InnerWrapper>
