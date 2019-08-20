@@ -1,4 +1,9 @@
-import {WithStyles, createStyles, withStyles} from '@material-ui/core';
+import {
+  ClickAwayListener,
+  WithStyles,
+  createStyles,
+  withStyles,
+} from '@material-ui/core';
 import {StyleRules} from '@material-ui/core/styles';
 import {action, observable} from 'mobx';
 import {observer} from 'mobx-react';
@@ -19,11 +24,6 @@ interface ShareIcon {
 
 const styles = (): StyleRules =>
   createStyles({
-    wrapper: {
-      position: 'fixed',
-      right: '110px',
-      bottom: '90px',
-    },
     target: {
       display: 'flex',
       textAlign: 'center',
@@ -45,6 +45,12 @@ const styles = (): StyleRules =>
       transform: `scale(1) translate(-60px, -40px)`,
     },
   });
+
+const Wrapper = styled.div`
+  position: fixed;
+  right: 110px;
+  bottom: 90px;
+`;
 
 const IconWrapper = styled.span`
   position: absolute;
@@ -92,6 +98,13 @@ export class TSharePop extends Component<SharePopProps> {
     this.isOpenMenu = !this.isOpenMenu;
   }
 
+  @action
+  handleClickAway(): void {
+    if (this.isOpenMenu) {
+      this.menuToggle();
+    }
+  }
+
   getClassOfWrapper = (className: unknown): string =>
     ((this.isOpenMenu && className) || '') as string;
 
@@ -109,7 +122,7 @@ export class TSharePop extends Component<SharePopProps> {
 
   render(): ReactNode {
     const {
-      classes: {wrapper, target, weibo, wechat, qq},
+      classes: {target, weibo, wechat, qq},
     } = this.props;
 
     const shareIcons: ShareIcon[] = [
@@ -139,15 +152,17 @@ export class TSharePop extends Component<SharePopProps> {
     );
 
     return (
-      <div className={wrapper}>
-        <Shape></Shape>
-        <div className={target}>
-          <ShareButtonLabel onClick={() => this.menuToggle()}>
-            分享
-          </ShareButtonLabel>
-          {shareIconNodes}
-        </div>
-      </div>
+      <ClickAwayListener onClickAway={() => this.menuToggle()}>
+        <Wrapper>
+          <Shape></Shape>
+          <div className={target}>
+            <ShareButtonLabel onClick={() => this.handleClickAway()}>
+              分享
+            </ShareButtonLabel>
+            {shareIconNodes}
+          </div>
+        </Wrapper>
+      </ClickAwayListener>
     );
   }
 }
