@@ -152,11 +152,11 @@ export class TSharePop extends Component<SharePopProps> {
     );
 
     return (
-      <ClickAwayListener onClickAway={() => this.menuToggle()}>
+      <ClickAwayListener onClickAway={() => this.handleClickAway()}>
         <Wrapper>
           <Shape></Shape>
           <div className={target}>
-            <ShareButtonLabel onClick={() => this.handleClickAway()}>
+            <ShareButtonLabel onClick={() => this.menuToggle()}>
               分享
             </ShareButtonLabel>
             {shareIconNodes}
