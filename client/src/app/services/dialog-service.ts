@@ -1,10 +1,18 @@
 import {ButtonProps} from '@material-ui/core/Button';
 import {observable} from 'mobx';
 import {ComponentType} from 'react';
-import {Injectable} from 'react-ts-di';
+import {Inject, Injectable} from 'react-ts-di';
 import UUID from 'uuid';
 
 import {Loading} from '../components';
+
+import {ErrorManager} from './error-manager';
+import {Time, TimeUnit} from './time';
+import {Toast} from './toast';
+
+interface LoadingOptions {
+  timeout: TimeUnit;
+}
 
 export interface CloseOptions {
   isDestroy: boolean;
@@ -44,6 +52,12 @@ export interface DialogOptions<T = ParsedActionButtons> {
 
 @Injectable()
 export class DialogService {
+  @Inject
+  private toast!: Toast;
+
+  @Inject
+  private errorManager!: ErrorManager;
+
   @observable
   dialogs = new Map<string, DialogOptions>();
 
@@ -109,10 +123,25 @@ export class DialogService {
 
   async loading(
     cb: (...args: unknown[]) => Promise<void> | void,
+    options?: LoadingOptions,
   ): Promise<void> {
+    const {timeout} = options || {timeout: 10 * Time.Second};
+    const timeoutId = setTimeout(() => {
+      this.closeLoading();
+      this.toast.warning('操作太长时间啦！');
+    }, timeout);
+
     this.openLoading();
-    await cb();
+
+    try {
+      await cb();
+    } catch (e) {
+      clearTimeout(timeoutId);
+      this.errorManager.spurtError(e);
+    }
+
     this.closeLoading();
+    clearTimeout(timeoutId);
   }
 
   private openLoading(): void {
