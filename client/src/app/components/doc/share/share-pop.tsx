@@ -1,9 +1,4 @@
-import {
-  ClickAwayListener,
-  WithStyles,
-  createStyles,
-  withStyles,
-} from '@material-ui/core';
+import {WithStyles, createStyles, withStyles} from '@material-ui/core';
 import {StyleRules} from '@material-ui/core/styles';
 import {action, observable} from 'mobx';
 import {observer} from 'mobx-react';
@@ -94,15 +89,8 @@ export class TSharePop extends Component<SharePopProps> {
   private isOpenMenu = false;
 
   @action
-  menuToggle(): void {
-    this.isOpenMenu = !this.isOpenMenu;
-  }
-
-  @action
   handleClickAway(): void {
-    if (this.isOpenMenu) {
-      this.menuToggle();
-    }
+    this.isOpenMenu = !this.isOpenMenu;
   }
 
   getClassOfWrapper = (className: unknown): string =>
@@ -152,7 +140,7 @@ export class TSharePop extends Component<SharePopProps> {
     );
 
     return (
-      <ClickAwayListener onClickAway={() => this.menuToggle()}>
+      <div>
         <Wrapper>
           <Shape></Shape>
           <div className={target}>
@@ -162,7 +150,7 @@ export class TSharePop extends Component<SharePopProps> {
             {shareIconNodes}
           </div>
         </Wrapper>
-      </ClickAwayListener>
+      </div>
     );
   }
 }
