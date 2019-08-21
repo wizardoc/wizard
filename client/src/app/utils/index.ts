@@ -4,3 +4,4 @@ export * from './storage';
 export * from './MIME';
 export * from './parsers';
 export * from './markdown';
+export * from './typeof';
