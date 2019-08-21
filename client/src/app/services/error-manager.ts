@@ -1,5 +1,7 @@
 import {Inject, Injectable} from 'react-ts-di';
 
+import {typeOf} from '../utils';
+
 import {Toast} from './toast';
 
 interface Errors {
@@ -23,12 +25,28 @@ export class ErrorManager {
     4003: '该用户已被禁止',
   };
 
+  private readonly SYSTEM_ERRORS = {
+    NetworkError: '网络错误',
+  };
+
   getErrorMessage(errorCode: number | string): string {
     return this.ERRORS[errorCode];
   }
 
-  spurtError(errorCode: number | string): void {
-    this.toast.error(this.getErrorMessage(errorCode));
+  getErrorMessageBySystem(errMsg: string): string {
+    return this.SYSTEM_ERRORS[errMsg.replace(/\s/, '')] || errMsg;
+  }
+
+  /** 通过 errorCode 来抛出 toast 错误信息 */
+  spurtError(errorCode: number | string): void;
+  // tslint:disable-next-line:unified-signatures
+  spurtError(e: Error): void;
+  spurtError(query: number | string | Error): void {
+    if (typeOf(query).isError()) {
+      this.toast.error(this.getErrorMessageBySystem((query as Error).message));
+    } else {
+      this.toast.error(this.getErrorMessage(query as number | string));
+    }
   }
 }
 
