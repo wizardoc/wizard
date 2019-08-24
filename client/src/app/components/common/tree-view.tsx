@@ -3,7 +3,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TreeItem, {TreeItemProps} from '@material-ui/lab/TreeItem';
 import TreeView from '@material-ui/lab/TreeView';
-import React, {Component, ComponentType, ReactNode} from 'react';
+import React, {Component, ComponentType, MouseEvent, ReactNode} from 'react';
 import styled from 'styled-components';
 
 import {TreeNode, markdownParser} from '../../utils';
@@ -15,7 +15,8 @@ export interface TreeViewProps {
 
 const StyledTreeItem = styled(TreeItem)`
   .MuiTreeItem-root:focus > .MuiTreeItem-content {
-    background: rgba(25, 118, 210, 0.08);
+    background: ${props => props.theme.primaryColor} !important;
+    color: white;
   }
 
   .MuiTreeItem-group {
@@ -64,7 +65,11 @@ export class TreeViewGenerator extends Component<TreeViewProps> {
     );
   }
 
-  private handleTreeItemClick(text: string): void {
+  private handleTreeItemClick(e: MouseEvent, text: string): void {
+    e.stopPropagation();
+
+    console.info(text);
+
     location.hash = text;
   }
 
@@ -76,7 +81,7 @@ export class TreeViewGenerator extends Component<TreeViewProps> {
         key={node.index}
         nodeId={node.index.toString()}
         label={node.text}
-        onClick={() => this.handleTreeItemClick(node.text)}
+        onMouseDown={(e: MouseEvent) => this.handleTreeItemClick(e, node.text)}
       >
         {!!children.length
           ? children.map(child => this.createTreeNode(child))
