@@ -22,7 +22,7 @@ import {GlobalStyle, ThemeProvider, styledTheme, theme} from './theme';
 // import {GhostPage} from './ui';
 import {InjectStore} from './utils';
 
-const MAX_SNACK_BAR_COUNT = 5;
+const MAX_SNACK_BAR_COUNT = 3;
 
 const Wrapper = styled.div`
   min-height: 100%;
