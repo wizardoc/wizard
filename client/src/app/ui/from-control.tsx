@@ -42,6 +42,15 @@ interface FieldInfos {
   [index: string]: unknown;
 }
 
+interface ValidatorInfo {
+  isError: boolean;
+  validator(): void;
+}
+
+interface ValidatorInfos {
+  [index: string]: ValidatorInfo;
+}
+
 const Wrapper = styled.div`
   margin: 0 !important;
   padding: 0 !important;
@@ -58,6 +67,9 @@ export class FormControl extends Component<FormControlProps> {
 
   @observable
   private fieldInfos: FieldInfos = {};
+
+  @observable
+  private validators: ValidatorInfos = {};
 
   render(): ReactNode {
     const {children, rules, onFormDataChange} = this.props;
@@ -91,28 +103,40 @@ export class FormControl extends Component<FormControlProps> {
       const errorThrower = (msg?: string): void => {
         setErrMsg(msg);
 
+        this.validators[name].isError = true;
         isError = true;
       };
-      const validator: Validator =
-        rule.validator ||
-        (required
-          ? (
-              _rule: Rule,
-              value: string,
-              cb: (errMsg?: string) => void,
-            ): void => {
-              const throwErrMsg = errMsg || `${name} 不能为空`;
 
-              if (!value || value === '') {
-                cb(throwErrMsg);
-              }
+      if (!this.validators[name]) {
+        // 收集各个输入框的 validator
+        this.validators[name] = {
+          validator: () => {
+            validator(rule, this.fieldInfos[name] as string, errorThrower);
+          },
+          isError: false,
+        };
+      }
+
+      /** 用户自定义 validator */
+      const userValidator = rule.validator || ((): void => {});
+      const validator: Validator = required
+        ? (_rule: Rule, value: string, cb: (errMsg?: string) => void): void => {
+            const throwErrMsg = errMsg || `${name} 不能为空`;
+
+            if (!value || value === '') {
+              cb(throwErrMsg);
             }
-          : () => {});
+
+            userValidator(_rule, value, cb);
+          }
+        : userValidator;
       const originListener = part.props[listenerName] || ((): void => {});
       const sysListener = (e: unknown): void => {
         originListener(e);
 
         isError = false;
+        this.validators[name].isError = false;
+
         validator(
           rule,
           (e as ChangeEvent<HTMLInputElement>).target.value,
@@ -160,5 +184,18 @@ export class FormControl extends Component<FormControlProps> {
     });
 
     return <>{parts}</>;
+  }
+
+  validate(): boolean {
+    let validateResult = false;
+
+    for (const info of Object.keys(this.validators)) {
+      const {validator, isError} = this.validators[info];
+
+      validator();
+      validateResult = validateResult || isError;
+    }
+
+    return !validateResult;
   }
 }
