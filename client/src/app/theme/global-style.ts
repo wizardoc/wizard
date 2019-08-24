@@ -29,6 +29,7 @@ export const GlobalStyle = createGlobalStyle`
     align-items: center;
 
     & .md-img {
+      border-radius: 5px;
       max-width: 600px;
       max-height: 500px;
     }
