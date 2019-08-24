@@ -2,7 +2,7 @@ import {Button, Link} from '@material-ui/core';
 import {LinkProps} from '@material-ui/core/Link';
 import {observable} from 'mobx';
 import {observer} from 'mobx-react';
-import React, {Component, ComponentType, ReactNode} from 'react';
+import React, {Component, ComponentType, ReactNode, createRef} from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 // import {RouteComponentProps} from 'react-router-dom';
 import {Inject} from 'react-ts-di';
@@ -77,6 +77,8 @@ export class TLogin extends Component<LoginProps & RouteComponentProps> {
   @observable
   private formData: FormData | undefined;
 
+  private formControlRef = createRef<FormControl>();
+
   private rules: Rules = {
     username: {
       required: true,
@@ -87,6 +89,9 @@ export class TLogin extends Component<LoginProps & RouteComponentProps> {
         }
       },
     },
+    password: {
+      required: true,
+    },
   };
 
   render(): ReactNode {
@@ -95,6 +100,7 @@ export class TLogin extends Component<LoginProps & RouteComponentProps> {
         <LoginTitle>登录</LoginTitle>
         <Wrapper>
           <FormControl
+            ref={this.formControlRef}
             onFormDataChange={(formData: unknown) => {
               this.formData = formData as FormData;
             }}
@@ -124,7 +130,21 @@ export class TLogin extends Component<LoginProps & RouteComponentProps> {
     );
   }
 
+  validate(): boolean {
+    const {current} = this.formControlRef;
+
+    if (current) {
+      return current.validate();
+    }
+
+    return false;
+  }
+
   async handleLoginClick(): Promise<void> {
+    if (!this.validate()) {
+      return;
+    }
+
     if (!this.formData) {
       return;
     }
