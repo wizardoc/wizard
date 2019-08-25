@@ -1,37 +1,55 @@
-import {Grow} from '@material-ui/core';
-import {SlideProps} from '@material-ui/core/Slide';
+import Slide, {SlideProps} from '@material-ui/core/Slide';
 import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 import React, {Component, ComponentType, ReactNode} from 'react';
 
-export function withSlide(
-  Target: ComponentType<any>,
-  direction: SlideProps['direction'],
-): ComponentType<any> {
-  @observer
-  class TSlide extends Component<any> {
-    @observable
-    private isMounted = false;
+interface WithSlideOptions {
+  direction: SlideProps['direction'];
+  timeout: number;
+}
 
-    render(): ReactNode {
-      console.info(direction);
+export interface WithSlideProps {
+  exitAnimation(cb: Function): void;
+}
 
-      return (
-        <Grow in={this.isMounted} timeout={1000}>
-          <Target {...this.props}></Target>
-        </Grow>
-      );
+export function withSlide(options: WithSlideOptions): any {
+  // tslint:disable-next-line:only-arrow-functions
+  return function<P extends WithSlideProps>(
+    Wrapper: ComponentType<P>,
+  ): ComponentType<Exclude<P, keyof WithSlideProps>> {
+    @observer
+    class Body extends Component<Exclude<P, keyof WithSlideProps>> {
+      @observable
+      private isMounted = false;
+
+      render(): ReactNode {
+        return (
+          <Slide {...options} in={this.isMounted} unmountOnExit>
+            <div>
+              <Wrapper
+                {...this.props}
+                exitAnimation={(cb: Function) => {
+                  this.handleExistAnimation(cb);
+                }}
+              ></Wrapper>
+            </div>
+          </Slide>
+        );
+      }
+
+      handleExistAnimation(cb: Function): void {
+        const {timeout} = options;
+
+        this.isMounted = false;
+
+        setTimeout(() => cb(), timeout);
+      }
+
+      componentDidMount(): void {
+        this.isMounted = true;
+      }
     }
 
-    componentDidMount(): void {
-      this.isMounted = true;
-      console.info(this.isMounted);
-    }
-
-    componentWillUnmount(): void {
-      this.isMounted = false;
-    }
-  }
-
-  return TSlide;
+    return Body;
+  };
 }
