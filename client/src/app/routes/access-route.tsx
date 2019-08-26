@@ -1,6 +1,5 @@
 import React, {Component, ReactNode} from 'react';
 import {Route, RouteComponentProps, Switch, withRouter} from 'react-router-dom';
-import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
 import {LoginPage} from '../pages/login-page';
 import {RegisterPage} from '../pages/register-page';
