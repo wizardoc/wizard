@@ -4,6 +4,7 @@ import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 
 // import Wizard from '../assets/static/wizard.png';
+import {WithSlideProps, withSlide} from '../animations';
 import Wand from '../assets/static/wizard-white.jpg';
 import {Login} from '../components';
 import {Center} from '../ui';
@@ -90,12 +91,14 @@ const TipText = styled.div`
 //   margin-left: 20px !important;
 // ` as ComponentType<TypographyProps>;
 
-class LoginCard extends Component {
+class LoginCard extends Component<WithSlideProps> {
   render(): ReactNode {
+    const {exitAnimation} = this.props;
+
     return (
       <Box>
         <LoginBox>
-          <Login />
+          <Login exitAnimation={exitAnimation} />
         </LoginBox>
         <TipCard>
           <WizardWrapper>
@@ -118,9 +121,14 @@ class LoginCard extends Component {
 
 export class LoginPage extends Component {
   render(): ReactNode {
+    const Card = withSlide({
+      direction: 'left',
+      timeout: 300,
+    })(LoginCard);
+
     return (
       <LoginWrapper>
-        <LoginCard></LoginCard>
+        <Card></Card>
       </LoginWrapper>
     );
   }
