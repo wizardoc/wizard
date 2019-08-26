@@ -9,7 +9,6 @@ import {UserName} from '../access/username';
 export const TextFieldWrapper = styled(FormTextField)`
   width: 300px;
   margin: 0 50px;
-  margin-top: 15px !important;
 ` as ComponentType<FormTextFieldProps>;
 
 export interface BaseInfoData {
@@ -31,7 +30,7 @@ export class BaseInfo extends Component<BaseInfoProps> {
     return (
       <FormControl
         rules={{
-          name: {required: true},
+          displayName: {required: true},
           username: {required: true},
           password: {required: true},
           email: {required: true},
