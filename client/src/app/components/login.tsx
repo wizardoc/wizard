@@ -1,4 +1,4 @@
-import {Button, Link} from '@material-ui/core';
+import {Button} from '@material-ui/core';
 import {LinkProps} from '@material-ui/core/Link';
 import {observable} from 'mobx';
 import {observer} from 'mobx-react';
@@ -9,9 +9,10 @@ import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
 // import {USER} from '../constant';3ew
+import {WithSlideProps} from '../animations';
 import {MAIN_PAGE, USER} from '../constant';
 import {Toast, User} from '../services';
-import {FormControl, Line, Rules, Title} from '../ui';
+import {A, FormControl, Line, Rules, Title} from '../ui';
 
 import {Password} from './access/password';
 import {UserName} from './access/username';
@@ -39,8 +40,7 @@ const ActionButton = styled(Button)`
 
 const LoginButton = styled(ActionButton)``;
 
-const JumpLink = styled(Link)`
-  cursor: pointer !important;
+const JumpLink = styled(A)`
   margin-top: 10px !important;
 ` as ComponentType<LinkProps>;
 
@@ -67,7 +67,9 @@ const LoginTitle = styled(Title)`
 `;
 
 @observer
-export class TLogin extends Component<LoginProps & RouteComponentProps> {
+export class TLogin extends Component<
+  LoginProps & RouteComponentProps & WithSlideProps
+> {
   @Inject
   private userService!: User;
 
@@ -164,9 +166,9 @@ export class TLogin extends Component<LoginProps & RouteComponentProps> {
   }
 
   handleRegisterClick(): void {
-    const {history} = this.props;
+    const {history, exitAnimation} = this.props;
 
-    history.push(USER.REGISTER);
+    exitAnimation(() => history.push(USER.REGISTER));
   }
 }
 

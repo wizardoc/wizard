@@ -1,6 +1,7 @@
-import React, {Component, ReactNode} from 'react';
+import React, {Component, FunctionComponent, ReactNode} from 'react';
 import styled from 'styled-components';
 
+import {WithSlideProps, withSlide} from '../animations';
 import {Register} from '../components';
 
 import {AccessBox, Wrapper} from './common-style-component/access-wrapper';
@@ -15,14 +16,29 @@ const TipCard = styled.div`
   margin-right: 20px;
 `;
 
+const CardWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Card: FunctionComponent = withSlide({
+  direction: 'right',
+  timeout: 300,
+})(({exitAnimation}: WithSlideProps) => (
+  <CardWrapper>
+    <TipCard></TipCard>
+    <RegisterBox>
+      <Register exitAnimation={exitAnimation} />
+    </RegisterBox>
+  </CardWrapper>
+));
+
 export class RegisterPage extends Component {
   render(): ReactNode {
     return (
       <Wrapper>
-        <TipCard></TipCard>
-        <RegisterBox>
-          <Register />
-        </RegisterBox>
+        <Card></Card>
       </Wrapper>
     );
   }

@@ -7,15 +7,19 @@ import FilterVintageIcon from '@material-ui/icons/FilterVintage';
 import {action, observable} from 'mobx';
 import {observer} from 'mobx-react';
 import React, {Component, ComponentType, ReactNode} from 'react';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
+import {WithSlideProps} from '../../animations';
+import {USER} from '../../constant';
 import {
   OrganizationService,
   ParsedRegisterData,
   Toast,
   User,
 } from '../../services';
+import {A, Title} from '../../ui';
 
 import {BaseInfo, BaseInfoData} from './base-info';
 import {Complete} from './complete';
@@ -36,7 +40,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  padding: 50px 24px !important;
+  padding-bottom: 30px;
   flex-direction: column;
   transition: 0.3s height;
 `;
@@ -71,8 +75,14 @@ const NextStep = styled(Button)`
   width: 200px;
 `;
 
+const RegisterTitle = styled(Title)``;
+
+const TitleWrapper = styled.div`
+  width: 100%;
+`;
+
 @observer
-export class Register extends Component {
+class RouterRegister extends Component<WithSlideProps & RouteComponentProps> {
   @Inject
   private toast!: Toast;
 
@@ -183,6 +193,12 @@ export class Register extends Component {
     this.organizationInfo = info;
   }
 
+  handleLoginClick(): void {
+    const {history, exitAnimation} = this.props;
+
+    exitAnimation(() => history.push(USER.LOGIN));
+  }
+
   async handleNextClick(): Promise<void> {
     if (this.isFinish()) {
       // complete register logic
@@ -206,6 +222,9 @@ export class Register extends Component {
   render(): ReactNode {
     return (
       <Wrapper>
+        <TitleWrapper>
+          <RegisterTitle>注册</RegisterTitle>
+        </TitleWrapper>
         <StepperWrapper activeStep={this.currentIndex}>
           {steps.map((label, index) => (
             <Step key={label} completed={index < this.currentIndex}>
@@ -239,7 +258,10 @@ export class Register extends Component {
             </NextStep>
           </ButtonsWrapper>
         </Row>
+        <A onClick={() => this.handleLoginClick()}>已有账号？立即登录！</A>
       </Wrapper>
     );
   }
 }
+
+export const Register = withRouter(RouterRegister);
