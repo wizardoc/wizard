@@ -4,7 +4,6 @@ import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 
 // import Wizard from '../assets/static/wizard.png';
-import {withSlide} from '../animations';
 import Wand from '../assets/static/wizard-white.jpg';
 import {Login} from '../components';
 import {Center} from '../ui';
@@ -119,11 +118,9 @@ class LoginCard extends Component {
 
 export class LoginPage extends Component {
   render(): ReactNode {
-    const Card = withSlide(LoginCard, 'left');
-
     return (
       <LoginWrapper>
-        <Card></Card>
+        <LoginCard></LoginCard>
       </LoginWrapper>
     );
   }
