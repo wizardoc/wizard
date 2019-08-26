@@ -10,10 +10,6 @@ import {observer} from 'mobx-react';
 import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 
-import QQIcon from '../../../assets/static/share/qq-transparent.png';
-import WechatIcon from '../../../assets/static/share/wechat-transparent.png';
-import WeiboIcon from '../../../assets/static/share/weibo-transparent.png';
-
 import {Shape} from './@shape';
 
 interface ShareIcon {
@@ -66,7 +62,7 @@ const IconWrapper = styled.span`
   cursor: pointer;
 `;
 
-const IconImage = styled.img`
+const IconImage = styled.i`
   display: block;
   width: 30px;
   height: 30px;
@@ -127,17 +123,17 @@ export class TSharePop extends Component<SharePopProps> {
 
     const shareIcons: ShareIcon[] = [
       {
-        icon: WeiboIcon,
+        icon: 'icon-weibo iconfont',
         className: this.getClassOfWrapper(weibo),
         clickHandler: (): void => this.handleWeiboClick(),
       },
       {
-        icon: QQIcon,
+        icon: 'icon-qq iconfont',
         className: this.getClassOfWrapper(qq),
         clickHandler: (): void => this.handleQQClick(),
       },
       {
-        icon: WechatIcon,
+        icon: 'icon-wechat iconfont',
         className: this.getClassOfWrapper(wechat),
         clickHandler: (): void => this.handleWechatClick(),
       },
@@ -146,7 +142,7 @@ export class TSharePop extends Component<SharePopProps> {
     const shareIconNodes = shareIcons.map(
       ({icon, className, clickHandler}: ShareIcon) => (
         <IconWrapper key={icon} className={className} onClick={clickHandler}>
-          <IconImage src={icon}></IconImage>
+          <IconImage className={icon}></IconImage>
         </IconWrapper>
       ),
     );
