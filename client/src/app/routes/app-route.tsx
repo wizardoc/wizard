@@ -40,6 +40,8 @@ export class TAppRoutes extends Component<
           key={location.pathname}
           classNames={'fade'}
           timeout={500}
+          mountOnEnter
+          unmountOnExit
         >
           <Switch location={location}>
             <Route exact path="/" render={() => <Redirect to="/home" />} />
