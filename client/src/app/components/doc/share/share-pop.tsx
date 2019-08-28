@@ -60,6 +60,7 @@ const IconWrapper = styled.span`
   right: 0;
   margin: auto;
   cursor: pointer;
+  color: white;
 `;
 
 const IconImage = styled.i`
@@ -67,6 +68,7 @@ const IconImage = styled.i`
   width: 30px;
   height: 30px;
   margin: 9px auto;
+  font-size: 26px !important;
 `;
 
 const ShareButtonLabel = styled.label`
