@@ -36,6 +36,8 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .md-heading {
+    font-weight: 300;
+
     &:target {
       padding-top: 70px;
       margin-top: -70px;
