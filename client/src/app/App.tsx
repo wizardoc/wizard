@@ -15,7 +15,7 @@ import {
   Profile,
   SharePop,
 } from './components';
-import {BrowserRoutes} from './routes';
+import {AccessRoute, AppRoutes} from './routes';
 import {DialogService} from './services';
 import {TipStore} from './store';
 import {GlobalStyle, ThemeProvider, styledTheme, theme} from './theme';
@@ -59,7 +59,8 @@ class TApp extends Component<WithSnackbarProps> {
             <Profile />
             <Wrapper>
               <HeaderBar />
-              <BrowserRoutes />
+              <AppRoutes />
+              <AccessRoute />
               <FloatingPop />
               <SharePop />
               <Footer />
