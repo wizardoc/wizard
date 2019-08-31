@@ -9,8 +9,12 @@ renderer.image = (href, _title, text): string =>
   </div>`;
 
 renderer.heading = (text: string, level: number): string => {
-  return `<h${level} id="${text}" class="md-heading">${text}</h${level}>`;
+  const rawText = text.replace(/<span class="md-text">(.+?)<\/span>/, '$1');
+
+  return `<h${level} class="md-heading">${rawText}</h${level}>`;
 };
+
+renderer.text = (text: string) => `<span class="md-text">${text}</span>`;
 
 export const markdown = Marked.setOptions({
   renderer,
