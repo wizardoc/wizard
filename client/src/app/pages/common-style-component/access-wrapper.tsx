@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
 
 export const AccessBox = styled.div`
   width: 500px;
-  height: fit-content;
+  height: 100%;
   background: #fff;
-  border-radius: 10px;
+  border-radius: 0 10px 10px 0;
 `;

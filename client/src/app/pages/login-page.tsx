@@ -7,9 +7,10 @@ import styled from 'styled-components';
 import {WithSlideProps, withSlide} from '../animations';
 import Wand from '../assets/static/wizard-white.jpg';
 import {Login} from '../components';
-import {Center} from '../ui';
 
 import {AccessBox, Wrapper} from './common-style-component/access-wrapper';
+import {CenterLine} from './common-style-component/center';
+import {TipBody, TipText} from './common-style-component/tip';
 
 const LoginWrapper = styled(Wrapper)`
   display: flex;
@@ -22,11 +23,6 @@ const LoginBox = styled(AccessBox)`
   height: 450px;
   border-radius: 10px 0 0 10px;
 `;
-
-// const Logo = styled.img`
-//   width: 120px;
-//   margin-bottom: 30px;
-// `;
 
 const Box = styled.div`
   display: flex;
@@ -55,42 +51,6 @@ const WizardWrapper = styled.div`
   align-items: center;
 `;
 
-const TipHeader = styled.div`
-  width: 100%;
-  margin-top: 100px;
-  padding: 0 30px;
-  box-sizing: border-box;
-`;
-
-const CenterText = styled.span`
-  color: white;
-`;
-
-const TipBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 30px;
-`;
-
-const TipText = styled.div`
-  color: white;
-  margin-top: 20px;
-`;
-
-// const Banner = styled.div`
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-// `;
-
-// const Title = styled(Typography)`
-//   font-size: 58px !important;
-//   color: #636e72;
-//   font-weight: 100 !important;
-//   margin-left: 20px !important;
-// ` as ComponentType<TypographyProps>;
-
 class LoginCard extends Component<WithSlideProps> {
   render(): ReactNode {
     const {exitAnimation} = this.props;
@@ -104,11 +64,7 @@ class LoginCard extends Component<WithSlideProps> {
           <WizardWrapper>
             <Wizard src={Wand}></Wizard>
           </WizardWrapper>
-          <TipHeader>
-            <Center lineColor="#fff">
-              <CenterText>ABOUT</CenterText>
-            </Center>
-          </TipHeader>
+          <CenterLine>LOGIN</CenterLine>
           <TipBody>
             <TipText>管理文档就像魔法一样...</TipText>
             <TipText>哈！ 文档就管理好了！</TipText>
