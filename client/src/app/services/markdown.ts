@@ -1,4 +1,6 @@
-import {Injectable} from 'react-ts-di';
+import {Inject, Injectable} from 'react-ts-di';
+
+import {CacheService} from './cache';
 
 export interface TreeNode extends ParsedTreeNode {
   index: string;
@@ -23,7 +25,27 @@ interface NodeInfo {
 
 @Injectable()
 export class Markdown {
+  @Inject
+  cache!: CacheService;
+
+  private readonly CACHE_KEY = 'markdownService';
+
   parse(content: string): Root {
+    // 防止缓存异常
+    if (content === '') {
+      return {children: [], parsedFlatNodeIndexes: []};
+    }
+
+    const cacheResult = this.cache.getContent(this.CACHE_KEY);
+
+    if (!cacheResult) {
+      return this.cache.setCache(this.CACHE_KEY, this.parseMD(content));
+    }
+
+    return cacheResult as Root;
+  }
+
+  private parseMD(content: string): Root {
     // traverse
     const titles = (content.match(/(?:^|\n|\s)(#+\s.+)/g) || []).map(
       (cap: string) => cap.trim(),
