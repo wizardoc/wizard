@@ -1,14 +1,3 @@
-type Asserter = () => boolean;
-
-interface TypeAsserter {
-  isObject: Asserter;
-  isArray: Asserter;
-  isString: Asserter;
-  isNumber: Asserter;
-  isBoolean: Asserter;
-  isError: Asserter;
-}
-
 export const enum DataType {
   Object = '[object Object]',
   Array = '[object Array]',
@@ -26,13 +15,20 @@ export function typeAssert(target: unknown): string {
   return Object.prototype.toString.call(target);
 }
 
-export function typeOf(target: unknown): TypeAsserter {
-  return {
-    isObject: () => compare(target, DataType.Object),
-    isArray: () => compare(target, DataType.Array),
-    isString: () => compare(target, DataType.String),
-    isNumber: () => compare(target, DataType.Number),
-    isBoolean: () => compare(target, DataType.Boolean),
-    isError: () => compare(target, DataType.Error),
-  };
-}
+export const isObject = (target: unknown): target is object =>
+  compare(target, DataType.Object);
+
+export const isArray = <T>(target: unknown): target is T[] =>
+  compare(target, DataType.Array);
+
+export const isString = (target: unknown): target is string =>
+  compare(target, DataType.String);
+
+export const isNumber = (target: unknown): target is number =>
+  compare(target, DataType.Number);
+
+export const isBoolean = (target: unknown): target is boolean =>
+  compare(target, DataType.Boolean);
+
+export const isError = (target: unknown): target is Error =>
+  compare(target, DataType.Error);

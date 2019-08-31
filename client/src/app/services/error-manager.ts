@@ -1,6 +1,6 @@
 import {Inject, Injectable} from 'react-ts-di';
 
-import {typeOf} from '../utils';
+import {isError} from '../utils';
 
 import {Toast} from './toast';
 
@@ -43,10 +43,10 @@ export class ErrorManager {
   // tslint:disable-next-line:unified-signatures
   spurtError(e: Error): void;
   spurtError(query: number | string | Error): void {
-    if (typeOf(query).isError()) {
-      this.toast.error(this.getErrorMessageBySystem((query as Error).message));
+    if (isError(query)) {
+      this.toast.error(this.getErrorMessageBySystem(query.message));
     } else {
-      this.toast.error(this.getErrorMessage(query as number | string));
+      this.toast.error(this.getErrorMessage(query));
     }
   }
 }
