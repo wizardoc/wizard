@@ -6,7 +6,12 @@ import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
 import {RouterAnimation} from '../animations';
-import {MDRender, PageHeader, TreeViewGenerator} from '../components';
+import {
+  Contributors,
+  MDRender,
+  PageHeader,
+  TreeViewGenerator,
+} from '../components';
 import {DialogService, DocService} from '../services';
 
 const Wrapper = styled.div``;
@@ -37,6 +42,11 @@ const PageContent = styled.div`
   box-sizing: border-box;
 `;
 
+const ContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 @observer
 class TAbout extends Component {
   @Inject
@@ -64,7 +74,10 @@ class TAbout extends Component {
             ></TreeViewGenerator>
           </Side>
           <Fade in={this.isMounted} timeout={500}>
-            <Content content={this.content}></Content>
+            <ContentWrapper>
+              <Content content={this.content}></Content>
+              <Contributors></Contributors>
+            </ContentWrapper>
           </Fade>
         </PageContent>
       </Wrapper>
