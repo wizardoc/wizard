@@ -9,3 +9,4 @@ export * from './login';
 export * from './user';
 export * from './common';
 export * from './doc';
+export * from './about';
