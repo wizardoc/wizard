@@ -16,6 +16,9 @@ renderer.heading = (text: string, level: number): string => {
 
 renderer.text = (text: string) => `<span class="md-text">${text}</span>`;
 
+renderer.codespan = (codespan: string) =>
+  `<span class="md-codespan">${codespan}</span>`;
+
 export const markdown = Marked.setOptions({
   renderer,
   gfm: true,

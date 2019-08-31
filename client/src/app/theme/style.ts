@@ -24,6 +24,7 @@ export const styledTheme = {
   redLinearGradient: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
   spacing: '10px',
   baseBgColor: '#eceff1',
+  codeBgColor: '#f8f8f8',
 };
 
 export default styled;

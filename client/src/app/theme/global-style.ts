@@ -22,6 +22,13 @@ export const GlobalStyle = createGlobalStyle`
     border-radius: 10px;
   }
 
+  .md-codespan {
+    background: #f8f8f8;
+    color: #f06292;
+    padding: 3px 10px;
+    border-radius: 5px;
+  }
+
   .md-img-container {
     width: 100%;
     display: flex;
