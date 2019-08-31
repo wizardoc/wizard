@@ -79,13 +79,14 @@ export class Markdown {
         continue;
       }
 
-      if (node.level < lessLevelNode.level) {
+      if (node.level === lessLevelNode.level) {
+        lessLevelNode = node;
+        stashNode.children.push(node);
+      } else if (node.level < lessLevelNode.level) {
         lessLevelNode.children.push(node);
 
         stashNode = lessLevelNode;
         lessLevelNode = node;
-      } else if (node.level === lessLevelNode.level) {
-        stashNode.children.push(node);
       } else if (node.level < topLevelNode.level) {
         topLevelNode.children.push(node);
       } else if (node.level >= topLevelNode.level) {
