@@ -8,12 +8,8 @@ renderer.image = (href, _title, text): string =>
   <img class="md-img" src="${href}" alt="${text}" />
   </div>`;
 
-renderer.heading = (text: string, level: number): string => {
-  const rawText = text.replace(/<span class="md-text">(.+?)<\/span>/, '$1');
-
-  return `<h${level} class="md-heading">${rawText}</h${level}>`;
-};
-
+renderer.heading = (_text: string, level: number, raw: string): string =>
+  `<h${level} class="md-heading" id=${raw}>${raw}</h${level}>`;
 renderer.text = (text: string) => `<span class="md-text">${text}</span>`;
 
 renderer.codespan = (codespan: string) =>
