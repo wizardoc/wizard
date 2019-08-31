@@ -27,6 +27,7 @@ export const styledTheme = {
   codeBgColor: '#f8f8f8',
   shallowBlue: 'rgba(25, 118, 210, 0.08)',
   articleColor: '#2f2f2f',
+  quoteBgColor: 'rgba(255, 218, 121,0.2)',
 };
 
 export default styled;
