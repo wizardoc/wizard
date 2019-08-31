@@ -25,6 +25,7 @@ export const styledTheme = {
   spacing: '10px',
   baseBgColor: '#eceff1',
   codeBgColor: '#f8f8f8',
+  shallowBlue: 'rgba(25, 118, 210, 0.08)',
 };
 
 export default styled;
