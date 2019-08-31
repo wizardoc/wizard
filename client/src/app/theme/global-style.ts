@@ -1,6 +1,8 @@
 import {createGlobalStyle} from 'styled-components';
 
-export const GlobalStyle = createGlobalStyle`
+import {styledTheme} from './style';
+
+export const GlobalStyle = createGlobalStyle<{theme: typeof styledTheme}>`
   html, body {
     margin: 0;
     height:100%;
@@ -17,14 +19,14 @@ export const GlobalStyle = createGlobalStyle`
 
   /* markdown */
   pre {
-    background: #f8f8f8;
+    background: ${props => props.theme.codeBgColor};
     padding: 15px;
     border-radius: 10px;
   }
 
   .md-codespan {
-    background: #f8f8f8;
-    color: #f06292;
+    background: ${props => props.theme.codeBgColor};
+    color: ${props => props.theme.secondaryColor};
     padding: 3px 10px;
     border-radius: 5px;
   }
@@ -52,9 +54,23 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .md-text {
-    color: #2f2f2f;
+    color: ${props => props.theme.articleColor};
     font-size: 16px;
     font-weight: 400;
     line-height: 1.7;
+  }
+
+  .md-quote-wrapper {
+    display: flex;
+
+    .md-quote-block {
+      height: 100%;
+      width: 5px;
+      background: ${props => props.theme.primaryColor};
+    }
+
+    .md-quote-content {
+
+    }
   }
 `;
