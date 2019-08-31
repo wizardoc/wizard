@@ -1,1 +1,5 @@
-export const TABS_CONFIG = ['/home', '/doc', '/about'];
+export enum TABS_CONFIG {
+  '/home',
+  '/doc',
+  '/about',
+}
