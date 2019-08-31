@@ -15,6 +15,14 @@ renderer.text = (text: string) => `<span class="md-text">${text}</span>`;
 renderer.codespan = (codespan: string) =>
   `<span class="md-codespan">${codespan}</span>`;
 
+renderer.blockquote = (quote: string) =>
+  `<div class="md-quote-wrapper">
+    <div class="md-quote-block"></div>
+    <div class="md-quote-content">
+      ${quote}
+    </div>
+  </div>`;
+
 export const markdown = Marked.setOptions({
   renderer,
   gfm: true,

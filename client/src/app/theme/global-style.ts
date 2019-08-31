@@ -62,15 +62,18 @@ export const GlobalStyle = createGlobalStyle<{theme: typeof styledTheme}>`
 
   .md-quote-wrapper {
     display: flex;
+    margin: 15px 0 15px 35px;
 
     .md-quote-block {
-      height: 100%;
       width: 5px;
-      background: ${props => props.theme.primaryColor};
+      background: ${props => props.theme.secondaryColor};
     }
 
     .md-quote-content {
-
+      width: 100%;
+      border-radius: 0 3px 3px 0;
+      padding: 0 15px;
+      background: ${props => props.theme.quoteBgColor};
     }
   }
 `;
