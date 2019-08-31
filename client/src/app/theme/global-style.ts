@@ -43,4 +43,11 @@ export const GlobalStyle = createGlobalStyle`
       margin-top: -70px;
     }
   }
+
+  .md-text {
+    color: #2f2f2f;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.7;
+  }
 `;
