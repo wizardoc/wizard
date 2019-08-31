@@ -4,9 +4,10 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TreeItem, {TreeItemProps} from '@material-ui/lab/TreeItem';
 import TreeView from '@material-ui/lab/TreeView';
 import React, {Component, ComponentType, MouseEvent, ReactNode} from 'react';
+import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
-import {TreeNode, markdownParser} from '../../utils';
+import {Markdown, TreeNode} from '../../services';
 
 export interface TreeViewProps {
   rootText: string;
@@ -41,9 +42,12 @@ const StyledTreeItem = styled(TreeItem)`
 ` as ComponentType<TreeItemProps>;
 
 export class TreeViewGenerator extends Component<TreeViewProps> {
+  @Inject
+  markdown!: Markdown;
+
   render(): ReactNode {
     const {content, rootText} = this.props;
-    const {children} = markdownParser(content);
+    const {children} = this.markdown.parse(content);
     const treeRoot = {
       text: rootText,
       level: 0,

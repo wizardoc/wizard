@@ -6,3 +6,5 @@ export * from './dialog-service';
 export * from './doc-service';
 export * from './error-manager';
 export * from './time';
+export * from './cache';
+export * from './markdown';
