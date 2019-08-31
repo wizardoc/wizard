@@ -58,15 +58,9 @@ export class TAppRoutes extends Component<
   componentDidMount(): void {
     const {history} = this.props;
 
-    this.unListen = history.listen(loc => {
-      const {pathname} = loc;
-
-      if (['/home', '/'].includes(pathname)) {
-        this.uiControl.isMainPage = true;
-      } else {
-        this.uiControl.isMainPage = false;
-      }
-    });
+    this.unListen = history.listen(({pathname}) =>
+      this.uiControl.updatePage(pathname),
+    );
   }
 
   componentWillUnmount(): void {

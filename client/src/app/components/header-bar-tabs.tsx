@@ -6,7 +6,7 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import styled from 'styled-components';
 
 import {TABS_CONFIG} from '../constant';
-import {MainTabs} from '../store';
+import {MainTabs, UIControl} from '../store';
 import {InjectStore} from '../utils';
 
 const Wrapper = styled.div`
@@ -19,7 +19,10 @@ export class THeaderBarTabs extends Component<RouteComponentProps> {
   @InjectStore(MainTabs)
   private mainTabs!: MainTabs;
 
-  handleTabChange(_event: React.ChangeEvent<{}>, value: number): void {
+  @InjectStore(UIControl)
+  private uiControl!: UIControl;
+
+  handleTabChange(value: number): void {
     this.mainTabs.tabTag = value;
     this.props.history.push(TABS_CONFIG[value]);
   }
@@ -29,7 +32,7 @@ export class THeaderBarTabs extends Component<RouteComponentProps> {
       <Wrapper>
         <Tabs
           value={this.mainTabs.tabTag}
-          onChange={(event, value) => this.handleTabChange(event, value)}
+          onChange={(_event, value) => this.handleTabChange(value)}
           indicatorColor="secondary"
         >
           <Tab label="首页" />
@@ -38,6 +41,13 @@ export class THeaderBarTabs extends Component<RouteComponentProps> {
         </Tabs>
       </Wrapper>
     );
+  }
+
+  componentDidMount(): void {
+    const {pathname} = this.props.location;
+
+    this.mainTabs.tabTag = TABS_CONFIG[pathname];
+    this.uiControl.updatePage(pathname);
   }
 }
 
