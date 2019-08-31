@@ -10,9 +10,10 @@ import {
   Contributors,
   MDRender,
   PageHeader,
-  TreeViewGenerator,
+  // TreeViewGenerator,
 } from '../components';
 import {DialogService, DocService} from '../services';
+import {TreeView} from '../ui';
 
 const Wrapper = styled.div``;
 
@@ -20,7 +21,8 @@ const Side = styled.div`
   min-width: 290px;
   margin-right: 25px;
   padding: 10px;
-  height: 500px;
+  min-height: 500px;
+  height: fit-content;
   background: rgba(0, 0, 0, 0.04);
   color: rgba(0, 0, 0, 0.87) !important;
   position: sticky;
@@ -68,10 +70,11 @@ class TAbout extends Component {
         <PageContent>
           <Side>
             <SideTitle>目录</SideTitle>
-            <TreeViewGenerator
+            <TreeView content={this.content}></TreeView>
+            {/* <TreeViewGenerator
               rootText="关于"
               content={this.content}
-            ></TreeViewGenerator>
+            ></TreeViewGenerator> */}
           </Side>
           <Fade in={this.isMounted} timeout={500}>
             <ContentWrapper>
