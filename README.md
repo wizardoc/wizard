@@ -90,6 +90,14 @@ export class MainTabs {
 tabs!: MainTabs
 ```
 
+## Regex
+
+正则统一封装在 `services/regex` 下，通过 `readonly` 常量暴露给外部使用，外部使用正则统一使用注入的 regex, 调用上面的方法
+
+## Validator
+
+通用的 Validator 经过抽象放在 `ui/form-control/validators` 目录下，通过 `form-control-types` 暴露出去
+
 ## TODO
 
 - [ ] three.js 应用 - 衍生出一些小游戏彩蛋
