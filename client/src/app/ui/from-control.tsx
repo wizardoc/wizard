@@ -123,6 +123,8 @@ export class FormControl extends Component<FormControlProps> {
         ? (_rule: Rule, value: string, cb: (errMsg?: string) => void): void => {
             const throwErrMsg = errMsg || `${name} 不能为空`;
 
+            console.info(value);
+
             if (!value || value === '') {
               cb(throwErrMsg);
             }
