@@ -113,7 +113,7 @@ export class FormControl extends Component<FormControlProps> {
           validator: () => {
             validator(rule, this.fieldInfos[name] as string, errorThrower);
           },
-          isError: false,
+          isError: true,
         };
       }
 
@@ -187,14 +187,14 @@ export class FormControl extends Component<FormControlProps> {
   }
 
   validate(): boolean {
-    let validateResult = false;
+    let validateResult = true;
 
     for (const info of Object.keys(this.validators)) {
       const {validator, isError} = this.validators[info];
 
       validator();
 
-      validateResult = validateResult && isError;
+      validateResult = validateResult && !isError;
     }
 
     return validateResult;
