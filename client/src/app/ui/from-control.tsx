@@ -90,7 +90,7 @@ export class FormControl extends Component<FormControlProps> {
       const {name} = part.props || {name: ''};
       const rule = rules[name] || {};
 
-      let isError = false;
+      let isError = true;
       const {errMsg, trigger = 'change', required} = rule;
       const listenerName = `on${trigger[0].toUpperCase()}${trigger.slice(1)}`;
       const setErrMsg = (msg?: string): void => {
@@ -193,9 +193,11 @@ export class FormControl extends Component<FormControlProps> {
       const {validator, isError} = this.validators[info];
 
       validator();
-      validateResult = validateResult || isError;
+      console.info(validateResult, isError);
+
+      validateResult = validateResult && isError;
     }
 
-    return !validateResult;
+    return validateResult;
   }
 }
