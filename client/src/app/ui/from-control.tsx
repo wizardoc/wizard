@@ -193,7 +193,6 @@ export class FormControl extends Component<FormControlProps> {
       const {validator, isError} = this.validators[info];
 
       validator();
-      console.info(validateResult, isError);
 
       validateResult = validateResult && isError;
     }
