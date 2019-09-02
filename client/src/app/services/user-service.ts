@@ -92,6 +92,19 @@ export class User {
     this.setUserInfo(userInfo);
   }
 
+  async validBaseInfo(baseInfo: BaseInfoData): Promise<boolean> {
+    interface ValidResult {
+      isValid: boolean;
+    }
+
+    const {isValid} = this.http.post<ValidResult, BaseInfoData>(
+      USER_API.VALID_BASE_INFO,
+      baseInfo,
+    );
+
+    return isValid;
+  }
+
   @computed
   get avatar(): string {
     if (!this.userInfo) {
