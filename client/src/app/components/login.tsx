@@ -133,13 +133,7 @@ export class TLogin extends Component<
   }
 
   validate(): boolean {
-    const {current} = this.formControlRef;
-
-    if (current) {
-      return current.validate();
-    }
-
-    return false;
+    return this.formControlRef.current!.validate();
   }
 
   async handleLoginClick(): Promise<void> {

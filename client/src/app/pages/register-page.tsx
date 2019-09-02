@@ -24,12 +24,13 @@ const WandWrapper = styled.div`
 
 const TipCard = styled.div`
   width: 300px;
-  height: 584px;
+  height: 100%;
   background: ${props => props.theme.primaryColor};
   border-radius: 10px 0 0 10px;
 `;
 
 const CardWrapper = styled.div`
+  height: 600px;
   display: flex;
   justify-content: center;
   align-items: center;
