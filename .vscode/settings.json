@@ -10,5 +10,6 @@
   "tslint.configFile": "node_modules/@magicspace/configs/tslint-prettier.js",
   "[plaintext]": {
     "files.insertFinalNewline": false
-  }
+  },
+  "commentTranslate.targetLanguage": "en"
 }
