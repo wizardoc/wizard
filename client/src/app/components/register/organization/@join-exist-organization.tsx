@@ -2,11 +2,11 @@ import React, {Component, ReactNode} from 'react';
 
 import {FormControl} from '../../../ui';
 import {TextFieldWrapper} from '../base-info';
-import {OrganizationData} from '../entry';
 
-import {OrganizationProps} from './organization';
+import {HandleProps} from './common/common-props';
+import {OrganizationData} from './organization';
 
-interface JoinExistOrganizationProps extends OrganizationProps {}
+interface JoinExistOrganizationProps extends HandleProps {}
 
 export class JoinExistOrganization extends Component<
   JoinExistOrganizationProps
