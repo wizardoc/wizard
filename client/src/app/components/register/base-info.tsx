@@ -4,7 +4,7 @@ import React, {Component, ComponentType, ReactNode, createRef} from 'react';
 import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
-import {Regex, User} from '../../services';
+import {DialogService, Regex, Toast, User} from '../../services';
 import {
   Form,
   FormControl,
@@ -43,6 +43,12 @@ export class BaseInfo extends Component<BaseInfoProps & PartViewProps> {
   @Inject
   private userService!: User;
 
+  @Inject
+  private dialogService!: DialogService;
+
+  @Inject
+  private toast!: Toast;
+
   private formControlRef = createRef<FormControl>();
 
   async handleNextStepClick(): Promise<void> {
@@ -52,22 +58,26 @@ export class BaseInfo extends Component<BaseInfoProps & PartViewProps> {
       return;
     }
 
-    const isValid = await this.userService.validBaseInfo(this.baseInfoData!);
+    // 校验数据完整性
+    if (!this.baseInfoData) {
+      this.toast.warning('数据不完整');
 
-    console.info(isValid);
+      return;
+    }
 
-    // 没有校验数据完整性
+    let isValid = false;
+
+    // 校验 baseInfo
+    await this.dialogService.loading(async () => {
+      isValid = await this.userService.validBaseInfo(this.baseInfoData!);
+    });
+
     if (!isValid) {
       return;
     }
 
+    this.userService.collectBaseInfo(this.baseInfoData);
     this.props.onNextStepClick();
-
-    console.info(this.baseInfoData);
-
-    // if(this.baseInfoData){
-    //   this.userService.collectBaseInfo(this.baseInfo),
-    // }
   }
 
   get rules(): Rules {
