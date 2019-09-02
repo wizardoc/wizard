@@ -33,7 +33,7 @@ export class OrganizationService {
     username: string,
   ): Promise<void> {
     try {
-      await this.http.post<{}, string>(this.parseUrl('/new'), {
+      await this.http.post(this.parseUrl('/new'), {
         organizeName: name,
         username,
         organizeDescription: description,

@@ -8,3 +8,4 @@ export * from './error-manager';
 export * from './time';
 export * from './cache';
 export * from './markdown';
+export * from './regex';
