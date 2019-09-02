@@ -12,7 +12,9 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 
-type Validator = (
+import {IFormControl} from './form-control-type';
+
+export type Validator = (
   rule: Rule,
   value: string,
   cb: (msg?: string) => void,
@@ -61,7 +63,8 @@ const ErrorHelpMessage = styled(FormHelperText)`
 ` as ComponentType<FormHelperTextProps>;
 
 @observer
-export class FormControl extends Component<FormControlProps> {
+export class FormControl extends Component<FormControlProps>
+  implements IFormControl {
   @observable
   private errorManager: {[index: string]: ErrorInfo} = {};
 
@@ -122,8 +125,6 @@ export class FormControl extends Component<FormControlProps> {
       const validator: Validator = required
         ? (_rule: Rule, value: string, cb: (errMsg?: string) => void): void => {
             const throwErrMsg = errMsg || `${name} 不能为空`;
-
-            console.info(value);
 
             if (!value || value === '') {
               cb(throwErrMsg);
