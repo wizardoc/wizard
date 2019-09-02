@@ -42,11 +42,7 @@ export class HTTP {
     }) as unknown) as R;
   }
 
-  post<R, T>(
-    path: string,
-    data?: PostPayload<T>,
-    contentType?: ContentType,
-  ): R {
+  post<R, T = {}>(path: string, data?: T, contentType?: ContentType): R {
     return (Axios.post<R>(this.join(path), data || {}, {
       headers: {
         'Content-Type': contentType || ContentType.Form,
