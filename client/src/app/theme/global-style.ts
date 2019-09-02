@@ -39,7 +39,6 @@ export const GlobalStyle = createGlobalStyle<{theme: typeof styledTheme}>`
 
     & .md-img {
       border-radius: 5px;
-      max-width: 600px;
       max-height: 500px;
     }
   }
