@@ -29,10 +29,11 @@ export function getData<T extends Res>(res: AxiosResponse<ResData<T>>): T {
   const {data, err} = res.data;
 
   if (err) {
-    // process error
+    /** process error */
     errorManager.spurtError(err.code);
 
-    throw new Error(errorManager.getErrorMessage(err.code));
+    /** soft failure */
+    console.error(errorManager.getErrorMessage(err.code));
   }
 
   return data;
