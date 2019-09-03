@@ -46,7 +46,7 @@ export class THeaderBarTabs extends Component<RouteComponentProps> {
   componentDidMount(): void {
     const {pathname} = this.props.location;
 
-    this.mainTabs.tabTag = TABS_CONFIG[pathname];
+    this.mainTabs.tabTag = TABS_CONFIG[pathname] || '/home';
     this.uiControl.updatePage(pathname);
   }
 }
