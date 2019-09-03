@@ -36,6 +36,7 @@ export class THeaderBarTabs extends Component<RouteComponentProps> {
           indicatorColor="secondary"
         >
           <Tab label="首页" />
+          <Tab label="组织" />
           <Tab label="规范" />
           <Tab label="关于" />
         </Tabs>
@@ -46,7 +47,7 @@ export class THeaderBarTabs extends Component<RouteComponentProps> {
   componentDidMount(): void {
     const {pathname} = this.props.location;
 
-    this.mainTabs.tabTag = TABS_CONFIG[pathname] || '/home';
+    this.mainTabs.tabTag = TABS_CONFIG[pathname] || TABS_CONFIG['/home'];
     this.uiControl.updatePage(pathname);
   }
 }

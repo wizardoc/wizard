@@ -13,6 +13,7 @@ import {CSSTransition, TransitionGroup} from 'react-transition-group';
 import {About} from '../pages/about';
 import {Doc} from '../pages/doc';
 import {Home} from '../pages/home';
+import {Organization} from '../pages/organization';
 // import {PageNotFound} from '../pages/page-not-found';
 import {UIControl} from '../store';
 import {InjectStore} from '../utils';
@@ -48,6 +49,7 @@ export class TAppRoutes extends Component<
             <Route exact path="/home" component={Home} />
             <Route exact path="/doc" component={Doc} />
             <Route exact path="/about" component={About} />
+            <Route exact path="/organization" component={Organization} />
             {/* <Route component={PageNotFound} /> */}
           </Switch>
         </CSSTransition>
