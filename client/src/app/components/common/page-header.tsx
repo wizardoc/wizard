@@ -1,7 +1,9 @@
 import {Typography} from '@material-ui/core';
 import {TypographyProps} from '@material-ui/core/Typography';
-import React, {ComponentType, FunctionComponent} from 'react';
+import React, {ComponentType, FunctionComponent, ReactNode} from 'react';
 import styled from 'styled-components';
+
+import {StyledFab} from './fab';
 
 interface PageHeaderWrapperProps {
   bgColor?: string;
@@ -9,6 +11,8 @@ interface PageHeaderWrapperProps {
 
 export interface PageHeaderProps extends PageHeaderWrapperProps {
   title: string;
+  fabIcon?: ReactNode;
+  onFabClick?(): void;
 }
 
 const Wrapper = styled.div<PageHeaderWrapperProps>`
@@ -36,10 +40,29 @@ const Title = styled(Typography)`
   font-size: 20px !important;
 ` as ComponentType<TypographyProps>;
 
-export const PageHeader: FunctionComponent<PageHeaderProps> = props => (
-  <Header>
-    <Wrapper>
-      <Title variant="h5">{props.title}</Title>
-    </Wrapper>
-  </Header>
-);
+const HelpFab = styled(StyledFab)`
+  position: absolute !important;
+  right: 120px;
+  bottom: -28px;
+  background: ${props => props.theme.secondaryColor} !important;
+  color: white !important;
+`;
+
+export const PageHeader: FunctionComponent<PageHeaderProps> = props => {
+  const {onFabClick = (): void => {}, title, fabIcon} = props;
+
+  return (
+    <Header>
+      <Wrapper>
+        <Title variant="h5">{title}</Title>
+      </Wrapper>
+      {fabIcon ? (
+        <HelpFab onClick={onFabClick} aria-label="edit">
+          {fabIcon}
+        </HelpFab>
+      ) : (
+        <></>
+      )}
+    </Header>
+  );
+};
