@@ -4,3 +4,4 @@ export * from './page-header';
 export * from './tree-view';
 export * from './loading';
 export * from './md-render';
+export * from './fab';
