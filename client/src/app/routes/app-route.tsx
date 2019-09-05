@@ -1,6 +1,6 @@
 import 'animate.css';
 
-import React, {Component, ReactNode} from 'react';
+import React, {Component, ReactNode, Suspense, lazy} from 'react';
 import {
   Redirect,
   Route,
@@ -8,21 +8,25 @@ import {
   Switch,
   withRouter,
 } from 'react-router-dom';
-import {CSSTransition, TransitionGroup} from 'react-transition-group';
+// import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
-import {About} from '../pages/about';
-import {Doc} from '../pages/doc';
-import {Home} from '../pages/home';
-import {Organization} from '../pages/organization';
 // import {PageNotFound} from '../pages/page-not-found';
 import {UIControl} from '../store';
-import {InjectStore} from '../utils';
+import {InjectStore, defaultify} from '../utils';
 
 import './tmp.css';
 
 interface AppRoutesProps {
   initData?: unknown;
 }
+
+/** Lazy load */
+const Home = lazy(() => defaultify(import('../pages/home'), 'Home'));
+const Doc = lazy(() => defaultify(import('../pages/doc'), 'Doc'));
+const Organization = lazy(() =>
+  defaultify(import('../pages/organization'), 'Organization'),
+);
+const About = lazy(() => defaultify(import('../pages/about'), 'About'));
 
 export class TAppRoutes extends Component<
   AppRoutesProps & RouteComponentProps
@@ -36,24 +40,26 @@ export class TAppRoutes extends Component<
     const {location} = this.props;
 
     return (
-      <TransitionGroup>
-        <CSSTransition
-          key={location.pathname}
-          classNames={'fade'}
-          timeout={500}
-          mountOnEnter
-          unmountOnExit
-        >
-          <Switch location={location}>
-            <Route exact path="/" render={() => <Redirect to="/home" />} />
-            <Route exact path="/home" component={Home} />
-            <Route exact path="/doc" component={Doc} />
-            <Route exact path="/about" component={About} />
-            <Route exact path="/organization" component={Organization} />
-            {/* <Route component={PageNotFound} /> */}
-          </Switch>
-        </CSSTransition>
-      </TransitionGroup>
+      // <TransitionGroup>
+      //   <CSSTransition
+      //     key={location.pathname}
+      //     classNames={'fade'}
+      //     timeout={500}
+      //     mountOnEnter
+      //     unmountOnExit
+      //   >
+      <Suspense fallback="正在加载中...">
+        <Switch location={location}>
+          <Route exact path="/" render={() => <Redirect to="/home" />} />
+          <Route exact path="/home" component={Home} />
+          <Route exact path="/doc" component={Doc} />
+          <Route exact path="/about" component={About} />
+          <Route exact path="/organization" component={Organization} />
+          {/* <Route component={PageNotFound} /> */}
+        </Switch>
+      </Suspense>
+      // </CSSTransition>
+      // </TransitionGroup>
     );
   }
 
