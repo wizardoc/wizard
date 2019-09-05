@@ -43,6 +43,7 @@ const styles = (): StyleRules =>
   });
 
 const Wrapper = styled.div`
+  display: none;
   position: fixed;
   right: 110px;
   bottom: 90px;
