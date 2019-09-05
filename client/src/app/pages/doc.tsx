@@ -1,7 +1,6 @@
 import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 
-import {RouterAnimation} from '../animations';
 import {PageHeader} from '../components';
 
 const Wrapper = styled.div`
@@ -9,14 +8,12 @@ const Wrapper = styled.div`
   display: flex;
 `;
 
-export const Doc = RouterAnimation(
-  class extends Component {
-    render(): ReactNode {
-      return (
-        <Wrapper>
-          <PageHeader title="文档"></PageHeader>
-        </Wrapper>
-      );
-    }
-  },
-);
+export class Doc extends Component {
+  render(): ReactNode {
+    return (
+      <Wrapper>
+        <PageHeader title="文档"></PageHeader>
+      </Wrapper>
+    );
+  }
+}
