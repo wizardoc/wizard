@@ -5,3 +5,4 @@ export * from './MIME';
 export * from './markdown';
 export * from './typeof';
 export * from './viewport-listener';
+export * from './import';
