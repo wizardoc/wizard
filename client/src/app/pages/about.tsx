@@ -71,10 +71,6 @@ class TAbout extends Component {
           <Side>
             <SideTitle>目录</SideTitle>
             <TreeView content={this.content}></TreeView>
-            {/* <TreeViewGenerator
-              rootText="关于"
-              content={this.content}
-            ></TreeViewGenerator> */}
           </Side>
           <Fade in={this.isMounted} timeout={500}>
             <ContentWrapper>
