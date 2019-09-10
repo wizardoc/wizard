@@ -43,7 +43,24 @@ export class HTTP {
   }
 
   post<R, T = {}>(path: string, data?: T, contentType?: ContentType): R {
-    return (Axios.post<R>(this.join(path), data || {}, {
+    return this.complexRequest('post', path, data, contentType);
+  }
+
+  put<R, T = {}>(path: string, data?: T, contentType?: ContentType): R {
+    return this.complexRequest('post', path, data, contentType);
+  }
+
+  delete<R, T = {}>(path: string, data?: T, contentType?: ContentType): R {
+    return this.complexRequest('delete', path, data, contentType);
+  }
+
+  private complexRequest<R, T = {}>(
+    methodName: string,
+    path: string,
+    data?: T,
+    contentType?: ContentType,
+  ): R {
+    return (Axios[methodName]<R>(this.join(path), data || {}, {
       headers: {
         'Content-Type': contentType || ContentType.Form,
       },
