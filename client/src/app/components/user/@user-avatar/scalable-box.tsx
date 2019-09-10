@@ -31,14 +31,17 @@ const Wrapper = styled.div<ScalableWrapperProps>`
   width: ${props => props.width + 128}px;
   height: ${props => props.height + 128}px;
   cursor: move;
-  position: relative;
+  position: absolute;
   outline: 600px solid rgba(0, 0, 0, 0.3);
-  transform: translate3D(
-    ${props => props.x - 1}px,
-    ${props => props.y - 1}px,
-    0
-  );
+  left: ${props => props.x - 1}px;
+  top: ${props => props.y - 1}px;
   z-index: 2;
+`;
+
+const MoveWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
 `;
 
 const AvatarSelectorMask = styled.div`
@@ -255,16 +258,18 @@ export class ScalableBox extends Component<ScalableBoxProps> {
         }
         onMouseUp={(e: MouseEvent<HTMLDivElement>) => this.handleBoxMouseUp(e)}
       >
-        <Wrapper
-          onMouseUp={() => this.spurt()}
-          onMouseDown={(e: MouseEvent<HTMLDivElement>) =>
-            this.handleBoxMouseDown(e)
-          }
-          {...this.boxSize}
-          {...this.movePosition}
-        >
-          {blocks}
-        </Wrapper>
+        <MoveWrapper>
+          <Wrapper
+            onMouseUp={() => this.spurt()}
+            onMouseDown={(e: MouseEvent<HTMLDivElement>) =>
+              this.handleBoxMouseDown(e)
+            }
+            {...this.boxSize}
+            {...this.movePosition}
+          >
+            {blocks}
+          </Wrapper>
+        </MoveWrapper>
       </AvatarSelectorMask>
     );
   }

@@ -17,15 +17,15 @@ interface ClipData {
   end: Point;
 }
 
-interface ClipAvatarProps extends ClipData {}
+// interface ClipAvatarProps extends ClipData {}
 
 const Wrapper = styled.div`
   position: relative;
 `;
 
-const ClipAvatar = styled.img<ClipAvatarProps>`
-  clip: ${({start, end}) => `rect(${start.x}, ${start.y}, ${end.x}, ${end.y})`};
-`;
+// const ClipAvatar = styled.img<ClipAvatarProps>`
+//   clip: ${({start, end}) => `rect(${start.x}, ${start.y}, ${end.x}, ${end.y})`};
+// `;
 
 @observer
 export class AvatarSelector extends Component<
@@ -52,7 +52,7 @@ export class AvatarSelector extends Component<
 
     return (
       <Wrapper>
-        <ClipAvatar src={this.dataUrl} {...this.clipData}></ClipAvatar>
+        {/* <ClipAvatar src={this.dataUrl} {...this.clipData}></ClipAvatar> */}
         <ScalableBox
           img={this.dataUrl}
           onBlockMove={points => this.handleBlockMove(points)}
