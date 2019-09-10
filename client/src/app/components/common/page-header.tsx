@@ -44,7 +44,7 @@ const HelpFab = styled(StyledFab)`
   position: absolute !important;
   right: 120px;
   bottom: -28px;
-  background: ${props => props.theme.secondaryColor} !important;
+  background: ${props => props.theme.thirdColor} !important;
   color: white !important;
 `;
 
