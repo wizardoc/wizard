@@ -97,7 +97,7 @@ export class User {
       isValid: boolean;
     }
 
-    const {isValid} = this.http.post<ValidResult, BaseInfoData>(
+    const {isValid} = await this.http.post<ValidResult, BaseInfoData>(
       USER_API.VALID_BASE_INFO,
       baseInfo,
     );
@@ -111,9 +111,9 @@ export class User {
       return '';
     }
 
-    const {avatar, username} = this.userInfo;
+    const {avatar, displayName} = this.userInfo;
 
-    return avatar === '' || !avatar ? username.slice(0, 2) : avatar;
+    return avatar === '' || !avatar ? displayName[0] : avatar;
   }
 
   register(): void {
