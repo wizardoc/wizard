@@ -5,9 +5,9 @@ import React, {Component, ReactNode} from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import styled from 'styled-components';
 
-import {TABS_CONFIG} from '../constant';
-import {MainTabs, UIControl} from '../store';
-import {InjectStore} from '../utils';
+import {TABS_CONFIG} from '../../constant';
+import {MainTabs, UIControl} from '../../store';
+import {InjectStore} from '../../utils';
 
 const Wrapper = styled.div`
   flex-grow: 1;

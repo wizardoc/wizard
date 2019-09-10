@@ -1,13 +1,9 @@
 import {
   AppBar,
-  Avatar,
-  Badge,
   IconButton,
   InputBase,
-  SvgIcon,
   Theme,
   Toolbar,
-  Tooltip,
   Typography,
   WithStyles,
   createStyles,
@@ -17,8 +13,6 @@ import {AppBarProps} from '@material-ui/core/AppBar';
 import {StyleRules} from '@material-ui/core/styles';
 import {fade} from '@material-ui/core/styles/colorManipulator';
 import {TypographyProps} from '@material-ui/core/Typography';
-import EditIcon from '@material-ui/icons/Edit';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import SearchIcon from '@material-ui/icons/Search';
 import {observer} from 'mobx-react';
 import React, {Component, ComponentType, ReactNode} from 'react';
@@ -27,13 +21,13 @@ import {Inject} from 'react-ts-di';
 // import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
-import {GitHubSvg} from '../assets';
-import Wizard from '../assets/static/wizard-white.jpg';
-import {Links} from '../constant';
-import {User} from '../services';
-import {ProfileStore, RecentDrawer, UIControl} from '../store';
-import {InjectStore} from '../utils';
+import Wizard from '../../assets/static/wizard-white.jpg';
+import {DrawerService} from '../../services';
+import {UIControl} from '../../store';
+import {InjectStore} from '../../utils';
+import {DocRecentUpdateDrawer} from '../doc-recent-update-drawer';
 
+import {Funcs} from './@funcs';
 import {HeaderBarTabs} from './header-bar-tabs';
 
 interface AppBarWrapperProps {
@@ -105,11 +99,6 @@ const Row = styled.div`
   align-items: center;
 `;
 
-const AvatarWrapper = styled(Avatar)`
-  margin-left: 20px;
-  cursor: pointer;
-`;
-
 const WizardTitle = styled(Typography)`
   cursor: pointer;
 ` as ComponentType<TypographyProps>;
@@ -123,23 +112,13 @@ class THeaderBar extends Component<HeaderBarProps> {
   @InjectStore(UIControl)
   private uiControl!: UIControl;
 
-  @InjectStore(RecentDrawer)
-  private recentDrawer!: RecentDrawer;
-
-  @InjectStore(ProfileStore)
-  private profileStore!: ProfileStore;
-
   @Inject
-  private userService!: User;
-
-  handleGithubIconClick(): void {
-    window.open(Links.GitHub);
-  }
+  private drawerService!: DrawerService;
 
   handleLogoClick(): void {
-    this.recentDrawer.viewRecentDrawerToggle();
-
-    console.info(this.recentDrawer.isViewRecentDrawer);
+    this.drawerService.render(<DocRecentUpdateDrawer></DocRecentUpdateDrawer>, {
+      direction: 'left',
+    });
   }
 
   handleWizardTitleClick(): void {
@@ -148,20 +127,9 @@ class THeaderBar extends Component<HeaderBarProps> {
     history.push('/');
   }
 
-  handleAvatarClick(): void {
-    this.profileStore.toggleViewProfilePanel();
-  }
-
   render(): ReactNode {
     const {classes} = this.props;
-    const {
-      grow,
-      search,
-      searchIcon,
-      inputRoot,
-      inputInput,
-      notification,
-    } = classes;
+    const {grow, search, searchIcon, inputRoot, inputInput} = classes;
 
     return (
       <AppBarWrapper position="static" isMainPage={this.uiControl.isMainPage}>
@@ -192,33 +160,7 @@ class THeaderBar extends Component<HeaderBarProps> {
               }}
             />
           </div>
-          <Tooltip title="notify">
-            <IconButton color="inherit" className={notification}>
-              <Badge badgeContent={10} max={99} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="edit doc">
-            <IconButton color="inherit">
-              <EditIcon />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Github repository">
-            <IconButton
-              color="inherit"
-              onClick={() => this.handleGithubIconClick()}
-            >
-              <SvgIcon>
-                <GitHubSvg />
-              </SvgIcon>
-            </IconButton>
-          </Tooltip>
-          {this.userService.avatar !== '' && (
-            <AvatarWrapper onClick={() => this.handleAvatarClick()}>
-              {this.userService.avatar}
-            </AvatarWrapper>
-          )}
+          <Funcs></Funcs>
         </Toolbar>
       </AppBarWrapper>
     );
