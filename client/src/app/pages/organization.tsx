@@ -1,4 +1,4 @@
-import EditIcon from '@material-ui/icons/Edit';
+import AddIcon from '@material-ui/icons/Add';
 import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 
@@ -13,7 +13,7 @@ export class Organization extends Component {
   render(): ReactNode {
     return (
       <Wrapper>
-        <PageHeader title="组织" fabIcon={<EditIcon></EditIcon>}></PageHeader>
+        <PageHeader title="组织" fabIcon={<AddIcon></AddIcon>}></PageHeader>
       </Wrapper>
     );
   }
