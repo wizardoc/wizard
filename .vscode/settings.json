@@ -11,5 +11,8 @@
   "[plaintext]": {
     "files.insertFinalNewline": false
   },
-  "commentTranslate.targetLanguage": "en"
+  "commentTranslate.targetLanguage": "en",
+  "cSpell.words": [
+    "defaultify"
+  ]
 }
