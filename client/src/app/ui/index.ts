@@ -10,3 +10,4 @@ export * from './upload';
 export * from './link';
 export * from './tree-view';
 export * from './form-control';
+export * from './drawer';
