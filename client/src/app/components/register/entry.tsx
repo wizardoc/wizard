@@ -81,7 +81,7 @@ class RouterRegister extends Component<WithSlideProps & RouteComponentProps> {
     }
   }
 
-  isFinish(): boolean {
+  get isFinish(): boolean {
     return this.currentIndex === this.registerBody.length - 1;
   }
 
@@ -92,7 +92,7 @@ class RouterRegister extends Component<WithSlideProps & RouteComponentProps> {
   }
 
   async handleNextClick(): Promise<void> {
-    if (this.isFinish()) {
+    if (this.isFinish) {
       // complete register logic
       try {
         await this.userService.register();
@@ -118,7 +118,11 @@ class RouterRegister extends Component<WithSlideProps & RouteComponentProps> {
     return (
       <Wrapper>
         <TitleWrapper>
-          <Title isReverse hasBack onBackClick={() => this.handleBackClick()}>
+          <Title
+            isReverse
+            hasBack={!this.isFinish}
+            onBackClick={() => this.handleBackClick()}
+          >
             注册
           </Title>
         </TitleWrapper>
@@ -130,7 +134,9 @@ class RouterRegister extends Component<WithSlideProps & RouteComponentProps> {
           ))}
         </StepperWrapper>
         <RegisterBodyWrapper>{this.viewerBody}</RegisterBodyWrapper>
-        <A onClick={() => this.handleLoginClick()}>已有账号？立即登录！</A>
+        {!this.isFinish && (
+          <A onClick={() => this.handleLoginClick()}>已有账号？立即登录！</A>
+        )}
       </Wrapper>
     );
   }

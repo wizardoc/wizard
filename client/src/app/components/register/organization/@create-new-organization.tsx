@@ -37,7 +37,7 @@ export class CreateNewOrganization extends Component<
           type="text"
           autoComplete="new-password"
           inputProps={{
-            maxLength: 50,
+            maxLength: 30,
           }}
         />
       </FormControl>

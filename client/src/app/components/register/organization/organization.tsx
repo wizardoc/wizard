@@ -7,8 +7,16 @@ import ToggleButtonGroup, {
 import {action, observable} from 'mobx';
 import {observer} from 'mobx-react';
 import React, {Component, ComponentType, ReactNode} from 'react';
+import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
+import {
+  DialogService,
+  OrganizationService,
+  ParsedRegisterData,
+  Toast,
+  User,
+} from '../../../services';
 import {TipContent, TipVariant} from '../../../ui';
 import {NextStep} from '../common/buttons';
 import {PartViewProps} from '../common/part-view-props';
@@ -31,12 +39,13 @@ const SelectGroup = styled(ToggleButtonGroup)`
 const RenderComponents = styled.div`
   width: 100%;
   display: flex;
+  margin-top: 10px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
 
-const enum ORGANIZATION_TAB_NAME {
+enum ORGANIZATION_TAB_NAME {
   NEW_ORGANIZATION,
   JOIN_EXIST_ORGANIZATION,
 }
@@ -58,49 +67,58 @@ export class TOrganization extends Component<
   @observable
   private organizationInfo: OrganizationData | undefined;
 
+  @Inject
+  private userService!: User;
+
+  @Inject
+  private toast!: Toast;
+
+  @Inject
+  private organizationService!: OrganizationService;
+
+  @Inject
+  private dialogService!: DialogService;
+
   @action
   handleOrganizationInfoChange(info: OrganizationData): void {
     this.organizationInfo = info;
   }
 
-  async handleNextStepClick(): Promise<void> {
-    if (!this.organizationInfo) {
-      return;
-    }
+  handleNextStepClick(): void {
+    this.dialogService.loading(async () => {
+      if (!this.organizationInfo) {
+        return;
+      }
 
-    this.props.onNextStepClick();
+      this.props.onNextStepClick();
 
-    // const {
-    //   organizationName,
-    //   organizationDescription,
-    // } = this.organizationInfo;
+      const {organizationName, organizationDescription} = this.organizationInfo;
 
-    // await this.userService.register();
+      // 注册用户
+      await this.userService.register();
 
-    // const registerData = this.userService
-    //   .registerData as ParsedRegisterData;
+      const registerData = this.userService.registerData as ParsedRegisterData;
 
-    // if (!registerData) {
-    //   this.toast.error('用户数据异常');
+      if (!registerData) {
+        this.toast.error('用户数据异常');
 
-    //   return;
-    // }
+        return;
+      }
 
-    // // 加入现有组织
-    // if (!organizationDescription) {
-    //   await this.organizationService.joinOrganization(
-    //     organizationName,
-    //     registerData.username,
-    //   );
-    // } else {
-    //   await this.organizationService.createOrganization(
-    //     organizationName,
-    //     organizationDescription,
-    //     registerData.username,
-    //   );
-    // }
-
-    // this.toast.success('注册成功');
+      // 加入现有组织
+      if (!organizationDescription) {
+        await this.organizationService.joinOrganization(
+          organizationName,
+          registerData.username,
+        );
+      } else {
+        await this.organizationService.createOrganization(
+          organizationName,
+          organizationDescription,
+          registerData.username,
+        );
+      }
+    });
   }
 
   render(): ReactNode {
