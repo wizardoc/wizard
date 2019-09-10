@@ -1,0 +1,39 @@
+@font-face {
+	font-family: "wizard-font";
+	src: url('./fonts/wizard-font.eot');
+	src: url('./fonts/wizard-font.eot?#iefix') format('eot'),
+		url('./fonts/wizard-font.woff') format('woff'),
+		url('./fonts/wizard-font.ttf') format('truetype');
+}
+
+
+[class^="wizard-icon-"], [class*=" wizard-icon-"] {
+	font-family: "wizard-font" !important;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	vertical-align: middle;
+	display: inline-block;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+
+.wizard-icon-python:before {
+	content: "\EA01";
+}
+
+.wizard-icon-qq:before {
+	content: "\EA02";
+}
+
+.wizard-icon-wechat:before {
+	content: "\EA03";
+}
+
+.wizard-icon-weibo:before {
+	content: "\EA04";
+}
