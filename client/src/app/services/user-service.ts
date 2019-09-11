@@ -1,3 +1,5 @@
+// import {TipStore} from '../store';
+import {Optional} from '@wizard/shared';
 import {action, computed, observable} from 'mobx';
 import {Inject, Injectable} from 'react-ts-di';
 
@@ -5,8 +7,6 @@ import {HTTP} from '../api';
 import {BaseInfoData} from '../components';
 import {USER_API} from '../constant';
 import {LoadingStore} from '../store';
-// import {TipStore} from '../store';
-import {Optional} from '../types/type-utils';
 import {InjectStore} from '../utils';
 
 import {JWT} from './jwt-service';

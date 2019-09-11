@@ -1,3 +1,4 @@
+import {Omit} from '@wizard/shared';
 import {omit} from 'lodash';
 import {action, observable} from 'mobx';
 import {Inject, Injectable} from 'react-ts-di';
@@ -5,7 +6,6 @@ import {Inject, Injectable} from 'react-ts-di';
 import {HTTP} from '../api';
 import {CalledOptionalTipInfo, OptionalTipInfo} from '../components';
 import {TODO_API} from '../constant';
-import {Omit} from '../types/type-utils';
 
 /**
  * 控制顶部 tip 的 service

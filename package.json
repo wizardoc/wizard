@@ -17,7 +17,8 @@
   "workspaces": {
     "packages": [
       "client",
-      "node-middleware"
+      "node-middleware",
+      "shared"
     ]
   }
 }

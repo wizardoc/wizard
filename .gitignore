@@ -3,9 +3,11 @@ node_modules
 
 # log
 yarn-error.log
+lerna-debug.log
 
 # dist
 dist
+shared/bld
 
 # idea
 .idea/

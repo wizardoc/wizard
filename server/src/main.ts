@@ -1,4 +1,4 @@
-import Koa, { Context } from 'koa';
+import Koa, {Context} from 'koa';
 import Router from 'koa-router';
 
 const app = new Koa();
@@ -10,4 +10,4 @@ router.get('*', (context: Context) => {
 
 app.use(router.routes());
 
-export { app };
+export {app};

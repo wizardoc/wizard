@@ -1,0 +1,10 @@
+{
+  "name": "@wizard/shared",
+  "version": "1.0.0",
+  "main": "bld/index.js",
+  "types": "bld/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  }
+}
