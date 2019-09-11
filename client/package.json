@@ -32,7 +32,6 @@
     "react-transition-group": "^4.2.2",
     "react-ts-di": "^1.2.4",
     "rxjs": "^6.5.2",
-    "shared": "^0.2.0",
     "styled-components": "^4.2.0",
     "uuid": "^3.3.2"
   },
