@@ -1,5 +1,5 @@
 {
-  "name": "@wizard/node-middleware",
+  "name": "@wizard/server",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -7,9 +7,11 @@
     "start": "node index.js"
   },
   "dependencies": {
+    "@wizard/shared": "^1.0.0",
     "http-proxy": "^1.17.0",
     "koa": "^2.7.0",
-    "koa-router": "^7.4.0"
+    "koa-router": "^7.4.0",
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@types/koa": "^2.0.48",
