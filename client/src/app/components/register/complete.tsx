@@ -1,4 +1,5 @@
 import React, {Component, ReactNode} from 'react';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
@@ -9,7 +10,7 @@ const RegisterSuccessImg = styled.img`
   width: 300px;
 `;
 
-export class Complete extends Component {
+class RouterComplete extends Component<RouteComponentProps> {
   @Inject
   toast!: Toast;
 
@@ -21,3 +22,5 @@ export class Complete extends Component {
     this.toast.success('注册成功');
   }
 }
+
+export const Complete = withRouter(RouterComplete);
