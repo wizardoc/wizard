@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "dist",
-    "rootDirs": ["./src", "../client/src/app"],
+    "rootDir": "src",
     "module": "commonjs",
     "target": "es6",
     "lib": ["es6", "dom", "esnext", "es7"],
@@ -11,5 +11,5 @@
     "allowJs": true
   },
   "exclude": ["node_modules"],
-  "include": ["./src/**/*", "../client/src/**/*"]
+  "include": ["src/**/*", "index.js", "../ssr-client/client"]
 }

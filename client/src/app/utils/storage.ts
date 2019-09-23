@@ -6,8 +6,8 @@ class BaseStorage {
   }
 
   setItem(key: string, data: unknown): void {
-    if(!data){
-      return
+    if (!data) {
+      return;
     }
 
     this.storage.setItem(

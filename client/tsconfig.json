@@ -11,7 +11,7 @@
     "jsx": "react",
     "types": ["node"],
     "moduleResolution": "node",
-    "rootDir": "src",
+    "rootDirs": ["src", "../server/src"],
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,

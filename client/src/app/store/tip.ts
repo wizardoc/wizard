@@ -15,7 +15,7 @@ export class TipStore {
   @observable
   private _isShowTip = false;
 
-  private deferId: NodeJS.Timeout | undefined;
+  private deferId: number | undefined;
 
   init(): void {
     if (this.deferId) {
@@ -30,7 +30,8 @@ export class TipStore {
     this.init();
     this._isShowTip = true;
 
-    this.deferId = setTimeout(
+    /** Distinguish setTimeout of node from Type */
+    this.deferId = window.setTimeout(
       () => (this._isShowTip = false),
       MAX_EXIST_DURATION,
     );

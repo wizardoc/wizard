@@ -19,7 +19,7 @@ export class CacheService {
   private readonly INIT_COUNT = 2;
   private readonly TIME_CIRCLE = Time.Hour / 2;
 
-  private listenerId!: NodeJS.Timeout;
+  private listenerId!: number;
 
   constructor() {
     this.listener();
@@ -63,9 +63,8 @@ export class CacheService {
   }
 
   private listener(): void {
-    this.listenerId = setInterval(() => {
-      console.info('exec');
-
+    /** Distinguish setInterval of node from type */
+    this.listenerId = window.setInterval(() => {
       for (const key of Object.keys(this.pool)) {
         this.pool[key].count--;
 
