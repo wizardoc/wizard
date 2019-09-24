@@ -100,6 +100,12 @@ tabs!: MainTabs
 
 ## TODO
 
+- [ ] PageHeader 加入图片元素
+- [ ] markdown 图片交互优化
+- [ ] 写文章页面，富文本编辑器调研
+- [ ] 组织详情页面
+- [ ] 组织表结构优化，owner
+- [ ] 组织概览
 - [ ] 待办事项，许多东西我们不需要及时的处理，因此可加入待办事项
 - [ ] three.js 应用 - 衍生出一些小游戏彩蛋
 - [ ] three.js main panel
