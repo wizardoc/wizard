@@ -46,8 +46,10 @@ export interface ParsedActionButtons extends BaseActionButtons {
 
 export interface DialogOptions<T = ParsedActionButtons> {
   title: string;
+  isClickAwayClose?: boolean;
+  isFullScreen?: boolean;
   actionButtons?: T[];
-  componentProps: unknown;
+  componentProps?: unknown;
 }
 
 @Injectable()
@@ -73,6 +75,13 @@ export class DialogService {
   private stashDialogData: unknown;
   private dialogData: unknown;
 
+  /** 主动调起 service 关闭 */
+  kill(dialogID: string): void {
+    if (dialogID === this.currentDialogID) {
+      this.spurt();
+    }
+  }
+
   async open(
     content: ComponentType,
     options: DialogOptions<ActionButtons>,
@@ -97,7 +106,7 @@ export class DialogService {
           }) as ActionButtonCB<void>,
         })),
         componentProps: {
-          ...options.componentProps,
+          ...(options.componentProps || {}),
           close: (data: unknown, options: CloseOptions): void => {
             if (options) {
               const {isDestroy} = options;

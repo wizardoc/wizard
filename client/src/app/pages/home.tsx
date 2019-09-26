@@ -11,8 +11,6 @@ const Wrapper = styled.div`
 
 class THome extends Component {
   render(): ReactNode {
-    console.info('wwww');
-
     return (
       <Wrapper>
         <Started />

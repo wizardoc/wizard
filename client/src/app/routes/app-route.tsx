@@ -27,6 +27,9 @@ const Organization = lazy(() =>
   defaultify(import('../pages/organization'), 'Organization'),
 );
 const About = lazy(() => defaultify(import('../pages/about'), 'About'));
+const EmailValidator = lazy(() =>
+  defaultify(import('../pages/email-validator'), 'EmailValidator'),
+);
 
 export class TAppRoutes extends Component<
   AppRoutesProps & RouteComponentProps
@@ -55,6 +58,7 @@ export class TAppRoutes extends Component<
           <Route exact path="/doc" component={Doc} />
           <Route exact path="/about" component={About} />
           <Route exact path="/organization" component={Organization} />
+          <Route exact path="/email-validator" component={EmailValidator} />
           {/* <Route component={PageNotFound} /> */}
         </Switch>
       </Suspense>

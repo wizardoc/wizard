@@ -1,10 +1,12 @@
 import {DrawerProps} from '@material-ui/core/Drawer';
 import {action, computed, observable} from 'mobx';
 import {ReactNode} from 'react';
-import {Injectable} from 'react-ts-di';
+import {Inject, Injectable} from 'react-ts-di';
+
+import {Time} from './time';
 
 interface Direction {
-  direction: DrawerProps['anchor'];
+  anchor: DrawerProps['anchor'];
 }
 
 /** Drawer component using */
@@ -27,7 +29,10 @@ export class DrawerService {
   currentDrawer: ReactNode | undefined;
 
   @observable
-  _options: DrawerOptions = {direction: 'right'};
+  _options: DrawerOptions = {anchor: 'right'};
+
+  @Inject
+  time!: Time;
 
   /** Drawer to be render */
   @action
@@ -53,7 +58,6 @@ export class DrawerService {
 
   @action
   hidden(): void {
-    this._isShow = false;
     this.resetConfig();
   }
 
@@ -80,7 +84,7 @@ export class DrawerService {
   @action
   private resetConfig(): void {
     this._isShow = false;
-    this._options = {direction: 'right'};
-    this.currentDrawer = undefined;
+
+    /** some config need reset while animation ending */
   }
 }

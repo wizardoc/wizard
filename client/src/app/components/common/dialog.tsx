@@ -36,6 +36,12 @@ export class CommonDialog extends Component<CommonDialogProps> {
   @Inject
   private dialogService!: DialogService;
 
+  handleClose(isClose: boolean, dialogID: string): void {
+    if (isClose) {
+      this.dialogService.kill(dialogID);
+    }
+  }
+
   render(): ReactNode {
     const {dialogID} = this.props;
 
@@ -50,7 +56,13 @@ export class CommonDialog extends Component<CommonDialogProps> {
       return <></>;
     }
 
-    const {title, actionButtons = [], componentProps} = options;
+    const {
+      title,
+      actionButtons = [],
+      componentProps,
+      isFullScreen,
+      isClickAwayClose,
+    } = options;
     const Footer: FunctionComponent = () => {
       if (!actionButtons.length) {
         return <></>;
@@ -70,7 +82,11 @@ export class CommonDialog extends Component<CommonDialogProps> {
     const Content = withDialog(content, componentProps);
 
     return (
-      <Dialog open={isShow}>
+      <Dialog
+        fullScreen={!!isFullScreen}
+        open={isShow}
+        onClose={() => this.handleClose(!!isClickAwayClose, dialogID)}
+      >
         {title && <DialogTitle>{title}</DialogTitle>}
         <DialogContent>
           <Content></Content>

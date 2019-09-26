@@ -11,3 +11,5 @@ export * from './link';
 export * from './tree-view';
 export * from './form-control';
 export * from './drawer';
+export * from './color-block';
+export * from './input';
