@@ -107,17 +107,11 @@ export class TSharePop extends Component<SharePopProps> {
   getClassOfWrapper = (className: unknown): string =>
     ((this.isOpenMenu && className) || '') as string;
 
-  handleWeiboClick(): void {
-    console.info('111 click weibo');
-  }
+  handleWeiboClick(): void {}
 
-  handleWechatClick(): void {
-    console.info('111 click wechat');
-  }
+  handleWechatClick(): void {}
 
-  handleQQClick(): void {
-    console.info('111 click qq');
-  }
+  handleQQClick(): void {}
 
   render(): ReactNode {
     const {

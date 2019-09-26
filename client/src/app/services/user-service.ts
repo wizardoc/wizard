@@ -31,7 +31,6 @@ export type RegisterData = Optional<ParsedRegisterData>;
 export class User {
   @computed
   get getIsLogin(): boolean {
-    console.info(this.isLogin);
     return this.isLogin;
   }
 
@@ -119,8 +118,6 @@ export class User {
     organizationName: string,
     organizationDescription?: string,
   ): void {
-    console.info(organizationName, organizationDescription);
-
     this.registerData = {
       ...this.registerData,
       organizationName,
