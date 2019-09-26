@@ -4,11 +4,10 @@ import {Inject, Injectable} from 'react-ts-di';
 import {HTTP} from '../api';
 import {BaseInfoData} from '../components';
 import {USER_API} from '../constant';
-import {LoadingStore} from '../store';
 // import {TipStore} from '../store';
 import {Optional} from '../types/type-utils';
-import {InjectStore} from '../utils';
 
+import {DialogService} from './dialog-service';
 import {JWT} from './jwt-service';
 
 export interface UserBaseInfo {
@@ -42,8 +41,8 @@ export class User {
   @Inject
   private jwt!: JWT;
 
-  @InjectStore(LoadingStore)
-  private loading!: LoadingStore;
+  @Inject
+  private dialog!: DialogService;
 
   registerData: RegisterData = {};
 
@@ -68,17 +67,11 @@ export class User {
 
   @action
   async initUserInfo(): Promise<void> {
-    this.loading.loadingDialogToggle();
-
-    try {
+    this.dialog.loading(async () => {
       const {userInfo} = await this.http.get(USER_API.INFO);
 
       this.setUserInfo(userInfo);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      this.loading.loadingDialogToggle();
-    }
+    });
   }
 
   @action
@@ -111,9 +104,7 @@ export class User {
       return '';
     }
 
-    const {avatar, displayName} = this.userInfo;
-
-    return avatar === '' || !avatar ? displayName[0] : avatar;
+    return getAvatar(this.userInfo);
   }
 
   register(): void {
@@ -144,4 +135,19 @@ export class User {
     this.userInfo = undefined;
     this.isLogin = false;
   }
+}
+
+interface UserInfoAvatarPart {
+  avatar: string;
+  displayName: string;
+}
+
+export function getAvatar(userInfo: UserInfoAvatarPart): string {
+  if (!userInfo) {
+    return '';
+  }
+
+  const {avatar, displayName} = userInfo;
+
+  return avatar === '' || !avatar ? displayName[0] : avatar;
 }
