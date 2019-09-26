@@ -160,7 +160,7 @@ export class TOrganization extends Component<
   private renderComponent(): ReactNode {
     return this.currentGroup === ORGANIZATION_TAB_NAME.NEW_ORGANIZATION ? (
       <CreateNewOrganization
-        onOrganizationInfoChange={(info: any) =>
+        onOrganizationInfoChange={info =>
           this.handleOrganizationInfoChange(info)
         }
       />
