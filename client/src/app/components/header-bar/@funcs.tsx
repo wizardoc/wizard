@@ -6,9 +6,10 @@ import styled from 'styled-components';
 
 import {GitHubSvg} from '../../assets';
 import {Links} from '../../constant';
-import {User} from '../../services';
+import {DrawerService, User} from '../../services';
 import {ProfileStore} from '../../store';
 import {InjectStore} from '../../utils';
+import {Todos} from '../optional-tip';
 
 const AvatarWrapper = styled(Avatar)`
   margin-left: 20px;
@@ -26,6 +27,9 @@ export class Funcs extends Component {
   @Inject
   userService!: User;
 
+  @Inject
+  drawerService!: DrawerService;
+
   @InjectStore(ProfileStore)
   private profileStore!: ProfileStore;
 
@@ -35,6 +39,10 @@ export class Funcs extends Component {
 
   handleAvatarClick(): void {
     this.profileStore.toggleViewProfilePanel();
+  }
+
+  handleTodoClick(): void {
+    this.drawerService.render(<Todos></Todos>, {anchor: 'right'});
   }
 
   render(): ReactNode {
@@ -59,7 +67,7 @@ export class Funcs extends Component {
         </Tooltip>
         {this.userService.avatar !== '' && (
           <>
-            <Tooltip title="待办事项">
+            <Tooltip title="待办事项" onClick={() => this.handleTodoClick()}>
               <IconButton color="inherit">
                 <SubjectIcon />
               </IconButton>
