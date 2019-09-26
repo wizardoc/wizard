@@ -10,3 +10,4 @@ export * from './common';
 export * from './doc';
 export * from './about';
 export * from './optional-tip';
+export * from './organization';
