@@ -9,6 +9,7 @@ import {RouterAnimation} from '../animations';
 import {
   Contributors,
   MDRender,
+  PageContent,
   PageHeader,
   // TreeViewGenerator,
 } from '../components';
@@ -36,12 +37,6 @@ const SideTitle = styled.p`
 
 const Content = styled(MDRender)`
   width: calc(100% - 310px);
-`;
-
-const PageContent = styled.div`
-  display: flex;
-  padding: 25px;
-  box-sizing: border-box;
 `;
 
 const ContentWrapper = styled.div`

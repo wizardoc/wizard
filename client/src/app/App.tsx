@@ -60,9 +60,11 @@ class TApp extends Component<WithSnackbarProps> {
       <ThemeProvider theme={styledTheme}>
         <MuiThemeProvider theme={theme}>
           {/* Drawer is render by service here */}
-          <Drawer {...options} open={isShow}>
-            {currentDrawer}
-          </Drawer>
+          {currentDrawer && (
+            <Drawer {...options} open={isShow}>
+              {currentDrawer}
+            </Drawer>
+          )}
           {/* Dialog is render by service here */}
           {dialogs.map(dialogID => (
             <CommonDialog key={dialogID} dialogID={dialogID}></CommonDialog>
@@ -72,8 +74,6 @@ class TApp extends Component<WithSnackbarProps> {
             {this.optionalTipService.tipInfos.map(info => (
               <OptionalTip key={info.name} {...info}></OptionalTip>
             ))}
-          </BrowserRouter>
-          <BrowserRouter>
             <Profile />
             <Wrapper>
               <HeaderBar />
@@ -97,7 +97,7 @@ class TApp extends Component<WithSnackbarProps> {
     this.optionalTipService.push({
       name: '验证邮箱',
       description: '验证邮箱后，wizard 会把每次的更改推送发送到你邮箱哦',
-      route: '/',
+      route: '/email-validator',
       icon: <EmailIcon></EmailIcon>,
     });
   }
