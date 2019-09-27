@@ -117,7 +117,7 @@ class THeaderBar extends Component<HeaderBarProps> {
 
   handleLogoClick(): void {
     this.drawerService.render(<DocRecentUpdateDrawer></DocRecentUpdateDrawer>, {
-      direction: 'left',
+      anchor: 'left',
     });
   }
 

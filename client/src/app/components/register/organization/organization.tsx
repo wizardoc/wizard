@@ -21,8 +21,8 @@ import {TipContent, TipVariant} from '../../../ui';
 import {NextStep} from '../common/buttons';
 import {PartViewProps} from '../common/part-view-props';
 
-import {CreateNewOrganization} from './@create-new-organization';
-import {JoinExistOrganization} from './@join-exist-organization';
+import {CreateNewOrganization} from './create-new-organization';
+import {JoinExistOrganization} from './join-exist-organization';
 
 const Wrapper = styled.div``;
 
@@ -160,7 +160,7 @@ export class TOrganization extends Component<
   private renderComponent(): ReactNode {
     return this.currentGroup === ORGANIZATION_TAB_NAME.NEW_ORGANIZATION ? (
       <CreateNewOrganization
-        onOrganizationInfoChange={(info: any) =>
+        onOrganizationInfoChange={info =>
           this.handleOrganizationInfoChange(info)
         }
       />

@@ -5,8 +5,19 @@ import {ORGANIZATION} from '../constant';
 import {TipStore} from '../store';
 import {InjectStore} from '../utils';
 
+import {UserBaseInfo} from './user-service';
+
 interface OrganizationNames {
   organizeNames: string[];
+}
+
+export interface OrganizationCardData extends UserBaseInfo {
+  ownerInfo: UserBaseInfo;
+  organizeName: string;
+  description: string;
+  hasValid: string;
+  createTime: number;
+  joinTime: number;
 }
 
 @Injectable()
@@ -25,6 +36,12 @@ export class OrganizationService {
     );
 
     return organizeNames;
+  }
+
+  async getAllJoinOrganization(): Promise<OrganizationCardData[]> {
+    const {organizations} = await this.http.get(this.parseUrl('/joins/all'));
+
+    return organizations;
   }
 
   async createOrganization(

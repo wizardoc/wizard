@@ -17,14 +17,14 @@ export class JoinExistOrganization extends Component<
     return (
       <FormControl
         rules={{
-          choseOrganization: {required: true},
+          organizationName: {required: true},
         }}
         onFormDataChange={(data: unknown) =>
           onOrganizationInfoChange(data as OrganizationData)
         }
       >
         <TextFieldWrapper
-          name="choseOrganization"
+          name="organizationName"
           label="选择已存在的组织"
           type="text"
           autoComplete="new-password"

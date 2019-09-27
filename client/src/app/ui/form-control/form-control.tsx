@@ -12,6 +12,8 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 
+import {isArray} from '../../utils';
+
 import {IFormControl} from './form-control-type';
 
 export type Validator = (
@@ -56,6 +58,8 @@ interface ValidatorInfos {
 const Wrapper = styled.div`
   margin: 0 !important;
   padding: 0 !important;
+  width: fit-content !important;
+  height: fit-content !important;
 `;
 
 const ErrorHelpMessage = styled(FormHelperText)`
@@ -81,7 +85,15 @@ export class FormControl extends Component<FormControlProps>
       return <></>;
     }
 
-    const parts = (children as ReactElement[]).map(child => {
+    let parsedChildren = [];
+
+    if (!isArray(children)) {
+      parsedChildren.push(children);
+    } else {
+      parsedChildren = children;
+    }
+
+    const parts = (parsedChildren as ReactElement[]).map(child => {
       if (!child.props) {
         return <></>;
       }

@@ -72,8 +72,6 @@ export class TreeViewGenerator extends Component<TreeViewProps> {
   private handleTreeItemClick(e: MouseEvent, text: string): void {
     e.stopPropagation();
 
-    console.info(text);
-
     location.hash = text;
   }
 

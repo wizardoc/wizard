@@ -7,7 +7,7 @@ export * from './markdown';
 export * from './optional-tip-service';
 export * from './organization-service';
 export * from './regex';
-export * from './time';
 export * from './toast';
 export * from './user-service';
 export * from './drawer-service';
+export * from './time';

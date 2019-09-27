@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  position: absolute;
+  position: fixed;
   top: 40px;
   z-index: 2000;
 `;
@@ -76,12 +76,14 @@ class TipBodyWrapper extends Component<
     } = this.props;
 
     exitAnimation(() => {
-      onLaterClick();
-
       if (isExec) {
         onExecClick();
         history.push(route);
+
+        return;
       }
+
+      onLaterClick();
     });
   }
 

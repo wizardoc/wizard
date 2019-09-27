@@ -48,6 +48,12 @@ const HelpFab = styled(StyledFab)`
   color: white !important;
 `;
 
+export const PageContent = styled.div`
+  display: flex;
+  padding: 25px;
+  box-sizing: border-box;
+`;
+
 export const PageHeader: FunctionComponent<PageHeaderProps> = props => {
   const {onFabClick = (): void => {}, title, fabIcon} = props;
 

@@ -64,8 +64,6 @@ export class CacheService {
 
   private listener(): void {
     this.listenerId = setInterval(() => {
-      console.info('exec');
-
       for (const key of Object.keys(this.pool)) {
         this.pool[key].count--;
 
