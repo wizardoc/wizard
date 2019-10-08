@@ -36,8 +36,8 @@ export class THeaderBarTabs extends Component<RouteComponentProps> {
           indicatorColor="secondary"
         >
           <Tab label="首页" />
-          <Tab label="组织" />
-          <Tab label="规范" />
+          <Tab label="组织 & 规范" />
+          <Tab label="Public space" />
           <Tab label="关于" />
         </Tabs>
       </Wrapper>
