@@ -94,7 +94,7 @@ export class OrganizationCardInfo extends Component<OrganizationCardInfoProps> {
               创建时间: {this.formatTime(createTime)}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              创建时间: {this.formatTime(joinTime)}
+              加入时间: {this.formatTime(joinTime)}
             </Typography>
           </DateAround>
         </CardContent>

@@ -16,21 +16,12 @@ import {
   OrganizationCardData,
   OrganizationService,
 } from '../services';
+import {Carpet} from '../ui';
 
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-`;
-
-const Carpet = styled.div`
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: -2;
-  background: #eee;
 `;
 
 @observer
@@ -61,7 +52,7 @@ export class Organization extends Component {
 
     return (
       <Wrapper>
-        <Carpet></Carpet>
+        <Carpet color="#eee"></Carpet>
         <PageHeader
           onFabClick={() => this.handleNewOrganizationClick()}
           title="组织"
