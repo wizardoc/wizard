@@ -1,5 +1,5 @@
 import {ButtonProps} from '@material-ui/core/Button';
-import {observable} from 'mobx';
+import {action, observable} from 'mobx';
 import {ComponentType} from 'react';
 import {Inject, Injectable} from 'react-ts-di';
 import UUID from 'uuid';
@@ -52,6 +52,15 @@ export interface DialogOptions<T = ParsedActionButtons> {
   componentProps?: unknown;
 }
 
+export interface DialogConfig {
+  isShow: boolean;
+  dialogData?: unknown;
+  content: ComponentType;
+  options: DialogOptions;
+}
+
+type DialogID = string;
+
 @Injectable()
 export class DialogService {
   @Inject
@@ -61,22 +70,13 @@ export class DialogService {
   private errorManager!: ErrorManager;
 
   @observable
-  dialogs = new Map<string, DialogOptions>();
+  dialogs = new Map<DialogID, DialogConfig>();
 
   @observable
-  isShow = false;
-
-  @observable
-  content: ComponentType | undefined;
-
-  @observable
-  currentDialogID: string | undefined;
-
-  private stashDialogData: unknown;
-  private dialogData: unknown;
+  currentDialogID: DialogID | undefined;
 
   /** 主动调起 service 关闭 */
-  kill(dialogID: string): void {
+  kill(dialogID: DialogID): void {
     if (dialogID === this.currentDialogID) {
       this.spurt();
     }
@@ -87,10 +87,14 @@ export class DialogService {
     options: DialogOptions<ActionButtons>,
   ): Promise<DialogRef> {
     const {actionButtons = []} = options;
+    const dialogID = UUID.v4();
 
     return new Promise(resolve => {
+      /** 用于外部接收吐出消息的回调 */
       const onClose = <T>(cb: (data: T) => void): void => {
-        cb(this.dialogData as T);
+        const {dialogData} = this.dialogs.get(dialogID)!;
+
+        cb(dialogData as T);
         this.dialogs.delete(dialogID);
       };
       const op: DialogOptions = {
@@ -111,7 +115,13 @@ export class DialogService {
             if (options) {
               const {isDestroy} = options;
 
-              this.stashDialogData = data;
+              // 暂存 dialogData 有些场景下，调用 close 并不会关闭 dialog，而是等待 下方 footer 按钮关闭
+              if (this.currentDialogID) {
+                const config = this.dialogs.get(this.currentDialogID)!;
+
+                config.dialogData = data;
+                this.dialogs.set(this.currentDialogID, config);
+              }
 
               if (isDestroy) {
                 this.spurt();
@@ -121,12 +131,13 @@ export class DialogService {
           },
         },
       };
-      const dialogID = UUID.v4();
 
-      this.dialogs.set(dialogID, op);
+      this.dialogs.set(dialogID, {
+        isShow: true,
+        content,
+        options: op,
+      });
       this.currentDialogID = dialogID;
-      this.content = content;
-      this.isShow = true;
     });
   }
 
@@ -169,9 +180,17 @@ export class DialogService {
     this.dialogs.delete(this.currentDialogID);
   }
 
-  /** throw value */
+  /** throw value and close current dialog */
+  @action
   private spurt(): void {
-    this.isShow = false;
-    this.dialogData = this.stashDialogData;
+    if (!this.currentDialogID) {
+      return;
+    }
+
+    const ref = this.dialogs.get(this.currentDialogID);
+
+    if (ref) {
+      ref.isShow = false;
+    }
   }
 }

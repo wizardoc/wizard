@@ -16,6 +16,7 @@ import {
   OrganizationCardData,
   OrganizationService,
 } from '../services';
+import {Carpet} from '../ui';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -51,6 +52,7 @@ export class Organization extends Component {
 
     return (
       <Wrapper>
+        <Carpet color="#eee"></Carpet>
         <PageHeader
           onFabClick={() => this.handleNewOrganizationClick()}
           title="组织"

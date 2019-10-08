@@ -11,6 +11,7 @@ export const GlobalStyle = createGlobalStyle<{theme: typeof styledTheme}>`
 
   body {
     overflow-x: hidden;
+    background: ${props => props.theme.white};
   }
 
   #root {

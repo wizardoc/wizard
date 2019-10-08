@@ -14,10 +14,14 @@ interface OrganizationCardInfoProps {
   organizationCardData: OrganizationCardData;
 }
 
+interface OrganizationNameProps {
+  isFull: boolean;
+}
+
 const Cover = styled.div`
   width: 100%;
   height: 194px;
-  background-color: #bdbdbd;
+  background-color: ${props => props.theme.white};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,6 +37,11 @@ const DescriptionAround = styled(Typography)`
 ` as ComponentType<TypographyProps>;
 
 const DateAround = styled.div``;
+
+const OrganizationName = styled.div<OrganizationNameProps>`
+  color: ${props => (props.isFull ? props.theme.white : props.theme.black)};
+  transition: 0.5s all;
+`;
 
 const OrganizationCover = styled(CardMedia)`` as ComponentType<CardMediaProps>;
 
@@ -65,7 +74,11 @@ export class OrganizationCardInfo extends Component<OrganizationCardInfoProps> {
           onMouseLeave={() => this.toggleIsFull()}
         >
           <Cover>
-            <ColorBlock isFull={this.isFull}>{organizeName}</ColorBlock>
+            <ColorBlock isFull={this.isFull}>
+              <OrganizationName isFull={this.isFull}>
+                {organizeName}
+              </OrganizationName>
+            </ColorBlock>
           </Cover>
         </OrganizationCover>
         <CardContent>
@@ -81,7 +94,7 @@ export class OrganizationCardInfo extends Component<OrganizationCardInfoProps> {
               创建时间: {this.formatTime(createTime)}
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              创建时间: {this.formatTime(joinTime)}
+              加入时间: {this.formatTime(joinTime)}
             </Typography>
           </DateAround>
         </CardContent>

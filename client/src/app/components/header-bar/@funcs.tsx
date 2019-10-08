@@ -12,6 +12,8 @@ import {InjectStore} from '../../utils';
 import {Todos} from '../optional-tip';
 
 const AvatarWrapper = styled(Avatar)`
+  width: 35px !important;
+  height: 35px !important;
   margin-left: 20px;
   font-size: 15px !important;
   cursor: pointer;
@@ -20,6 +22,16 @@ const AvatarWrapper = styled(Avatar)`
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
+  margin-left: 10px;
+`;
+
+const UserInfo = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
+
+const UserName = styled.div`
   margin-left: 10px;
 `;
 
@@ -72,9 +84,10 @@ export class Funcs extends Component {
                 <SubjectIcon />
               </IconButton>
             </Tooltip>
-            <AvatarWrapper onClick={() => this.handleAvatarClick()}>
-              {this.userService.avatar}
-            </AvatarWrapper>
+            <UserInfo onClick={() => this.handleAvatarClick()}>
+              <AvatarWrapper>{this.userService.avatar}</AvatarWrapper>
+              <UserName>{this.userService.userInfo!.displayName}</UserName>
+            </UserInfo>
           </>
         )}
       </Wrapper>
