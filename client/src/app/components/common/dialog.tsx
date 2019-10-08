@@ -49,10 +49,11 @@ export class CommonDialog extends Component<CommonDialogProps> {
       return <></>;
     }
 
-    const {isShow, content, dialogs} = this.dialogService;
-    const options = dialogs.get(dialogID);
+    const {dialogs} = this.dialogService;
+    const config = dialogs.get(dialogID);
+    const {isShow, content} = config!;
 
-    if (!options || !content) {
+    if (!config || !content) {
       return <></>;
     }
 
@@ -62,7 +63,7 @@ export class CommonDialog extends Component<CommonDialogProps> {
       componentProps,
       isFullScreen,
       isClickAwayClose,
-    } = options;
+    } = config.options;
     const Footer: FunctionComponent = () => {
       if (!actionButtons.length) {
         return <></>;
