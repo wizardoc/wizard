@@ -23,6 +23,16 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
+const Carpet = styled.div`
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: -2;
+  background: #eee;
+`;
+
 @observer
 export class Organization extends Component {
   @Inject
@@ -51,6 +61,7 @@ export class Organization extends Component {
 
     return (
       <Wrapper>
+        <Carpet></Carpet>
         <PageHeader
           onFabClick={() => this.handleNewOrganizationClick()}
           title="组织"

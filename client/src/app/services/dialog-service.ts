@@ -187,6 +187,10 @@ export class DialogService {
       return;
     }
 
-    this.dialogs.get(this.currentDialogID)!.isShow = false;
+    const ref = this.dialogs.get(this.currentDialogID);
+
+    if (ref) {
+      ref.isShow = false;
+    }
   }
 }
