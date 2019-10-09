@@ -99,12 +99,15 @@ tabs!: MainTabs
 通用的 Validator 经过抽象放在 `ui/form-control/validators` 目录下，通过 `form-control-types` 暴露出去
 
 ## TODO
-
-- [ ] PageHeader 加入图片元素
+- [ ] `PUBLIC SPACE` 可以发展为类似论坛文章一样的东西，在 UI 上用 Material Design 的 卡片
+- [ ] 在 `PUBLIC SPACE` 中设置一些 tab 用来区分小类，`建议`， `技术文章公开区域`，`专栏导读`, `广告区`
+- [x] 加入 `PUBLIC SPACE`，放置一些公开的文档
+- [ ] 分离出一个没有 header 和没有 footer 的 router-place，放置一些如 `登录` `注册` 之类的页面
+- [x] PageHeader 加入图片元素 (效果不是太好，思考一下更好的解决方式)
 - [ ] markdown 图片交互优化
 - [ ] 写文章页面，富文本编辑器调研
 - [ ] 组织详情页面
-- [ ] 组织表结构优化，owner
+- [x] 组织表结构优化，owner
 - [ ] 组织概览
 - [ ] 待办事项，许多东西我们不需要及时的处理，因此可加入待办事项
 - [ ] three.js 应用 - 衍生出一些小游戏彩蛋
