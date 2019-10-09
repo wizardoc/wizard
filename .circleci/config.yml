@@ -1,5 +1,20 @@
-version: 0.0.1
+version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:10.4.0
+      - image: circleci/node:11.10.1
+    working_directory: ~/wizard-FE
+    steps:
+      # pull all code from current branch
+      - checkout
+      # install deps
+      - run: yarn install
+      # cache node_modules
+      - save_cache:
+          paths:
+            - node_modules
+          key: wizard-{{ checksum "package.json" }}
+      # run unit test of browser
+      - run: cd ./client && yarn test
+      # lint strict
+      - run: yarn tslint -p tsconfig.json
