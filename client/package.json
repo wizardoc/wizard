@@ -37,7 +37,7 @@
   "scripts": {
     "start": "react-app-rewired start --scripts-version react-scripts-ts",
     "build": "react-app-rewired build --scripts-version react-scripts-ts",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "eject": "react-scripts-ts eject",
     "dev": "next"
   },
