@@ -4,7 +4,8 @@ const Path = require('path');
 // const nodeExternals = require('webpack-node-externals');
 
 module.exports = function override(config) {
-  const {entry} = config;
+  const {entry, resolve = {}} = config;
+  const {alias = {}} = resolve;
 
   // ssr config
   // if (IS_SSR) {
@@ -17,8 +18,15 @@ module.exports = function override(config) {
   //     : (config.externals = [nodeExternals()]);
   // }
 
+  config.resolve.alias = {
+    ...alias,
+    '~': Path.resolve('src/app'),
+    '~imgs': Path.resolve('src/app/assets/static'),
+  };
   config.entry.pop();
   config.entry = [...entry, Path.resolve('./src/app/index.tsx')];
+
+  console.info(config);
 
   return config;
 };

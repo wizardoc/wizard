@@ -18,6 +18,9 @@ import {
 } from '../services';
 import {Carpet} from '../ui';
 
+// tslint:disable-next-line:no-implicit-dependencies
+import OrganizationImg from '~/assets/static/organization.png';
+
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
@@ -54,6 +57,7 @@ export class Organization extends Component {
       <Wrapper>
         <Carpet color="#eee"></Carpet>
         <PageHeader
+          img={OrganizationImg}
           onFabClick={() => this.handleNewOrganizationClick()}
           title="组织"
           fabIcon={<AddIcon></AddIcon>}

@@ -11,6 +11,7 @@ interface PageHeaderWrapperProps {
 
 export interface PageHeaderProps extends PageHeaderWrapperProps {
   title: string;
+  img?: string;
   fabIcon?: ReactNode;
   onFabClick?(): void;
 }
@@ -20,24 +21,27 @@ const Wrapper = styled.div<PageHeaderWrapperProps>`
   height: 100%;
   color: white;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding-left: 20px;
+  padding: 0 20px;
+  box-sizing: border-box;
   background: ${({theme, bgColor}) => bgColor || theme.primaryColor};
   position: absolute;
   top: 0;
   left: 0;
   z-index: -2;
+  overflow: hidden;
 `;
 
 const Header = styled.div`
   width: 100%;
-  height: 80px;
+  height: 100px;
   position: relative;
 `;
 
 const Title = styled(Typography)`
-  font-weight: 300 !important;
-  font-size: 20px !important;
+  font-weight: 100 !important;
+  font-size: 25px !important;
 ` as ComponentType<TypographyProps>;
 
 const HelpFab = styled(StyledFab)`
@@ -48,6 +52,11 @@ const HelpFab = styled(StyledFab)`
   color: white !important;
 `;
 
+const RelatedImg = styled.img`
+  width: 120px;
+  opacity: 0.8;
+`;
+
 export const PageContent = styled.div`
   display: flex;
   padding: 25px;
@@ -55,19 +64,18 @@ export const PageContent = styled.div`
 `;
 
 export const PageHeader: FunctionComponent<PageHeaderProps> = props => {
-  const {onFabClick = (): void => {}, title, fabIcon} = props;
+  const {onFabClick = (): void => {}, title, fabIcon, img} = props;
 
   return (
     <Header>
       <Wrapper>
         <Title variant="h5">{title}</Title>
+        {img && <RelatedImg src={img}></RelatedImg>}
       </Wrapper>
-      {fabIcon ? (
+      {fabIcon && (
         <HelpFab onClick={onFabClick} aria-label="edit">
           {fabIcon}
         </HelpFab>
-      ) : (
-        <></>
       )}
     </Header>
   );
