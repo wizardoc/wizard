@@ -1,6 +1,5 @@
 <div>
-  <p align="center"><img src="https://github.com/wizaaard/wizard/blob/master/client/src/app/assets/static/wizard-card-variant.png" alt="fre logo" width="180"></p>
-  <h1 align="center" style="font-size:100px;">Wizard</h1>
+  <p align="center"><img src="https://github.com/wizaaard/wizard/blob/master/client/src/app/assets/static/wizard-card-variant.png" alt="fre logo"></p>
 </div>
 <p align="center">A document of code manager platform</p>
 <p align="center">
