@@ -17,4 +17,4 @@ jobs:
       # run unit test of browser
       - run: cd ./client && yarn test
       # lint strict
-      - run: yarn tslint -p tsconfig.json
+      - run: cd ./client && yarn tslint -p tsconfig.json
