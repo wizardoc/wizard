@@ -97,6 +97,23 @@ tabs!: MainTabs
 
 通用的 Validator 经过抽象放在 `ui/form-control/validators` 目录下，通过 `form-control-types` 暴露出去
 
+## Pages
+- [ ] 文档页面 （3 个 tab）
+  - [ ] 普通 Markdown 文档页面
+  - [ ] 规范文档页面 （有 diff）
+  - [ ] API 文档页面（封装 swagger）
+- [ ] 组织页面
+  - [ ] 组织卡片预览页面
+  - [ ] 组织管理页面，Owner 才能进入
+- [ ] PUBLIC SPACE
+  - [ ] 公开文章区
+  - [ ] 专栏导读
+  - [ ] 广告区
+  - [ ] 建议
+- [ ] Markdown 编辑器
+- [ ] 新建文档页面
+  - [ ] 嵌入 markdown
+
 ## TODO
 - [ ] `PUBLIC SPACE` 可以发展为类似论坛文章一样的东西，在 UI 上用 Material Design 的 卡片
 - [ ] 抽离 `卡片展示区域` 的组件，添加展示方式的功能，列表展示，卡片展示 两种
