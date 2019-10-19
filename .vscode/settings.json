@@ -7,12 +7,10 @@
   "files.trimTrailingWhitespace": true,
   "typescript.tsdk": "node_modules/typescript/lib",
   "tslint.autoFixOnSave": true,
-  "tslint.configFile": "node_modules/@magicspace/configs/tslint-prettier.js",
+  "tslint.configFile": "client/tslint.json",
   "[plaintext]": {
     "files.insertFinalNewline": false
   },
   "commentTranslate.targetLanguage": "en",
-  "cSpell.words": [
-    "defaultify"
-  ]
+  "cSpell.words": ["defaultify"]
 }

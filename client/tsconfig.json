@@ -1,7 +1,7 @@
 {
   "extends": "../node_modules/@magicspace/configs/tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "",
+    "baseUrl": ".",
     "outDir": "build/dist",
     "module": "commonjs",
     "target": "es6",
@@ -25,7 +25,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "paths": {
-      "~": ["src/app"]
+      "~/*": ["src/app"]
     }
   },
   "exclude": [
