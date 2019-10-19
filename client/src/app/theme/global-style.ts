@@ -50,6 +50,14 @@ export const GlobalStyle = createGlobalStyle<{theme: typeof styledTheme}>`
     &:target {
       padding-top: 70px;
       margin-top: -70px;
+      transition: 0.3s all;
+      border-left: 5px solid ${props => props.theme.primaryColor};
+      padding-left: 10px;
+      background: ${props => props.theme.shallowPrimaryColor};
+    }
+
+    &:hover {
+
     }
   }
 

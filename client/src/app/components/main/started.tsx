@@ -9,16 +9,16 @@ import Main from '../../assets/static/main.png';
 import {MAIN_PAGE, USER} from '../../constant';
 import {User} from '../../services';
 import {ActionButton} from '../../ui';
+import {ReleaseBanner} from '../release-banner';
 
 // import {GithubBtn} from './@github-btn';
-import {GithubBtn} from './@github-btn';
 
 const Wrapper = styled.div`
   width: 100%;
 `;
 
 const StartPanel = styled.div`
-  height: 550px;
+  height: 650px;
   display: flex;
   justify-content: space-around;
   background: ${props => props.theme.primaryColor};
@@ -40,19 +40,18 @@ const GetStarted = styled(BaseButton)`
 const StartedWrapper = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 60px !important;
+  margin-top: 35px !important;
 `;
 
 const WizardTitle = styled.p`
-  font-size: 70px;
+  font-size: 30px;
   color: white;
-  margin-top: 100px;
-  margin-bottom: 0;
+  margin: 0;
 `;
 
 const Description = styled.p`
-  width: 400px;
-  margin-top: 5px;
+  width: 500px;
+  margin-top: 30px;
   line-height: 40px;
   color: white;
 `;
@@ -61,7 +60,13 @@ const MainImg = styled.img`
   height: 100%;
 `;
 
-const WizardDescription = styled.div``;
+const WizardDescription = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+`;
 
 interface StartedProps extends RouteComponentProps {}
 
@@ -85,9 +90,12 @@ class TStarted extends Component<StartedProps> {
       <Wrapper>
         <StartPanel>
           <WizardDescription>
-            <WizardTitle>Wizard</WizardTitle>
+            <ReleaseBanner></ReleaseBanner>
+            <WizardTitle>Document management platform</WizardTitle>
             <Description>
-              绝佳的文档管理平台，免费，开源，服务于技术开发者，让文档管理如此轻松!
+              开源免费的文档管理平台，管理 API 文档，前端组件文档，markdown
+              文档的绝佳平台，为技术服务，技术分享知识分享平台。赶紧创建自己的第一个
+              wizard 组织吧！
             </Description>
             <StartedWrapper>
               <GetStarted
@@ -97,7 +105,7 @@ class TStarted extends Component<StartedProps> {
               >
                 立即开始!
               </GetStarted>
-              <GithubBtn />
+              {/* <GithubBtn /> */}
             </StartedWrapper>
           </WizardDescription>
           <MainImg src={Main} />

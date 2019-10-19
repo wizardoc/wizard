@@ -17,9 +17,7 @@ import {
   OrganizationService,
 } from '../services';
 import {Carpet} from '../ui';
-
-// tslint:disable-next-line:no-implicit-dependencies
-import OrganizationImg from '~/assets/static/organization.png';
+import OrganizationImg from '../assets/static/organization.png';
 
 const Wrapper = styled.div`
   width: 100%;
