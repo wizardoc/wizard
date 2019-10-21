@@ -20,6 +20,7 @@ export const styledTheme = {
   secondaryColor: '#f06292',
   thirdColor: '#feca57',
   darkPrimaryColor: '#1565c0',
+  green: '#27ae60',
   dark: '#424242',
   shallowPrimaryColor: 'rgba(25, 118, 210, 0.1)',
   highRed: '#e91e63',

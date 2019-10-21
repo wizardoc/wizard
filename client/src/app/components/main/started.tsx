@@ -5,11 +5,13 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
-import Main from '../../assets/static/main.png';
+import Main from '../../assets/static/main_code.svg';
 import {MAIN_PAGE, USER} from '../../constant';
 import {User} from '../../services';
 import {ActionButton} from '../../ui';
 import {ReleaseBanner} from '../release-banner';
+
+import {SkewBlock} from './@skew-block';
 
 // import {GithubBtn} from './@github-btn';
 
@@ -18,7 +20,7 @@ const Wrapper = styled.div`
 `;
 
 const StartPanel = styled.div`
-  height: 650px;
+  height: 700px;
   display: flex;
   justify-content: space-around;
   background: ${props => props.theme.primaryColor};
@@ -56,16 +58,26 @@ const Description = styled.p`
   color: white;
 `;
 
-const MainImg = styled.img`
-  height: 100%;
-`;
-
 const WizardDescription = styled.div`
   height: 100%;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   flex-direction: column;
+`;
+
+const DescriptionContainer = styled.div`
+  position: relative;
+`;
+
+const MainImg = styled.img`
+  height: 500px;
+`;
+
+const MainImgWrapper = styled.div`
+  height: 100%;
+  display: flex;
+  align-items: center;
 `;
 
 interface StartedProps extends RouteComponentProps {}
@@ -90,26 +102,31 @@ class TStarted extends Component<StartedProps> {
       <Wrapper>
         <StartPanel>
           <WizardDescription>
-            <ReleaseBanner></ReleaseBanner>
-            <WizardTitle>Document management platform</WizardTitle>
-            <Description>
-              开源免费的文档管理平台，管理 API 文档，前端组件文档，markdown
-              文档的绝佳平台，为技术服务，技术分享知识分享平台。赶紧创建自己的第一个
-              wizard 组织吧！
-            </Description>
-            <StartedWrapper>
-              <GetStarted
-                variant="outlined"
-                color="primary"
-                onClick={() => this.handleGetStartClick()}
-              >
-                立即开始!
-              </GetStarted>
-              {/* <GithubBtn /> */}
-            </StartedWrapper>
+            <DescriptionContainer>
+              <ReleaseBanner tag="NEW"></ReleaseBanner>
+              <WizardTitle>Document management platform</WizardTitle>
+              <Description>
+                开源免费的文档管理平台，管理 API 文档，前端组件文档，markdown
+                文档的绝佳平台，为技术服务，技术分享知识分享平台。赶紧创建自己的第一个
+                wizard 组织吧！
+              </Description>
+              <StartedWrapper>
+                <GetStarted
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => this.handleGetStartClick()}
+                >
+                  立即开始!
+                </GetStarted>
+                {/* <GithubBtn /> */}
+              </StartedWrapper>
+            </DescriptionContainer>
           </WizardDescription>
-          <MainImg src={Main} />
+          <MainImgWrapper>
+            <MainImg src={Main} />
+          </MainImgWrapper>
         </StartPanel>
+        <SkewBlock></SkewBlock>
       </Wrapper>
     );
   }
