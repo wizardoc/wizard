@@ -5,7 +5,13 @@ export interface ReleaseTagProps {
   tag: 'NEW' | 'PATCH' | 'FEATURE';
 }
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  background: ${props => props.theme.green};
+  padding: 3px;
+  border-radius: 5px;
+  color: ${props => props.theme.white};
+  margin: 1px;
+`;
 
 export class ReleaseTag extends Component<ReleaseTagProps> {
   render(): ReactNode {
