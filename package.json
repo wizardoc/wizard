@@ -8,6 +8,9 @@
     "@magicspace/configs": "0.1.46",
     "lerna": "^3.13.3"
   },
+  "scripts": {
+    "client:start": "cd client && yarn start"
+  },
   "dependencies": {
     "prettier": "^1.17.0",
     "tslint": "5.11.0",
