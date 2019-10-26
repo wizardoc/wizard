@@ -26,10 +26,32 @@ export const GlobalStyle = createGlobalStyle<{theme: typeof styledTheme}>`
   }
 
   .md-codespan {
-    background: ${props => props.theme.codeBgColor};
+    background: ${props => props.theme.shallowSecondaryColor};
     color: ${props => props.theme.secondaryColor};
     padding: 3px 10px;
     border-radius: 5px;
+  }
+
+  .md-heading-wrapper {
+    display: flex;
+    align-items: center;
+
+    &:target {
+      padding-top: 70px;
+      margin-top: -70px;
+    }
+  }
+
+  .md-heading-block {
+    height: 40px;
+    width: 5px;
+    background: ${props => props.theme.primaryColor};
+    margin-right: 10px;
+  }
+
+  .md-heading {
+    margin: 0;
+    font-weight: 300;
   }
 
   .md-img-container {
@@ -41,23 +63,6 @@ export const GlobalStyle = createGlobalStyle<{theme: typeof styledTheme}>`
     & .md-img {
       border-radius: 5px;
       max-height: 500px;
-    }
-  }
-
-  .md-heading {
-    font-weight: 300;
-
-    &:target {
-      padding-top: 70px;
-      margin-top: -70px;
-      transition: 0.3s all;
-      border-left: 5px solid ${props => props.theme.primaryColor};
-      padding-left: 10px;
-      background: ${props => props.theme.shallowPrimaryColor};
-    }
-
-    &:hover {
-
     }
   }
 
