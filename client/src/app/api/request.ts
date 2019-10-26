@@ -3,7 +3,7 @@ import {Injectable} from 'react-ts-di';
 
 import ServerConfig from '../.config/server-config.json';
 
-import {useReq, useRes} from './@attach-interceptor';
+import {useReq, useRes, ResponseInterceptor} from './@attach-interceptor';
 import {getData, requestType} from './@interceptors';
 
 interface ServerConfig {
@@ -24,7 +24,7 @@ export interface PostPayload<T = unknown> {
 }
 
 useReq(requestType);
-useRes(getData as any);
+useRes(getData as ResponseInterceptor);
 
 @Injectable()
 export class HTTP {
