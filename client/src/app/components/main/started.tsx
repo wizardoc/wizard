@@ -4,6 +4,9 @@ import React, {Component, ComponentType, ReactNode} from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
+import {Zoom} from '@material-ui/core';
+import {observer} from 'mobx-react';
+import {observable} from 'mobx';
 
 import Main from '../../assets/static/main_code.svg';
 import {MAIN_PAGE, USER} from '../../constant';
@@ -82,9 +85,13 @@ const MainImgWrapper = styled.div`
 
 interface StartedProps extends RouteComponentProps {}
 
+@observer
 class TStarted extends Component<StartedProps> {
   @Inject
   private userService!: User;
+
+  @observable
+  isMounted = false;
 
   handleGetStartClick(): void {
     const {isLogin} = this.userService;
@@ -122,13 +129,21 @@ class TStarted extends Component<StartedProps> {
               </StartedWrapper>
             </DescriptionContainer>
           </WizardDescription>
-          <MainImgWrapper>
-            <MainImg src={Main} />
-          </MainImgWrapper>
+          <Zoom in={this.isMounted}>
+            <MainImgWrapper>
+              <MainImg src={Main} />
+            </MainImgWrapper>
+          </Zoom>
         </StartPanel>
         <SkewBlock></SkewBlock>
       </Wrapper>
     );
+  }
+
+  componentDidMount(): void {
+    setTimeout(() => {
+      this.isMounted = true;
+    }, 500);
   }
 }
 
