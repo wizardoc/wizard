@@ -68,6 +68,8 @@ export function requestType(
     dup.data = QS.stringify(data);
   }
 
+  dup.withCredentials = true;
+
   // attach jwt in authentication of header
   const JWT = LocalStorage.getItem('jwt');
 

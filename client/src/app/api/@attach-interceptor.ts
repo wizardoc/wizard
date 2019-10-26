@@ -9,11 +9,11 @@ const enum InterceptorType {
   Res = 'response',
 }
 
-type RequestInterceptor = (
+export type RequestInterceptor = (
   value: AxiosRequestConfig,
 ) => AxiosRequestConfig | Promise<AxiosRequestConfig>;
 
-type ResponseInterceptor = (
+export type ResponseInterceptor = (
   value: AxiosResponse,
 ) => AxiosResponse | Promise<AxiosResponse>;
 
