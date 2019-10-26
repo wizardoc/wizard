@@ -19,7 +19,7 @@ export interface CloseOptions {
 }
 
 export interface WithDialog {
-  close?(data: unknown, options?: CloseOptions): void;
+  close?(data?: unknown, options?: CloseOptions): void;
 }
 
 export interface DialogRef {
