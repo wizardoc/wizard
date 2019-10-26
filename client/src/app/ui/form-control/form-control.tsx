@@ -38,6 +38,10 @@ interface FormControlProps {
   onFormDataChange(formData: unknown): void;
 }
 
+interface ErrorHelpMessageProps {
+  hasIcon: boolean;
+}
+
 interface ErrorInfo {
   errMsg: string;
 }
@@ -62,9 +66,10 @@ const Wrapper = styled.div`
   height: fit-content !important;
 `;
 
-const ErrorHelpMessage = styled(FormHelperText)`
+const ErrorHelpMessage = styled(FormHelperText)<ErrorHelpMessageProps>`
+  ${props => props.hasIcon && 'margin-left: 35px !important;'}
   color: red !important;
-` as ComponentType<FormHelperTextProps>;
+` as ComponentType<FormHelperTextProps & ErrorHelpMessageProps>;
 
 @observer
 export class FormControl extends Component<FormControlProps>
@@ -102,7 +107,7 @@ export class FormControl extends Component<FormControlProps>
         ...child.props,
         'aria-describedby': 'component-error-text',
       });
-      const {name} = part.props || {name: ''};
+      const {name, icon} = part.props || {name: '', icon: undefined};
       const rule = rules[name] || {};
 
       let isError = true;
@@ -188,10 +193,12 @@ export class FormControl extends Component<FormControlProps>
         ),
       });
 
+      console.info(icon);
+
       return (
         <Wrapper key={name}>
           {part}
-          <ErrorHelpMessage id="component-error-text">
+          <ErrorHelpMessage id="component-error-text" hasIcon={!!icon}>
             {(this.errorManager[name] || {}).errMsg}
           </ErrorHelpMessage>
         </Wrapper>
