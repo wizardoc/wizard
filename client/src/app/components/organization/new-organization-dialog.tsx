@@ -4,9 +4,11 @@ import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 import React, {Component, ComponentType, ReactNode, createRef} from 'react';
 import styled from 'styled-components';
+import {Inject} from 'react-ts-di';
 
 import {FormControl} from '../../ui';
 import {CreateNewOrganization, OrganizationData} from '../register';
+import {OrganizationService, Toast, WithDialog} from '../../services';
 
 const Wrapper = styled.div`
   width: 345px;
@@ -21,13 +23,42 @@ const Submit = styled(Button)`
 ` as ComponentType<ButtonProps>;
 
 @observer
-export class NewOrganizationDialog extends Component {
+export class NewOrganizationDialog extends Component<WithDialog> {
+  @Inject
+  organizationService!: OrganizationService;
+
   @observable
   organizationData!: OrganizationData;
 
+  @Inject
+  toast!: Toast;
+
   formControlRef = createRef<FormControl>();
 
-  handleCreateClick(): void {}
+  async handleCreateClick(): Promise<void> {
+    const {current} = this.formControlRef;
+
+    if (!current) {
+      return;
+    }
+
+    current.validate();
+
+    const {organizationName, organizationDescription} = this.organizationData;
+
+    await this.organizationService.newOrganization(
+      organizationName,
+      organizationDescription!,
+    );
+
+    this.toast.success('创建组织成功!');
+    this.props.close!(
+      {},
+      {
+        isDestroy: true,
+      },
+    );
+  }
 
   render(): ReactNode {
     return (

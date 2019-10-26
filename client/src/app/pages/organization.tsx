@@ -36,16 +36,19 @@ export class Organization extends Component {
   @observable
   organizationCards: OrganizationCardData[] = [];
 
-  handleNewOrganizationClick(): void {
-    this.dialogService.open(NewOrganizationDialog, {
+  async handleNewOrganizationClick(): Promise<void> {
+    await this.dialogService.open(NewOrganizationDialog, {
       title: '创建自己的组织 :)',
       isClickAwayClose: true,
     });
+
+    this.fetchOrganizations();
   }
 
   render(): ReactNode {
-    const cards = this.organizationCards.map(data => (
+    const cards = this.organizationCards.map((data, index) => (
       <OrganizationCard
+        seqIndex={index}
         organizationCardData={data}
         key={data.toString()}
       ></OrganizationCard>
@@ -65,7 +68,11 @@ export class Organization extends Component {
     );
   }
 
-  async componentDidMount(): Promise<void> {
+  async fetchOrganizations(): Promise<void> {
     this.organizationCards = await this.organization.getAllJoinOrganization();
+  }
+
+  async componentDidMount(): Promise<void> {
+    this.fetchOrganizations();
   }
 }

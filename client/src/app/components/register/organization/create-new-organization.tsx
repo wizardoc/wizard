@@ -25,11 +25,11 @@ export class CreateNewOrganization extends Component<
       <FormControl
         ref={this.props.formControlRef}
         rules={{
-          organizationName: {required: true},
-          organizationDescription: {required: true},
+          organizationName: {required: true, errMsg: '组织名称不能为空'},
+          organizationDescription: {required: true, errMsg: '组织描述不能为空'},
         }}
-        onFormDataChange={(info: unknown): void =>
-          this.props.onOrganizationInfoChange(info as OrganizationData)
+        onFormDataChange={(info: OrganizationData): void =>
+          this.props.onOrganizationInfoChange(info)
         }
       >
         <IconInput

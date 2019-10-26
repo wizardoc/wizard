@@ -1,4 +1,4 @@
-import {Card, Zoom} from '@material-ui/core';
+import {Card, Grow} from '@material-ui/core';
 import {CardProps} from '@material-ui/core/Card';
 import {observable} from 'mobx';
 import {observer} from 'mobx-react';
@@ -13,10 +13,14 @@ import {OrganizationCardInfo} from './organization-card-info';
 
 export interface OrganizationCardProps {
   organizationCardData: OrganizationCardData;
+  seqIndex: number;
 }
 
 const CardWrapper = styled(Card)`
-  width: 345px;
+  width: calc(25% - 25px);
+  min-width: 300px;
+  max-width: 400px;
+  margin: 12.5px;
 ` as ComponentType<CardProps>;
 
 @observer
@@ -25,10 +29,10 @@ export class OrganizationCard extends Component<OrganizationCardProps> {
   isMounted = false;
 
   render(): ReactNode {
-    const {organizationCardData} = this.props;
+    const {organizationCardData, seqIndex} = this.props;
 
     return (
-      <Zoom in={this.isMounted}>
+      <Grow in={this.isMounted} timeout={seqIndex * 300}>
         <CardWrapper>
           <HeaderOwner ownerInfo={organizationCardData.ownerInfo}></HeaderOwner>
           <OrganizationCardInfo
@@ -36,7 +40,7 @@ export class OrganizationCard extends Component<OrganizationCardProps> {
           ></OrganizationCardInfo>
           <OrganizationActions></OrganizationActions>
         </CardWrapper>
-      </Zoom>
+      </Grow>
     );
   }
 
