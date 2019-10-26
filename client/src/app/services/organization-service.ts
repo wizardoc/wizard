@@ -5,7 +5,7 @@ import {ORGANIZATION} from '../constant';
 import {TipStore} from '../store';
 import {InjectStore} from '../utils';
 
-import {UserBaseInfo} from './user-service';
+import {UserBaseInfo, User} from './user-service';
 
 interface OrganizationNames {
   organizeNames: string[];
@@ -24,6 +24,9 @@ export interface OrganizationCardData extends UserBaseInfo {
 export class OrganizationService {
   @InjectStore(TipStore)
   private tipStore!: TipStore;
+
+  @Inject
+  private user!: User;
 
   @Inject
   private http!: HTTP;
@@ -58,6 +61,22 @@ export class OrganizationService {
     } catch (e) {
       this.tipStore.addTipToQueue('拉取信息失败', 'error');
     }
+  }
+
+  // without username
+  newOrganization(
+    name: string,
+    description: string,
+  ): Promise<void> | undefined {
+    const {userInfo} = this.user;
+
+    if (!userInfo) {
+      console.error('Cannot get info of user');
+
+      return undefined;
+    }
+
+    return this.createOrganization(name, description, userInfo.username);
   }
 
   async hasExistOrganization(organizationName: string): Promise<boolean> {
