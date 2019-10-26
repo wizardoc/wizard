@@ -9,7 +9,10 @@ renderer.image = (href, _title, text): string =>
   </div>`;
 
 renderer.heading = (_text: string, level: number, raw: string): string =>
-  `<h${level} class="md-heading" id=${raw}>${raw}</h${level}>`;
+  `<div class="md-heading-wrapper" id=${raw}>
+    <div class="md-heading-block"></div>
+    <h${level} class="md-heading">${raw}</h${level}>
+  </div>`;
 renderer.text = (text: string) => `<span class="md-text">${text}</span>`;
 
 renderer.codespan = (codespan: string) =>
