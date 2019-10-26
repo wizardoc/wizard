@@ -9,6 +9,7 @@ import styled from 'styled-components';
 
 import {OrganizationCardData, Time} from '../../services';
 import {ColorBlock} from '../../ui';
+import {colorGenerator} from '../../utils';
 
 interface OrganizationCardInfoProps {
   organizationCardData: OrganizationCardData;
@@ -53,6 +54,13 @@ export class OrganizationCardInfo extends Component<OrganizationCardInfoProps> {
   @observable
   isFull = false;
 
+  color: string;
+
+  constructor(props: OrganizationCardInfoProps) {
+    super(props);
+    this.color = colorGenerator();
+  }
+
   formatTime(stamp: number): string {
     return this.time.new(stamp).format('YYYY-MM-DD hh:mm');
   }
@@ -74,7 +82,7 @@ export class OrganizationCardInfo extends Component<OrganizationCardInfoProps> {
           onMouseLeave={() => this.toggleIsFull()}
         >
           <Cover>
-            <ColorBlock isFull={this.isFull}>
+            <ColorBlock isFull={this.isFull} color={this.color}>
               <OrganizationName isFull={this.isFull}>
                 {organizeName}
               </OrganizationName>
