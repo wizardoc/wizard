@@ -59,7 +59,8 @@ const RelatedImg = styled.img`
 
 export const PageContent = styled.div`
   display: flex;
-  padding: 25px;
+  flex-wrap: wrap;
+  padding: 12.5px;
   box-sizing: border-box;
 `;
 
