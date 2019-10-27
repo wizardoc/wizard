@@ -4,14 +4,19 @@ import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 import React, {Component, ComponentType, ReactNode} from 'react';
 import styled from 'styled-components';
+import {Inject} from 'react-ts-di';
 
-import {OrganizationCardData} from '../../services';
+import {OrganizationCardData, Time} from '../../services';
 
 import {HeaderOwner} from './header-owner';
 import {OrganizationActions} from './organization-actions';
 import {OrganizationCardInfo} from './organization-card-info';
 
-export interface OrganizationCardProps {
+export interface OrganizationActionHandlerProps {
+  onOrganizationRemove(name: string): void;
+}
+
+export interface OrganizationCardProps extends OrganizationActionHandlerProps {
   organizationCardData: OrganizationCardData;
   seqIndex: number;
 }
@@ -28,17 +33,30 @@ export class OrganizationCard extends Component<OrganizationCardProps> {
   @observable
   isMounted = false;
 
+  @Inject
+  time!: Time;
+
   render(): ReactNode {
-    const {organizationCardData, seqIndex} = this.props;
+    const {organizationCardData, seqIndex, onOrganizationRemove} = this.props;
+    const delayDuration = seqIndex * 300;
 
     return (
-      <Grow in={this.isMounted} timeout={seqIndex * 300}>
+      <Grow in={this.isMounted} timeout={delayDuration}>
         <CardWrapper>
           <HeaderOwner ownerInfo={organizationCardData.ownerInfo}></HeaderOwner>
           <OrganizationCardInfo
             organizationCardData={organizationCardData}
           ></OrganizationCardInfo>
-          <OrganizationActions></OrganizationActions>
+          <OrganizationActions
+            onOrganizationRemove={async name => {
+              this.isMounted = false;
+
+              await this.time.sleep(delayDuration / Time.Second);
+
+              onOrganizationRemove(name);
+            }}
+            organizationCardData={organizationCardData}
+          ></OrganizationActions>
         </CardWrapper>
       </Grow>
     );
