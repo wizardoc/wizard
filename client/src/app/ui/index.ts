@@ -14,3 +14,4 @@ export * from './drawer';
 export * from './color-block';
 export * from './input';
 export * from './carpet';
+export * from './view-way';
