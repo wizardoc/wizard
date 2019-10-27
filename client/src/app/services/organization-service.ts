@@ -4,6 +4,7 @@ import {HTTP} from '../api';
 import {ORGANIZATION} from '../constant';
 import {TipStore} from '../store';
 import {InjectStore} from '../utils';
+import {Omit} from '../types/type-utils';
 
 import {UserBaseInfo, User} from './user-service';
 
@@ -61,6 +62,14 @@ export class OrganizationService {
     } catch (e) {
       this.tipStore.addTipToQueue('拉取信息失败', 'error');
     }
+  }
+
+  removeOrganization(
+    name: string,
+  ): Promise<
+    Omit<OrganizationCardData, keyof Omit<OrganizationCardData, 'organizeName'>>
+  > {
+    return this.http.delete(ORGANIZATION.REMOVE(name));
   }
 
   // without username
