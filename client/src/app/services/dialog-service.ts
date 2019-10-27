@@ -4,7 +4,7 @@ import {ComponentType} from 'react';
 import {Inject, Injectable} from 'react-ts-di';
 import UUID from 'uuid';
 
-import {Loading} from '../components';
+import {Loading, ConfirmDialog} from '../components';
 
 import {ErrorManager} from './error-manager';
 import {Time, TimeUnit} from './time';
@@ -162,6 +162,33 @@ export class DialogService {
 
     this.closeLoading();
     clearTimeout(timeoutId);
+  }
+
+  /** confirm dialog */
+  confirm(
+    title: string,
+    content: string,
+    onSureClick?: () => void,
+    onCancelClick?: () => void,
+  ): Promise<DialogRef> {
+    const cbify = (func?: Function): boolean => {
+      const caller = (): void => {};
+
+      (func || caller)();
+
+      return true;
+    };
+
+    return this.open(ConfirmDialog, {
+      title,
+      componentProps: {
+        content,
+      },
+      actionButtons: [
+        {text: '我再想想', cb: () => cbify(onCancelClick)},
+        {text: '好', cb: () => cbify(onSureClick)},
+      ],
+    });
   }
 
   private openLoading(): void {
