@@ -11,6 +11,14 @@ export class Time {
     return new TimeUtil(timeStamp);
   }
 
+  /**
+   * 书面多
+   * @param duration 睡眠时间，单位是秒
+   */
+  sleep(duration: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, duration * Time.Second));
+  }
+
   static readonly Second: TimeUnit = 1000;
   static readonly MilliSecond: TimeUnit = 1;
   static readonly Minute: TimeUnit = 60 * Time.Second;
