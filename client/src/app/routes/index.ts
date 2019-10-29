@@ -1,2 +1,2 @@
 export * from './app-route';
-export * from './access-route';
+export * from './limpidity-route';
