@@ -45,6 +45,7 @@ export class OrganizationActions extends Component<OrganizationActionsProps> {
       tip: '退出组织',
       icon: <MeetingRoomIcon></MeetingRoomIcon>,
       handler: this.handleQuitOrgClick,
+      isHide: this.isOwner
     },
     {
       tip: '删除组织',
