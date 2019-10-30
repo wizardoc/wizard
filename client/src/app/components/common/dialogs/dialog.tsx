@@ -14,7 +14,7 @@ import React, {
 } from 'react';
 import {Inject} from 'react-ts-di';
 
-import {DialogService} from '../../services';
+import {DialogService} from '../../../services';
 
 interface CommonDialogProps {
   dialogID?: string;
