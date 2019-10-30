@@ -3,35 +3,20 @@ import EmailIcon from '@material-ui/icons/Email';
 import {observer} from 'mobx-react';
 import {SnackbarProvider, WithSnackbarProps, withSnackbar} from 'notistack';
 import React, {Component, FunctionComponent} from 'react';
-import {BrowserRouter} from 'react-router-dom';
+import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import {Inject} from 'react-ts-di';
-import styled from 'styled-components';
 
-import {
-  CommonDialog,
-  FloatingPop,
-  Footer,
-  HeaderBar,
-  OptionalTip,
-  Profile,
-  SharePop,
-} from './components';
-import {AccessRoute, AppRoutes} from './routes';
+import {CommonDialog, OptionalTip, Profile, HeaderBar} from './components';
+import {LimpidityRoute} from './routes';
 import {DialogService, DrawerService, OptionalTipService} from './services';
 import {TipStore} from './store';
 import {GlobalStyle, ThemeProvider, styledTheme, theme} from './theme';
 import {Drawer} from './ui';
 // import {GhostPage} from './ui';
 import {InjectStore} from './utils';
+import {Main} from './main';
 
 const MAX_SNACK_BAR_COUNT = 3;
-
-const Wrapper = styled.div`
-  min-height: 100%;
-  position: relative;
-  box-sizing: border-box;
-  padding-bottom: 60px;
-`;
 
 @observer
 class TApp extends Component<WithSnackbarProps> {
@@ -71,18 +56,15 @@ class TApp extends Component<WithSnackbarProps> {
           ))}
           <GlobalStyle />
           <BrowserRouter>
+            <Profile />
             {this.optionalTipService.tipInfos.map(info => (
               <OptionalTip key={info.name} {...info}></OptionalTip>
             ))}
-            <Profile />
-            <Wrapper>
-              <HeaderBar />
-              <AppRoutes />
-              <AccessRoute />
-              <FloatingPop />
-              <SharePop />
-              <Footer />
-            </Wrapper>
+            <HeaderBar />
+            <Switch>
+              <Route path="/limpidity" component={LimpidityRoute} />
+              <Route path="/" component={Main} />
+            </Switch>
           </BrowserRouter>
         </MuiThemeProvider>
       </ThemeProvider>

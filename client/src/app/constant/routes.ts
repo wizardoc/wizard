@@ -1,7 +1,7 @@
 // user router
 export enum USER {
-  LOGIN = '/login',
-  REGISTER = '/register',
+  LOGIN = '/limpidity/login',
+  REGISTER = '/limpidity/register',
 }
 
 export enum MAIN_PAGE {
