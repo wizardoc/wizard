@@ -1,5 +1,7 @@
 // const {ReactLoadablePlugin} = require('react-loadable/webpack');
 const Path = require('path');
+const {DllReferencePlugin} = require('webpack');
+const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 // const {IS_SSR} = process.env;
 // const nodeExternals = require('webpack-node-externals');
 
@@ -18,6 +20,19 @@ module.exports = function override(config) {
   //     : (config.externals = [nodeExternals()]);
   // }
 
+  const plugins = [
+    new DllReferencePlugin({
+      manifest: require('./static/vendor.manifest'),
+    }),
+    new AddAssetHtmlPlugin({
+      filepath: Path.resolve(__dirname, '../static/dll/_dll_vendor.js'),
+      outputPath: 'dll',
+      publicPath: 'dll',
+      includeSourcemap: false,
+    }),
+  ];
+
+  config.plugins.push(...plugins);
   config.resolve.alias = {
     ...alias,
     '~': Path.resolve('src/app'),
@@ -25,8 +40,6 @@ module.exports = function override(config) {
   };
   config.entry.pop();
   config.entry = [...entry, Path.resolve('./src/app/index.tsx')];
-
-  console.info(config);
 
   return config;
 };
