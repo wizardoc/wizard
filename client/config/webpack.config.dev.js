@@ -17,6 +17,7 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 const HappyPack = require('happypack');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const os = require('os');
 
 const happyThreadPool = HappyPack.ThreadPool({size: os.cpus().length});
@@ -237,6 +238,10 @@ module.exports = {
     ],
   },
   plugins: [
+    new CompressionWebpackPlugin({
+      test: /\.(ts|js|tsx|json)(\?.*)?$/i,
+      cache: true,
+    }),
     createHappyPlugin('happy-babel', [
       {
         loader: 'babel-loader',
