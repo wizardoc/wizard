@@ -6,6 +6,7 @@
 
 # production
 /build
+/static
 
 # config
 src/app/.config
