@@ -15,6 +15,6 @@ jobs:
             - node_modules
           key: wizard-{{ checksum "package.json" }}
       # run unit test of browser
-      - run: cd ./client && yarn test
+      # - run: cd ./client && yarn test
       # lint strict
       - run: cd ./client && yarn tslint -p tsconfig.json
