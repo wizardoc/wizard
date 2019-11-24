@@ -76,7 +76,7 @@
   },
   "scripts": {
     "start": "node scripts/start --scripts-version react-scripts-ts",
-    "build": "react-app-rewired build --scripts-version react-scripts-ts",
+    "build": "node scripts/build --scripts-version react-scripts-ts",
     "test": "jest --passWithNoTests",
     "dev": "next",
     "dll": "webpack --config ./webpack.dll.config.js --mode production"
