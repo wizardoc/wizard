@@ -1,5 +1,5 @@
 import {MuiThemeProvider} from '@material-ui/core/styles';
-import EmailIcon from '@material-ui/icons/Email';
+// import EmailIcon from '@material-ui/icons/Email';
 import {observer} from 'mobx-react';
 import {SnackbarProvider, WithSnackbarProps, withSnackbar} from 'notistack';
 import React, {Component, FunctionComponent} from 'react';
@@ -76,12 +76,12 @@ class TApp extends Component<WithSnackbarProps> {
 
     this.tipStore.tipQueue = enqueueSnackbar;
 
-    this.optionalTipService.push({
-      name: '验证邮箱',
-      description: '验证邮箱后，wizard 会把每次的更改推送发送到你邮箱哦',
-      route: '/email-validator',
-      icon: <EmailIcon></EmailIcon>,
-    });
+    // this.optionalTipService.push({
+    //   name: '验证邮箱',
+    //   description: '验证邮箱后，wizard 会把每次的更改推送发送到你邮箱哦',
+    //   route: '/email-validator',
+    //   icon: <EmailIcon></EmailIcon>,
+    // });
   }
 }
 
