@@ -113,6 +113,12 @@ tabs!: MainTabs
 - [ ] Markdown 编辑器
 - [ ] 新建文档页面
   - [ ] 嵌入 markdown
+- [ ] 消息系统页面
+  - [ ] 消息列表
+  - [ ] 消息通知 bar，需要显示条数
+  - [ ] 具体消息内容
+  - [ ] 只有删除行为的消息条
+  - [ ] 有接受和拒绝的消息条
 
 ## TODO
 - [ ] `PUBLIC SPACE` 可以发展为类似论坛文章一样的东西，在 UI 上用 Material Design 的 卡片
