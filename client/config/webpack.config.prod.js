@@ -38,7 +38,7 @@ if (env.stringified['process.env'].NODE_ENV !== '"production"') {
 }
 
 // Note: defined here because it will be used more than once.
-const cssFilename = 'static/css/[name].[contenthash:8].css';
+const cssFilename = 'static/css/[name].[hash:8].css';
 
 // ExtractTextPlugin expects the build output to be flat.
 // (See https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/27)
@@ -120,7 +120,11 @@ module.exports = {
     ],
   },
   optimization: {
+    runtimeChunk: 'single',
     splitChunks: {
+      minSize: 30000, // 模块超过30k自动被抽离成公共模块
+      minChunks: 1,
+      chunks: 'all',
       cacheGroups: {
         vendors: {
           test: /[\\/]node_modules[\\/]/,
@@ -130,15 +134,15 @@ module.exports = {
     },
     minimizer: [
       new ParallelUglifyPlugin({
+        warnings: false,
         // 多进程压缩
         cacheDir: '.cache/',
-        uglifyJS: {
+        uglifyES: {
           output: {
             comments: false,
             beautify: false,
           },
           compress: {
-            warnings: false,
             drop_console: true,
             collapse_vars: true,
             reduce_vars: true,
@@ -307,45 +311,32 @@ module.exports = {
     // Otherwise React will be compiled in the very slow development mode.
     new webpack.DefinePlugin(env.stringified),
     // Minify the code.
-    new UglifyJsPlugin({
-      uglifyOptions: {
-        parse: {
-          // we want uglify-js to parse ecma 8 code. However we want it to output
-          // ecma 5 compliant code, to avoid issues with older browsers, this is
-          // whey we put `ecma: 5` to the compress and output section
-          // https://github.com/facebook/create-react-app/pull/4234
-          ecma: 8,
-        },
-        compress: {
-          ecma: 5,
-          warnings: false,
-          // Disabled because of an issue with Uglify breaking seemingly valid code:
-          // https://github.com/facebook/create-react-app/issues/2376
-          // Pending further investigation:
-          // https://github.com/mishoo/UglifyJS2/issues/2011
-          comparisons: false,
-          // Don't inline functions with arguments, to avoid name collisions:
-          // https://github.com/mishoo/UglifyJS2/issues/2842
-          inline: 1,
-        },
-        mangle: {
-          safari10: true,
-        },
-        output: {
-          ecma: 5,
-          comments: false,
-          // Turned on because emoji and regex is not minified properly using default
-          // https://github.com/facebook/create-react-app/issues/2488
-          ascii_only: true,
-        },
-      },
-      // Use multi-process parallel running to improve the build speed
-      // Default number of concurrent runs: os.cpus().length - 1
-      parallel: true,
-      // Enable file caching
-      cache: true,
-      sourceMap: shouldUseSourceMap,
-    }), // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
+    // new UglifyJsPlugin({
+    //   uglifyOptions: {
+    //     compress: {
+    //       // Disabled because of an issue with Uglify breaking seemingly valid code:
+    //       // https://github.com/facebook/create-react-app/issues/2376
+    //       // Pending further investigation:
+    //       // https://github.com/mishoo/UglifyJS2/issues/2011
+    //       comparisons: false,
+    //       // Don't inline functions with arguments, to avoid name collisions:
+    //       // https://github.com/mishoo/UglifyJS2/issues/2842
+    //       inline: 1,
+    //     },
+    //     output: {
+    //       comments: false,
+    //       // Turned on because emoji and regex is not minified properly using default
+    //       // https://github.com/facebook/create-react-app/issues/2488
+    //       ascii_only: true,
+    //     },
+    //   },
+    //   // Use multi-process parallel running to improve the build speed
+    //   // Default number of concurrent runs: os.cpus().length - 1
+    //   parallel: true,
+    //   // Enable file caching
+    //   cache: true,
+    //   sourceMap: shouldUseSourceMap,
+    // }), // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
     new ExtractTextPlugin({
       filename: cssFilename,
     }),

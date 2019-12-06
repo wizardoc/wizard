@@ -25,6 +25,7 @@ export const styledTheme = {
   shallowPrimaryColor: 'rgba(25, 118, 210, 0.1)',
   highRed: '#e91e63',
   translucentWhite: 'rgba(255, 255, 255, 0.5)',
+  editorGray: '#f4f4f4',
   shallowGray: '#eeeeee',
   deepGray: '#cecece',
   redLinearGradient: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
