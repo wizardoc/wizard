@@ -1,8 +1,10 @@
-const webpack = require('webpack');
+const {DllPlugin} = require('webpack');
 const {resolve, join} = require('path');
+const path = require('path');
 // const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 
 module.exports = {
+  context: path.join(__dirname, '..'),
   entry: {
     vendor: [
       'react',
@@ -26,10 +28,13 @@ module.exports = {
       'mobx-react',
       'mobx-utils',
       'moment',
+      // 'marked',
+      // 'qs',
+      // 'object-assign',
     ],
   },
   output: {
-    path: resolve('static'),
+    path: resolve('../static'),
     library: '_dll_[name]',
     filename: 'dll/_dll_[name].js',
   },
@@ -37,9 +42,9 @@ module.exports = {
     // new CleanWebpackPlugin(['dll'], {
     //   root: resolve('static'),
     // }),
-    new webpack.DllPlugin({
+    new DllPlugin({
       name: '_dll_[name]',
-      path: join(__dirname, './static', '[name].manifest.json'),
+      path: join(__dirname, '../static', '[name].manifest.json'),
     }),
   ],
 };
