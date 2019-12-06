@@ -12,3 +12,4 @@ export * from './about';
 export * from './optional-tip';
 export * from './organization';
 export * from './release-banner';
+export * from './pen';
