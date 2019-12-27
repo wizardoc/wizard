@@ -21,3 +21,4 @@ export * from './utils';
 export * from './animations';
 export * from './api';
 export * from './main';
+export * from './app-routing';

@@ -3,18 +3,19 @@ import {MuiThemeProvider} from '@material-ui/core/styles';
 import {observer} from 'mobx-react';
 import {SnackbarProvider, WithSnackbarProps, withSnackbar} from 'notistack';
 import React, {Component, FunctionComponent} from 'react';
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import {BrowserRouter} from 'react-router-dom';
 import {Inject} from 'react-ts-di';
 
 import {CommonDialog, OptionalTip, Profile, HeaderBar} from './components';
-import {LimpidityRoute} from './routes';
+// import {LimpidityRoute} from './routes';
 import {DialogService, DrawerService, OptionalTipService} from './services';
 import {TipStore} from './store';
 import {GlobalStyle, ThemeProvider, styledTheme, theme} from './theme';
 import {Drawer} from './ui';
 // import {GhostPage} from './ui';
 import {InjectStore} from './utils';
-import {Main} from './main';
+// import {Main} from './main';
+import {AppRouting} from './app-routing';
 
 const MAX_SNACK_BAR_COUNT = 3;
 
@@ -61,10 +62,11 @@ class TApp extends Component<WithSnackbarProps> {
               <OptionalTip key={info.name} {...info}></OptionalTip>
             ))}
             <HeaderBar />
-            <Switch>
+            {/* <Switch>
               <Route path="/limpidity" component={LimpidityRoute} />
               <Route path="/" component={Main} />
-            </Switch>
+            </Switch> */}
+            <AppRouting />
           </BrowserRouter>
         </MuiThemeProvider>
       </ThemeProvider>
