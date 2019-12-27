@@ -12,3 +12,5 @@ export * from './user-service';
 export * from './drawer-service';
 export * from './time';
 export * from './draft-service';
+export * from './route';
+export * from './tab-service';
