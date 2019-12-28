@@ -4,7 +4,7 @@ import React, {Component, ComponentType, ReactNode, createRef} from 'react';
 import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
-import {DialogService, Regex, Toast, User} from '../../services';
+import {DialogService, Toast, User, RegexUtils} from '../../services';
 import {
   Form,
   FormControl,
@@ -38,7 +38,7 @@ export class BaseInfo extends Component<BaseInfoProps & PartViewProps> {
   private baseInfoData: BaseInfoData | undefined;
 
   @Inject
-  private regex!: Regex;
+  private regexUtils!: RegexUtils;
 
   @Inject
   private userService!: User;
@@ -101,7 +101,7 @@ export class BaseInfo extends Component<BaseInfoProps & PartViewProps> {
         errMsg: '邮箱不能为空',
         required: true,
         validator: (_rule, text, cb) => {
-          if (!this.regex.test(Regex.Email, text)) {
+          if (!this.regexUtils.validEmail(text)) {
             cb('请输入正确的邮箱格式');
           }
         },
