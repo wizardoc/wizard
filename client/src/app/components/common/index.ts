@@ -5,3 +5,4 @@ export * from './loading';
 export * from './md-render';
 export * from './fab';
 export * from './dialogs';
+export * from './tab';

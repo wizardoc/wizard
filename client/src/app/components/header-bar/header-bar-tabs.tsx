@@ -1,55 +1,59 @@
-import {Tab} from '@material-ui/core';
-import Tabs from '@material-ui/core/Tabs';
-import {observer} from 'mobx-react';
 import React, {Component, ReactNode} from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import styled from 'styled-components';
+import {Inject} from 'react-ts-di';
 
-import {TABS_CONFIG} from '../../constant';
-import {MainTabs, UIControl} from '../../store';
-import {InjectStore} from '../../utils';
+import {TabService} from 'src/app/services';
+
+import {WizardTabConfig, WizardTab} from '../common';
 
 const Wrapper = styled.div`
   flex-grow: 1;
   margin-left: 30px;
 `;
 
-@observer
-export class THeaderBarTabs extends Component<RouteComponentProps> {
-  @InjectStore(MainTabs)
-  private mainTabs!: MainTabs;
+@withRouter
+export class HeaderBarTabs extends Component<Partial<RouteComponentProps>> {
+  @Inject
+  tabService!: TabService;
 
-  @InjectStore(UIControl)
-  private uiControl!: UIControl;
+  tabConfigs: WizardTabConfig[] = [
+    {
+      text: '首页',
+      route: '/home',
+    },
+    {
+      text: '组织 & 规范',
+      route: '/organization',
+    },
+    {
+      text: 'PUBLIC SPACE',
+      route: '/public-space',
+    },
+    {
+      text: '关于',
+      route: '/about',
+    },
+  ];
 
-  handleTabChange(value: number): void {
-    this.mainTabs.tabTag = value;
-    this.props.history.push(TABS_CONFIG[value]);
+  constructor(props: Partial<RouteComponentProps>) {
+    super(props);
+
+    this.tabService.updatePage(props.location!.pathname);
+  }
+
+  handleTabChange(config: WizardTabConfig): void {
+    this.tabService.updatePage(config.route!);
   }
 
   render(): ReactNode {
     return (
       <Wrapper>
-        <Tabs
-          value={this.mainTabs.tabTag}
-          onChange={(_event, value) => this.handleTabChange(value)}
-          indicatorColor="secondary"
-        >
-          <Tab label="首页" />
-          <Tab label="组织 & 规范" />
-          <Tab label="Public space" />
-          <Tab label="关于" />
-        </Tabs>
+        <WizardTab
+          tabs={this.tabConfigs}
+          onTabChange={config => this.handleTabChange(config)}
+        />
       </Wrapper>
     );
   }
-
-  componentDidMount(): void {
-    const {pathname} = this.props.location;
-
-    this.mainTabs.tabTag = TABS_CONFIG[pathname] || TABS_CONFIG['/home'];
-    this.uiControl.updatePage(pathname);
-  }
 }
-
-export const HeaderBarTabs = withRouter(THeaderBarTabs);
