@@ -6,8 +6,8 @@ import {observer} from 'mobx-react';
 import React, {Component, ComponentType, ReactNode} from 'react';
 import styled from 'styled-components';
 
-import {Circle} from '../assets';
-import WhiteWizard from '../assets/static/wizard-white.jpg';
+import {Circle} from '../../assets';
+import WhiteWizard from '../../assets/static/wizard-white.jpg';
 
 interface ShadeProps {
   isShutdown?: boolean;

@@ -1,22 +1,21 @@
-import {lazy} from 'react';
-
-import {defaultify} from 'src/app/utils';
+import {lazy} from 'src/app/utils';
 
 import {Routes} from '../routes';
 
 /** Lazy load */
-const Home = lazy(() => defaultify(import('../../../pages/home'), 'Home'));
-const Doc = lazy(() => defaultify(import('../../../pages/doc'), 'Doc'));
-const Organization = lazy(() =>
-  defaultify(import('../../../pages/organization'), 'Organization'),
+const Home = lazy(import('../../../pages/home'), 'Home');
+
+const Doc = lazy(import('../../../pages/doc'), 'Doc');
+const Organization = lazy(
+  import('../../../pages/organization'),
+  'Organization',
 );
-const About = lazy(() => defaultify(import('../../../pages/about'), 'About'));
-const EmailValidator = lazy(() =>
-  defaultify(import('../../../pages/email-validator'), 'EmailValidator'),
+const About = lazy(import('../../../pages/about'), 'About');
+const EmailValidator = lazy(
+  import('../../../pages/email-validator'),
+  'EmailValidator',
 );
-const PublicSpace = lazy(() =>
-  defaultify(import('../../../pages/public-space'), 'PublicSpace'),
-);
+const PublicSpace = lazy(import('../../../pages/public-space'), 'PublicSpace');
 
 export const rootRoutes: Routes = [
   {

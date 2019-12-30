@@ -10,7 +10,7 @@ export interface Route {
   path: string;
   exact?: boolean;
   redirect?: string;
-  layout?: 'no-header' | 'normal';
+  layout?: 'limpidity' | 'normal';
   /**
    * 当 Component 为空时，会自动填充 404
    */

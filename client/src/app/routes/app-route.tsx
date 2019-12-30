@@ -21,8 +21,10 @@ interface AppRoutesProps {
 }
 
 /** Lazy load */
-const Home = lazy(() => defaultify(import('../pages/home'), 'Home'));
-const Doc = lazy(() => defaultify(import('../pages/doc'), 'Doc'));
+// tslint:disable-next-line:no-require-imports
+const Home = lazy(() => defaultify(require('../pages/home'), 'Home'));
+// tslint:disable-next-line:no-require-imports
+const Doc = lazy(() => defaultify(require('../pages/doc'), 'Doc'));
 const Organization = lazy(() =>
   defaultify(import('../pages/organization'), 'Organization'),
 );

@@ -1,6 +1,6 @@
 export * from './doc-recent-update-drawer';
 export * from './floating-pop';
-export * from './footer';
+export * from './footer/footer';
 export * from './header-bar';
 export * from './main';
 export * from './register';
@@ -13,3 +13,4 @@ export * from './optional-tip';
 export * from './organization';
 export * from './release-banner';
 export * from './pen';
+export * from './footer';

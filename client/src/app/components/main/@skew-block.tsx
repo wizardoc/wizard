@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
   width: 100%;
   height: 100px;
-  background: ${props => props.theme.white};
+  background: ${props => props.theme.primaryColor};
   transform-origin: left;
   transform: skewY(-3deg);
 `;

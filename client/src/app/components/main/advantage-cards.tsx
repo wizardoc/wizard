@@ -10,19 +10,19 @@ const Cards = styled.div`
   display: flex;
   justify-content: space-evenly;
   padding: 10px 0;
-  margin: 0 0 50px;
+  margin: 100px 0 50px 0;
 `;
 
 export class AdvantageCards extends Component {
   render(): ReactNode {
     return (
       <Cards>
-        {advantageConfigs.map(config => (
+        {advantageConfigs.map(({title, content, img}) => (
           <AdvantageCard
-            title={config.title}
-            key={config.title}
-            content={config.content}
-            img={config.img}
+            title={title}
+            key={title}
+            content={content}
+            img={img}
           />
         ))}
       </Cards>

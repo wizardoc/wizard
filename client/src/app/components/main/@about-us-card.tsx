@@ -20,7 +20,6 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 10px 0;
   margin-bottom: 50px;
 `;
 
@@ -28,10 +27,9 @@ const AboutUsWrapper = styled(Card)`
   width: 700px;
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
-  border: 1px solid;
-  box-shadow: none !important;
-  border-color: #cecece;
+  /* border: 1px solid; */
+  /* border-color: #cecece; */
+  box-shadow: ${props => props.theme.baseShadow} !important;
   background-color: white;
   padding-right: 20px;
 ` as ComponentType<CardProps>;
@@ -74,7 +72,7 @@ export const AboutUsCard: FunctionComponent = () => {
           </div>
         </AboutUsContent>
         <CardActions>
-          <AboutUsActionButton variant="contained" color="primary">
+          <AboutUsActionButton variant="contained" color="secondary">
             About Us
           </AboutUsActionButton>
         </CardActions>

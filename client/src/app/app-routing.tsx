@@ -1,10 +1,19 @@
 import React, {Component, ReactNode, Suspense, ComponentType} from 'react';
 import {Inject} from 'react-ts-di';
 import {Switch, Route, Redirect, RouteComponentProps} from 'react-router-dom';
+import styled from 'styled-components';
 
 import {RouterService} from './services';
 import {PageNotFound} from './pages/page-not-found';
 import {isString} from './utils';
+import {FloatingPop, Footer, SharePop} from './components';
+
+const Wrapper = styled.div`
+  min-height: 100%;
+  position: relative;
+  box-sizing: border-box;
+  padding-bottom: 60px;
+`;
 
 /**
  * 整个 App 的 Route 渲染组件，通过解析 routerService 的 routes 渲染和处理所有的 routes
@@ -15,6 +24,8 @@ export class AppRouting extends Component {
   routerService!: RouterService;
 
   render(): ReactNode {
+    console.info(this.routerService.routes);
+
     const routeComponents = this.routerService.routes.map(route => (
       <Route
         path={route.path}
@@ -34,7 +45,11 @@ export class AppRouting extends Component {
             }
           }
 
-          return this.renderProcessor(route.redirect, route.component);
+          return this.renderProcessor(
+            route.layout,
+            route.redirect,
+            route.component,
+          );
         }}
       />
     ));
@@ -50,6 +65,7 @@ export class AppRouting extends Component {
   }
 
   private renderProcessor(
+    layout: 'limpidity' | 'normal' | undefined,
     redirect?: string,
     component?: ComponentType<RouteComponentProps<any>> | ComponentType<any>,
   ): ReactNode {
@@ -57,7 +73,18 @@ export class AppRouting extends Component {
 
     // process render
     if (component) {
-      return <RenderComponent />;
+      return layout === 'limpidity' ? (
+        <RenderComponent />
+      ) : (
+        <Wrapper>
+          <RenderComponent />
+          <FloatingPop />
+          <SharePop />
+          <Footer />
+        </Wrapper>
+      );
+
+      return <RenderComponent></RenderComponent>;
     }
 
     if (!component && !redirect) {
