@@ -3,7 +3,7 @@ import {RouteComponentProps, withRouter} from 'react-router-dom';
 import styled from 'styled-components';
 import {Inject} from 'react-ts-di';
 
-import {TabService} from 'src/app/services';
+import {TabService, User} from 'src/app/services';
 
 import {WizardTabConfig, WizardTab} from '../common';
 
@@ -17,24 +17,64 @@ export class HeaderBarTabs extends Component<Partial<RouteComponentProps>> {
   @Inject
   tabService!: TabService;
 
-  tabConfigs: WizardTabConfig[] = [
+  @Inject
+  userService!: User;
+
+  initTabConfigs: WizardTabConfig[] = [
     {
       text: '首页',
       route: '/home',
     },
     {
-      text: '组织 & 规范',
-      route: '/organization',
+      text: '为什么使用 Wizard',
+      route: '/why-use',
     },
     {
       text: 'PUBLIC SPACE',
       route: '/public-space',
     },
     {
-      text: '关于',
+      text: '帮助中心',
+      route: '/help',
+    },
+    {
+      text: '关于我们',
       route: '/about',
     },
   ];
+
+  loginTabConfigs: WizardTabConfig[] = [
+    {
+      text: '组织',
+      route: '/organizations',
+    },
+    {
+      text: '文档',
+      route: '/documents',
+    },
+    {
+      text: '动态广场',
+      route: '/activity-piazza',
+    },
+    {
+      text: '关于',
+      route: '/about',
+    },
+    {
+      text: '帮助中心',
+      route: '/help',
+    },
+    {
+      text: '关于我们',
+      route: '/about',
+    },
+  ];
+
+  get tabConfigs(): WizardTabConfig[] {
+    return this.userService.isLogin
+      ? this.loginTabConfigs
+      : this.initTabConfigs;
+  }
 
   constructor(props: Partial<RouteComponentProps>) {
     super(props);

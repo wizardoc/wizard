@@ -50,8 +50,12 @@ export class WizardTab extends Component<
   }
 
   handleTabChange(index: number): void {
+    const {onTabChange = (): void => {}, tabs} = this.props;
+    const config = tabs[index];
+
     this.currentTabIndex = index;
-    this.parseTabClickHandler(this.props.tabs[index]);
+    this.parseTabClickHandler(config);
+    onTabChange(config);
   }
 
   parseTabClickHandler({route, query, isNewPage}: WizardTabConfig): void {
@@ -65,7 +69,7 @@ export class WizardTab extends Component<
     }
 
     if (query) {
-      return push({
+      push({
         search: `tab=${query}`,
       });
     }

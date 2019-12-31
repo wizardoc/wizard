@@ -16,6 +16,7 @@ export const GlobalStyle = createGlobalStyle<{theme: typeof styledTheme}>`
 
   #root {
     height: 100%;
+    overflow: auto;
   }
 
   /* markdown */
