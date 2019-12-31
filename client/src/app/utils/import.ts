@@ -1,5 +1,4 @@
-import {ComponentType} from 'react';
-import loadable, {LoadableComponent} from '@loadable/component';
+import React, {ComponentType, LazyExoticComponent} from 'react';
 
 export interface DefaultModule<T> {
   default: ComponentType<T>;
@@ -15,6 +14,6 @@ export function defaultify<T>(
 export function lazy<T>(
   loader: Promise<T>,
   name: string,
-): LoadableComponent<any> {
-  return loadable(() => defaultify<T>(loader, name));
+): LazyExoticComponent<any> {
+  return React.lazy(() => defaultify<T>(loader, name));
 }
