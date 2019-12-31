@@ -1,0 +1,70 @@
+{
+  "team": {
+    "title": "团队",
+    "links": [
+      {
+        "text": "关于我们",
+        "link": "#"
+      },
+      {
+        "text": "广告投放",
+        "link": "#"
+      },
+      {
+        "text": "联系我们",
+        "link": "#"
+      },
+      {
+        "text": "贡献指南",
+        "link": "#"
+      }
+    ]
+  },
+  "consult": {
+    "title": "咨询",
+    "links": [
+      {
+        "text": "帮助",
+        "link": "#"
+      },
+      {
+        "text": "使用指南",
+        "link": "#"
+      },
+      {
+        "text": "关于赞助",
+        "link": "#"
+      }
+    ]
+  },
+  "changelog": {
+    "title": "Change Logs",
+    "links": [
+      {
+        "text": "更新日志",
+        "link": "#"
+      },
+      {
+        "text": "BUG 社区",
+        "link": "#"
+      },
+      {
+        "text": "功能计划",
+        "link": "#"
+      }
+    ]
+  },
+  "clause": {
+    "title": "条款",
+    "links": [
+      {
+        "text": "服务条款",
+        "href": "#"
+      },
+      {
+        "text": "隐私政策",
+        "href": "#"
+      }
+    ]
+  }
+}

@@ -11,8 +11,7 @@ import {FloatingPop, Footer, SharePop} from './components';
 const Wrapper = styled.div`
   min-height: 100%;
   position: relative;
-  box-sizing: border-box;
-  padding-bottom: 60px;
+  padding-bottom: 360px;
 `;
 
 /**
