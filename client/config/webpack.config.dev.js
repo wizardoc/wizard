@@ -42,6 +42,10 @@ module.exports = {
 
   devtool: 'cheap-module-source-map',
 
+  stats: {
+    warningsFilter: /Attempted import error: '[^']+' is not exported from '[^']+'/,
+  },
+
   entry: [
     require.resolve('./polyfills'),
 
@@ -87,7 +91,7 @@ module.exports = {
     ],
   },
   module: {
-    strictExportPresence: true,
+    strictExportPresence: false,
     rules: [
       {
         test: /\.(js|jsx|mjs)$/,

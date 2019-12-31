@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "build/dist",
-    "module": "commonjs",
+    "module": "esnext",
     "target": "es6",
     "lib": ["es6", "dom", "esnext", "es7", "dom.iterable"],
     "sourceMap": true,
