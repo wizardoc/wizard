@@ -26,6 +26,7 @@ const Wrapper = styled.div`
   position: fixed;
   right: 50px;
   bottom: 100px;
+  z-index: 2;
 `;
 
 // const MenuIcon = styled(AddIcon)<MenuIconProps>`
