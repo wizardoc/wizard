@@ -1,6 +1,5 @@
 import {RouteComponentProps} from 'react-router-dom';
 import {ComponentType, ComponentClass} from 'react';
-import {WithRouterProps, WithRouterStatics} from 'react-router';
 
 import {Omit} from './type-utils';
 

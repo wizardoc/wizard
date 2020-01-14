@@ -205,7 +205,7 @@ module.exports = {
       manifest: require('../static/vendor.manifest'),
     }),
     new AddAssetHtmlPlugin({
-      filepath: path.resolve(__dirname, '../static/dll/_dll_vendor.js'),
+      filepath: path.join(__dirname, '../static/dll/_dll_vendor.js'),
       outputPath: 'dll',
       publicPath: 'dll',
       includeSourcemap: false,

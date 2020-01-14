@@ -10,7 +10,9 @@ export class RouterService {
   private parsedRoutes: Routes;
 
   constructor() {
-    this.parsedRoutes = this.preparseRoutes(this._routes, '');
+    this.parsedRoutes = this.preparseRoutes(this._routes, '').filter(
+      ({children}) => !children,
+    );
   }
 
   private preparseRoutes(routes: Routes, prefixPath: string): Routes {

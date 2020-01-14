@@ -1,7 +1,6 @@
 import React, {Component, ReactNode} from 'react';
 import {Tabs, Tab} from '@material-ui/core';
-import {withRouter} from 'react-router-dom';
-import {RouteComponentProps} from 'react-router';
+import {withRouter, RouteComponentProps} from 'react-router-dom';
 
 interface WizardTabProps {
   tabs: WizardTabConfig[];
