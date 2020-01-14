@@ -2,7 +2,12 @@
 
 const autoprefixer = require('autoprefixer');
 const path = require('path');
-const webpack = require('webpack');
+const {
+  NamedModulesPlugin,
+  DefinePlugin,
+  HotModuleReplacementPlugin,
+  IgnorePlugin,
+} = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
@@ -19,6 +24,7 @@ const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 const HappyPack = require('happypack');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const os = require('os');
 
 const happyThreadPool = HappyPack.ThreadPool({size: os.cpus().length});
@@ -181,6 +187,7 @@ module.exports = {
     ],
   },
   plugins: [
+    new HardSourceWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: 'css/[name].css',
       chunkFilename: 'css/[id].css',
@@ -216,17 +223,17 @@ module.exports = {
     }),
     new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
 
-    new webpack.NamedModulesPlugin(),
+    new NamedModulesPlugin(),
 
-    new webpack.DefinePlugin(env.stringified),
+    new DefinePlugin(env.stringified),
 
-    new webpack.HotModuleReplacementPlugin(),
+    new HotModuleReplacementPlugin(),
 
     new CaseSensitivePathsPlugin(),
 
     new WatchMissingNodeModulesPlugin(paths.appNodeModules),
 
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new IgnorePlugin(/^\.\/locale$/, /moment$/),
 
     new ForkTsCheckerWebpackPlugin({
       async: false,
