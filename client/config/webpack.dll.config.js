@@ -30,7 +30,7 @@ module.exports = {
     ],
   },
   output: {
-    path: resolve('../static'),
+    path: join(__dirname, '../static'),
     library: '_dll_[name]',
     filename: 'dll/_dll_[name].js',
   },
