@@ -16,7 +16,6 @@ module.exports = {
       'rxjs',
       'styled-components',
       'uuid',
-      '@loadable/component',
       '@material-ui/core',
       '@material-ui/icons',
       '@material-ui/lab',
@@ -28,9 +27,6 @@ module.exports = {
       'mobx-react',
       'mobx-utils',
       'moment',
-      // 'marked',
-      // 'qs',
-      // 'object-assign',
     ],
   },
   output: {
