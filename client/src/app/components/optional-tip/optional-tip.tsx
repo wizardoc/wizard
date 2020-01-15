@@ -3,6 +3,8 @@ import React, {Component, ReactNode} from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import styled from 'styled-components';
 
+import {TodoItemData} from 'src/app/services/todo-service';
+
 import {WithSlideProps, withSlide} from '../../animations';
 
 export interface OptionalTipProps extends OptionalTipInfo {}
@@ -12,10 +14,7 @@ export interface OptionalTipInfo extends CalledOptionalTipInfo {
   onLaterClick(): void;
 }
 
-export interface CalledOptionalTipInfo {
-  name: string;
-  description: string;
-  route: string;
+export interface CalledOptionalTipInfo extends TodoItemData {
   icon?: ReactNode;
 }
 

@@ -40,7 +40,7 @@ export class OptionalTipService {
 
   /** 未处理的事情加入待办事项 */
   private addToTodoList(tipInfo: Omit<CalledOptionalTipInfo, 'icon'>): void {
-    this.http.post(TODO_API.ADD_TODO_ITEM, omit(tipInfo, 'icon'));
+    this.http.post(TODO_API.add, omit(tipInfo, 'icon'));
   }
 
   get tipInfos(): OptionalTipInfo[] {

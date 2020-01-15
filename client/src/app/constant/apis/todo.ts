@@ -1,4 +1,5 @@
-export const enum TODO_API {
-  ADD_TODO_ITEM = '/todo/add',
-  REMOVE_TODO_ITEM = '/todo/remove',
-}
+export const TODO_API = {
+  add: '/todo/add',
+  remove: '/todo/remove',
+  all: '/todo/all',
+};
