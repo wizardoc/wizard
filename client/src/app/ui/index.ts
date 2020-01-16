@@ -15,3 +15,4 @@ export * from './color-block';
 export * from './input';
 export * from './carpet';
 export * from './view-way';
+export * from './catalog';

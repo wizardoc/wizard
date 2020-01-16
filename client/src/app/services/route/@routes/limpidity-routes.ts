@@ -30,6 +30,18 @@ export const limpidityRoutes: Routes = [
       },
     ],
   },
+  {
+    path: '/pen',
+    component: Pen,
+  },
+  {
+    path: '/register',
+    component: Register,
+  },
+  {
+    path: '/login',
+    component: Login,
+  },
   // {
   // path: '/limpidity',
   // component: Pen,

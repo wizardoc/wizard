@@ -44,26 +44,26 @@ export class HeaderBarTabs extends Component<Partial<RouteComponentProps>> {
   ];
 
   loginTabConfigs: WizardTabConfig[] = [
-    {
-      text: '组织',
-      route: '/organizations',
-    },
-    {
-      text: '文档',
-      route: '/documents',
-    },
-    {
-      text: '动态广场',
-      route: '/activity-piazza',
-    },
-    {
-      text: '关于',
-      route: '/about',
-    },
-    {
-      text: '帮助中心',
-      route: '/help',
-    },
+    // {
+    //   text: '组织',
+    //   route: '/organizations',
+    // },
+    // {
+    //   text: '文档',
+    //   route: '/documents',
+    // },
+    // {
+    //   text: '动态广场',
+    //   route: '/activity-piazza',
+    // },
+    // {
+    //   text: '关于',
+    //   route: '/about',
+    // },
+    // {
+    //   text: '帮助中心',
+    //   route: '/help',
+    // },
     {
       text: '关于我们',
       route: '/about',

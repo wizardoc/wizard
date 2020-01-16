@@ -1,4 +1,3 @@
-import {Fade} from '@material-ui/core';
 import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 import React, {Component, ReactNode} from 'react';
@@ -7,42 +6,43 @@ import styled from 'styled-components';
 
 import {RouterAnimation} from '../animations';
 import {
-  Contributors,
-  MDRender,
-  PageContent,
-  PageHeader,
+  PagePaper,
   // TreeViewGenerator,
 } from '../components';
-import {DialogService, DocService} from '../services';
-import {TreeView} from '../ui';
+import {DialogService, DocService, Time} from '../services';
+import {Catalog} from '../ui';
+// import {TreeView} from '../ui';
 
-const Wrapper = styled.div``;
-
-const Side = styled.div`
-  min-width: 290px;
-  margin-right: 25px;
-  padding: 10px;
-  min-height: 500px;
-  height: fit-content;
-  background: rgba(0, 0, 0, 0.04);
-  color: rgba(0, 0, 0, 0.87) !important;
-  position: sticky;
-  top: 70px;
-`;
-
-const SideTitle = styled.p`
-  font-size: 30px;
-  font-weight: 300;
-`;
-
-const Content = styled(MDRender)`
-  width: calc(100% - 310px);
-`;
-
-const ContentWrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  background: ${props => props.theme.shallowGray};
 `;
+
+// const Side = styled.div`
+//   min-width: 290px;
+//   margin-right: 25px;
+//   padding: 10px;
+//   min-height: 500px;
+//   height: fit-content;
+//   background: rgba(0, 0, 0, 0.04);
+//   color: rgba(0, 0, 0, 0.87) !important;
+//   position: sticky;
+//   top: 70px;
+// `;
+
+// const SideTitle = styled.p`
+//   font-size: 30px;
+//   font-weight: 300;
+// `;
+
+// const Content = styled(MDRender)`
+//   width: calc(100% - 310px);
+// `;
+
+// const ContentWrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+// `;
 
 @observer
 class TAbout extends Component {
@@ -51,6 +51,9 @@ class TAbout extends Component {
 
   @Inject
   docService!: DocService;
+
+  @Inject
+  time!: Time;
 
   @observable
   content: string = '';
@@ -61,19 +64,12 @@ class TAbout extends Component {
   render(): ReactNode {
     return (
       <Wrapper>
-        <PageHeader title="关于"></PageHeader>
-        <PageContent>
-          <Side>
-            <SideTitle>目录</SideTitle>
-            <TreeView content={this.content}></TreeView>
-          </Side>
-          <Fade in={this.isMounted} timeout={500}>
-            <ContentWrapper>
-              <Content content={this.content}></Content>
-              <Contributors></Contributors>
-            </ContentWrapper>
-          </Fade>
-        </PageContent>
+        <Catalog content={this.content} title="关于我们" />
+        <PagePaper
+          isMounted={this.isMounted}
+          content={this.content}
+          title="关于我们"
+        />
       </Wrapper>
     );
   }
@@ -82,9 +78,11 @@ class TAbout extends Component {
     this.dialogService.loading(
       async (): Promise<void> => {
         this.content = await this.docService.getAboutWizard();
+
+        await this.time.sleep(0.5);
+        this.isMounted = true;
       },
     );
-    this.isMounted = true;
   }
 }
 

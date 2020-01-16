@@ -15,7 +15,8 @@ export const GlobalStyle = createGlobalStyle<{theme: typeof styledTheme}>`
   }
 
   #root {
-    width: fit-content;
+    width: 100%;
+    min-width: fit-content;
     height: 100%;
     overflow: auto;
   }

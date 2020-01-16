@@ -59,8 +59,8 @@ const RelatedImg = styled.img`
 
 export const PageContent = styled.div`
   display: flex;
-  padding: 25px;
-  box-sizing: border-box;
+  /* padding: 25px; */
+  /* box-sizing: border-box; */
 `;
 
 export const PageHeader: FunctionComponent<PageHeaderProps> = props => {

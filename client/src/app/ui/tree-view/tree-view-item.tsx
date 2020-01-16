@@ -23,6 +23,7 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.div<TitleProps>`
+  width: 100%;
   height: 35px;
   display: flex;
   align-items: center;
@@ -89,9 +90,7 @@ export class TreeViewItem extends Component<TreeViewItemProps> {
     return (
       <Wrapper>
         <Row>
-          {subCount === 0 ? (
-            undefined
-          ) : (
+          {subCount !== 0 && (
             <AnimationExpandMoreIcon
               isSpread={this.isSpread}
               onClick={() => (this.isSpread = !this.isSpread)}

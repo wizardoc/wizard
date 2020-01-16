@@ -7,6 +7,7 @@ type Direction = 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom';
 
 interface ScalableBoxProps {
   img?: string;
+  previewSize: BaseSize;
   onBlockMove(data: Point[]): void;
 }
 
@@ -15,9 +16,12 @@ export interface Point {
   y: number;
 }
 
-interface Size {
+export interface BaseSize {
   width: number;
   height: number;
+}
+
+interface Size extends BaseSize {
   direction: Direction;
 }
 
@@ -27,9 +31,11 @@ interface ScalableBlockProps {
   direction: Direction;
 }
 
+const INIT_BOX_SIZE = 128;
+
 const Wrapper = styled.div<ScalableWrapperProps>`
-  width: ${props => props.width + 128}px;
-  height: ${props => props.height + 128}px;
+  width: ${props => props.width + INIT_BOX_SIZE}px;
+  height: ${props => props.height + INIT_BOX_SIZE}px;
   cursor: move;
   position: absolute;
   outline: 600px solid rgba(0, 0, 0, 0.3);
@@ -121,7 +127,10 @@ export class ScalableBox extends Component<ScalableBoxProps> {
     const {x, y} = this.movePosition;
     const {width, height} = this.boxSize;
     const [resultX, resultY] = [x - 1, y - 1];
-    const [resultWidth, resultHeight] = [width + 128, height + 128];
+    const [resultWidth, resultHeight] = [
+      width + INIT_BOX_SIZE,
+      height + INIT_BOX_SIZE,
+    ];
 
     onBlockMove([
       {x: resultX, y: resultY},
@@ -145,6 +154,8 @@ export class ScalableBox extends Component<ScalableBoxProps> {
   handleBoxMouseMove(e: MouseEvent<HTMLDivElement>): void {
     const {clientX, clientY} = e;
     const {x, y} = this.pressPosition;
+
+    console.info(clientX, clientY);
 
     const DIRECTION_DISPATCHER = {
       leftTop: [x - clientX, y - clientY],
@@ -192,6 +203,14 @@ export class ScalableBox extends Component<ScalableBoxProps> {
     }
 
     const {x: originX, y: originY} = this.originPosition;
+    const {
+      previewSize: {width, height},
+    } = this.props;
+    const {width: boxWidth, height: boxHeight} = this.boxSize;
+    const [currentBoxWidth, currentBoxHeight] = [
+      boxWidth + INIT_BOX_SIZE,
+      boxHeight + INIT_BOX_SIZE,
+    ];
     let [resultX, resultY] = [originX + clientX - x, originY + clientY - y];
 
     if (resultX <= 0) {
@@ -200,6 +219,14 @@ export class ScalableBox extends Component<ScalableBoxProps> {
 
     if (resultY <= 0) {
       resultY = 0;
+    }
+
+    if (resultX + currentBoxWidth >= width) {
+      resultX = width - currentBoxWidth;
+    }
+
+    if (resultY + currentBoxHeight >= height) {
+      resultY = height - currentBoxHeight;
     }
 
     requestAnimationFrame(
@@ -211,7 +238,11 @@ export class ScalableBox extends Component<ScalableBoxProps> {
     );
   }
 
-  handleBoxMouseUp(_: MouseEvent<HTMLDivElement>): void {
+  handleBoxMouseUp(): void {
+    this.stop();
+  }
+
+  stop(): void {
     this.isResize = false;
     // reset
     this.isPress = false;
@@ -256,7 +287,8 @@ export class ScalableBox extends Component<ScalableBoxProps> {
         onMouseMove={(e: MouseEvent<HTMLDivElement>) =>
           this.handleBoxMouseMove(e)
         }
-        onMouseUp={(e: MouseEvent<HTMLDivElement>) => this.handleBoxMouseUp(e)}
+        onMouseUp={() => this.handleBoxMouseUp()}
+        onMouseLeave={() => this.stop()}
       >
         <MoveWrapper>
           <Wrapper

@@ -32,6 +32,7 @@ const FullScreen = styled.div`
 
 const Wrapper = styled(FullScreen)<WrapperProps>`
   overflow: hidden;
+  transition: 0.3s all;
 
   z-index: ${props => props.layer};
 `;
