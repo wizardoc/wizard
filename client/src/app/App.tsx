@@ -44,19 +44,19 @@ class TApp extends Component<WithSnackbarProps> {
 
     return (
       <ThemeProvider theme={styledTheme}>
-        <MuiThemeProvider theme={theme}>
-          {/* Drawer is render by service here */}
-          {currentDrawer && (
-            <Drawer {...options} open={isShow}>
-              {currentDrawer}
-            </Drawer>
-          )}
-          {/* Dialog is render by service here */}
-          {dialogs.map(dialogID => (
-            <CommonDialog key={dialogID} dialogID={dialogID}></CommonDialog>
-          ))}
-          <GlobalStyle />
-          <BrowserRouter>
+        <BrowserRouter>
+          <MuiThemeProvider theme={theme}>
+            {/* Drawer is render by service here */}
+            {currentDrawer && (
+              <Drawer {...options} open={isShow}>
+                {currentDrawer}
+              </Drawer>
+            )}
+            {/* Dialog is render by service here */}
+            {dialogs.map(dialogID => (
+              <CommonDialog key={dialogID} dialogID={dialogID}></CommonDialog>
+            ))}
+            <GlobalStyle />
             <Profile />
             {this.optionalTipService.tipInfos.map(info => (
               <OptionalTip key={info.name} {...info}></OptionalTip>
@@ -67,8 +67,8 @@ class TApp extends Component<WithSnackbarProps> {
               <Route path="/" component={Main} />
             </Switch> */}
             <AppRouting />
-          </BrowserRouter>
-        </MuiThemeProvider>
+          </MuiThemeProvider>
+        </BrowserRouter>
       </ThemeProvider>
     );
   }

@@ -1,6 +1,6 @@
 import {Avatar, IconButton, SvgIcon, Tooltip} from '@material-ui/core';
-import SubjectIcon from '@material-ui/icons/Subject';
 import React, {Component, ReactNode} from 'react';
+import WorkIcon from '@material-ui/icons/Work';
 import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
@@ -77,11 +77,11 @@ export class Funcs extends Component {
             </SvgIcon>
           </IconButton>
         </Tooltip>
-        {this.userService.avatar !== '' && (
+        {this.userService.isLogin && (
           <>
             <Tooltip title="待办事项" onClick={() => this.handleTodoClick()}>
               <IconButton color="inherit">
-                <SubjectIcon />
+                <WorkIcon />
               </IconButton>
             </Tooltip>
             <UserInfo onClick={() => this.handleAvatarClick()}>

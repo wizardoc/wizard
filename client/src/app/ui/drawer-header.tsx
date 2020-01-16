@@ -5,6 +5,7 @@ import styled from 'styled-components';
 interface DrawerHeaderProps {
   title: string;
   icon: ReactElement;
+  description?: string;
 }
 
 const DrawerHeaderIcon = styled.div`
@@ -12,14 +13,24 @@ const DrawerHeaderIcon = styled.div`
   color: ${props => props.theme.primaryColor} !important;
 `;
 
+const HeaderText = styled.div``;
+
+const Description = styled.div`
+  color: ${props => props.theme.descriptionColor};
+  font-size: 12px;
+`;
+
 export const DrawerHeader: FunctionComponent<DrawerHeaderProps> = props => {
-  const {icon, title} = props;
+  const {icon, title, description} = props;
 
   return (
     <>
       <ListItem>
         <DrawerHeaderIcon>{icon}</DrawerHeaderIcon>
-        <ListItemText primary={title} />
+        <HeaderText>
+          <ListItemText primary={title} />
+          <Description>{description}</Description>
+        </HeaderText>
       </ListItem>
       <Divider />
     </>

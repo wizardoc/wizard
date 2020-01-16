@@ -115,6 +115,12 @@ class RouterRegister extends Component<WithSlideProps & RouteComponentProps> {
   }
 
   render(): ReactNode {
+    const renderSteps = steps.map((label, index) => (
+      <Step key={label} completed={index < this.currentIndex}>
+        <StepLabel>{label}</StepLabel>
+      </Step>
+    ));
+
     return (
       <Wrapper>
         <TitleWrapper>
@@ -127,11 +133,7 @@ class RouterRegister extends Component<WithSlideProps & RouteComponentProps> {
           </Title>
         </TitleWrapper>
         <StepperWrapper activeStep={this.currentIndex}>
-          {steps.map((label, index) => (
-            <Step key={label} completed={index < this.currentIndex}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          ))}
+          {renderSteps}
         </StepperWrapper>
         <RegisterBodyWrapper>{this.viewerBody}</RegisterBodyWrapper>
         {!this.isFinish && (
