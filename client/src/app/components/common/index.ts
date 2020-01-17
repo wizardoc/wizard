@@ -8,3 +8,4 @@ export * from './dialogs';
 export * from './tab';
 export * from './view-banner';
 export * from './lazy-loading';
+export * from './avatar';

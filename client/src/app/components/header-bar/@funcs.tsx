@@ -1,4 +1,4 @@
-import {Avatar, IconButton, SvgIcon, Tooltip} from '@material-ui/core';
+import {IconButton, SvgIcon, Tooltip} from '@material-ui/core';
 import React, {Component, ReactNode} from 'react';
 import WorkIcon from '@material-ui/icons/Work';
 import {Inject} from 'react-ts-di';
@@ -10,8 +10,9 @@ import {DrawerService, User} from '../../services';
 import {ProfileStore} from '../../store';
 import {InjectStore} from '../../utils';
 import {Todos} from '../optional-tip';
+import {Avatar} from '../common';
 
-const AvatarWrapper = styled(Avatar)`
+const AvatarWrapper = styled.div`
   width: 35px !important;
   height: 35px !important;
   margin-left: 20px;
@@ -58,6 +59,8 @@ export class Funcs extends Component {
   }
 
   render(): ReactNode {
+    const {isLogin, userInfo} = this.userService;
+
     return (
       <Wrapper>
         {/* <Tooltip title="notify">
@@ -77,7 +80,7 @@ export class Funcs extends Component {
             </SvgIcon>
           </IconButton>
         </Tooltip>
-        {this.userService.isLogin && (
+        {isLogin && (
           <>
             <Tooltip title="待办事项" onClick={() => this.handleTodoClick()}>
               <IconButton color="inherit">
@@ -85,8 +88,10 @@ export class Funcs extends Component {
               </IconButton>
             </Tooltip>
             <UserInfo onClick={() => this.handleAvatarClick()}>
-              <AvatarWrapper>{this.userService.avatar}</AvatarWrapper>
-              <UserName>{this.userService.userInfo!.displayName}</UserName>
+              <AvatarWrapper>
+                <Avatar></Avatar>
+              </AvatarWrapper>
+              <UserName>{userInfo!.displayName}</UserName>
             </UserInfo>
           </>
         )}

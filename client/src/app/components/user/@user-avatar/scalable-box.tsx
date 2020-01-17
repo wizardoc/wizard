@@ -38,7 +38,7 @@ const Wrapper = styled.div<ScalableWrapperProps>`
   height: ${props => props.height + INIT_BOX_SIZE}px;
   cursor: move;
   position: absolute;
-  outline: 600px solid rgba(0, 0, 0, 0.3);
+  outline: 6000px solid rgba(0, 0, 0, 0.3);
   left: ${props => props.x - 1}px;
   top: ${props => props.y - 1}px;
   z-index: 2;

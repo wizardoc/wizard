@@ -1,4 +1,4 @@
-import {Avatar, Typography} from '@material-ui/core';
+import {Typography} from '@material-ui/core';
 import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import InsertPhotoIcon from '@material-ui/icons/InsertPhoto';
 import {observable} from 'mobx';
@@ -10,9 +10,9 @@ import styled from 'styled-components';
 import {DialogService, Toast, User, UploadService} from '../../../services';
 import {Upload} from '../../../ui';
 import {isImage} from '../../../utils';
+import {Avatar} from '../../common';
 
 import {AvatarSelector} from './avatar-selector';
-import {Point} from './scalable-box';
 
 interface EditTagProps {
   hover: boolean;
@@ -24,9 +24,9 @@ const Wrapper = styled.div`
   overflow: hidden;
 `;
 
-const AvatarBigger = styled(Avatar)`
-  width: 150px !important;
-  height: 150px !important;
+const AvatarBigger = styled.div`
+  width: 150px;
+  height: 150px;
   cursor: pointer;
 `;
 
@@ -91,16 +91,13 @@ export class UserAvatar extends Component {
     const dialogRef = await this.dialogService.open(AvatarSelector, {
       actionButtons: [
         {
+          text: '取消',
+        },
+        {
           text: '确认',
-          cb: async (data: Point[]) => {
-            console.info(data);
-
-            try {
-              await this.uploadService.upload(file);
-            } catch (e) {
-              console.info(e);
-              this.toast.error('上传失败');
-            }
+          cb: () => this.handleSelectBoxClose(file),
+          props: {
+            color: 'primary',
           },
         },
       ],
@@ -120,7 +117,9 @@ export class UserAvatar extends Component {
           onMouseLeave={() => this.handleAvatarMouseLeave()}
           onMouseOver={() => this.handleAvatarMouseHover()}
         >
-          <AvatarBigger>{this.userService.avatar}</AvatarBigger>
+          <AvatarBigger>
+            <Avatar></Avatar>
+          </AvatarBigger>
           <EditTag hover={this.isAvatarHover}>
             <BarWrapper>
               <InsertPhotoIcon></InsertPhotoIcon>
@@ -132,5 +131,17 @@ export class UserAvatar extends Component {
         </Wrapper>
       </Upload>
     );
+  }
+
+  async handleSelectBoxClose(file: File): Promise<void> {
+    try {
+      const {url} = await this.uploadService.upload(file);
+
+      await this.userService.updateAvatar(url);
+
+      this.toast.success('上传成功！');
+    } catch (e) {
+      this.toast.error('上传失败');
+    }
   }
 }

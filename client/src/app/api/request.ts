@@ -47,7 +47,7 @@ export class HTTP {
   }
 
   put<R, T = {}>(path: string, data?: T, contentType?: ContentType): R {
-    return this.complexRequest('post', path, data, contentType);
+    return this.complexRequest('put', path, data, contentType);
   }
 
   delete<R, T = {}>(path: string, data?: T, contentType?: ContentType): R {

@@ -29,11 +29,6 @@ export type RegisterData = Optional<ParsedRegisterData>;
 
 @Injectable()
 export class User {
-  @computed
-  get getIsLogin(): boolean {
-    return this.isLogin;
-  }
-
   @Inject
   private http!: HTTP;
 
@@ -98,7 +93,14 @@ export class User {
   }
 
   @computed
+  get getIsLogin(): boolean {
+    return this.isLogin;
+  }
+
+  @computed
   get avatar(): string {
+    console.info('www');
+
     if (!this.userInfo) {
       return '';
     }
@@ -131,6 +133,12 @@ export class User {
     // reset userData
     this.userInfo = undefined;
     this.isLogin = false;
+  }
+
+  async updateAvatar(avatar: string): Promise<void> {
+    await this.http.put(USER_API.updateAvatar, {avatar});
+
+    this.userInfo!.avatar = avatar;
   }
 }
 

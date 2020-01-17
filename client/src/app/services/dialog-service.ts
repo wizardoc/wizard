@@ -39,11 +39,11 @@ type ActionButtonCB<R extends boolean | void | Promise<boolean | void>> = (
 
 export interface ActionButtons extends BaseActionButtons {
   /** return a bool value to determine whether to throw a value out */
-  cb: ActionButtonCB<boolean | void | Promise<boolean | void>>;
+  cb?: ActionButtonCB<boolean | void | Promise<boolean | void>>;
 }
 
 export interface ParsedActionButtons extends BaseActionButtons {
-  cb: ActionButtonCB<boolean | void | Promise<boolean | void>>;
+  cb?: ActionButtonCB<boolean | void | Promise<boolean | void>>;
 }
 
 export interface DialogOptions<T = ParsedActionButtons> {
@@ -128,9 +128,10 @@ export class DialogService {
           ...button,
           cb: (() => {
             const {dialogData} = this.dialogs.get(dialogID)!;
+            const {cb = (): void => {}} = button;
 
             /** 通过上层对话框组件调用 close 将数据传递到动作按钮的回调 */
-            if (button.cb(dialogData) === false) {
+            if (cb(dialogData) === false) {
               return;
             }
 

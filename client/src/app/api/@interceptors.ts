@@ -48,6 +48,8 @@ export function getData<T extends Res>(res: AxiosResponse<ResData<T>>): T {
 
     /** soft failure */
     console.error(errorManager.getErrorMessage(err.code));
+
+    throw new Error(errorManager.getErrorMessage(err.code));
   }
 
   return data;

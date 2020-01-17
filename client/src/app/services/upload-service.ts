@@ -1,7 +1,7 @@
 import {Injectable, Inject} from 'react-ts-di';
-import sha256 from 'crypto-js/sha256';
 import {observable} from 'mobx';
-import {upload} from 'qiniu-js';
+import sha256 from 'crypto-js/sha256';
+import {upload, CompletedResult} from 'qiniu-js';
 
 import {HTTP} from '../api';
 import {UPLOAD_API} from '../constant';
@@ -12,6 +12,11 @@ import {User} from './user-service';
 interface ParsedUploadOptions {
   prefix: string;
   mimeType: string[];
+}
+
+interface UploadResult {
+  res: CompletedResult;
+  url: string;
 }
 
 type UploadOptions = Partial<ParsedUploadOptions>;
@@ -35,17 +40,19 @@ export class UploadService {
 
   private _token: string = '';
 
+  private domain = 'q47dmxl45.bkt.clouddn.com';
+
   constructor() {
     this.getQiniuToken();
   }
 
-  upload(file: File, options?: UploadOptions): Promise<boolean> {
+  upload(file: File, options?: UploadOptions): Promise<UploadResult> {
     const {prefix, mimeType} = this.parseOptions(options || {});
     const key = this.genKey(file.name, prefix);
 
     return new Promise((resolve, reject) => {
       if (!key) {
-        resolve(false);
+        reject(new Error('permission denied'));
 
         return;
       }
@@ -65,9 +72,13 @@ export class UploadService {
       observable.subscribe({
         next: res => (this._percent = res.total.percent),
         error: err => reject(err),
-        complete: () => resolve(true),
+        complete: res => resolve({res, url: this.getUrl(key)}),
       });
     });
+  }
+
+  getUrl(key: string): string {
+    return `http://${this.domain}/${key}`;
   }
 
   /**
