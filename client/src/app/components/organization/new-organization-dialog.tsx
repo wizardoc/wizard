@@ -8,7 +8,7 @@ import {Inject} from 'react-ts-di';
 
 import {FormControl} from '../../ui';
 import {CreateNewOrganization, OrganizationData} from '../register';
-import {OrganizationService, Toast, WithDialog} from '../../services';
+import {OrganizationService, Toast, DialogComponentProps} from '../../services';
 
 const Wrapper = styled.div`
   width: 345px;
@@ -23,7 +23,9 @@ const Submit = styled(Button)`
 ` as ComponentType<ButtonProps>;
 
 @observer
-export class NewOrganizationDialog extends Component<WithDialog> {
+export class NewOrganizationDialog extends Component<
+  Partial<DialogComponentProps>
+> {
   @Inject
   organizationService!: OrganizationService;
 

@@ -23,8 +23,6 @@ export class AppRouting extends Component {
   routerService!: RouterService;
 
   render(): ReactNode {
-    console.info(this.routerService.routes);
-
     const routeComponents = this.routerService.routes.map(route => (
       <Route
         path={route.path}

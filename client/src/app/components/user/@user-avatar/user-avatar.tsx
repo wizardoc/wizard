@@ -7,11 +7,12 @@ import React, {Component, ReactNode} from 'react';
 import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
-import {DialogService, Toast, User} from '../../../services';
+import {DialogService, Toast, User, UploadService} from '../../../services';
 import {Upload} from '../../../ui';
 import {isImage} from '../../../utils';
 
 import {AvatarSelector} from './avatar-selector';
+import {Point} from './scalable-box';
 
 interface EditTagProps {
   hover: boolean;
@@ -55,16 +56,19 @@ const BarWrapper = styled.div`
 @observer
 export class UserAvatar extends Component {
   @Inject
-  private toast!: Toast;
+  toast!: Toast;
 
   @Inject
-  private userService!: User;
+  userService!: User;
 
   @Inject
-  private dialogService!: DialogService;
+  dialogService!: DialogService;
+
+  @Inject
+  uploadService!: UploadService;
 
   @observable
-  private isAvatarHover = false;
+  isAvatarHover = false;
 
   handleAvatarMouseHover(): void {
     this.isAvatarHover = true;
@@ -88,7 +92,16 @@ export class UserAvatar extends Component {
       actionButtons: [
         {
           text: '确认',
-          cb: () => true,
+          cb: async (data: Point[]) => {
+            console.info(data);
+
+            try {
+              await this.uploadService.upload(file);
+            } catch (e) {
+              console.info(e);
+              this.toast.error('上传失败');
+            }
+          },
         },
       ],
       title: '选择头像',

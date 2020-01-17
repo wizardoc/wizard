@@ -35,7 +35,6 @@ export class Todos extends Component<Partial<RouteComponentProps>> {
   todoService!: TodoService;
 
   render(): ReactNode {
-    // console.info(this.todoService.todoItems[0].name);
     const items = this.todoService.todoItems.map(item => (
       <TodoItem item={item}></TodoItem>
     ));

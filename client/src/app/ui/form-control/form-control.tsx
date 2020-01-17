@@ -193,8 +193,6 @@ export class FormControl extends Component<FormControlProps>
         ),
       });
 
-      console.info(icon);
-
       return (
         <Wrapper key={name}>
           {part}

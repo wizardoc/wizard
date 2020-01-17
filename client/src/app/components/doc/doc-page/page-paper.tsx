@@ -23,15 +23,15 @@ const ContentCard = styled(Card)`
   padding: 40px 50px 50px 50px;
   margin: 15px;
   position: relative;
+  z-index: 1;
 ` as ComponentType<CardProps>;
 
 const Banner = styled.div`
   width: 100%;
   height: 500px;
-  top: 48px;
-  position: sticky;
   margin-bottom: -300px;
   overflow: hidden;
+  position: relative;
 `;
 
 const Title = styled.div`

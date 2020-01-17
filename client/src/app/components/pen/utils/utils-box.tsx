@@ -31,8 +31,6 @@ export class UtilsBox extends Component {
   draftService!: DraftService;
 
   handleUtilClick(style: string | undefined, handler = (): void => {}): void {
-    console.info(style);
-
     if (style) {
       this.draftService.setCurrentStyle(style);
     }
