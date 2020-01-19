@@ -1,5 +1,5 @@
 <div>
-  <p align="center"><img src="https://github.com/wizaaard/wizard/blob/master/client/src/app/assets/static/wizard-card-variant.png" alt="fre logo"></p>
+  <p align="center"><img src="https://github.com/wizaaard/wizard/blob/master/client/src/app/assets/static/wizard-card-variant.png"></p>
 </div>
 <p align="center">A document of code manager platform</p>
 <p align="center">
@@ -31,67 +31,262 @@
 - Cache DB: `Redis`
 - Primary DB: `PostgreSQL`
 
-## Dev
+## 贡献指南
+关于贡献时的一些快速上手指南。
+`Wizardoc` 是一个技术驱动的文档管理平台，它体现在文档和知识管理的互相结合，其中包括前端组件文档，Swagger API 文档，markdown 文档，还可以陆续加入流程图等，这些都在新的 Feature 当中！
 
-Client 文件目录结构:
+在生活中我很鼓励大家去多写文档，这样带来的维护成本是最小的，可能需要一个平台，这是 `Wizard` 在做的一部分事情。在另一方面，我认为一个框架或语言的上手曲线和难易程度在一部分层面上取决于该框架或语言的 API 文档，另一方面是拥有大量的学习总结和踩坑博文，但技术分享的博文和文档其实是相当相似的。`Wizard` 以组织的单位来划分作者，你可以属于多个组织，在组织中，你撰写的开放的文档即是分享的内容！
+
+我是一个很喜欢写博客的人，从几年前就有这个习惯，于是我想有一个大家一起维护的博客平台，这就是 Wizard Public Space！它是一个开放的领域，这里堆积着各种各样的开放文档，它是另一种形式的博客平台，于此同时，你可以开放你组织内部的规范到社区，欢迎你这样做！
+
+### 开头的话
+`Wizard` 还很不成熟，从各个方面，架构上，业务上，思考上，都很不成熟，我想让它变的更好，在近段时间，我一直在思考最佳的解决方案，不断的重构，我认为这是一种对待工程最好的方式。
+
+谢谢你 `Clone Wizard`，我希望能和大家一起思考问题，一起寻找最佳的解决问题的方式，这个项目一开始就不是为了业务，我希望大家能在贡献之余从中学到以前很难学到的东西，或者带给 Wizard 令人激动的新功能！这是 Wizard 成立的初衷。
+
+后端 Archie 的项目在 [->> 这里 <<-](https://github.com/wizaaard/wizard)。
+
+### 贡献流程
+另起一个代表功能的分支，比如
+
+```shell
+git checkout feature-login-page
+```
+
+或者修复一些 bug，比如
+
+```shell
+git checkout fix-login-bug
+```
+
+在新的分支上做相应的开发，完成后发起 `Pull Request` 合并到 `Master`，一次贡献就完成了！
+
+### 快速开始
+```shell
+cd client
+yarn install
+yarn dll
+yarn start
+```
+
+在启动之前，需要在 `/client/src/app/.config` 目录下创建 `server-config.json` 文件，这是 API 的配置文件,确定 API 请求地址，下面是一份 `server-config.json`:
+
+```json
+{
+  "baseUrl": "localhost",
+  "port": 4000,
+  "protocol": "http",
+  "mode": "dev"
+}
+```
+
+### 文件目录组织结构
+外层工程目录组织结构（主要是 Client 和 Server 目录，Wizard 使用 `lerna` 来做多包管理）
 
 ```js
-├── build // dist
-├── public // 静态目录存放
-├── src
-│   ├── app
-│   │   ├── ui // 业务无关组件
-│   │   ├── assets  // 静态素材
-│   │   ├── components // 业务组件
-│   │   ├── constant // 常量文件
-│   │   ├── index.tsx // bootstrap
-│   │   ├── pages // 完整的页面
-│   │   ├── routes // 抽象通用的路由
-│   │   ├── services // 前端 service
-│   │   ├── store // mobx 的 store
-│   │   ├── theme // 全局注入的一些样式，包括 styled-components 和 material-design
-│   │   └── utils // 工具
-│   ├── index.tsx // 启始文件，实际导出真实 index.tsx
-│   ├── ssr // 存放 ssr 必须文件
-│   └── test // jest 测试
+├── .circleci
+├── .vscode
+├── client
+├── doc
+├── docker
+├── server
+├── client // App 主要目录
+├── server // koa 服务，主要提供 SSR，现在还没搭建起来，这是近期要做的事情，有兴趣的话可以提 PR
+│
+
 ```
 
-## DI
+Client 目录组织结构
 
-service 可通过封装的 `react-ts-di` 进行注入
+```js
+├── config // Webpack 配置文件存放目录
+├── public  // html 模板以及一些其他的工程静态文件
+├── scripts // 启动脚本，CRA 的启动脚本
+├── src // 代码源文件
+│    ├── app // 网站源文件
+│    ├── ssr // ssr 需要的连接客户端的胶水代码
+│    ├── test // 单元测试
+├── static // DLL 的输出目录
+```
 
-```ts
+App 目录组织结构 `/client/src/app/`
+
+```js
+├── animations // 动画 HOC
+├── api // api 相关配置
+├── assets // 图片字体等静态文件
+├── components // 业务组件
+├── configs // 放置一些业务相关的的全局配置
+├── constants // 全局的常量目录
+├── pages // 页面目录，所有的页面都放在这下面，页面由 "component" 搭建而成，它们放在 components 目录下，这里只是单纯的页面
+├── routes // 路由
+├── services // 服务，提供一些全局的服务
+├── store // mobx store (准备重构废弃，先不用管这个目录)
+├── theme // 全局的样式，通过 Context 向下注入，方便主题修改
+├── ui //一些业务无关的通用的组件
+├── utils //全局的工具
+```
+
+## Lint
+lint 是我在之前公司写的一个小的 tslint rules 库 [Magicspace](https://github.com/makeflow/magicspace)
+
+又一个约定：在一个目录下，文件如果不以 `@` 开头的话，那这个文件是必须被导出到外层的。
+
+比如
+
+```js
+├── foo
+  ├── bar.ts
+  ├── index.ts
+```
+
+index.ts
+```typescript
+export * from './bar'
+```
+
+这样做是必须的，要不然 lint 会向你抛出错误，如果你不想将它抛出外层，你必须在文件名前面加上 `@`
+
+```
+@bar.ts
+```
+
+## 依赖注入
+Wizard 的架构在这部分上借鉴了 `Angular`，组件之间的通信通过 Service 来完成。一个 Service 提供一个服务，使用了 [react-ts-di](https://github.com/youncccat/react-ts-di) 完成这部分功能，它是一个精简的轻量级的 React 的依赖注入库。
+
+用 `@Injectable` 装饰表明它是一个 Service，下面是一个 Toast 服务，它的功能是弹出一个轻提示。
+
+```typescript
+import {Injectable} from 'react-ts-di';
+
+import {TipStore} from '../store';
+import {InjectStore} from '../utils';
+
 @Injectable()
-class Foo {}
+export class Toast {
+  @InjectStore(TipStore)
+  private tipStore!: TipStore;
 
-------
+  success(text: string): void {
+    this.tipStore.addTipToQueue(text, 'success');
+  }
 
-@Inject
-foo!:Foo
-```
+  error(text: string): void {
+    this.tipStore.addTipToQueue(text, 'error');
+  }
 
-store 通过 `InjectStore` 来进行注入，其实跟 `react-ts-di` 做了同样的事情，不过维护了两个单例池，考虑是否有必要单独抽出来
+  warning(text: string): void {
+    this.tipStore.addTipToQueue(text, 'warning');
+  }
 
-```ts
-export class MainTabs {
- @observable
- tabTag: number = 0;
-
- @action
- changeTab(): void {
-   this.tabTag = 1;
- }
+  info(text: string): void {
+    this.tipStore.addTipToQueue(text, 'info');
+  }
 }
-
-------
-
-@InjectStore
-tabs!: MainTabs
 ```
 
-## Regex
+在任何组件需要 Toast 的地方进行 `@Inject` 装饰，IOC 会将这个 service 的实例创建好并注入进来。
 
-正则统一封装在 `services/regex` 下，通过 `readonly` 常量暴露给外部使用，外部使用正则统一使用注入的 regex, 调用上面的方法
+```typescript
+export class User extends Component {
+  @Inject
+  toast!:Toast
+
+  render(): ReactNode {
+    return <div onClick={() => this.toast.success('click!')}></div>
+  }
+}
+```
+
+这是组件间通信共享状态的主要机制。
+
+## 正则表达式
+
+在 `/services` 目录下，有 RegexUtil service，它提供一些常用的正则，在业务组件不应该写 regex 字面量，应该通过在 RegexUtil service 里注册正则表达式，通过方法将它暴露出来。
+
+## 表单
+
+现在的表单并不齐全，表单验证 `FormControl` 在 `/ui/form-control` 下，具体使用方法见代码
+
+## 路由
+
+所有的路由按功能拆分在 `/routes` 目录下，如果要添加新的路由文件，只需要创建一个 `xxx-routes.ts` 在该目录下并导出就行了
+
+```js
+export xxxRoutes:Routes[] = [...]
+```
+
+这样这个 xxx routes 就已经被注册了，不需要额外的配置
+
+路由对象如下，它声明在 `/service/route` 下
+
+```typescript
+export interface Route {
+  path: string; // 路由路径
+  exact?: boolean; // 是否精准匹配
+  redirect?: string; // 重定向
+  layout?: Layout; // 路由对应的布局
+  /**
+   * 当 Component 为空时，会自动填充 404
+   */
+  component?: ComponentType<RouteComponentProps<any>> | ComponentType<any>; // 该 path 对应的 组件
+  activatedGuard?: ActivatedGuardConstructor; // 进入该路由的守卫
+  deactivatedGuard?: DeactivatedGuardConstructor; // 离开该路由的守卫
+  children?: Routes; // 子路由
+}
+```
+
+wizard 的路由机制其实是不存在子路由的概念的，在被注册的路由被解析的时候会被全部摊平，比如:
+
+```typescript
+export const UserRoutes: Routes = [
+  {
+    path: '/user',
+    layout: 'limpidity',
+    component: Foo,
+    children: [
+      {
+        path: '/register',
+        component: Register,
+      },
+      {
+        path: '/login',
+        component: Login,
+      },
+      {
+        path: '/email-validator',
+        component: EmailValidator,
+      },
+    ],
+  },
+];
+```
+
+它会被解析成(需要注意的是，layout 的默认值是 normal，子路由没有声明 layout 的话会继承父路由的 layout):
+```typescript
+[
+  {
+    path: '/user',
+    component: User,
+    layout: 'limpidity',
+  },
+  {
+    path: '/user/register',
+    component: Register,
+    layout: 'limpidity',
+  },
+  {
+    path: '/user/login',
+    component: Login,
+    layout: 'limpidity',
+  },
+  {
+    path: '/user/email-validator',
+    component: EmailValidator,
+    layout: 'limpidity',
+  },
+]
+```
 
 ## Validator
 
