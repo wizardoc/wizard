@@ -2,7 +2,7 @@ import {RouteComponentProps} from 'react-router-dom';
 
 import {Constructable} from 'src/app/types/type-utils';
 
-import {Route} from '../routes';
+import {Route} from '../route';
 
 export type DeactivatedGuardConstructor = Constructable<DeactivatedGuard>;
 

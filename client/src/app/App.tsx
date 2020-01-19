@@ -14,7 +14,6 @@ import {GlobalStyle, ThemeProvider, styledTheme, theme} from './theme';
 import {Drawer} from './ui';
 // import {GhostPage} from './ui';
 import {InjectStore} from './utils';
-// import {Main} from './main';
 import {AppRouting} from './app-routing';
 
 const MAX_SNACK_BAR_COUNT = 3;
@@ -62,10 +61,6 @@ class TApp extends Component<WithSnackbarProps> {
               <OptionalTip key={info.name} {...info}></OptionalTip>
             ))}
             <HeaderBar />
-            {/* <Switch>
-              <Route path="/limpidity" component={LimpidityRoute} />
-              <Route path="/" component={Main} />
-            </Switch> */}
             <AppRouting />
           </MuiThemeProvider>
         </BrowserRouter>

@@ -6,7 +6,6 @@ import UUID from 'uuid';
 
 import {Loading, ConfirmDialog} from '../components';
 
-import {ErrorManager} from './error-manager';
 import {Time, TimeUnit} from './time';
 import {Toast} from './toast';
 
@@ -90,9 +89,6 @@ type DialogID = string;
 export class DialogService {
   @Inject
   private toast!: Toast;
-
-  @Inject
-  private errorManager!: ErrorManager;
 
   @observable
   dialogs = new Map<DialogID, DialogConfig>();
@@ -185,7 +181,6 @@ export class DialogService {
       await cb();
     } catch (e) {
       clearTimeout(timeoutId);
-      this.errorManager.spurtError(e);
     }
 
     this.closeLoading();

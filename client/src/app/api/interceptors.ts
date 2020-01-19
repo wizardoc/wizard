@@ -1,4 +1,4 @@
-import {AxiosRequestConfig, AxiosResponse} from 'axios';
+import {AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios';
 import * as QS from 'qs';
 
 import {errorManager} from '../services';
@@ -8,7 +8,7 @@ import {ContentType} from './request';
 
 interface DataInterface {
   data: unknown;
-  err: unknown;
+  err: ResError;
 }
 
 interface Res {
@@ -16,7 +16,7 @@ interface Res {
 }
 
 /** 后端的错误对象 */
-interface ResError {
+export interface ResError {
   /**
    * 错误码
    */
@@ -40,19 +40,13 @@ interface ResData<T> {
 }
 
 export function getData<T extends Res>(res: AxiosResponse<ResData<T>>): T {
-  const {data, err} = res.data;
+  return res.data.data;
+}
 
-  if (err) {
-    /** process error */
-    errorManager.spurtError(err.code);
-
-    /** soft failure */
-    console.error(errorManager.getErrorMessage(err.code));
-
-    throw new Error(errorManager.getErrorMessage(err.code));
+export function errorCatcher({response}: AxiosError<ResData<any>>): void {
+  if (response) {
+    errorManager.spurtError(response.data.err);
   }
-
-  return data;
 }
 
 export function requestType(

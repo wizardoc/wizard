@@ -8,6 +8,8 @@ import {Time} from 'src/app/services';
 
 import {MDRender} from '../../common';
 
+import {OrganizationInfoCard} from './organization-info-card';
+
 export interface PagePaperProps {
   content: string;
   title: string;
@@ -21,9 +23,7 @@ const Wrapper = styled.div``;
 
 const ContentCard = styled(Card)`
   padding: 40px 50px 50px 50px;
-  margin: 15px;
-  position: relative;
-  z-index: 1;
+  margin-right: 15px;
 ` as ComponentType<CardProps>;
 
 const Banner = styled.div`
@@ -47,6 +47,15 @@ const Title = styled.div`
   top: -150px;
 `;
 
+const PageContent = styled.div`
+  width: 100%;
+  display: flex;
+  position: relative;
+  z-index: 1;
+  padding: 20px 50px;
+  box-sizing: border-box;
+`;
+
 export class PagePaper extends Component<PagePaperProps> {
   render(): ReactNode {
     const {content, title, isMounted} = this.props;
@@ -62,9 +71,12 @@ export class PagePaper extends Component<PagePaperProps> {
             <Title>{title}</Title>
           </ColorBlock>
         </Banner>
-        <ContentCard>
-          <MDRender content={content}></MDRender>
-        </ContentCard>
+        <PageContent>
+          <ContentCard>
+            <MDRender content={content}></MDRender>
+          </ContentCard>
+          <OrganizationInfoCard></OrganizationInfoCard>
+        </PageContent>
       </Wrapper>
     );
   }

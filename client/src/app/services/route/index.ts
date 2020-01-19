@@ -1,3 +1,3 @@
 export * from './router-service';
-export * from './routes';
 export * from './guards';
+export * from './route';

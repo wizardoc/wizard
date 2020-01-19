@@ -18,32 +18,6 @@ const Wrapper = styled.div`
   background: ${props => props.theme.shallowGray};
 `;
 
-// const Side = styled.div`
-//   min-width: 290px;
-//   margin-right: 25px;
-//   padding: 10px;
-//   min-height: 500px;
-//   height: fit-content;
-//   background: rgba(0, 0, 0, 0.04);
-//   color: rgba(0, 0, 0, 0.87) !important;
-//   position: sticky;
-//   top: 70px;
-// `;
-
-// const SideTitle = styled.p`
-//   font-size: 30px;
-//   font-weight: 300;
-// `;
-
-// const Content = styled(MDRender)`
-//   width: calc(100% - 310px);
-// `;
-
-// const ContentWrapper = styled.div`
-//   display: flex;
-//   flex-direction: column;
-// `;
-
 @observer
 class TAbout extends Component {
   @Inject

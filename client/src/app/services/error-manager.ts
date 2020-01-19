@@ -1,6 +1,7 @@
 import {Inject, Injectable} from 'react-ts-di';
 
-import {isError} from '../utils';
+import {isError, isObject} from '../utils';
+import {ResError} from '../api';
 
 import {Toast} from './toast';
 
@@ -45,10 +46,17 @@ export class ErrorManager {
   spurtError(errorCode: number | string): void;
   // tslint:disable-next-line:unified-signatures
   spurtError(e: Error): void;
-  spurtError(query: number | string | Error): void {
+  // tslint:disable-next-line:unified-signatures
+  spurtError(e: ResError): void;
+  spurtError(query: number | string | Error | ResError): void {
     if (isError(query)) {
+      // 系统抛出的错误
       this.toast.error(this.getErrorMessageBySystem(query.message));
+    } else if (isObject(query)) {
+      // 后端抛出的 error msg
+      this.toast.error(this.getErrorMessage(query.code) || query.msg);
     } else {
+      // 只根据 code 来匹配错误（向后兼容）
       this.toast.error(this.getErrorMessage(query));
     }
   }

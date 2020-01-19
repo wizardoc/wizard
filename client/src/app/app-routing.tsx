@@ -3,7 +3,7 @@ import {Inject} from 'react-ts-di';
 import {Switch, Route, Redirect, RouteComponentProps} from 'react-router-dom';
 import styled from 'styled-components';
 
-import {RouterService} from './services';
+import {RouterService, Layout} from './services';
 import {PageNotFound} from './pages/page-not-found';
 import {isString} from './utils';
 import {FloatingPop, Footer, SharePop} from './components';
@@ -62,7 +62,7 @@ export class AppRouting extends Component {
   }
 
   private renderProcessor(
-    layout: 'limpidity' | 'normal' | undefined,
+    layout: Layout,
     redirect?: string,
     component?: ComponentType<RouteComponentProps<any>> | ComponentType<any>,
   ): ReactNode {
@@ -80,8 +80,6 @@ export class AppRouting extends Component {
           <Footer />
         </Wrapper>
       );
-
-      return <RenderComponent></RenderComponent>;
     }
 
     if (!component && !redirect) {
