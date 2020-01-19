@@ -35,11 +35,11 @@ export class HeaderBarTabs extends Component<Partial<RouteComponentProps>> {
     },
     {
       text: '帮助中心',
-      route: '/help',
+      route: '/team/help',
     },
     {
       text: '关于我们',
-      route: '/about',
+      route: '/team/about',
     },
   ];
 
