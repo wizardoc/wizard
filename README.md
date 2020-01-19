@@ -44,7 +44,7 @@
 
 谢谢你 `Clone Wizard`，我希望能和大家一起思考问题，一起寻找最佳的解决问题的方式，这个项目一开始就不是为了业务，我希望大家能在贡献之余从中学到以前很难学到的东西，或者带给 Wizard 令人激动的新功能！这是 Wizard 成立的初衷。
 
-后端 Archie 的项目在 [->> 这里 <<-](https://github.com/wizaaard/wizard)。
+后端 Archie 的项目在 [->> 这里 <<-](https://github.com/wizaaard/archie)。
 
 ### 贡献流程
 另起一个代表功能的分支，比如
