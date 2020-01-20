@@ -44,14 +44,22 @@ export class NewOrganizationDialog extends Component<
       return;
     }
 
-    current.validate();
+    if (!current.validate()) {
+      return;
+    }
 
     const {organizationName, organizationDescription} = this.organizationData;
 
-    await this.organizationService.newOrganization(
-      organizationName,
-      organizationDescription!,
-    );
+    try {
+      await this.organizationService.newOrganization(
+        organizationName,
+        organizationDescription!,
+      );
+    } catch (e) {
+      this.toast.error('组织已存在!');
+
+      return;
+    }
 
     this.toast.success('创建组织成功!');
     this.props.close!(

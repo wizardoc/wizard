@@ -45,7 +45,7 @@ export class OrganizationActions extends Component<OrganizationActionsProps> {
       tip: '退出组织',
       icon: <MeetingRoomIcon></MeetingRoomIcon>,
       handler: this.handleQuitOrgClick,
-      isHide: this.isOwner
+      isHide: this.isOwner,
     },
     {
       tip: '删除组织',
@@ -65,11 +65,13 @@ export class OrganizationActions extends Component<OrganizationActionsProps> {
       '删除组织',
       `确认要删除 ${name} 吗？`,
       async () => {
-        const {
-          organizeName,
-        } = await this.organizationService.removeOrganization(name);
+        try {
+          await this.organizationService.removeOrganization(name);
+        } catch (e) {
+          console.error(e);
+        }
 
-        this.props.onOrganizationRemove(organizeName);
+        this.props.onOrganizationRemove(name);
       },
     );
   }

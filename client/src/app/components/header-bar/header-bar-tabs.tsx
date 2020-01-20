@@ -26,10 +26,6 @@ export class HeaderBarTabs extends Component<Partial<RouteComponentProps>> {
       route: '/home',
     },
     {
-      text: '为什么使用 Wizard',
-      route: '/why-use',
-    },
-    {
       text: 'PUBLIC SPACE',
       route: '/public-space',
     },
@@ -63,7 +59,7 @@ export class HeaderBarTabs extends Component<Partial<RouteComponentProps>> {
     },
     {
       text: '关于我们',
-      route: '/about',
+      route: '/team/about',
     },
   ];
 
