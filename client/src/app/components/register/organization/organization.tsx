@@ -12,7 +12,6 @@ import styled from 'styled-components';
 
 import {
   DialogService,
-  OrganizationService,
   ParsedRegisterData,
   Toast,
   User,
@@ -73,8 +72,8 @@ export class TOrganization extends Component<
   @Inject
   private toast!: Toast;
 
-  @Inject
-  private organizationService!: OrganizationService;
+  // @Inject
+  // private organizationService!: OrganizationService;
 
   @Inject
   private dialogService!: DialogService;
@@ -94,8 +93,17 @@ export class TOrganization extends Component<
 
       const {organizationName, organizationDescription} = this.organizationInfo;
 
+      this.userService.ensureOrganization(
+        organizationName,
+        organizationDescription,
+      );
+
       // 注册用户
-      await this.userService.register();
+      try {
+        this.userService.register();
+      } catch (e) {
+        console.error(e);
+      }
 
       const registerData = this.userService.registerData as ParsedRegisterData;
 
@@ -106,18 +114,18 @@ export class TOrganization extends Component<
       }
 
       // 加入现有组织
-      if (!organizationDescription) {
-        await this.organizationService.joinOrganization(
-          organizationName,
-          registerData.username,
-        );
-      } else {
-        await this.organizationService.createOrganization(
-          organizationName,
-          organizationDescription,
-          registerData.username,
-        );
-      }
+      // if (!organizationDescription) {
+      //   await this.organizationService.joinOrganization(
+      //     organizationName,
+      //     registerData.username,
+      //   );
+      // } else {
+      //   await this.organizationService.createOrganization(
+      //     organizationName,
+      //     organizationDescription,
+      //     registerData.username,
+      //   );
+      // }
     });
   }
 

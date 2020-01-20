@@ -4,12 +4,10 @@ import {action, observable} from 'mobx';
 import {observer} from 'mobx-react';
 import React, {Component, ComponentType, ReactNode} from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
 import {WithSlideProps} from '../../animations';
 import {USER} from '../../constant';
-import {User} from '../../services';
 import {A, Title} from '../../ui';
 
 import {BaseInfo} from './base-info';
@@ -51,9 +49,6 @@ const TitleWrapper = styled.div`
 
 @observer
 class RouterRegister extends Component<WithSlideProps & RouteComponentProps> {
-  @Inject
-  private userService!: User;
-
   @observable
   private currentIndex = 0;
 
@@ -91,18 +86,7 @@ class RouterRegister extends Component<WithSlideProps & RouteComponentProps> {
     exitAnimation(() => history.push(USER.LOGIN));
   }
 
-  async handleNextClick(): Promise<void> {
-    if (this.isFinish) {
-      // complete register logic
-      try {
-        await this.userService.register();
-      } catch (e) {
-        console.error(e);
-      }
-
-      return;
-    }
-
+  handleNextClick(): void {
     this.nextStepToggle();
   }
 

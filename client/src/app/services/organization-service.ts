@@ -2,8 +2,6 @@ import {Inject, Injectable} from 'react-ts-di';
 
 import {HTTP} from '../api';
 import {ORGANIZATION} from '../constant';
-import {TipStore} from '../store';
-import {InjectStore} from '../utils';
 import {Omit} from '../types/type-utils';
 
 import {UserBaseInfo, User} from './user-service';
@@ -23,9 +21,6 @@ export interface OrganizationCardData extends UserBaseInfo {
 
 @Injectable()
 export class OrganizationService {
-  @InjectStore(TipStore)
-  private tipStore!: TipStore;
-
   @Inject
   private user!: User;
 
@@ -53,15 +48,11 @@ export class OrganizationService {
     description: string,
     username: string,
   ): Promise<void> {
-    try {
-      await this.http.post(this.parseUrl('/new'), {
-        organizeName: name,
-        username,
-        organizeDescription: description,
-      });
-    } catch (e) {
-      this.tipStore.addTipToQueue('拉取信息失败', 'error');
-    }
+    await this.http.post(this.parseUrl('/new'), {
+      organizeName: name,
+      username,
+      organizeDescription: description,
+    });
   }
 
   removeOrganization(

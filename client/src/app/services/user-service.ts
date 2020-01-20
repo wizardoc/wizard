@@ -23,6 +23,11 @@ interface OrganizationInfo {
   organizationDescription?: string;
 }
 
+interface LoginResData {
+  jwt: string;
+  userInfo: UserBaseInfo;
+}
+
 export type ParsedRegisterData = UserBaseInfo & OrganizationInfo;
 
 export type RegisterData = Optional<ParsedRegisterData>;
@@ -70,13 +75,12 @@ export class User {
 
   @action
   async login(username: string, password: string): Promise<void> {
-    const {jwt: jwtString, userInfo} = await this.http.post(USER_API.LOGIN, {
-      username,
-      password,
-    });
-
-    this.jwt.save(jwtString);
-    this.setUserInfo(userInfo);
+    this.saveToken(
+      await this.http.post(USER_API.LOGIN, {
+        username,
+        password,
+      }),
+    );
   }
 
   async validBaseInfo(baseInfo: BaseInfoData): Promise<boolean> {
@@ -99,8 +103,6 @@ export class User {
 
   @computed
   get avatar(): string {
-    console.info('www');
-
     if (!this.userInfo) {
       return '';
     }
@@ -108,8 +110,8 @@ export class User {
     return getAvatar(this.userInfo);
   }
 
-  register(): void {
-    return this.http.post(USER_API.REGISTER, this.registerData);
+  async register(): Promise<void> {
+    this.saveToken(await this.http.post(USER_API.REGISTER, this.registerData));
   }
 
   collectBaseInfo(baseInfo: BaseInfoData): void {
@@ -139,6 +141,11 @@ export class User {
     await this.http.put(USER_API.updateAvatar, {avatar});
 
     this.userInfo!.avatar = avatar;
+  }
+
+  private saveToken({jwt, userInfo}: LoginResData): void {
+    this.jwt.save(jwt);
+    this.setUserInfo(userInfo);
   }
 }
 

@@ -1,26 +1,38 @@
-import {Avatar, CardHeader, IconButton} from '@material-ui/core';
+import {CardHeader, IconButton} from '@material-ui/core';
 import {AvatarProps} from '@material-ui/core/Avatar';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import React, {Component, ComponentType, ReactNode} from 'react';
 import styled from 'styled-components';
 
-import {UserBaseInfo, getAvatar} from '../../services';
+import {withTheme, WithThemeProps} from 'src/app/theme';
+
+import {UserBaseInfo} from '../../services';
+import {Avatar} from '../common';
 
 interface HeaderOwnerProps {
   ownerInfo: UserBaseInfo;
 }
 
-const PrimaryAvatar = styled(Avatar)`
-  background: ${props => props.theme.primaryColor} !important;
+const PrimaryAvatar = styled.div`
+  width: 42px;
+  height: 42px;
 ` as ComponentType<AvatarProps>;
 
-export class HeaderOwner extends Component<HeaderOwnerProps> {
+@withTheme
+export class HeaderOwner extends Component<
+  HeaderOwnerProps & Partial<WithThemeProps>
+> {
   render(): ReactNode {
-    const {ownerInfo} = this.props;
+    const {ownerInfo, theme} = this.props;
+    const {primaryColor, white} = theme!;
 
     return (
       <CardHeader
-        avatar={<PrimaryAvatar>{getAvatar(ownerInfo)}</PrimaryAvatar>}
+        avatar={
+          <PrimaryAvatar>
+            <Avatar bgColor={primaryColor} color={white} />
+          </PrimaryAvatar>
+        }
         title={ownerInfo.displayName}
         subheader="Owner"
         action={

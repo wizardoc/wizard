@@ -17,7 +17,7 @@ export const RootRoutes: Routes = [
     component: Home,
   },
   {
-    path: '/organization',
+    path: '/organizations',
     component: Organization,
   },
 ];

@@ -10,7 +10,6 @@ import styled from 'styled-components';
 
 // import {USER} from '../constant';3ew
 import {WithSlideProps} from '../animations';
-import {MAIN_PAGE, USER} from '../constant';
 import {Toast, User} from '../services';
 import {A, FormControl, Line, Rules, Title} from '../ui';
 
@@ -156,13 +155,13 @@ export class TLogin extends Component<
     }
 
     this.toast.success('登录成功');
-    history.replace(MAIN_PAGE.ROOT);
+    history.replace('/');
   }
 
   handleRegisterClick(): void {
     const {history, exitAnimation} = this.props;
 
-    exitAnimation(() => history.push(USER.REGISTER));
+    exitAnimation(() => history.push('/user/register'));
   }
 }
 

@@ -9,7 +9,6 @@ import {observer} from 'mobx-react';
 import {observable} from 'mobx';
 
 import Main from '../../assets/static/main_code.svg';
-import {MAIN_PAGE, USER} from '../../constant';
 import {User} from '../../services';
 import {ActionButton} from '../../ui';
 import {ReleaseBanner} from '../release-banner';
@@ -98,9 +97,9 @@ class TStarted extends Component<StartedProps> {
     const {history} = this.props;
 
     if (isLogin) {
-      history.push(MAIN_PAGE.DOCUMENT);
+      history.push('/doc');
     } else {
-      history.push(USER.LOGIN);
+      history.push('/user/login');
     }
   }
 

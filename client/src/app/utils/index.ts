@@ -7,3 +7,5 @@ export * from './typeof';
 export * from './viewport-listener';
 export * from './import';
 export * from './color-generator';
+export * from './view-port';
+export * from './helpers';

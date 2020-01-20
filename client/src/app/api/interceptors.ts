@@ -43,10 +43,16 @@ export function getData<T extends Res>(res: AxiosResponse<ResData<T>>): T {
   return res.data.data;
 }
 
-export function errorCatcher({response}: AxiosError<ResData<any>>): void {
+export function errorCatcher(err: AxiosError<ResData<any>>): void {
+  const {response} = err;
+
   if (response) {
     errorManager.spurtError(response.data.err);
+  } else {
+    errorManager.spurtError(err);
   }
+
+  throw err;
 }
 
 export function requestType(
