@@ -1,4 +1,5 @@
 import * as styledComponents from 'styled-components';
+// import {ComponentType} from 'react';
 
 const {
   default: styled,
@@ -6,6 +7,7 @@ const {
   createGlobalStyle,
   keyframes,
   ThemeProvider,
+  // withTheme: styledWithTheme,
 } = styledComponents as styledComponents.ThemedStyledComponentsModule<
   IThemeInterface
 >;
@@ -45,7 +47,19 @@ export const styledTheme = {
   darkGray: 'rgb(186, 181, 171)',
   shallowGrayBlue: '#f7f9fc',
   descriptionColor: '#70757a',
+  fontGray: '#fafafa',
+  avatarBgGray: '#bdbdbd',
 };
+
+export type StyledTheme = typeof styledTheme;
+// export const withTheme = <
+//   T extends ComponentType<P>,
+//   P extends {theme?: IThemeInterface | undefined}
+// >(
+//   component: T,
+// ): any => (styledWithTheme(component as ComponentType<any>) as any) as T;
+
+// type WithTheme<T> = (component: T) => T
 
 export default styled;
 export {css, createGlobalStyle, keyframes, ThemeProvider};
