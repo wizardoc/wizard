@@ -11,7 +11,7 @@ const Wrapper = styled.div``;
 const Split = styled.div`
   width: 100%;
   height: 1px;
-  background: #7f8c8d;
+  background: ${props => props.theme.deepGray};
   margin: 30px 0;
 `;
 

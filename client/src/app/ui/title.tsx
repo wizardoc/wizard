@@ -45,7 +45,7 @@ const Block = styled.div<BlockProps>`
 
 const BackButton = styled(IconButton)<BackButtonProps>`
   font-size: 50px !important;
-  color: #1976d2;
+  color: ${props => props.theme.primaryColor};
   cursor: pointer;
   visibility: ${props => (props.hasBack ? 'visible' : 'hidden')};
 

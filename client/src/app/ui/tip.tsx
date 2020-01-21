@@ -19,6 +19,7 @@ import styled from 'styled-components';
 
 import {TipStore} from '../store';
 import {InjectStore} from '../utils';
+import {styledTheme} from '../theme';
 
 export const enum TipVariant {
   Success,
@@ -47,19 +48,19 @@ interface TipContentProps extends TipProps {}
 
 const stuffs: Stuff[] = [
   {
-    color: '#43a047',
+    color: styledTheme.successGreen,
     icon: <CheckCircleIcon />,
   },
   {
-    color: 'rgb(97, 136, 51)',
+    color: styledTheme.infoBlue,
     icon: <InfoIcon />,
   },
   {
-    color: '#ffa000',
+    color: styledTheme.warnYellow,
     icon: <WarningIcon />,
   },
   {
-    color: '#d32f2f',
+    color: styledTheme.errorRed,
     icon: <ErrorIcon />,
   },
   {
