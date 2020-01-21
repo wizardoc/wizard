@@ -6,8 +6,10 @@ export interface WithThemeProps {
   theme: StyledTheme;
 }
 
-export function withTheme<P>(RenderComponent: ComponentType<P>): any {
-  return class extends Component<any> {
+export function withTheme<T extends ComponentType<P>, P>(
+  RenderComponent: T,
+): T {
+  return class extends Component<P> {
     render(): ReactNode {
       return (
         <RenderComponent
@@ -16,5 +18,5 @@ export function withTheme<P>(RenderComponent: ComponentType<P>): any {
         ></RenderComponent>
       );
     }
-  } as any;
+  } as T;
 }
