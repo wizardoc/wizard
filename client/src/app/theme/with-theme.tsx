@@ -2,7 +2,7 @@ import React, {ComponentType, Component, ReactNode} from 'react';
 
 import {StyledTheme, styledTheme} from './style';
 
-export interface WithThemeProps {
+export interface ThemeComponentProps {
   theme: StyledTheme;
 }
 

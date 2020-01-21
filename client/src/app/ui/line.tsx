@@ -1,5 +1,7 @@
-import React, {FunctionComponent} from 'react';
+import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
+
+import {withTheme, ThemeComponentProps} from '../theme';
 
 interface InnerLineProps {
   lineColor?: string;
@@ -19,8 +21,15 @@ const LineWrapper = styled.div`
   justify-content: center;
 `;
 
-export const Line: FunctionComponent<LineProps> = ({lineColor = '#7f8c8d'}) => (
-  <LineWrapper>
-    <InnerLine lineColor={lineColor}></InnerLine>
-  </LineWrapper>
-);
+@withTheme
+export class Line extends Component<LineProps & Partial<ThemeComponentProps>> {
+  render(): ReactNode {
+    const {theme, lineColor = theme!.grayLineColor} = this.props;
+
+    return (
+      <LineWrapper>
+        <InnerLine lineColor={lineColor}></InnerLine>
+      </LineWrapper>
+    );
+  }
+}

@@ -6,7 +6,7 @@ import {observer} from 'mobx-react';
 import {AvatarProps as MaterialAvatarProps} from '@material-ui/core/Avatar';
 
 import {User, RegexUtils} from 'src/app/services';
-import {WithThemeProps, withTheme} from 'src/app/theme';
+import {withTheme, ThemeComponentProps} from 'src/app/theme';
 
 export interface AvatarProps extends AvatarWrapperProps {}
 
@@ -24,7 +24,9 @@ const AvatarWrapper = styled(MaterialAvatar)<AvatarWrapperProps>`
 
 @observer
 @withTheme
-export class Avatar extends Component<AvatarProps & Partial<WithThemeProps>> {
+export class Avatar extends Component<
+  AvatarProps & Partial<ThemeComponentProps>
+> {
   @Inject
   userService!: User;
 

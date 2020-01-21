@@ -5,6 +5,7 @@ import {CardProps} from '@material-ui/core/Card';
 
 import {ColorBlock} from 'src/app/ui';
 import {Time} from 'src/app/services';
+import {withTheme, ThemeComponentProps} from 'src/app/theme';
 
 import {MDRender} from '../../common';
 
@@ -56,9 +57,12 @@ const PageContent = styled.div`
   box-sizing: border-box;
 `;
 
-export class PagePaper extends Component<PagePaperProps> {
+@withTheme
+export class PagePaper extends Component<
+  PagePaperProps & Partial<ThemeComponentProps>
+> {
   render(): ReactNode {
-    const {content, title, isMounted} = this.props;
+    const {content, title, isMounted, theme} = this.props;
 
     return (
       <Wrapper>
@@ -66,7 +70,7 @@ export class PagePaper extends Component<PagePaperProps> {
           <ColorBlock
             isFull={!!isMounted}
             timeout={Time.Second * 1.5}
-            color="#1976d2"
+            color={theme!.primaryColor}
           >
             <Title>{title}</Title>
           </ColorBlock>

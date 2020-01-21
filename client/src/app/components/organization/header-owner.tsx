@@ -4,7 +4,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import React, {Component, ComponentType, ReactNode} from 'react';
 import styled from 'styled-components';
 
-import {withTheme, WithThemeProps} from 'src/app/theme';
+import {withTheme, ThemeComponentProps} from 'src/app/theme';
 
 import {UserBaseInfo} from '../../services';
 import {Avatar} from '../common';
@@ -20,7 +20,7 @@ const PrimaryAvatar = styled.div`
 
 @withTheme
 export class HeaderOwner extends Component<
-  HeaderOwnerProps & Partial<WithThemeProps>
+  HeaderOwnerProps & Partial<ThemeComponentProps>
 > {
   render(): ReactNode {
     const {ownerInfo, theme} = this.props;

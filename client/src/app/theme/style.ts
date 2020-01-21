@@ -49,6 +49,11 @@ export const styledTheme = {
   descriptionColor: '#70757a',
   fontGray: '#fafafa',
   avatarBgGray: '#bdbdbd',
+  grayLineColor: '#7f8c8d',
+  successGreen: '#43a047',
+  infoBlue: '#618833',
+  warnYellow: '#ffa000',
+  errorRed: '#d32f2f',
 };
 
 export type StyledTheme = typeof styledTheme;
