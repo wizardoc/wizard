@@ -18,6 +18,8 @@ export interface IThemeInterface {
 
 export const styledTheme = {
   black: '#000',
+  titleColor: '#333',
+  descColor: '#666',
   primaryColor: '#1976d2',
   secondaryColor: '#f06292',
   thirdColor: '#feca57',
@@ -67,4 +69,4 @@ export type StyledTheme = typeof styledTheme;
 // type WithTheme<T> = (component: T) => T
 
 export default styled;
-export { css, createGlobalStyle, keyframes, ThemeProvider };
+export {css, createGlobalStyle, keyframes, ThemeProvider};
