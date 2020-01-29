@@ -3,26 +3,31 @@ import styled from 'styled-components';
 
 import {viewObservable, ViewObservableComponentProps} from 'src/app/utils';
 
+import {GraphicAnimation} from './graphic-content';
+
 const ContentDesc = styled.div`
   color: ${props => props.theme.descColor};
 `;
 
-interface GraphicContentDescProps {
+interface GraphicContentDescProps extends GraphicAnimation {
   contentDesc: string;
-  showRatio: number;
-  fadeInClass: string;
 }
 
 @viewObservable()
 export class GraphicContentDesc extends Component<
   GraphicContentDescProps & Partial<ViewObservableComponentProps>
 > {
-  private contentDesc = createRef<any>();
+  private contentDescRef = createRef<HTMLDivElement>();
 
   componentDidMount(): void {
     const {showRatio, fadeInClass} = this.props;
+
     this.props.onObserve!(entry => {
-      const {current} = this.contentDesc;
+      const {current} = this.contentDescRef;
+
+      if (!current) {
+        return;
+      }
 
       if (entry[0].intersectionRatio > showRatio) {
         if (Array.prototype.includes.call(current.classList, fadeInClass)) {
@@ -38,7 +43,7 @@ export class GraphicContentDesc extends Component<
     const {contentDesc} = this.props;
 
     return (
-      <ContentDesc ref={this.contentDesc} className="animated">
+      <ContentDesc ref={this.contentDescRef} className="animated">
         {contentDesc}
       </ContentDesc>
     );

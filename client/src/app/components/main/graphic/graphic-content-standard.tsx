@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 import {viewObservable, ViewObservableComponentProps} from 'src/app/utils';
 
+import {GraphicAnimation} from './graphic-content';
+
 const ContentStandard = styled.div`
   margin: 50px 0 30px;
   width: fit-content;
@@ -13,22 +15,25 @@ const ContentStandard = styled.div`
   background-color: ${props => props.theme.baseBgColor};
 `;
 
-interface GraphicContentStandardProps {
+interface GraphicContentStandardProps extends GraphicAnimation {
   contentStandard: string;
-  showRatio: number;
-  fadeInClass: string;
 }
 
 @viewObservable()
 export class GraphicContentStandard extends Component<
   GraphicContentStandardProps & Partial<ViewObservableComponentProps>
 > {
-  private contentStandard = createRef<any>();
+  private contentStandardRef = createRef<HTMLDivElement>();
 
   componentDidMount(): void {
     const {fadeInClass, showRatio} = this.props;
+
     this.props.onObserve!(entry => {
-      const {current} = this.contentStandard;
+      const {current} = this.contentStandardRef;
+
+      if (!current) {
+        return;
+      }
 
       if (entry[0].intersectionRatio > showRatio) {
         if (Array.prototype.includes.call(current.classList, fadeInClass)) {
@@ -44,7 +49,7 @@ export class GraphicContentStandard extends Component<
     const {contentStandard} = this.props;
 
     return (
-      <ContentStandard ref={this.contentStandard} className="animated">
+      <ContentStandard ref={this.contentStandardRef} className="animated">
         {contentStandard}
       </ContentStandard>
     );

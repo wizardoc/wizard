@@ -19,16 +19,18 @@ const ContentContainter = styled.div`
   justify-content: space-between;
 `;
 
+export interface GraphicContentInfo {
+  contentTitle: string;
+  contentStandard: string;
+  contentDesc: string;
+}
+
 interface GraphicProps {
   layout?: string;
   showRatio?: number;
-  contentObj: {
-    contentTitle: string;
-    contentStandard: string;
-    contentDesc: string;
-  };
   imgSrc: string;
   title?: string;
+  contentInfo: GraphicContentInfo;
 }
 
 export class GraphicContainer extends Component<GraphicProps> {
@@ -36,7 +38,7 @@ export class GraphicContainer extends Component<GraphicProps> {
     const {
       layout = 'row',
       showRatio = 0, // >0图片可能会不出来
-      contentObj,
+      contentInfo,
       imgSrc,
       title,
     } = this.props;
@@ -56,7 +58,7 @@ export class GraphicContainer extends Component<GraphicProps> {
         >
           <GraphicContent
             fadeInClass={fadeInClass}
-            contentObj={contentObj}
+            contentInfo={contentInfo}
             showRatio={showRatio}
           />
           <GraphicImg

@@ -10,7 +10,7 @@ const FadeInImg = styled.img`
 
 interface GraphicImgProps {
   graphicImg: string;
-  imgFadeInClass?: string;
+  imgFadeInClass: string;
   showRatio: number;
 }
 
@@ -18,12 +18,17 @@ interface GraphicImgProps {
 export class GraphicImg extends Component<
   GraphicImgProps & Partial<ViewObservableComponentProps>
 > {
-  private graphicImgRef = createRef<any>();
+  private graphicImgRef = createRef<HTMLImageElement>();
 
   componentDidMount(): void {
     const {imgFadeInClass, showRatio} = this.props;
+
     this.props.onObserve!(entry => {
       const {current} = this.graphicImgRef;
+
+      if (!current) {
+        return;
+      }
 
       if (entry[0].intersectionRatio > showRatio) {
         if (Array.prototype.includes.call(current.classList, imgFadeInClass)) {

@@ -6,6 +6,7 @@ import {
   GraphicContentStandard,
   GraphicContentDesc,
 } from './index';
+import {GraphicContentInfo} from './graphic';
 
 const Wrapper = styled.div`
   display: flex;
@@ -14,36 +15,35 @@ const Wrapper = styled.div`
   width: 540px;
 `;
 
-interface GraphicContentProps {
+export interface GraphicAnimation {
   showRatio: number;
   fadeInClass: string;
-  contentObj: {
-    contentTitle: string;
-    contentStandard: string;
-    contentDesc: string;
-  };
+}
+
+interface GraphicContentProps extends GraphicAnimation {
+  contentInfo: GraphicContentInfo;
 }
 
 export class GraphicContent extends Component<GraphicContentProps> {
   render(): ReactNode {
-    const {showRatio, contentObj, fadeInClass} = this.props;
+    const {showRatio, contentInfo, fadeInClass} = this.props;
 
     return (
       <Wrapper>
         <GraphicContentTitle
           fadeInClass={fadeInClass}
           showRatio={showRatio}
-          contentTitle={contentObj.contentTitle}
+          contentTitle={contentInfo.contentTitle}
         />
         <GraphicContentStandard
           fadeInClass={fadeInClass}
           showRatio={showRatio}
-          contentStandard={contentObj.contentStandard}
+          contentStandard={contentInfo.contentStandard}
         />
         <GraphicContentDesc
           fadeInClass={fadeInClass}
           showRatio={showRatio}
-          contentDesc={contentObj.contentDesc}
+          contentDesc={contentInfo.contentDesc}
         />
       </Wrapper>
     );

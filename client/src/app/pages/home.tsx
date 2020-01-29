@@ -31,7 +31,7 @@ class THome extends Component {
         <GraphicContainer
           title="这里是标题"
           layout="row"
-          contentObj={{
+          contentInfo={{
             contentTitle: '深度集成和开放的平台定位',
             contentStandard: '标准化',
             contentDesc:
