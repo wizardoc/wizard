@@ -1,54 +1,41 @@
-import React, {Component, ReactNode, createRef} from 'react';
+import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
+import {observer} from 'mobx-react';
+import {observable} from 'mobx';
 
-import {viewObservable, ViewObservableComponentProps} from 'src/app/utils';
+import {withFade, FadeInComponentProps} from 'src/app/animations';
 
-const FadeInImg = styled.img`
+interface FadeInImgProps {
+  isFadeIn: boolean;
+}
+
+const FadeInImg = styled.img<FadeInImgProps>`
   width: 540px;
-  opacity: 0;
+  opacity: ${props => (props.isFadeIn ? 1 : 0)};
+  transition: 0.3s;
 `;
 
 interface GraphicImgProps {
   graphicImg: string;
-  imgFadeInClass: string;
-  showRatio: number;
 }
 
-@viewObservable()
-export class GraphicImg extends Component<
-  GraphicImgProps & Partial<ViewObservableComponentProps>
-> {
-  private graphicImgRef = createRef<HTMLImageElement>();
+type GraphicComposeProps = GraphicImgProps & Partial<FadeInComponentProps>;
 
-  componentDidMount(): void {
-    const {imgFadeInClass, showRatio} = this.props;
+@withFade({direction: 'right'})
+@observer
+export class GraphicImg extends Component<GraphicComposeProps> {
+  @observable
+  isFadeIn = false;
 
-    this.props.onObserve!(entry => {
-      const {current} = this.graphicImgRef;
+  constructor(props: GraphicComposeProps) {
+    super(props);
 
-      if (!current) {
-        return;
-      }
-
-      if (entry[0].intersectionRatio > showRatio) {
-        if (Array.prototype.includes.call(current.classList, imgFadeInClass)) {
-          return;
-        }
-
-        current.classList.add(imgFadeInClass);
-      }
-    });
+    props.OnFadeInComplete!(() => (this.isFadeIn = true));
   }
 
   render(): ReactNode {
     const {graphicImg} = this.props;
 
-    return (
-      <FadeInImg
-        className="animated"
-        src={graphicImg}
-        ref={this.graphicImgRef}
-      />
-    );
+    return <FadeInImg src={graphicImg} isFadeIn={this.isFadeIn} />;
   }
 }

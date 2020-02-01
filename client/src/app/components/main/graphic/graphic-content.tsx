@@ -15,36 +15,19 @@ const Wrapper = styled.div`
   width: 540px;
 `;
 
-export interface GraphicAnimation {
-  showRatio: number;
-  fadeInClass: string;
-}
-
-interface GraphicContentProps extends GraphicAnimation {
+interface GraphicContentProps {
   contentInfo: GraphicContentInfo;
 }
 
 export class GraphicContent extends Component<GraphicContentProps> {
   render(): ReactNode {
-    const {showRatio, contentInfo, fadeInClass} = this.props;
+    const {contentInfo} = this.props;
 
     return (
       <Wrapper>
-        <GraphicContentTitle
-          fadeInClass={fadeInClass}
-          showRatio={showRatio}
-          contentTitle={contentInfo.contentTitle}
-        />
-        <GraphicContentStandard
-          fadeInClass={fadeInClass}
-          showRatio={showRatio}
-          contentStandard={contentInfo.contentStandard}
-        />
-        <GraphicContentDesc
-          fadeInClass={fadeInClass}
-          showRatio={showRatio}
-          contentDesc={contentInfo.contentDesc}
-        />
+        <GraphicContentTitle contentTitle={contentInfo.contentTitle} />
+        <GraphicContentStandard contentStandard={contentInfo.contentStandard} />
+        <GraphicContentDesc contentDesc={contentInfo.contentDesc} />
       </Wrapper>
     );
   }

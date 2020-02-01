@@ -1,9 +1,7 @@
 import React, {Component, ReactNode, createRef} from 'react';
 import styled from 'styled-components';
 
-import {viewObservable, ViewObservableComponentProps} from 'src/app/utils';
-
-import {GraphicAnimation} from './graphic-content';
+import {withFade} from 'src/app/animations';
 
 const ContentStandard = styled.div`
   margin: 50px 0 30px;
@@ -15,35 +13,15 @@ const ContentStandard = styled.div`
   background-color: ${props => props.theme.baseBgColor};
 `;
 
-interface GraphicContentStandardProps extends GraphicAnimation {
+interface GraphicContentStandardProps {
   contentStandard: string;
 }
 
-@viewObservable()
+@withFade({direction: 'left'})
 export class GraphicContentStandard extends Component<
-  GraphicContentStandardProps & Partial<ViewObservableComponentProps>
+  GraphicContentStandardProps
 > {
   private contentStandardRef = createRef<HTMLDivElement>();
-
-  componentDidMount(): void {
-    const {fadeInClass, showRatio} = this.props;
-
-    this.props.onObserve!(entry => {
-      const {current} = this.contentStandardRef;
-
-      if (!current) {
-        return;
-      }
-
-      if (entry[0].intersectionRatio > showRatio) {
-        if (Array.prototype.includes.call(current.classList, fadeInClass)) {
-          return;
-        }
-
-        current.classList.add(fadeInClass);
-      }
-    });
-  }
 
   render(): ReactNode {
     const {contentStandard} = this.props;
