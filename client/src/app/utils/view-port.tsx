@@ -115,7 +115,7 @@ export function viewObservable<P>(
               onObserve={(cb: IntersectionObserverCallback) =>
                 this.handleWrapperObserve(cb)
               }
-            ></Wrapper>
+            />
           </div>
         );
       }
