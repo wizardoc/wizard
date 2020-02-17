@@ -68,19 +68,17 @@ export class FloatingPop extends Component {
 
   render(): ReactNode {
     return (
-      <Wrapper>
+      <Wrapper
+        onMouseEnter={() => this.menuToggle()}
+        onMouseLeave={() => this.menuToggle()}
+      >
         <SpeedDial
-          ButtonProps={{
-            color: 'secondary',
-          }}
           ariaLabel="抽屉"
           icon={
             <IconWrapper isRotate={this.isOpenMenu}>
               <MemoryIcon />
             </IconWrapper>
           }
-          onMouseEnter={() => this.menuToggle()}
-          onMouseLeave={() => this.menuToggle()}
           open={this.isOpenMenu}
         >
           {this.actions.map(({name, icon, tooltipTitle}) => (

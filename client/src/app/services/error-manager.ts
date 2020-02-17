@@ -1,8 +1,8 @@
 import {Inject, Injectable} from 'react-ts-di';
 
 import {isError, isObject} from '../utils';
-import {ResError} from '../api';
 
+import {ResError} from './http';
 import {Toast} from './toast';
 
 interface Errors {

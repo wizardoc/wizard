@@ -34,6 +34,8 @@ export class Password extends Component<AccessProps & TextFieldProps> {
               </IconButton>
             </InputAdornment>
           ),
+        }}
+        inputProps={{
           maxLength: 22,
         }}
       />

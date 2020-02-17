@@ -2,10 +2,11 @@ import {omit} from 'lodash';
 import {action, observable} from 'mobx';
 import {Inject, Injectable} from 'react-ts-di';
 
-import {HTTP} from '../api';
 import {CalledOptionalTipInfo, OptionalTipInfo} from '../components';
 import {TODO_API} from '../constant';
 import {Omit} from '../types/type-utils';
+
+import {HTTP} from './http';
 
 /**
  * 控制顶部 tip 的 service

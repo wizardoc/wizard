@@ -1,12 +1,13 @@
 import {action, computed, observable} from 'mobx';
 import {Inject, Injectable} from 'react-ts-di';
 
-import {HTTP} from '../api';
 import {BaseInfoData} from '../components';
 import {USER_API} from '../constant';
 // import {TipStore} from '../store';
 import {Optional} from '../types/type-utils';
+import {emptyAssert} from '../utils';
 
+import {HTTP} from './http';
 import {DialogService} from './dialog-service';
 import {JWT} from './jwt-service';
 
@@ -66,34 +67,41 @@ export class User {
 
   @action
   async initUserInfo(): Promise<void> {
-    this.dialog.loading(async () => {
-      const {userInfo} = await this.http.get(USER_API.INFO);
+    interface UserInfoDTO {
+      userInfo: UserBaseInfo;
+    }
 
-      this.setUserInfo(userInfo);
+    this.dialog.loading(async () => {
+      const {data} = await this.http
+        .get<UserInfoDTO>(USER_API.INFO)
+        .expect(() => '获取用户信息失败');
+
+      emptyAssert(data, data => this.setUserInfo(data.userInfo));
     });
   }
 
   @action
   async login(username: string, password: string): Promise<void> {
-    this.saveToken(
-      await this.http.post(USER_API.LOGIN, {
+    const {data} = await this.http
+      .post<LoginResData>(USER_API.LOGIN, {
         username,
         password,
-      }),
-    );
+      })
+      .expect(() => '登陆失败');
+
+    emptyAssert(data, resData => this.saveToken(resData));
   }
 
-  async validBaseInfo(baseInfo: BaseInfoData): Promise<boolean> {
+  async validBaseInfo(baseInfo: BaseInfoData): Promise<boolean | undefined> {
     interface ValidResult {
       isValid: boolean;
     }
 
-    const {isValid} = await this.http.post<ValidResult, BaseInfoData>(
-      USER_API.VALID_BASE_INFO,
-      baseInfo,
-    );
+    const {data} = await this.http
+      .post<ValidResult, BaseInfoData>(USER_API.VALID_BASE_INFO, baseInfo)
+      .expect(() => '获取验证结果失败');
 
-    return isValid;
+    return data?.isValid;
   }
 
   @computed
@@ -111,7 +119,9 @@ export class User {
   }
 
   async register(): Promise<void> {
-    this.saveToken(await this.http.post(USER_API.REGISTER, this.registerData));
+    const {data} = await this.http.post<LoginResData>(USER_API.REGISTER, this.registerData).expect(() => "注册失败")
+
+    emptyAssert(data, data => this.saveToken(data))
   }
 
   collectBaseInfo(baseInfo: BaseInfoData): void {

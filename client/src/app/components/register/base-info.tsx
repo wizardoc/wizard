@@ -4,6 +4,8 @@ import React, {Component, ComponentType, ReactNode, createRef} from 'react';
 import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
+import {emptyAssert} from 'src/app/utils';
+
 import {DialogService, Toast, User, RegexUtils} from '../../services';
 import {
   Form,
@@ -69,7 +71,9 @@ export class BaseInfo extends Component<BaseInfoProps & PartViewProps> {
 
     // 校验 baseInfo
     await this.dialogService.loading(async () => {
-      isValid = await this.userService.validBaseInfo(this.baseInfoData!);
+      const validRes = await this.userService.validBaseInfo(this.baseInfoData!);
+
+      emptyAssert(validRes, validRes => (isValid = validRes));
     });
 
     if (!isValid) {

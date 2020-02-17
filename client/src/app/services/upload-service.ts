@@ -3,10 +3,10 @@ import {observable} from 'mobx';
 import sha256 from 'crypto-js/sha256';
 import {upload, CompletedResult} from 'qiniu-js';
 
-import {HTTP} from '../api';
 import {UPLOAD_API} from '../constant';
 import {MIME} from '../utils';
 
+import {HTTP} from './http';
 import {User} from './user-service';
 
 interface ParsedUploadOptions {
@@ -106,7 +106,15 @@ export class UploadService {
   }
 
   private async getQiniuToken(): Promise<void> {
-    this._token = await this.httpService.get(UPLOAD_API.getToken);
+    const {data} = await this.httpService
+      .get<string>(UPLOAD_API.getToken)
+      .expect(() => '获取 QiNiu Token 失败');
+
+    if (!data) {
+      return;
+    }
+
+    this._token = data;
   }
 
   get percent(): number {

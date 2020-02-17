@@ -1,9 +1,8 @@
 import {Inject, Injectable} from 'react-ts-di';
 
-import {HTTP} from '../api';
 import {ORGANIZATION} from '../constant';
-import {Omit} from '../types/type-utils';
 
+import {HTTP} from './http';
 import {UserBaseInfo, User} from './user-service';
 
 interface OrganizationNames {
@@ -30,17 +29,27 @@ export class OrganizationService {
   private organizationScope = 'organization';
 
   async getAllNames(): Promise<string[]> {
-    const {organizeNames} = await this.http.get<OrganizationNames>(
-      this.parseUrl('/name/all'),
-    );
+    const {data} = await this.http
+      .get<OrganizationNames>(this.parseUrl('/name/all'))
+      .expect(() => '网络错误');
 
-    return organizeNames;
+    if (!data) {
+      return [];
+    }
+
+    return data.organizeNames;
   }
 
   async getAllJoinOrganization(): Promise<OrganizationCardData[]> {
-    const {organizations} = await this.http.get(this.parseUrl('/joins/all'));
+    const {data} = await this.http
+      .get<OrganizationCardData[]>(this.parseUrl('/joins/all'))
+      .expect(() => '获取组织信息失败');
 
-    return organizations;
+    if (!data) {
+      return [];
+    }
+
+    return data;
   }
 
   async createOrganization(
@@ -55,12 +64,10 @@ export class OrganizationService {
     });
   }
 
-  removeOrganization(
-    name: string,
-  ): Promise<
-    Omit<OrganizationCardData, keyof Omit<OrganizationCardData, 'organizeName'>>
-  > {
-    return this.http.delete(ORGANIZATION.REMOVE(name));
+  removeOrganization(name: string): Promise<void> {
+    return this.http
+      .delete(ORGANIZATION.REMOVE(name))
+      .expect(() => '删除组织失败');
   }
 
   // without username
@@ -85,11 +92,13 @@ export class OrganizationService {
     return names.includes(organizationName);
   }
 
-  joinOrganization(organizeName: string, username: string): void {
-    return this.http.post(ORGANIZATION.JOIN, {
-      organizeName,
-      username,
-    });
+  joinOrganization(organizeName: string, username: string): Promise<void> {
+    return this.http
+      .post(ORGANIZATION.JOIN, {
+        organizeName,
+        username,
+      })
+      .expect(() => '加入组织失败');
   }
 
   private parseUrl(path: string): string {

@@ -32,3 +32,13 @@ export const isBoolean = (target: unknown): target is boolean =>
 
 export const isError = (target: unknown): target is Error =>
   compare(target, DataType.Error);
+
+// assets
+export function emptyAssert<T>(
+  value: T,
+  cb: (val: NonNullable<T>) => void,
+): void {
+  if (!!value) {
+    cb(value as NonNullable<T>);
+  }
+}

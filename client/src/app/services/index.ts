@@ -16,3 +16,4 @@ export * from './tab-service';
 export * from './regex';
 export * from './todo-service';
 export * from './upload-service';
+export * from './http';

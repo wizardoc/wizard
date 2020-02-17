@@ -45,7 +45,7 @@ const JumpLink = styled(A)`
 
 const RegisterLink = styled(JumpLink)`
   margin-top: 40px !important;
-` as ComponentType<LinkProps>;
+` as ComponentType<any>;
 
 const ActionButtonWrapper = styled.div`
   width: 300px;

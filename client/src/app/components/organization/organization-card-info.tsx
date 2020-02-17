@@ -1,6 +1,5 @@
 import {CardContent, CardMedia, Typography} from '@material-ui/core';
 import {CardMediaProps} from '@material-ui/core/CardMedia';
-import {TypographyProps} from '@material-ui/core/Typography';
 import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 import React, {Component, ComponentType, ReactNode} from 'react';
@@ -35,7 +34,7 @@ const Cover = styled.div`
 
 const DescriptionAround = styled(Typography)`
   margin: 5px 0 20px 0 !important;
-` as ComponentType<TypographyProps>;
+` as ComponentType<any>;
 
 const DateAround = styled.div``;
 

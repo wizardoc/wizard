@@ -1,8 +1,9 @@
 import {Inject, Injectable} from 'react-ts-di';
 
-import {HTTP} from '../api';
 import {ContributorInfo} from '../components';
 import {DOC_API} from '../constant';
+
+import {HTTP, Expectable} from './http';
 
 @Injectable()
 export class DocService {
@@ -16,7 +17,7 @@ export class DocService {
     'XyyF',
   ];
 
-  getAboutWizard(): string {
+  getAboutWizard(): Expectable<string> {
     return this.http.get(DOC_API.WIZARD);
   }
 

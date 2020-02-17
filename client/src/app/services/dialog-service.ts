@@ -45,12 +45,12 @@ export interface ParsedActionButtons extends BaseActionButtons {
   cb?: ActionButtonCB<boolean | void | Promise<boolean | void>>;
 }
 
-export interface DialogOptions<T = ParsedActionButtons> {
+export interface DialogOptions<T = ParsedActionButtons, P extends object = object> {
   title: string;
   isClickAwayClose?: boolean;
   isFullScreen?: boolean;
   actionButtons?: T[];
-  componentProps?: unknown;
+  componentProps?: P;
 }
 
 export interface DialogConfig {
@@ -136,7 +136,7 @@ export class DialogService {
           }) as ActionButtonCB<void>,
         })),
         componentProps: {
-          ...(options.componentProps || {}),
+          ...(options.componentProps ?? {}),
           close: (data: unknown, options: CloseOptions): void => {
             const {isDestroy} = this.parseOptions(options || {});
 

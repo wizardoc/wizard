@@ -1,8 +1,9 @@
 import {Injectable, Inject} from 'react-ts-di';
 import {observable} from 'mobx';
 
-import {HTTP} from '../api';
 import {TODO_API} from '../constant';
+
+import {HTTP} from './http';
 
 export interface TodoItemData {
   name: string;
@@ -23,7 +24,15 @@ export class TodoService {
   }
 
   async init(): Promise<void> {
-    this._todoItems = await this.httpService.get<TodoItemData[]>(TODO_API.all);
+    const {data} = await this.httpService
+      .get<TodoItemData[]>(TODO_API.all)
+      .expect(() => '获取待办事项失败');
+
+    if (!data) {
+      return;
+    }
+
+    this._todoItems = data;
   }
 
   addItem(item: TodoItemData): void {
