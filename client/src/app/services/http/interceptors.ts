@@ -1,10 +1,9 @@
 import {AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios';
 import * as QS from 'qs';
 
-import {errorManager} from '../services';
-import {LocalStorage} from '../utils';
+import {LocalStorage} from '../../utils';
 
-import {ContentType} from './request';
+import {ContentType} from './http-client';
 
 interface DataInterface {
   data: unknown;
@@ -44,14 +43,6 @@ export function getData<T extends Res>(res: AxiosResponse<ResData<T>>): T {
 }
 
 export function errorCatcher(err: AxiosError<ResData<any>>): void {
-  const {response} = err;
-
-  if (response) {
-    errorManager.spurtError(response.data.err);
-  } else {
-    errorManager.spurtError(err);
-  }
-
   throw err;
 }
 
