@@ -10,3 +10,33 @@ export function traverse<T>(arr: T[], fn: (item: T) => boolean | void): void {
     }
   }
 }
+
+export class Pipe<T = any> {
+  private constructor(private val: T) {}
+
+  next(cb: (v: T) => T, condition?: (v: T) => boolean): Pipe {
+    if((condition ?? (() => {}))(this.value)) {
+    this.val = cb(this.val);
+    }
+
+    return this;
+  }
+
+  valueOf(): T {
+    return this.val;
+  }
+
+  toString():T {
+    return this.val
+  }
+
+  private static instance: Pipe | undefined;
+
+  static from<T>(val: T): Pipe<T> {
+    return this.instance || (this.instance = new Pipe(val));
+  }
+
+  get value(): T {
+    return this.val;
+  }
+}
