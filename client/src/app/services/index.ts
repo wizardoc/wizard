@@ -17,3 +17,5 @@ export * from './regex';
 export * from './todo-service';
 export * from './upload-service';
 export * from './http';
+export * from './message';
+export * from './notify';

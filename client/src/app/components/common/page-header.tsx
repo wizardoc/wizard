@@ -29,7 +29,6 @@ const Wrapper = styled.div<PageHeaderWrapperProps>`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: -2;
   overflow: hidden;
 `;
 
