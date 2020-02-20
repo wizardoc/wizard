@@ -30,10 +30,6 @@ export class WizardTab extends Component<
 > {
   currentTabIndex: number = 0;
 
-  constructor(props: WizardTabProps & RouteComponentProps) {
-    super(props);
-  }
-
   render(): ReactNode {
     const tabs = this.props.tabs.map(tab => <Tab label={tab.text} />);
 

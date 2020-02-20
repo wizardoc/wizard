@@ -86,7 +86,7 @@ export class Organization extends Component {
           onFabClick={() => this.handleNewOrganizationClick()}
           title="组织"
           fabIcon={<AddIcon></AddIcon>}
-        ></PageHeader>
+        />
         <PageContent>
           <CardsWrapper>{cards}</CardsWrapper>
         </PageContent>

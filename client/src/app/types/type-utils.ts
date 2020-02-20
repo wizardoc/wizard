@@ -10,4 +10,4 @@ export type Compose<T, E extends keyof T> = {
 
 export type Omit<T, P extends keyof T> = Compose<T, Exclude<keyof T, P>>;
 
-export type Constructable<T> = new () => T;
+export type Constructable<T> = new (...args: any[]) => T;

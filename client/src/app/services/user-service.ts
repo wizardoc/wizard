@@ -10,6 +10,7 @@ import {emptyAssert} from '../utils';
 import {HTTP} from './http';
 import {DialogService} from './dialog-service';
 import {JWT} from './jwt-service';
+import { MessageService } from './message';
 
 export interface UserBaseInfo {
   displayName: string;
@@ -44,6 +45,9 @@ export class User {
   @Inject
   private dialog!: DialogService;
 
+  @Inject
+  messageService!:MessageService
+
   registerData: RegisterData = {};
 
   @observable
@@ -76,12 +80,16 @@ export class User {
         .get<UserInfoDTO>(USER_API.INFO)
         .expect(() => '获取用户信息失败');
 
-      emptyAssert(data, data => this.setUserInfo(data.userInfo));
+      emptyAssert(data, data => {
+        this.setUserInfo(data.userInfo)
+        // initialize websocket
+        this.messageService.initWebSocket()
+      });
     });
   }
 
   @action
-  async login(username: string, password: string): Promise<void> {
+  async login(username: string, password: string): Promise<boolean> {
     const {data} = await this.http
       .post<LoginResData>(USER_API.LOGIN, {
         username,
@@ -90,6 +98,8 @@ export class User {
       .expect(() => '登陆失败');
 
     emptyAssert(data, resData => this.saveToken(resData));
+
+    return !!data
   }
 
   async validBaseInfo(baseInfo: BaseInfoData): Promise<boolean | undefined> {
@@ -148,7 +158,7 @@ export class User {
   }
 
   async updateAvatar(avatar: string): Promise<void> {
-    await this.http.put(USER_API.updateAvatar, {avatar});
+    await this.http.put(USER_API.updateAvatar, {avatar}).expect(() => "更新头像失败");
 
     this.userInfo!.avatar = avatar;
   }

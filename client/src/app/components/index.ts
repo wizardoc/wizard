@@ -14,3 +14,4 @@ export * from './organization';
 export * from './release-banner';
 export * from './pen';
 export * from './footer';
+export * from './message-center';

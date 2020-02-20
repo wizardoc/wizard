@@ -146,11 +146,9 @@ export class TLogin extends Component<
 
     const {history} = this.props;
     const {username, password} = this.formData;
+    const ok = await this.userService.login(username, password);
 
-    try {
-      await this.userService.login(username, password);
-    } catch (e) {
-      console.error(e);
+    if (!ok) {
       return;
     }
 

@@ -64,17 +64,18 @@ export class HttpClient {
 
   protected create<T, R>(type: HttpType, payload: DispatchPayload<T>): Doer<R> {
     const {path, data, contentType, method} = payload;
+    const lowerCaseMethod = method.toLowerCase();
 
     const requests: Requests<R> = {
       ComplexHTTPMethod: () =>
-        Axios[method]<R>(this.join(path), data || {}, {
+        Axios[lowerCaseMethod]<R>(this.join(path), data || {}, {
           headers: {
             'Content-Type': contentType || ContentType.Form,
           },
         }),
       SimpleHTTPMethod: () =>
-        Axios[method]<R>(this.join(path), {
-          params: {...data},
+        Axios[lowerCaseMethod]<R>(this.join(path), {
+          params: data,
         }),
     };
 
@@ -98,12 +99,9 @@ export class HttpClient {
 
       const errMsg = (cb || (() => {}))(err);
 
-      console.info(err, errMsg, err && errMsg);
-
       // 抛出 caller 希望抛出的错误信息
       // else 吞并异常
       if (errMsg && err) {
-        console.info('aaaaa');
         this.toast.error(errMsg);
       }
 

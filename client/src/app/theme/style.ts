@@ -17,6 +17,7 @@ export interface IThemeInterface {
 }
 
 export const styledTheme = {
+  // colors
   black: '#000',
   primaryColor: '#1976d2',
   secondaryColor: '#f06292',
@@ -41,6 +42,7 @@ export const styledTheme = {
   white: '#fff',
   shallowSecondaryColor: 'rgba(240, 98, 146, 0.1)',
   grayTextColor: 'rgba(0, 0, 0, 0.54)',
+  shallowShadow: '0 1px 3px rgba(26,26,26,.1)',
   baseShadow:
     '0px 1px 5px 0px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 3px 1px -2px rgba(0,0,0,0.12);',
   darkWhite: 'rgb(214, 211, 205)',
@@ -54,6 +56,11 @@ export const styledTheme = {
   infoBlue: '#618833',
   warnYellow: '#ffa000',
   errorRed: '#d32f2f',
+  baseGrayBg: '#f4f5f5',
+
+  // variables
+  heightOmitHeader: 'calc(100% - 48px)',
+  headerBarHeight: '48px',
 };
 
 export type StyledTheme = typeof styledTheme;
