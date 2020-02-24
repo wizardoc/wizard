@@ -69,22 +69,22 @@ export class HeaderBarTabs extends Component<Partial<RouteComponentProps>> {
       : this.initTabConfigs;
   }
 
-  constructor(props: Partial<RouteComponentProps>) {
-    super(props);
+  // constructor(props: Partial<RouteComponentProps>) {
+  //   super(props);
 
-    this.tabService.updatePage(props.location!.pathname);
-  }
+  //   this.tabService.updatePage(props.location!.pathname);
+  // }
 
-  handleTabChange(config: WizardTabConfig): void {
-    this.tabService.updatePage(config.route!);
-  }
+  // handleTabChange(config: WizardTabConfig): void {
+  //   this.tabService.updatePage(config.route!);
+  // }
 
   render(): ReactNode {
     return (
       <Wrapper>
         <WizardTab
           tabs={this.tabConfigs}
-          onTabChange={config => this.handleTabChange(config)}
+          // onTabChange={config => this.handleTabChange(config)}
         />
       </Wrapper>
     );

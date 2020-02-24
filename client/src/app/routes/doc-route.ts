@@ -8,7 +8,7 @@ const Doc = lazy(import('../pages/doc'), 'Doc');
 export const DocumentRoutes: Routes = [
   {
     path: '/document',
-    layout: 'limpidity',
+    layout: 'no-footer',
     component: Doc,
     children: [
       {

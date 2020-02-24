@@ -6,7 +6,7 @@ import React, {Component, FunctionComponent} from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import {Inject} from 'react-ts-di';
 
-import {CommonDialog, OptionalTip, Profile, HeaderBar} from './components';
+import {CommonDialog, OptionalTip, Profile} from './components';
 // import {LimpidityRoute} from './routes';
 import {DialogService, DrawerService, OptionalTipService} from './services';
 import {TipStore} from './store';
@@ -60,7 +60,7 @@ class TApp extends Component<WithSnackbarProps> {
             {this.optionalTipService.tipInfos.map(info => (
               <OptionalTip key={info.name} {...info}></OptionalTip>
             ))}
-            <HeaderBar />
+            {/* <HeaderBar /> */}
             <AppRouting />
           </MuiThemeProvider>
         </BrowserRouter>

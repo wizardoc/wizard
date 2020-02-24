@@ -18,6 +18,10 @@ const Wrapper = styled(Container)`
   padding: 50px 0;
 `;
 
+export interface MessageOverviewProps {
+  type: 'user' | 'system';
+}
+
 @observer
 export class MessageOverview extends Component {
   @Inject

@@ -19,7 +19,7 @@ import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 
 import Wizard from '../../assets/static/wizard-white.jpg';
-import {DrawerService, TabService} from '../../services';
+import {DrawerService} from '../../services';
 import {DocRecentUpdateDrawer} from '../doc-recent-update-drawer';
 
 import {Funcs} from './@funcs';
@@ -27,7 +27,7 @@ import {HeaderBarTabs} from './header-bar-tabs';
 import {HeaderSearch} from './@header-search';
 
 interface AppBarWrapperProps {
-  isMainPage: boolean;
+  isFixed: boolean;
 }
 
 const styles = (theme: Theme): StyleRules =>
@@ -42,7 +42,9 @@ const styles = (theme: Theme): StyleRules =>
 
 type HOCProps = WithStyles<typeof styles> & Partial<RouteComponentProps>;
 
-export interface HeaderBarProps extends HOCProps {}
+export interface HeaderBarProps extends HOCProps {
+  isFixed: boolean;
+}
 
 const Logo = styled.img`
   height: 22px;
@@ -59,15 +61,12 @@ const WizardTitle = styled(Typography)`
 ` as ComponentType<TypographyProps>;
 
 const AppBarWrapper = styled(AppBar)<AppBarWrapperProps>`
-  ${props => !props.isMainPage && 'top: 0;position: sticky !important;'}
+  ${props => props.isFixed && 'top: 0;position: sticky !important;'}
 ` as ComponentType<AppBarProps & AppBarWrapperProps>;
 
 @observer
 @withRouter
 class THeaderBar extends Component<HeaderBarProps> {
-  @Inject
-  private tabService!: TabService;
-
   @Inject
   private drawerService!: DrawerService;
 
@@ -86,10 +85,13 @@ class THeaderBar extends Component<HeaderBarProps> {
   render(): ReactNode {
     const {
       classes: {grow},
+      isFixed,
     } = this.props;
 
+    console.info(isFixed);
+
     return (
-      <AppBarWrapper position="static" isMainPage={this.tabService.isMainPage}>
+      <AppBarWrapper position="static" isFixed={isFixed}>
         <Toolbar variant="dense">
           <Row>
             <IconButton onClick={() => this.handleLogoClick()}>

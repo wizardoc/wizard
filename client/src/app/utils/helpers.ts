@@ -30,10 +30,8 @@ export class Pipe<T = any> {
     return this.val
   }
 
-  private static instance: Pipe | undefined;
-
   static from<T>(val: T): Pipe<T> {
-    return this.instance || (this.instance = new Pipe(val));
+    return new Pipe(val);
   }
 
   get value(): T {

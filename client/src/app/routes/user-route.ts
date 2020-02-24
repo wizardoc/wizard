@@ -12,7 +12,7 @@ const EmailValidator = lazy(
 export const UserRoutes: Routes = [
   {
     path: '/user',
-    layout: 'limpidity',
+    layout: 'no-footer',
     children: [
       {
         path: '/register',

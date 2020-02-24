@@ -7,7 +7,7 @@ const About = lazy(import('../pages/about'), 'About');
 export const TeamRoutes: Routes = [
   {
     path: '/team',
-    layout: 'limpidity',
+    layout: 'no-footer',
     children: [
       {
         path: '/about',

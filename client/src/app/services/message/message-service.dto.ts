@@ -33,3 +33,8 @@ type DispatchedMessage = Omit<Message, 'messageType'>;
 export interface NotifyMessage extends DispatchedMessage {}
 
 export interface ChatMessage extends DispatchedMessage {}
+
+export interface Messages {
+  notifies: NotifyMessage[];
+  chats: ChatMessage[];
+}

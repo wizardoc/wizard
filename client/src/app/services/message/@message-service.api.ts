@@ -5,7 +5,7 @@ import {Group, AbsURL} from 'src/app/utils';
 @Injectable()
 @Group('/message')
 export class MessageServiceAPI {
-  @AbsURL
+  @AbsURL('ws')
   connect = '/connect';
 
   all = '/all';

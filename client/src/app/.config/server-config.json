@@ -1,6 +1,6 @@
 {
   "baseUrl": "localhost",
-  "port": 8080,
+  "port": 4000,
   "protocol": "http",
-  "mode": "dev"
+  "mode": "prod"
 }

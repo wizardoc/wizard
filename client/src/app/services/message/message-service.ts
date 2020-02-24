@@ -1,574 +1,33 @@
 import {Injectable, Inject} from 'react-ts-di';
-import {observable} from 'mobx';
+
+import {emptyAssert} from 'src/app/utils';
 
 import {JWT} from '../jwt-service';
+import {NotifyService} from '../notify';
+import {HTTP} from '../http';
 
 import {
   BaseMessageType,
-  NotifyMessage,
-  ChatMessage,
   Message,
   MessageType,
+  Messages,
 } from './message-service.dto';
 import {MessageConnection} from './@message-connection';
+import {MessageServiceAPI} from './@message-service.api';
 
 @Injectable()
-export class MessageService extends MessageConnection {
+export abstract class MessageService extends MessageConnection {
   @Inject
   private jwt!: JWT;
 
-  @observable
-  private _notifyMessages: NotifyMessage[] = [
-    {
-      id: 'ashfdhg=asdvbjasdg',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body: `
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.
-          `,
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg2',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg3',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg7',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg4',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg5',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg4',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg5',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg4',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg5',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg4',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg5',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg4',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg5',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg4',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg5',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg4',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg5',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg4',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg5',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg4',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg5',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg4',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg5',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg4',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg5',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg4',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg5',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg4',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg5',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg4',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg5',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg4',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg5',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg4',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg5',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg4',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg5',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg4',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg5',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg4',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg5',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
+  @Inject
+  private notifyService!: NotifyService;
 
-    {
-      id: 'ashfdhg=asdvbjasdg4',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg5',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg4',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg5',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg4',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg5',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg4',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg5',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg4',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-    {
-      id: 'ashfdhg=asdvbjasdg5',
-      from: 'zzh',
-      main: {
-        title: 'This is title.',
-        body:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.',
-      },
-      sendTime: 1582206745373,
-    },
-  ];
+  @Inject
+  protected api!: MessageServiceAPI;
 
-  @observable
-  private _chatMessage: ChatMessage[] = [];
+  @Inject
+  private http!: HTTP;
 
   onOpen(): void {
     if (!this.jwt.JWTString) {
@@ -577,26 +36,32 @@ export class MessageService extends MessageConnection {
       return;
     }
 
+    // send jwt to BE for storage user id and establish map between user and connection
     this.sendMessage(BaseMessageType.INIT, this.jwt.JWTString);
+    this.dispatchMessage();
   }
 
   onClose(): void {}
 
-  onMessage(e: MessageEvent): void {
-    const data: Message = e.data;
+  onMessage(msg: Message): void {
     const containers = {
-      [MessageType.NOTIFY]: this.notifyMessage,
-      [MessageType.CHAT]: this.chatMessage,
+      [MessageType.NOTIFY]: this.notifyService.messages,
+
+      // [MessageType.CHAT]: (msg: ChatMessage): void => this.onNotifyMessage(msg),
     };
 
-    containers[data.messageType].push(data);
+    containers[msg.messageType].push(msg);
   }
 
-  get notifyMessage(): NotifyMessage[] {
-    return this._notifyMessages;
-  }
+  onConnectionInit(): void {}
 
-  get chatMessage(): ChatMessage[] {
-    return this._chatMessage;
+  private async dispatchMessage(): Promise<void> {
+    const {data} = await this.http
+      .get<Messages>(this.api.all)
+      .expect(() => '获取消息失败');
+
+    emptyAssert(data, data => {
+      this.notifyService.messages.push(...data.notifies);
+    });
   }
 }

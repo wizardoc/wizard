@@ -3,15 +3,21 @@ import {Inject} from 'react-ts-di';
 import {Switch, Route, Redirect, RouteComponentProps} from 'react-router-dom';
 import styled from 'styled-components';
 
-import {RouterService, Layout} from './services';
+import {RouterService, Layout, TabService, HeaderType} from './services';
 import {PageNotFound} from './pages/page-not-found';
 import {isString} from './utils';
-import {FloatingPop, Footer, SharePop} from './components';
+import {FloatingPop, Footer, SharePop, HeaderBar} from './components';
 
-const Wrapper = styled.div`
-  min-height: 100%;
+interface WrapperProps {
+  isHideFooter: boolean;
+  isHideHeader: boolean;
+}
+
+const Wrapper = styled.div<WrapperProps>`
+  height: ${props =>
+    props.isHideHeader ? '100%' : props.theme.heightOmitHeader};
   position: relative;
-  padding-bottom: 360px;
+  ${props => !props.isHideFooter && 'padding-bottom: 360px;'}
 `;
 
 /**
@@ -21,6 +27,9 @@ const Wrapper = styled.div`
 export class AppRouting extends Component {
   @Inject
   routerService!: RouterService;
+
+  @Inject
+  tabService!: TabService;
 
   render(): ReactNode {
     const routeComponents = this.routerService.routes.map(route => (
@@ -46,6 +55,7 @@ export class AppRouting extends Component {
             route.layout,
             route.redirect,
             route.component,
+            route.headerType,
           );
         }}
       />
@@ -65,21 +75,64 @@ export class AppRouting extends Component {
     layout: Layout,
     redirect?: string,
     component?: ComponentType<RouteComponentProps<any>> | ComponentType<any>,
+    headerType: HeaderType = 'fixed',
   ): ReactNode {
     const RenderComponent = component as ComponentType<unknown>;
 
     // process render
     if (component) {
-      return layout === 'limpidity' ? (
-        <RenderComponent />
-      ) : (
-        <Wrapper>
-          <RenderComponent />
-          <FloatingPop />
-          <SharePop />
-          <Footer />
+      type RenderComponent = {
+        [k in Layout]: ReactNode;
+      };
+
+      const header = <HeaderBar isFixed={headerType === 'fixed'} />;
+      const wrapper = (children: ReactNode): ReactNode => (
+        <Wrapper
+          isHideFooter={layout === 'no-footer'}
+          isHideHeader={layout === 'no-header'}
+        >
+          {children}
         </Wrapper>
       );
+
+      const RENDER_COMPONENT: RenderComponent = {
+        limpidity: <RenderComponent />,
+        normal: (
+          <>
+            {header}
+            {wrapper(
+              <>
+                <RenderComponent />
+                <FloatingPop />
+                <SharePop />
+                <Footer />
+              </>,
+            )}
+          </>
+        ),
+        'no-header': wrapper(
+          <>
+            <RenderComponent />
+            <FloatingPop />
+            <SharePop />
+            <Footer />
+          </>,
+        ),
+        'no-footer': (
+          <>
+            {header}
+            {wrapper(
+              <>
+                <RenderComponent />
+                <FloatingPop />
+                <SharePop />
+              </>,
+            )}
+          </>
+        ),
+      };
+
+      return RENDER_COMPONENT[layout];
     }
 
     if (!component && !redirect) {
@@ -93,3 +146,28 @@ export class AppRouting extends Component {
     return <Redirect to={path} />;
   }
 }
+
+// function fixedHeader<P extends object>(
+//   Wrapper: ComponentType<P>,
+//   isFixedHeaderBar: boolean,
+// ): any {
+//   class FixedHeaderHOC extends Component<P> {
+//     @Inject
+//     tabService!: TabService;
+
+//     constructor(props: P) {
+//       super(props);
+
+//       console.info(isFixedHeaderBar);
+//       setTimeout(() => (this.tabService.isMainPage = !isFixedHeaderBar), 1000);
+//     }
+
+//     render(): ReactNode {
+//       return <Wrapper {...this.props} />;
+//     }
+
+//     componentDidMount(): void {}
+//   }
+
+//   return FixedHeaderHOC;
+// }

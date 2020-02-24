@@ -7,7 +7,7 @@ const MessageCenter = lazy(import('../pages/message-center'), 'MessageCenter');
 export const CenterRoutes: Routes = [
   {
     path: '/center',
-    layout: 'limpidity',
+    layout: 'no-footer',
     children: [
       {
         path: '/messages',

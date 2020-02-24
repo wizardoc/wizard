@@ -6,8 +6,8 @@ import {MessageOverview, PageHeader, MessageSwitcher} from '../components';
 const Wrapper = styled.div`
   width: 100%;
   height: fit-content;
-  min-height: ${props => props.theme.heightOmitHeader};
-  background: ${props => props.theme.baseGrayBg};
+  min-height: 100%;
+  background: ${props => props.theme.materialGray};
 `;
 
 export class MessageCenter extends Component {

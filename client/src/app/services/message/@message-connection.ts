@@ -1,7 +1,7 @@
 import {Injectable, Inject} from 'react-ts-di';
 
 import {MessageServiceAPI} from './@message-service.api';
-import {BaseMessage} from './message-service.dto';
+import {BaseMessage, Message} from './message-service.dto';
 
 interface EventTable {
   [eventName: string]: Function;
@@ -10,13 +10,13 @@ interface EventTable {
 @Injectable()
 export abstract class MessageConnection {
   @Inject
-  private api!: MessageServiceAPI;
+  protected api!: MessageServiceAPI;
 
   private webSocketInstance!: WebSocket;
 
   abstract onOpen(): void;
   abstract onClose(): void;
-  abstract onMessage(e: MessageEvent): void;
+  abstract onMessage(msg: Message): void;
 
   registerEvent(eventTable: EventTable): void {
     for (const eventName of Object.keys(eventTable)) {
@@ -37,7 +37,12 @@ export abstract class MessageConnection {
     this.registerEvent({
       open: this.onOpen,
       close: this.onClose,
-      message: this.onMessage,
+      message: (e: MessageEvent) => {
+        const data = JSON.parse(e.data);
+
+        data.main = JSON.parse(data.main);
+        this.onMessage(data);
+      },
       error: this.onError,
     });
   }

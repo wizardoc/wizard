@@ -57,6 +57,7 @@ export const styledTheme = {
   warnYellow: '#ffa000',
   errorRed: '#d32f2f',
   baseGrayBg: '#f4f5f5',
+  materialGray: '#e8e8e8',
 
   // variables
   heightOmitHeader: 'calc(100% - 48px)',

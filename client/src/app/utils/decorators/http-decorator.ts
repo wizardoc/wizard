@@ -52,14 +52,16 @@ export function Group(path: string): ClassDecorator {
 }
 
 // attach abs url prefix on start of value
-export function AbsURL(target: object, propertyKey: string | symbol): void {
-  const absPrefix = getAbsPath({
-    ...ServerConfig,
-    protocol: 'ws',
-  });
+export function AbsURL(protocol?: string): PropertyDecorator {
+  return (target: object, propertyKey: string | symbol): void => {
+    const absPrefix = getAbsPath({
+      ...ServerConfig,
+      protocol: protocol ?? 'http',
+    });
 
-  // set a flag indicate that an abolute path will append to start of api later
-  Reflect.defineMetadata(ABS_PATH_KEY, absPrefix, target, propertyKey);
+    // set a flag indicate that an abolute path will append to start of api later
+    Reflect.defineMetadata(ABS_PATH_KEY, absPrefix, target, propertyKey);
+  };
 }
 
 // The Params decorator will append some params on end of value by URL encoding

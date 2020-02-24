@@ -1,13 +1,15 @@
-import {Injectable, Inject} from 'react-ts-di';
+import {Injectable} from 'react-ts-di';
+import {observable} from 'mobx';
 
-import {MessageService, NotifyMessage} from '../message';
+import {NotifyMessage} from '../message';
 
 @Injectable()
 export class NotifyService {
-  @Inject
-  private messageService!: MessageService;
+  @observable
+  messages: NotifyMessage[] = [];
 
-  get messages(): NotifyMessage[] {
-    return this.messageService.notifyMessage;
+  onNotifyMessage(msg: NotifyMessage): void {
+    console.info(this.messages);
+    this.messages.push(msg);
   }
 }
