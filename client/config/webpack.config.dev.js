@@ -24,7 +24,7 @@ const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 const HappyPack = require('happypack');
 const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+// const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const os = require('os');
 
 const happyThreadPool = HappyPack.ThreadPool({size: os.cpus().length});
@@ -187,7 +187,7 @@ module.exports = {
     ],
   },
   plugins: [
-    new HardSourceWebpackPlugin(),
+    // new HardSourceWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: 'css/[name].css',
       chunkFilename: 'css/[id].css',
@@ -212,7 +212,7 @@ module.exports = {
       manifest: require('../static/vendor.manifest'),
     }),
     new AddAssetHtmlPlugin({
-      filepath: path.join(__dirname, '../static/dll/_dll_vendor.js'),
+      filepath: path.join(__dirname, '../static/dll/dll_vendor.js'),
       outputPath: 'dll',
       publicPath: 'dll',
       includeSourcemap: false,

@@ -10,13 +10,12 @@ export const GlobalStyle = createGlobalStyle<{theme: typeof styledTheme}>`
   }
 
   body {
-    overflow-x: hidden;
     background: ${props => props.theme.white};
   }
 
   #root {
     width: 100%;
-    min-width: fit-content;
+    min-width: 100%;
     height: 100%;
     overflow: auto;
   }

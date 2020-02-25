@@ -1,5 +1,5 @@
 // import {Typography} from '@material-ui/core';
-import {ButtonProps} from '@material-ui/core/Button';
+import Button, {ButtonProps} from '@material-ui/core/Button';
 import React, {Component, ComponentType, ReactNode} from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Inject} from 'react-ts-di';
@@ -10,7 +10,6 @@ import {observable} from 'mobx';
 
 import Main from '../../assets/static/main_code.svg';
 import {User} from '../../services';
-import {ActionButton} from '../../ui';
 import {ReleaseBanner} from '../release-banner';
 
 import {SkewBlock} from './@skew-block';
@@ -28,9 +27,10 @@ const StartPanel = styled.div`
   background: ${props => props.theme.primaryColor};
 `;
 
-const BaseButton = styled(ActionButton)`
+const BaseButton = styled(Button)`
   width: 150px;
   color: white !important;
+  padding: 10px !important;
 ` as ComponentType<ButtonProps>;
 
 const GetStarted = styled(BaseButton)`

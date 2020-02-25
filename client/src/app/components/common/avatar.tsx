@@ -22,8 +22,8 @@ const AvatarWrapper = styled(MaterialAvatar)<AvatarWrapperProps>`
   color: ${props => props.color} !important;
 ` as ComponentType<AvatarWrapperProps & MaterialAvatarProps>;
 
-@observer
 @withTheme
+@observer
 export class Avatar extends Component<
   AvatarProps & Partial<ThemeComponentProps>
 > {

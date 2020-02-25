@@ -31,15 +31,15 @@ module.exports = {
   },
   output: {
     path: join(__dirname, '../static'),
-    library: '_dll_[name]',
-    filename: 'dll/_dll_[name].js',
+    library: 'dll_[name]',
+    filename: 'dll/dll_[name].js',
   },
   plugins: [
     // new CleanWebpackPlugin(['dll'], {
     //   root: resolve('static'),
     // }),
     new DllPlugin({
-      name: '_dll_[name]',
+      name: 'dll_[name]',
       path: join(__dirname, '../static', '[name].manifest.json'),
     }),
   ],

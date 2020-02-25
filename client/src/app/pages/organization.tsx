@@ -4,21 +4,29 @@ import {observer} from 'mobx-react';
 import React, {Component, ReactNode} from 'react';
 import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
+import {withRouter, RouteComponentProps} from 'react-router-dom';
 
 import {
   NewOrganizationDialog,
   OrganizationCard,
   PageContent,
   PageHeader,
+  LayoutToggle,
 } from '../components';
 import {
   DialogService,
   OrganizationCardData,
   OrganizationService,
   Toast,
+  Time,
 } from '../services';
 import {Carpet} from '../ui';
 import OrganizationImg from '../assets/static/organization.png';
+import {withTheme, ThemeComponentProps} from '../theme';
+
+interface CardsWrapperProps {
+  layout: string;
+}
 
 const Wrapper = styled.div`
   width: 100%;
@@ -26,13 +34,48 @@ const Wrapper = styled.div`
   flex-direction: column;
 `;
 
-const CardsWrapper = styled.div`
+const CardsWrapper = styled.div<CardsWrapperProps>`
+  width: 100%;
   display: flex;
-  flex-wrap: wrap;
+
+  ${props =>
+    props.layout === 'column'
+      ? `
+      flex-wrap: wrap;
+    `
+      : `
+      align-items: center;
+      flex-wrap: nowrap;
+      overflow-x: scroll;
+    `}
+
+  &::-webkit-scrollbar {
+    /* width: 10px; */
+    border: none !important;
+    height: 6px !important;
+  }
+
+  &::-webkit-scrollbar-track {
+    border: none !important;
+    /* background: #f00 !important; */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: ${props => props.theme.primaryColor};
+    border-radius: 1000px;
+  }
 `;
 
+const LayoutToggleWrapper = styled.div`
+  margin: 15px 12.5px;
+`;
+
+@withTheme
+@withRouter
 @observer
-export class Organization extends Component {
+export class Organization extends Component<
+  Partial<ThemeComponentProps & RouteComponentProps>
+> {
   @Inject
   organization!: OrganizationService;
 
@@ -42,8 +85,14 @@ export class Organization extends Component {
   @Inject
   toast!: Toast;
 
+  @Inject
+  time!: Time;
+
   @observable
   organizationCards: OrganizationCardData[] = [];
+
+  @observable
+  layout: string = 'column';
 
   async handleNewOrganizationClick(): Promise<void> {
     await this.dialogService.open(NewOrganizationDialog, {
@@ -69,29 +118,53 @@ export class Organization extends Component {
   }
 
   render(): ReactNode {
+    const {theme} = this.props;
+
     const cards = this.organizationCards.map((data, index) => (
       <OrganizationCard
         seqIndex={index}
         organizationCardData={data}
         key={data.organizeName}
         onOrganizationRemove={name => this.handleOrganizationRemove(name)}
-      ></OrganizationCard>
+      />
     ));
 
     return (
       <Wrapper>
-        <Carpet color="#eee"></Carpet>
+        <Carpet color={theme!.baseGray}></Carpet>
         <PageHeader
           img={OrganizationImg}
           onFabClick={() => this.handleNewOrganizationClick()}
           title="组织"
           fabIcon={<AddIcon></AddIcon>}
         />
+        <LayoutToggleWrapper>
+          <LayoutToggle
+            onChange={(value: string) => this.handleLayoutChange(value)}
+          />
+        </LayoutToggleWrapper>
         <PageContent>
-          <CardsWrapper>{cards}</CardsWrapper>
+          <CardsWrapper layout={this.layout}>{cards}</CardsWrapper>
         </PageContent>
       </Wrapper>
     );
+  }
+
+  async handleLayoutChange(value: string): Promise<void> {
+    console.info(value);
+
+    if (!value) {
+      return;
+    }
+
+    const dup = this.organizationCards.slice();
+
+    this.layout = value;
+    this.organizationCards = [];
+
+    await this.time.sleep(0);
+
+    this.organizationCards = dup;
   }
 
   async fetchOrganizations(): Promise<void> {
