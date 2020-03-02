@@ -1,11 +1,13 @@
 {
   "name": "http-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "license": "MIT",
-  "files": ["dist/**/*"],
+  "files": [
+    "dist/**/*"
+  ],
   "dependencies": {
-    "common-utils": "^1.0.0",
+    "common-utils": "^1.0.1",
     "reflect-metadata": "^0.1.13"
   },
   "scripts": {
