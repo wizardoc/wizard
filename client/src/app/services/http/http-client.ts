@@ -50,6 +50,16 @@ export enum ContentType {
 
 const {baseUrl, port, protocol, mode} = ServerConfig as ServerConfig;
 
+export function getBaseURL(): string {
+  return `${baseUrl}:${port === 80 ? '' : port}/${
+    mode === 'dev' ? 'apis/' : ''
+  }`;
+}
+
+export function getAbsPath(): string {
+  return `${protocol}://${getBaseURL()}`;
+}
+
 export class HttpClient {
   private addr: string;
 
@@ -57,9 +67,7 @@ export class HttpClient {
   private toast!: Toast;
 
   constructor() {
-    this.addr = `${protocol}://${baseUrl}:${port === 80 ? '' : port}/${
-      mode === 'dev' ? 'apis/' : ''
-    }`;
+    this.addr = getAbsPath();
   }
 
   protected create<T, R>(type: HttpType, payload: DispatchPayload<T>): Doer<R> {

@@ -7,12 +7,10 @@ import {BrowserRouter} from 'react-router-dom';
 import {Inject} from 'react-ts-di';
 
 import {CommonDialog, OptionalTip, Profile} from './components';
-// import {LimpidityRoute} from './routes';
 import {DialogService, DrawerService, OptionalTipService} from './services';
 import {TipStore} from './store';
 import {GlobalStyle, ThemeProvider, styledTheme, theme} from './theme';
 import {Drawer} from './ui';
-// import {GhostPage} from './ui';
 import {InjectStore} from './utils';
 import {AppRouting} from './app-routing';
 
