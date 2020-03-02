@@ -1,0 +1,10 @@
+{
+  "name": "common-utils",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "files": ["dist/**/*"],
+  "scripts": {
+    "compile": "rimraf ./dist && tsc"
+  }
+}
