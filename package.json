@@ -4,6 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@magicspace/configs": "0.1.46",
     "lerna": "^3.20.2",
