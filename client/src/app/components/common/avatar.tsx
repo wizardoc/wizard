@@ -8,22 +8,26 @@ import {AvatarProps as MaterialAvatarProps} from '@material-ui/core/Avatar';
 import {User, RegexUtils} from 'src/app/services';
 import {withTheme, ThemeComponentProps} from 'src/app/theme';
 
-export interface AvatarProps extends AvatarWrapperProps {}
+export interface AvatarProps extends AvatarWrapperProps {
+  // the lnk of avatar
+  lnk?: string;
+}
 
 interface AvatarWrapperProps {
   bgColor?: string;
   color?: string;
+  size?: string;
 }
 
 const AvatarWrapper = styled(MaterialAvatar)<AvatarWrapperProps>`
-  width: 100% !important;
-  height: 100% !important;
+  width: ${props => props.size} !important;
+  height: ${props => props.size} !important;
   background: ${props => props.bgColor} !important;
   color: ${props => props.color} !important;
 ` as ComponentType<AvatarWrapperProps & MaterialAvatarProps>;
 
-@observer
 @withTheme
+@observer
 export class Avatar extends Component<
   AvatarProps & Partial<ThemeComponentProps>
 > {
@@ -34,14 +38,15 @@ export class Avatar extends Component<
   regexUtils!: RegexUtils;
 
   render(): ReactNode {
-    const {theme} = this.props;
+    const {theme, lnk, size = "100%"} = this.props;
     const {bgColor = theme!.avatarBgGray, color = theme!.fontGray} = this.props;
     const {avatar} = this.userService;
     const srcProps = this.regexUtils.validURL(avatar) ? {src: avatar} : {};
+    const src = lnk ?? avatar
 
     return (
-      <AvatarWrapper {...srcProps} bgColor={bgColor} color={color}>
-        {avatar}
+      <AvatarWrapper src={src} size={size} {...srcProps} bgColor={bgColor} color={color}>
+        {src}
       </AvatarWrapper>
     );
   }

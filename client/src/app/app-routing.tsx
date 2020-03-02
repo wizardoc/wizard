@@ -11,10 +11,12 @@ import {FloatingPop, Footer, SharePop, HeaderBar} from './components';
 interface WrapperProps {
   isHideFooter: boolean;
   isHideHeader: boolean;
+  isFull?: boolean;
 }
 
 const Wrapper = styled.div<WrapperProps>`
-  height: ${props =>
+  height: ${props => (props.isFull ? props.theme.heightOmitHeader : 'fit-content')};
+  min-height: ${props =>
     props.isHideHeader ? '100%' : props.theme.heightOmitHeader};
   position: relative;
   ${props => !props.isHideFooter && 'padding-bottom: 360px;'}
@@ -56,6 +58,7 @@ export class AppRouting extends Component {
             route.redirect,
             route.component,
             route.headerType,
+            route.isFullContainer,
           );
         }}
       />
@@ -76,6 +79,7 @@ export class AppRouting extends Component {
     redirect?: string,
     component?: ComponentType<RouteComponentProps<any>> | ComponentType<any>,
     headerType: HeaderType = 'fixed',
+    isFullContainer?: boolean,
   ): ReactNode {
     const RenderComponent = component as ComponentType<unknown>;
 
@@ -90,6 +94,7 @@ export class AppRouting extends Component {
         <Wrapper
           isHideFooter={layout === 'no-footer'}
           isHideHeader={layout === 'no-header'}
+          isFull={isFullContainer ?? true}
         >
           {children}
         </Wrapper>

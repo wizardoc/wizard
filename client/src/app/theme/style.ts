@@ -19,7 +19,7 @@ export interface IThemeInterface {
 export const styledTheme = {
   // colors
   black: '#000',
-  primaryColor: '#1976d2',
+  primaryColor: '#3970f5',
   secondaryColor: '#f06292',
   thirdColor: '#feca57',
   darkPrimaryColor: '#1565c0',
@@ -27,6 +27,7 @@ export const styledTheme = {
   dark: '#424242',
   shallowPrimaryColor: 'rgba(25, 118, 210, 0.1)',
   highRed: '#e91e63',
+  translucentPrimary: 'rgb(25, 118, 210, 0.5)',
   translucentWhite: 'rgba(255, 255, 255, 0.5)',
   editorGray: '#f4f4f4',
   shallowGray: '#eeeeee',
@@ -57,7 +58,15 @@ export const styledTheme = {
   warnYellow: '#ffa000',
   errorRed: '#d32f2f',
   baseGrayBg: '#f4f5f5',
+  blueGrayBg: '#f4f5f9',
   materialGray: '#e8e8e8',
+  titleColor: '#182846',
+  subTitleColor: '#081123',
+  subTitleGray: '#5b6474',
+  shallowSubTitleGray: '#c8c7d0',
+  mainSecondaryColor: '#66cdc6',
+  mainPrimaryColor: '#5241cb',
+  lightBlue: '#3451ff',
 
   // variables
   heightOmitHeader: 'calc(100% - 48px)',

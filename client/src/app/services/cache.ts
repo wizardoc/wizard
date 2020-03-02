@@ -1,4 +1,5 @@
 import {Injectable} from 'react-ts-di';
+import {ArrowCache} from 'arrow-cache';
 
 import {Time} from './time';
 
@@ -75,3 +76,5 @@ export class CacheService {
     }, this.TIME_CIRCLE);
   }
 }
+
+export const arrowCache = new ArrowCache();

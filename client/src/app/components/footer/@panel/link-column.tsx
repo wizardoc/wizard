@@ -1,7 +1,7 @@
 import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 import {withRouter, RouteComponentProps} from 'react-router-dom';
-import Link from '@material-ui/core/Link';
+import {Link as MaterialLink} from '@material-ui/core';
 
 export interface LinkColumnProps {
   title: string;
@@ -48,7 +48,7 @@ export class LinkColumn extends Component<
     const {title, links} = this.props;
     const renderLinks = links.map(link => (
       <LinkItem>
-        <Link href={link.href}>{link.text}</Link>
+        <MaterialLink href={link.href}>{link.text}</MaterialLink>
       </LinkItem>
     ));
 

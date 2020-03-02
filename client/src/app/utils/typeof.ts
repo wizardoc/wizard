@@ -5,6 +5,7 @@ export const enum DataType {
   Number = '[object Number]',
   Boolean = '[object Boolean]',
   Error = '[object Error]',
+  Function = '[object Function]',
 }
 
 function compare(target: unknown, dataType: DataType): boolean {
@@ -32,6 +33,9 @@ export const isBoolean = (target: unknown): target is boolean =>
 
 export const isError = (target: unknown): target is Error =>
   compare(target, DataType.Error);
+
+export const isFunction = (target: unknown): target is Function =>
+  compare(target, DataType.Function);
 
 // assets
 export function emptyAssert<T>(

@@ -5,7 +5,7 @@
  */
 export function traverse<T>(arr: T[], fn: (item: T) => boolean | void): void {
   for (const item of arr) {
-    if (!fn(item)) {
+    if (fn(item) === false) {
       return;
     }
   }

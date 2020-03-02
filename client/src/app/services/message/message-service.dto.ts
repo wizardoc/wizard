@@ -1,3 +1,5 @@
+import {UserModel} from '../user';
+
 export enum BaseMessageType {
   // carry JWT when first establish websocket channel
   INIT,
@@ -23,9 +25,11 @@ export interface MessageMain {
 export interface Message {
   id: string;
   main: MessageMain;
-  from: string;
+  from: UserModel;
   sendTime: number;
   messageType: number;
+  isRead: boolean;
+  isDelete: boolean;
 }
 
 type DispatchedMessage = Omit<Message, 'messageType'>;

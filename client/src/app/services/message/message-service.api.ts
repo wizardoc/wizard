@@ -11,4 +11,10 @@ export class MessageServiceAPI {
   all = '/all';
 
   send = '/send';
+
+  delete = (id: string): string => `/delete/${id}`;
+
+  revoke = (id: string): string => `/revoke/${id}`;
+
+  read = (id: string): string => `/read/${id}`;
 }

@@ -16,3 +16,4 @@ export * from './input';
 export * from './carpet';
 export * from './view-way';
 export * from './catalog';
+export * from './search';

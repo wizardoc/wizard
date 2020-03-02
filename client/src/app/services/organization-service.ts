@@ -3,7 +3,7 @@ import {Inject, Injectable} from 'react-ts-di';
 import {ORGANIZATION} from '../constant';
 
 import {HTTP} from './http';
-import {UserBaseInfo, User} from './user-service';
+import {UserBaseInfo, User} from './user';
 
 interface OrganizationNames {
   organizeNames: string[];

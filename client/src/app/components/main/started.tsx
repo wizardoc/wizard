@@ -8,37 +8,47 @@ import {Zoom} from '@material-ui/core';
 import {observer} from 'mobx-react';
 import {observable} from 'mobx';
 
+import GithubPng from 'src/app/assets/static/github.png';
+
 import Main from '../../assets/static/main_code.svg';
 import {User} from '../../services';
 import {ActionButton} from '../../ui';
 import {ReleaseBanner} from '../release-banner';
 
 import {SkewBlock} from './@skew-block';
+import {KnowledgeCard} from './knowledge-card';
 
 // import {GithubBtn} from './@github-btn';
 
 const Wrapper = styled.div`
   width: 100%;
+  position: relative;
 `;
 
 const StartPanel = styled.div`
   height: 700px;
   display: flex;
   justify-content: space-around;
-  background: ${props => props.theme.primaryColor};
+  background: ${props => props.theme.white};
 `;
 
 const BaseButton = styled(ActionButton)`
-  width: 150px;
-  color: white !important;
+  height: 35px !important;
+  width: 150px !important;
+  border-radius: 1000px !important;
 ` as ComponentType<ButtonProps>;
 
 const GetStarted = styled(BaseButton)`
-  border-color: white !important;
+  /* border-color: white !important;
 
   &:hover {
     background-color: rgba(255, 255, 255, 0.5) !important;
-  }
+  } */
+  margin-left: 35px !important;
+` as ComponentType<ButtonProps>;
+
+const GitHubLnk = styled(BaseButton)`
+  background: ${props => props.theme.secondaryColor} !important;
 ` as ComponentType<ButtonProps>;
 
 const StartedWrapper = styled.div`
@@ -49,7 +59,7 @@ const StartedWrapper = styled.div`
 
 const WizardTitle = styled.p`
   font-size: 30px;
-  color: white;
+  color: ${props => props.theme.titleColor};
   margin: 0;
 `;
 
@@ -57,7 +67,7 @@ const Description = styled.p`
   width: 500px;
   margin-top: 30px;
   line-height: 40px;
-  color: white;
+  color: ${props => props.theme.subTitleColor};
 `;
 
 const WizardDescription = styled.div`
@@ -80,6 +90,23 @@ const MainImgWrapper = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
+  z-index: 1;
+`;
+
+const Circle = styled.div`
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  top: 800px;
+  left: -100px;
+  z-index: 1;
+  border-radius: 50%;
+  background: ${props => props.theme.mainSecondaryColor};
+`;
+
+const GitHubIcon = styled.img`
+  width: 20px;
+  margin-right: 5px;
 `;
 
 interface StartedProps extends RouteComponentProps {}
@@ -110,15 +137,19 @@ class TStarted extends Component<StartedProps> {
           <WizardDescription>
             <DescriptionContainer>
               <ReleaseBanner tag="NEW"></ReleaseBanner>
-              <WizardTitle>Document management platform</WizardTitle>
+              <WizardTitle>与知识管理相结合的文档管理平台</WizardTitle>
               <Description>
                 开源免费的文档管理平台，管理 API 文档，前端组件文档，markdown
                 文档的绝佳平台，为技术服务，技术分享知识分享平台。赶紧创建自己的第一个
                 wizard 组织吧！
               </Description>
               <StartedWrapper>
+                <GitHubLnk variant="contained" color="secondary">
+                  <GitHubIcon src={GithubPng} />
+                  GitHub
+                </GitHubLnk>
                 <GetStarted
-                  variant="outlined"
+                  variant="contained"
                   color="primary"
                   onClick={() => this.handleGetStartClick()}
                 >
@@ -134,7 +165,9 @@ class TStarted extends Component<StartedProps> {
             </MainImgWrapper>
           </Zoom>
         </StartPanel>
+        <Circle></Circle>
         <SkewBlock></SkewBlock>
+        <KnowledgeCard />
       </Wrapper>
     );
   }

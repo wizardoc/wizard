@@ -1,7 +1,7 @@
-import React, { Component, ReactNode } from 'react';
+import React, {Component, ReactNode} from 'react';
 
-export class UserMessage extends Component{
-  render():ReactNode{
-    return <React re
+export class UserMessage extends Component {
+  render(): ReactNode {
+    return <></>;
   }
 }

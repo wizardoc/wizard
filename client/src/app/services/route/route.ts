@@ -14,6 +14,7 @@ export interface Route {
   exact?: boolean;
   redirect?: string;
   layout?: Layout;
+  isFullContainer?: boolean;
   headerType?: HeaderType; // default: fixed
   /**
    * 当 Component 为空时，会自动填充 404
