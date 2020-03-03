@@ -1,13 +1,16 @@
 {
-  "name": "http-utils",
-  "version": "1.0.2",
+  "name": "@wizardoc/http-utils",
+  "version": "1.0.4",
   "main": "dist/index.js",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "dist/**/*"
   ],
   "dependencies": {
-    "common-utils": "^1.0.2",
+    "@wizardoc/common-utils": "^1.0.2",
     "reflect-metadata": "^0.1.13"
   },
   "scripts": {
