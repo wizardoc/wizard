@@ -1,8 +1,11 @@
 {
-  "name": "common-utils",
+  "name": "@wizardoc/common-utils",
   "version": "1.0.2",
   "main": "dist/index.js",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "dist/**/*"
   ],

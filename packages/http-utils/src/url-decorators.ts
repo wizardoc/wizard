@@ -1,9 +1,10 @@
 import 'reflect-metadata';
 
-import {Pipe, isFunction} from 'common-utils';
+import {Pipe, isFunction, traverse} from '@wizardoc/common-utils';
 
 const ABS_PATH_KEY = 'abs_path_key';
 const URL_PARAMS_KEY = 'url_params_key';
+const NAMESPACE_KEY = 'namespace_key';
 // const PARAMS_KEY = "params_key"
 
 interface Params {
@@ -25,21 +26,29 @@ function getAbsPath(protocol: string, baseUrl: string): string {
 
 export function Group(path: string): ClassDecorator {
   return <TFunction extends Function>(target: TFunction): TFunction | void => {
+    interface APIContainer {
+      [name: string]: Function | string;
+    }
+
     // wrap all props without constructor of target class for attach path
     const targetProp = new (target as any)();
     const props = Reflect.ownKeys(targetProp);
     const getMetadata = (key: string, prop: string | number | symbol): any =>
       Reflect.getMetadata(key, targetProp, prop as string);
+    const namespace = Reflect.getMetadata(NAMESPACE_KEY, target);
 
     // copy all props to the anonymous class and hack all values to attach group path
     return class {
       constructor() {
+        const container: APIContainer = {};
+
         for (const prop of props) {
           const val = targetProp[prop];
 
           // params tpl
           if (isFunction(val)) {
-            (this as any)[prop] = (param: string) => `${path}${val(param)}`;
+            container[prop as string] = (param: string) =>
+              `${path}${val(param)}`;
             continue;
           }
 
@@ -47,7 +56,7 @@ export function Group(path: string): ClassDecorator {
           const URLParams = getMetadata(URL_PARAMS_KEY, prop);
           const requestURL = `${path}${val}`;
 
-          (this as any)[prop] = Pipe.from<string>(requestURL)
+          container[prop as string] = Pipe.from<string>(requestURL)
             .next(
               url => absPath + url,
               () => !!absPath,
@@ -65,6 +74,15 @@ export function Group(path: string): ClassDecorator {
           //     , () => true)
           //   }
           // }
+        }
+
+        // wrap into namespace
+        if (namespace) {
+          (this as any)[namespace] = container;
+        } else {
+          traverse(Object.keys(container), prop => {
+            (this as any)[prop] = container[prop];
+          });
         }
       }
     } as any;
@@ -97,6 +115,13 @@ export function AbsURL(options?: AbsURLOptions): PropertyDecorator {
 export function URLParams(params: Params): PropertyDecorator {
   return (target: object, propertyKey: string | symbol) => {
     Reflect.defineMetadata(URL_PARAMS_KEY, params, target, propertyKey);
+  };
+}
+
+// wrap all api into namespace for compatible
+export function Namespace(name: string): ClassDecorator {
+  return <TFunction extends Function>(target: TFunction): TFunction | void => {
+    Reflect.defineMetadata(NAMESPACE_KEY, name, target);
   };
 }
 
