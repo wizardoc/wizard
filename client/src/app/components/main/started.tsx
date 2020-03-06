@@ -1,5 +1,5 @@
 // import {Typography} from '@material-ui/core';
-import {ButtonProps} from '@material-ui/core/Button';
+import Button, {ButtonProps} from '@material-ui/core/Button';
 import React, {Component, ComponentType, ReactNode} from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Inject} from 'react-ts-di';
@@ -12,7 +12,6 @@ import GithubPng from 'src/app/assets/static/github.png';
 
 import Main from '../../assets/static/main_code.svg';
 import {User} from '../../services';
-import {ActionButton} from '../../ui';
 import {ReleaseBanner} from '../release-banner';
 
 import {SkewBlock} from './@skew-block';

@@ -25,7 +25,7 @@ module.exports = function override(config) {
       manifest: require('./static/vendor.manifest'),
     }),
     new AddAssetHtmlPlugin({
-      filepath: Path.resolve(__dirname, '../static/dll/_dll_vendor.js'),
+      filepath: Path.resolve(__dirname, '../static/dll/dll_vendor.js'),
       outputPath: 'dll',
       publicPath: 'dll',
       includeSourcemap: false,
