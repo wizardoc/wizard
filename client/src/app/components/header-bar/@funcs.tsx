@@ -5,10 +5,11 @@ import WorkIcon from '@material-ui/icons/Work';
 import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {observer} from 'mobx-react';
 
 import {GitHubSvg} from '../../assets';
 import {Links} from '../../constant';
-import {DrawerService, User} from '../../services';
+import {DrawerService, User, NotifyService} from '../../services';
 import {ProfileStore} from '../../store';
 import {InjectStore} from '../../utils';
 import {Todos} from '../optional-tip';
@@ -41,12 +42,16 @@ const UserName = styled.div`
 `;
 
 @withRouter
+@observer
 export class Funcs extends Component<Partial<RouteComponentProps>> {
   @Inject
   userService!: User;
 
   @Inject
   drawerService!: DrawerService;
+
+  @Inject
+  notifyService!: NotifyService;
 
   iconFuncs: IconFunc[] = [
     {
@@ -69,7 +74,11 @@ export class Funcs extends Component<Partial<RouteComponentProps>> {
       handler: () => this.handleNotifyClick(),
       isLogin: true,
       body: (
-        <Badge badgeContent={10} max={99} color="secondary">
+        <Badge
+          badgeContent={this.notifyService.unreadMessageCount}
+          max={99}
+          color="secondary"
+        >
           <NotificationsIcon />
         </Badge>
       ),

@@ -7,7 +7,7 @@ import {UPLOAD_API} from '../constant';
 import {MIME} from '../utils';
 
 import {HTTP} from './http';
-import {User} from './user-service';
+import {User} from './user';
 
 interface ParsedUploadOptions {
   prefix: string;
@@ -40,7 +40,7 @@ export class UploadService {
 
   private _token: string = '';
 
-  private domain = 'q47dmxl45.bkt.clouddn.com';
+  private readonly domain = 'travel.gosolo.top';
 
   constructor() {
     this.getQiniuToken();

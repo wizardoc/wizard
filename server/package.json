@@ -1,6 +1,6 @@
 {
-  "name": "@wizard/node-middleware",
-  "version": "1.0.0",
+  "name": "node-middleware",
+  "version": "1.0.2",
   "main": "index.js",
   "license": "MIT",
   "scripts": {

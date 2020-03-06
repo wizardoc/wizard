@@ -1,12 +1,16 @@
 {
-  "name": "wizard",
+  "name": "wizardoc",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
     "@magicspace/configs": "0.1.46",
-    "lerna": "^3.13.3"
+    "lerna": "^3.20.2",
+    "rimraf": "^3.0.2"
   },
   "scripts": {
     "client:start": "cd client && yarn start"
@@ -20,7 +24,8 @@
   "workspaces": {
     "packages": [
       "client",
-      "node-middleware"
+      "server",
+      "packages/**/*"
     ]
   }
 }

@@ -3,8 +3,8 @@ import {Injectable, Inject} from 'react-ts-di';
 import {emptyAssert} from 'src/app/utils';
 
 import {JWT} from '../jwt-service';
-import {NotifyService} from '../notify';
-import {HTTP} from '../http';
+import {HTTP, Expectable} from '../http';
+import {Subject} from '../observer';
 
 import {
   BaseMessageType,
@@ -13,21 +13,27 @@ import {
   Messages,
 } from './message-service.dto';
 import {MessageConnection} from './@message-connection';
-import {MessageServiceAPI} from './@message-service.api';
+import {MessageServiceAPI} from './message-service.api';
+
+type MessageHandler = () => void;
+
+interface ContainerDistributor {
+  [type: number]: MessageHandler;
+}
 
 @Injectable()
-export abstract class MessageService extends MessageConnection {
+export class MessageService extends MessageConnection {
   @Inject
   private jwt!: JWT;
-
-  @Inject
-  private notifyService!: NotifyService;
 
   @Inject
   protected api!: MessageServiceAPI;
 
   @Inject
   private http!: HTTP;
+
+  @Inject
+  protected subject!: Subject;
 
   onOpen(): void {
     if (!this.jwt.JWTString) {
@@ -44,24 +50,36 @@ export abstract class MessageService extends MessageConnection {
   onClose(): void {}
 
   onMessage(msg: Message): void {
-    const containers = {
-      [MessageType.NOTIFY]: this.notifyService.messages,
-
-      // [MessageType.CHAT]: (msg: ChatMessage): void => this.onNotifyMessage(msg),
+    const distributor: ContainerDistributor = {
+      [MessageType.NOTIFY]: () => this.subject.notifyChatMessageObserver(msg),
+      [MessageType.CHAT]: () => this.subject.notifyChatMessageObserver(msg),
     };
 
-    containers[msg.messageType].push(msg);
+    distributor[msg.messageType]();
   }
 
   onConnectionInit(): void {}
+
+  protected readMessage(id: string): Expectable<void> {
+    return this.http.put(this.api.read(id));
+  }
+
+  protected deleteMessage(id: string): Expectable<void> {
+    return this.http.delete(this.api.delete(id));
+  }
+
+  protected revokeMessage(id: string): Expectable<void> {
+    return this.http.delete(this.api.revoke(id));
+  }
 
   private async dispatchMessage(): Promise<void> {
     const {data} = await this.http
       .get<Messages>(this.api.all)
       .expect(() => '获取消息失败');
 
-    emptyAssert(data, data => {
-      this.notifyService.messages.push(...data.notifies);
+    emptyAssert(data, ({notifies, chats}) => {
+      this.subject.notifyChatMessageAppendedObserver(chats);
+      this.subject.notifyNotifyMessageAppendedObserver(notifies);
     });
   }
 }

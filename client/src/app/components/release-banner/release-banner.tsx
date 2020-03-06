@@ -7,7 +7,7 @@ import {ReleaseTagProps, ReleaseTag} from './release-tag';
 export interface ReleaseBannerProps extends ReleaseTagProps {}
 
 const Wrapper = styled.div`
-  background: ${props => props.theme.translucentWhite};
+  background: ${props => props.theme.translucentPrimary};
   padding: 3px;
   border-radius: 5px;
   display: flex;

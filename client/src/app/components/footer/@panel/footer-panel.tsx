@@ -24,7 +24,7 @@ export class FooterPanel extends Component {
   constructor(props: {}) {
     super(props);
 
-    this.renderCols = this.renderLinks(LinkConfig);
+    this.renderCols = this.renderLinks(LinkConfig as LinkConfig);
   }
 
   render(): ReactNode {

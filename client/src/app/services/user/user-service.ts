@@ -1,16 +1,15 @@
 import {action, computed, observable} from 'mobx';
 import {Inject, Injectable} from 'react-ts-di';
 
-import {BaseInfoData} from '../components';
-import {USER_API} from '../constant';
+import {BaseInfoData} from '../../components';
+import {USER_API} from '../../constant';
 // import {TipStore} from '../store';
-import {Optional} from '../types/type-utils';
-import {emptyAssert} from '../utils';
-
-import {HTTP} from './http';
-import {DialogService} from './dialog-service';
-import {JWT} from './jwt-service';
-import { MessageService } from './message';
+import {Optional} from '../../types/type-utils';
+import {emptyAssert} from '../../utils';
+import {HTTP} from '../http';
+import {DialogService} from '../dialog-service';
+import {JWT} from '../jwt-service';
+import { MessageService } from '../message';
 
 export interface UserBaseInfo {
   displayName: string;

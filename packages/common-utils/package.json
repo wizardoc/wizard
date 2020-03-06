@@ -1,0 +1,15 @@
+{
+  "name": "@wizardoc/common-utils",
+  "version": "1.0.3",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "scripts": {
+    "compile": "rimraf ./dist && tsc"
+  }
+}

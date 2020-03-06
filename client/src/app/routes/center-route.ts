@@ -12,6 +12,7 @@ export const CenterRoutes: Routes = [
       {
         path: '/messages',
         component: MessageCenter,
+        layout: 'limpidity',
       },
     ],
   },

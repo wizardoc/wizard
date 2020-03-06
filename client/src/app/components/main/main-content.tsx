@@ -7,8 +7,9 @@ import {AboutUsCard} from './@about-us-card';
 import {AdvantageCards} from './advantage-cards';
 
 const Wrapper = styled(Container)`
-  position: relative;
-  top: -100px;
+  /* position: relative; */
+  /* top: 100px; */
+  margin-top: 500px;
 ` as ComponentType<ContainerProps>;
 
 export class MainContent extends Component {

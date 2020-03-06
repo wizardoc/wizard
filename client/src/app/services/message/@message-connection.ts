@@ -1,6 +1,6 @@
 import {Injectable, Inject} from 'react-ts-di';
 
-import {MessageServiceAPI} from './@message-service.api';
+import {MessageServiceAPI} from './message-service.api';
 import {BaseMessage, Message} from './message-service.dto';
 
 interface EventTable {
