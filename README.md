@@ -31,7 +31,7 @@
 - Cache DB: `Redis`
 - Primary DB: `PostgreSQL`
 
-## 贡献指南
+<!-- ## 贡献指南
 关于贡献时的一些快速上手指南。
 `Wizardoc` 是一个技术驱动的文档管理平台，它体现在文档和知识管理的互相结合，其中包括前端组件文档，Swagger API 文档，markdown 文档，还可以陆续加入流程图等，这些都在新的 Feature 当中！
 
@@ -290,9 +290,10 @@ export const UserRoutes: Routes = [
 
 ## Validator
 
-通用的 Validator 经过抽象放在 `ui/form-control/validators` 目录下，通过 `form-control-types` 暴露出去
+通用的 Validator 经过抽象放在 `ui/form-control/validators` 目录下，通过 `form-control-types` 暴露出去 -->
 
 ## Pages
+
 - [ ] 文档页面 （3 个 tab）
   - [ ] 普通 Markdown 文档页面
   - [ ] 规范文档页面 （有 diff）
@@ -316,6 +317,7 @@ export const UserRoutes: Routes = [
   - [ ] 有接受和拒绝的消息条
 
 ## TODO
+
 - [ ] `PUBLIC SPACE` 可以发展为类似论坛文章一样的东西，在 UI 上用 Material Design 的 卡片
 - [ ] 抽离 `卡片展示区域` 的组件，添加展示方式的功能，列表展示，卡片展示 两种
 - [ ] 组织点进是该组织下的所有文档，有查看所有组织的所有文档的功能
@@ -378,7 +380,7 @@ export const UserRoutes: Routes = [
 
 - 该文档的默认权限（默认为只读）
 - 是否公开 （默认为否）
-  - 如果是⬇️
+  - 如果是 ⬇️
   - 选择分类 （ref： 分类）
 
 ## 分类
