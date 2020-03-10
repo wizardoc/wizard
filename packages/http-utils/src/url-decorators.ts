@@ -47,8 +47,8 @@ export function Group(path: string): ClassDecorator {
 
           // params tpl
           if (isFunction(val)) {
-            container[prop as string] = (param: string) =>
-              `${path}${val(param)}`;
+            container[prop as string] = (...param: string[]) =>
+              `${path}${val(...param)}`;
             continue;
           }
 
