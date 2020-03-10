@@ -5,7 +5,9 @@
     "lib": ["dom", "esnext"],
     "outDir": "dist",
     "types": ["node"],
-    "declaration": true
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules/**/*"]
