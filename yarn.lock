@@ -2601,6 +2601,19 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
+"@wizardoc/common-utils@^1.0.2":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@wizardoc/common-utils/-/common-utils-1.0.3.tgz#63aa5d654faa427f7570231f05a4b91414ff70ba"
+  integrity sha512-2o7K3qJ8D1op9Rm6EAo1+7hLBWSoo/WmcVOB4I1yML2JeE6/YGtl/8mdTB0ksuecjBn2uw5dfvnQoi1tlmRONA==
+
+"@wizardoc/http-utils@^1.0.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@wizardoc/http-utils/-/http-utils-1.1.2.tgz#0c7370a14a14c8abaf180c196d1e1f3f7242783c"
+  integrity sha512-4I06iZvfLMKxuJLcxbFmOGHEgu5ta0OOAx5G3JILmmGvLqvbl2BnH2bxELIIZLVdbIqveLhP9nNKE/Znnb/2lg==
+  dependencies:
+    "@wizardoc/common-utils" "^1.0.2"
+    reflect-metadata "^0.1.13"
+
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "https://registry.npm.taobao.org/@xtuc/ieee754/download/@xtuc/ieee754-1.2.0.tgz#eef014a3145ae477a1cbc00cd1e552336dceb790"
@@ -2670,9 +2683,9 @@ acorn-walk@^6.0.1, acorn-walk@^6.1.1:
   integrity sha1-Ejy487hMIXHx9/slJhWxx4prGow=
 
 acorn@^5.5.3:
-  version "5.7.3"
-  resolved "https://registry.npm.taobao.org/acorn/download/acorn-5.7.3.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Facorn%2Fdownload%2Facorn-5.7.3.tgz#67aa231bf8812974b85235a96771eb6bd07ea279"
-  integrity sha1-Z6ojG/iBKXS4UjWpZ3Hra9B+onk=
+  version "5.7.4"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.7.4.tgz#3e8d8a9947d0599a1796d10225d7432f4a4acf5e"
+  integrity sha512-1D++VG7BhrtvQpNbBzovKNc1FLGGEE/oGe7b9xJm/RFHMBeUaUGpluV9RLjZa47YFdPcDAenEYuq9pQPcMdLJg==
 
 acorn@^6.0.1, acorn@^6.0.5, acorn@^6.0.7, acorn@^6.2.1:
   version "6.4.0"
