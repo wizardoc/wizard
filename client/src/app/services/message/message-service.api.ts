@@ -1,5 +1,5 @@
 import {Injectable} from 'react-ts-di';
-import {Group, AbsURL} from 'http-utils';
+import {Group, AbsURL} from '@wizardoc/http-utils';
 
 import {getBaseURL} from '../http';
 
