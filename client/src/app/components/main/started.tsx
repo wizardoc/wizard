@@ -31,7 +31,7 @@ const StartPanel = styled.div`
   background: ${props => props.theme.white};
 `;
 
-const BaseButton = styled(ActionButton)`
+const BaseButton = styled(Button)`
   height: 35px !important;
   width: 150px !important;
   border-radius: 1000px !important;
