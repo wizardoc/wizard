@@ -38,14 +38,20 @@ export class Avatar extends Component<
   regexUtils!: RegexUtils;
 
   render(): ReactNode {
-    const {theme, lnk, size = "100%"} = this.props;
+    const {theme, lnk, size = '100%'} = this.props;
     const {bgColor = theme!.avatarBgGray, color = theme!.fontGray} = this.props;
     const {avatar} = this.userService;
     const srcProps = this.regexUtils.validURL(avatar) ? {src: avatar} : {};
-    const src = lnk ?? avatar
+    const src = lnk ?? avatar;
 
     return (
-      <AvatarWrapper src={src} size={size} {...srcProps} bgColor={bgColor} color={color}>
+      <AvatarWrapper
+        src={src}
+        size={size}
+        {...srcProps}
+        bgColor={bgColor}
+        color={color}
+      >
         {src}
       </AvatarWrapper>
     );

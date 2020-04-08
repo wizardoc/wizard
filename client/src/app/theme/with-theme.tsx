@@ -1,6 +1,6 @@
-import React, {ComponentType, Component, ReactNode} from 'react';
+import React, { ComponentType, Component, ReactNode } from 'react';
 
-import {StyledTheme, styledTheme} from './style';
+import { StyledTheme, styledTheme } from './style';
 
 export interface ThemeComponentProps {
   theme: StyledTheme;

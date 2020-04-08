@@ -20,6 +20,8 @@ export const styledTheme = {
   // colors
   black: '#000',
   primaryColor: '#3970f5',
+  titleColor: '#333',
+  descColor: '#666',
   secondaryColor: '#f06292',
   thirdColor: '#feca57',
   darkPrimaryColor: '#1565c0',
@@ -60,7 +62,6 @@ export const styledTheme = {
   baseGrayBg: '#f4f5f5',
   blueGrayBg: '#f4f5f9',
   materialGray: '#e8e8e8',
-  titleColor: '#182846',
   subTitleColor: '#081123',
   subTitleGray: '#5b6474',
   shallowSubTitleGray: '#c8c7d0',
