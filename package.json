@@ -13,7 +13,8 @@
     "rimraf": "^3.0.2"
   },
   "scripts": {
-    "client:start": "cd client && yarn start"
+    "client:start": "cd client && yarn start",
+    "bootstrap": "lerna bootstrap"
   },
   "dependencies": {
     "prettier": "^1.17.0",
