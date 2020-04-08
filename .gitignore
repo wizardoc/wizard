@@ -1,8 +1,9 @@
 # dependencies
 node_modules
 
-# log
+# logs
 yarn-error.log
+lerna-debug.log
 
 # dist
 dist
@@ -12,3 +13,6 @@ dist
 
 # next ssr
 .next
+
+# dll
+_dll_vendor.js
