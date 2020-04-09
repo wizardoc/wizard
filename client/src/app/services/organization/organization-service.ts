@@ -1,22 +1,14 @@
 import {Inject, Injectable} from 'react-ts-di';
 
-import {ORGANIZATION} from '../constant';
+import {HTTP} from '../http';
+import {User} from '../user';
 
-import {HTTP} from './http';
-import {UserBaseInfo, User} from './user';
-
-interface OrganizationNames {
-  organizeNames: string[];
-}
-
-export interface OrganizationCardData extends UserBaseInfo {
-  ownerInfo: UserBaseInfo;
-  organizeName: string;
-  description: string;
-  hasValid: string;
-  createTime: number;
-  joinTime: number;
-}
+import {OrganizationAPI} from './@organization-service.api';
+import {
+  OrganizationNames,
+  OrganizationCardData,
+  AllOrganization,
+} from './organization-service.dto';
 
 @Injectable()
 export class OrganizationService {
@@ -26,11 +18,12 @@ export class OrganizationService {
   @Inject
   private http!: HTTP;
 
-  private organizationScope = 'organization';
+  @Inject
+  private apis!: OrganizationAPI;
 
   async getAllNames(): Promise<string[]> {
     const {data} = await this.http
-      .get<OrganizationNames>(this.parseUrl('/name/all'))
+      .get<OrganizationNames>(this.apis.allName)
       .expect(() => '网络错误');
 
     if (!data) {
@@ -42,31 +35,29 @@ export class OrganizationService {
 
   async getAllJoinOrganization(): Promise<OrganizationCardData[]> {
     const {data} = await this.http
-      .get<OrganizationCardData[]>(this.parseUrl('/joins/all'))
+      .get<AllOrganization>(this.apis.all)
       .expect(() => '获取组织信息失败');
 
     if (!data) {
       return [];
     }
 
-    return data;
+    return data.organizations;
   }
 
-  async createOrganization(
-    name: string,
-    description: string,
-    username: string,
-  ): Promise<void> {
-    await this.http.post(this.parseUrl('/new'), {
-      organizeName: name,
-      username,
-      organizeDescription: description,
-    });
+  async createOrganization(name: string, description: string): Promise<void> {
+    await this.http
+      .post(this.apis.new, {
+        organizeName: name,
+        username: this.user.userInfo?.username,
+        organizeDescription: description,
+      })
+      .expect(() => '创建组织失败');
   }
 
   removeOrganization(name: string): Promise<void> {
     return this.http
-      .delete(ORGANIZATION.REMOVE(name))
+      .delete(this.apis.remove(name))
       .expect(() => '删除组织失败');
   }
 
@@ -83,7 +74,7 @@ export class OrganizationService {
       return undefined;
     }
 
-    return this.createOrganization(name, description, userInfo.username);
+    return this.createOrganization(name, description);
   }
 
   async hasExistOrganization(organizationName: string): Promise<boolean> {
@@ -94,14 +85,10 @@ export class OrganizationService {
 
   joinOrganization(organizeName: string, username: string): Promise<void> {
     return this.http
-      .post(ORGANIZATION.JOIN, {
+      .post(this.apis.join, {
         organizeName,
         username,
       })
       .expect(() => '加入组织失败');
-  }
-
-  private parseUrl(path: string): string {
-    return `${this.organizationScope}${path}`;
   }
 }
