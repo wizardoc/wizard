@@ -135,7 +135,7 @@ export class MessageOverview extends Component {
   }
 
   handleExpansionClick(id: string): void {
-    this.notifyService.readNotifyMessage(id).expect(() => {});
+    this.notifyService.readNotifyMessage(id);
   }
 
   handleExpansionChange(id: string): void {

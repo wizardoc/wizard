@@ -2,21 +2,19 @@ import {action, computed, observable} from 'mobx';
 import {Inject, Injectable} from 'react-ts-di';
 
 import {BaseInfoData} from '../../components';
-import {USER_API} from '../../constant';
-// import {TipStore} from '../store';
 import {Optional} from '../../types/type-utils';
 import {emptyAssert} from '../../utils';
 import {HTTP} from '../http';
-import {DialogService} from '../dialog-service';
+import {DialogService} from '../dialog';
 import {JWT} from '../jwt-service';
-import { MessageService } from '../message';
+import {MessageService} from '../message';
 
-export interface UserBaseInfo {
-  displayName: string;
-  username: string;
-  password: string;
-  email: string;
+import {UserBaseInfo, UserInfoDTO, ValidResult} from './user-service.dto';
+import {UserServiceAPI} from './@user-service.api';
+
+interface UserInfoAvatarPart {
   avatar: string;
+  displayName: string;
 }
 
 interface OrganizationInfo {
@@ -45,7 +43,10 @@ export class User {
   private dialog!: DialogService;
 
   @Inject
-  messageService!:MessageService
+  messageService!: MessageService;
+
+  @Inject
+  api!: UserServiceAPI;
 
   registerData: RegisterData = {};
 
@@ -70,47 +71,41 @@ export class User {
 
   @action
   async initUserInfo(): Promise<void> {
-    interface UserInfoDTO {
-      userInfo: UserBaseInfo;
-    }
-
     this.dialog.loading(async () => {
-      const {data} = await this.http
-        .get<UserInfoDTO>(USER_API.INFO)
-        .expect(() => '获取用户信息失败');
+      const result = await this.http.get<UserInfoDTO>(this.api.info);
 
-      emptyAssert(data, data => {
-        this.setUserInfo(data.userInfo)
-        // initialize websocket
-        this.messageService.initWebSocket()
-      });
+      result
+        .expect(() => '获取用户信息失败')
+        .success(data =>
+          emptyAssert(data, data => {
+            this.setUserInfo(data.userInfo);
+            // initialize websocket
+            this.messageService.initWebSocket();
+          }),
+        );
     });
   }
 
   @action
   async login(username: string, password: string): Promise<boolean> {
-    const {data} = await this.http
-      .post<LoginResData>(USER_API.LOGIN, {
-        username,
-        password,
-      })
-      .expect(() => '登陆失败');
+    const result = await this.http.post<LoginResData>(this.api.login, {
+      username,
+      password,
+    });
 
-    emptyAssert(data, resData => this.saveToken(resData));
-
-    return !!data
+    return result
+      .expect(() => '登录失败')
+      .success(data => emptyAssert(data, resData => this.saveToken(resData)))
+      .ok;
   }
 
   async validBaseInfo(baseInfo: BaseInfoData): Promise<boolean | undefined> {
-    interface ValidResult {
-      isValid: boolean;
-    }
+    const result = await this.http.post<ValidResult, BaseInfoData>(
+      this.api.validBaseInfo,
+      baseInfo,
+    );
 
-    const {data} = await this.http
-      .post<ValidResult, BaseInfoData>(USER_API.VALID_BASE_INFO, baseInfo)
-      .expect(() => '获取验证结果失败');
-
-    return data?.isValid;
+    return result.expect(() => '获取验证结果失败').data?.isValid;
   }
 
   @computed
@@ -120,17 +115,18 @@ export class User {
 
   @computed
   get avatar(): string {
-    if (!this.userInfo) {
-      return '';
-    }
-
-    return getAvatar(this.userInfo);
+    return !this.userInfo ? '' : getAvatar(this.userInfo);
   }
 
   async register(): Promise<void> {
-    const {data} = await this.http.post<LoginResData>(USER_API.REGISTER, this.registerData).expect(() => "注册失败")
+    const result = await this.http.post<LoginResData>(
+      this.api.register,
+      this.registerData,
+    );
 
-    emptyAssert(data, data => this.saveToken(data))
+    result
+      .expect(() => '注册失败')
+      .success(data => emptyAssert(data, data => this.saveToken(data)));
   }
 
   collectBaseInfo(baseInfo: BaseInfoData): void {
@@ -157,7 +153,9 @@ export class User {
   }
 
   async updateAvatar(avatar: string): Promise<void> {
-    await this.http.put(USER_API.updateAvatar, {avatar}).expect(() => "更新头像失败");
+    const result = await this.http.put(this.api.updateAvatar, {avatar});
+
+    result.expect(() => '更新头像失败');
 
     this.userInfo!.avatar = avatar;
   }
@@ -166,11 +164,6 @@ export class User {
     this.jwt.save(jwt);
     this.setUserInfo(userInfo);
   }
-}
-
-interface UserInfoAvatarPart {
-  avatar: string;
-  displayName: string;
 }
 
 export function getAvatar(userInfo: UserInfoAvatarPart): string {

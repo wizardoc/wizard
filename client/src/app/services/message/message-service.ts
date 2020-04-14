@@ -3,7 +3,7 @@ import {Injectable, Inject} from 'react-ts-di';
 import {emptyAssert} from 'src/app/utils';
 
 import {JWT} from '../jwt-service';
-import {HTTP, Expectable} from '../http';
+import {HTTP, ResValueArea} from '../http';
 import {Subject} from '../observer';
 
 import {
@@ -60,26 +60,26 @@ export class MessageService extends MessageConnection {
 
   onConnectionInit(): void {}
 
-  protected readMessage(id: string): Expectable<void> {
+  protected readMessage(id: string): Promise<ResValueArea> {
     return this.http.put(this.api.read(id));
   }
 
-  protected deleteMessage(id: string): Expectable<void> {
+  protected deleteMessage(id: string): Promise<ResValueArea> {
     return this.http.delete(this.api.delete(id));
   }
 
-  protected revokeMessage(id: string): Expectable<void> {
+  protected revokeMessage(id: string): Promise<ResValueArea> {
     return this.http.delete(this.api.revoke(id));
   }
 
   private async dispatchMessage(): Promise<void> {
-    const {data} = await this.http
-      .get<Messages>(this.api.all)
-      .expect(() => '获取消息失败');
+    const result = await this.http.get<Messages>(this.api.all);
 
-    emptyAssert(data, ({notifies, chats}) => {
-      this.subject.notifyChatMessageAppendedObserver(chats);
-      this.subject.notifyNotifyMessageAppendedObserver(notifies);
-    });
+    result.success(data =>
+      emptyAssert(data, ({notifies, chats}) => {
+        this.subject.notifyChatMessageAppendedObserver(chats);
+        this.subject.notifyNotifyMessageAppendedObserver(notifies);
+      }),
+    );
   }
 }

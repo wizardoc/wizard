@@ -24,15 +24,11 @@ export class TodoService {
   }
 
   async init(): Promise<void> {
-    const {data} = await this.httpService
-      .get<TodoItemData[]>(TODO_API.all)
-      .expect(() => '获取待办事项失败');
+    const result = await this.httpService.get<TodoItemData[]>(TODO_API.all);
 
-    if (!data) {
-      return;
-    }
-
-    this._todoItems = data;
+    result
+      .expect(() => '获取待办事项失败')
+      .success(data => (this._todoItems = data ?? []));
   }
 
   addItem(item: TodoItemData): void {

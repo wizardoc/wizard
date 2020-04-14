@@ -1,13 +1,19 @@
-import {ButtonProps} from '@material-ui/core/Button';
 import {action, observable} from 'mobx';
 import {ComponentType} from 'react';
 import {Inject, Injectable} from 'react-ts-di';
 import UUID from 'uuid';
 
-import {Loading, ConfirmDialog} from '../components';
+import {Loading} from '../../components';
+import {Time, TimeUnit} from '../time';
+import {Toast} from '../toast';
 
-import {Time, TimeUnit} from './time';
-import {Toast} from './toast';
+import {
+  DialogID,
+  DialogOptions,
+  ActionButtons,
+  ActionButtonCB,
+  DialogPool,
+} from './dialog-pool';
 
 interface LoadingOptions {
   timeout: TimeUnit;
@@ -26,41 +32,6 @@ export interface DialogComponentProps {
 export interface DialogRef {
   onClose(dialogData: unknown): void;
 }
-
-export interface BaseActionButtons {
-  text: string;
-  props?: ButtonProps;
-}
-
-type ActionButtonCB<R extends boolean | void | Promise<boolean | void>> = (
-  dialogData: unknown,
-) => R;
-
-export interface ActionButtons extends BaseActionButtons {
-  /** return a bool value to determine whether to throw a value out */
-  cb?: ActionButtonCB<boolean | void | Promise<boolean | void>>;
-}
-
-export interface ParsedActionButtons extends BaseActionButtons {
-  cb?: ActionButtonCB<boolean | void | Promise<boolean | void>>;
-}
-
-export interface DialogOptions<T = ParsedActionButtons, P extends object = object> {
-  title: string;
-  isClickAwayClose?: boolean;
-  isFullScreen?: boolean;
-  actionButtons?: T[];
-  componentProps?: P;
-}
-
-export interface DialogConfig {
-  isShow: boolean;
-  dialogData?: unknown;
-  content: ComponentType;
-  options: DialogOptions;
-}
-
-type DialogID = string;
 
 /**
  * -- 用于调用对话框
@@ -90,8 +61,8 @@ export class DialogService {
   @Inject
   private toast!: Toast;
 
-  @observable
-  dialogs = new Map<DialogID, DialogConfig>();
+  @Inject
+  private dialogPool!: DialogPool;
 
   @observable
   currentDialogID: DialogID | undefined;
@@ -113,17 +84,17 @@ export class DialogService {
     return new Promise(resolve => {
       /** 用于外部接收吐出消息的回调 */
       const onClose = <T>(cb: (data: T) => void): void => {
-        const {dialogData} = this.dialogs.get(dialogID)!;
+        const {dialogData} = this.dialogPool.dialogs.get(dialogID)!;
 
         cb(dialogData as T);
-        this.dialogs.delete(dialogID);
+        this.dialogPool.dialogs.delete(dialogID);
       };
       const op: DialogOptions = {
         ...options,
         actionButtons: actionButtons.map(button => ({
           ...button,
           cb: (() => {
-            const {dialogData} = this.dialogs.get(dialogID)!;
+            const {dialogData} = this.dialogPool.dialogs.get(dialogID)!;
             const {cb = (): void => {}} = button;
 
             /** 通过上层对话框组件调用 close 将数据传递到动作按钮的回调 */
@@ -142,10 +113,10 @@ export class DialogService {
 
             // 暂存 dialogData 有些场景下，调用 close 并不会关闭 dialog，而是等待 下方 footer 按钮关闭
             if (this.currentDialogID) {
-              const config = this.dialogs.get(this.currentDialogID)!;
+              const config = this.dialogPool.dialogs.get(this.currentDialogID)!;
 
               config.dialogData = data;
-              this.dialogs.set(this.currentDialogID, config);
+              this.dialogPool.dialogs.set(this.currentDialogID, config);
             }
 
             if (isDestroy) {
@@ -156,7 +127,7 @@ export class DialogService {
         },
       };
 
-      this.dialogs.set(dialogID, {
+      this.dialogPool.dialogs.set(dialogID, {
         isShow: true,
         content,
         options: op,
@@ -187,33 +158,6 @@ export class DialogService {
     clearTimeout(timeoutId);
   }
 
-  /** confirm dialog */
-  confirm(
-    title: string,
-    content: string,
-    onSureClick?: () => void,
-    onCancelClick?: () => void,
-  ): Promise<DialogRef> {
-    const cbify = (func?: Function): boolean => {
-      const caller = (): void => {};
-
-      (func || caller)();
-
-      return true;
-    };
-
-    return this.open(ConfirmDialog, {
-      title,
-      componentProps: {
-        content,
-      },
-      actionButtons: [
-        {text: '我再想想', cb: () => cbify(onCancelClick)},
-        {text: '好', cb: () => cbify(onSureClick)},
-      ],
-    });
-  }
-
   private parseOptions(options: CloseOptions): ParsedCloseOptions {
     return {
       isDestroy: false,
@@ -234,7 +178,7 @@ export class DialogService {
     }
 
     this.spurt();
-    this.dialogs.delete(this.currentDialogID);
+    this.dialogPool.dialogs.delete(this.currentDialogID);
   }
 
   /** throw value and close current dialog */
@@ -244,7 +188,7 @@ export class DialogService {
       return;
     }
 
-    const ref = this.dialogs.get(this.currentDialogID);
+    const ref = this.dialogPool.dialogs.get(this.currentDialogID);
 
     if (ref) {
       ref.isShow = false;

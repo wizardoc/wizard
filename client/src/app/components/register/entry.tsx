@@ -1,13 +1,10 @@
-import {Step, StepLabel, Stepper} from '@material-ui/core';
-import {StepperProps} from '@material-ui/core/Stepper';
 import {action, observable} from 'mobx';
 import {observer} from 'mobx-react';
-import React, {Component, ComponentType, ReactNode} from 'react';
+import React, {Component, ReactNode} from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import styled from 'styled-components';
 
 import {WithSlideProps} from '../../animations';
-import {USER} from '../../constant';
 import {A, Title} from '../../ui';
 
 import {BaseInfo} from './base-info';
@@ -37,18 +34,15 @@ const RegisterBodyWrapper = styled.div`
   align-items: center;
 `;
 
-const StepperWrapper = styled(Stepper)`
-  width: 70%;
-` as ComponentType<StepperProps>;
-
-const steps = ['填写基本信息', '确定组织', '完成注册'];
-
 const TitleWrapper = styled.div`
   width: 100%;
 `;
 
+@withRouter
 @observer
-class RouterRegister extends Component<WithSlideProps & RouteComponentProps> {
+export class Register extends Component<
+  WithSlideProps & Partial<RouteComponentProps>
+> {
   @observable
   private currentIndex = 0;
 
@@ -83,7 +77,7 @@ class RouterRegister extends Component<WithSlideProps & RouteComponentProps> {
   handleLoginClick(): void {
     const {history, exitAnimation} = this.props;
 
-    exitAnimation(() => history.push(USER.LOGIN));
+    exitAnimation(() => history!.push('/user/login'));
   }
 
   handleNextClick(): void {
@@ -99,12 +93,6 @@ class RouterRegister extends Component<WithSlideProps & RouteComponentProps> {
   }
 
   render(): ReactNode {
-    const renderSteps = steps.map((label, index) => (
-      <Step key={label} completed={index < this.currentIndex}>
-        <StepLabel>{label}</StepLabel>
-      </Step>
-    ));
-
     return (
       <Wrapper>
         <TitleWrapper>
@@ -116,9 +104,6 @@ class RouterRegister extends Component<WithSlideProps & RouteComponentProps> {
             注册
           </Title>
         </TitleWrapper>
-        <StepperWrapper activeStep={this.currentIndex}>
-          {renderSteps}
-        </StepperWrapper>
         <RegisterBodyWrapper>{this.viewerBody}</RegisterBodyWrapper>
         {!this.isFinish && (
           <A onClick={() => this.handleLoginClick()}>已有账号？立即登录！</A>
@@ -127,5 +112,3 @@ class RouterRegister extends Component<WithSlideProps & RouteComponentProps> {
     );
   }
 }
-
-export const Register = withRouter(RouterRegister);

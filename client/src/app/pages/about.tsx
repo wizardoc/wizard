@@ -51,9 +51,8 @@ class TAbout extends Component {
   async componentDidMount(): Promise<void> {
     this.dialogService.loading(
       async (): Promise<void> => {
-        const {data} = await this.docService
-          .getAboutWizard()
-          .expect(() => '网络错误');
+        const data = await this.docService.getAboutWizard();
+        // .expect(() => '网络错误');
 
         if (!data) {
           return;

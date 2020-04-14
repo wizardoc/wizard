@@ -37,6 +37,11 @@ export const isError = (target: unknown): target is Error =>
 export const isFunction = (target: unknown): target is Function =>
   compare(target, DataType.Function);
 
+export const isUndefined = (target: unknown): target is undefined =>
+  target === undefined;
+
+export const isNull = (target: unknown): target is null => target === null;
+
 // assets
 export function emptyAssert<T>(
   value: T,

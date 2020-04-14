@@ -8,7 +8,11 @@ import {Inject} from 'react-ts-di';
 
 import {FormControl} from '../../ui';
 import {CreateNewOrganization, OrganizationData} from '../register';
-import {OrganizationService, Toast, DialogComponentProps} from '../../services';
+import {OrganizationService, Toast} from '../../services';
+
+interface NewOrganizationCardProps {
+  onCreateClick?(organizationData: OrganizationData): void;
+}
 
 const Wrapper = styled.div`
   width: 345px;
@@ -19,13 +23,11 @@ const Wrapper = styled.div`
 `;
 
 const Submit = styled(Button)`
-  margin: 10px 0 20px 0 !important;
+  margin: 30px 0 10px 0 !important;
 ` as ComponentType<ButtonProps>;
 
 @observer
-export class NewOrganizationDialog extends Component<
-  Partial<DialogComponentProps>
-> {
+export class NewOrganizationCard extends Component<NewOrganizationCardProps> {
   @Inject
   organizationService!: OrganizationService;
 
@@ -49,6 +51,7 @@ export class NewOrganizationDialog extends Component<
     }
 
     const {organizationName, organizationDescription} = this.organizationData;
+    const {onCreateClick = (): void => {}} = this.props;
 
     try {
       await this.organizationService.newOrganization(
@@ -61,13 +64,8 @@ export class NewOrganizationDialog extends Component<
       return;
     }
 
+    onCreateClick(this.organizationData);
     this.toast.success('创建组织成功!');
-    this.props.close!(
-      {},
-      {
-        isDestroy: true,
-      },
-    );
   }
 
   render(): ReactNode {
@@ -76,7 +74,7 @@ export class NewOrganizationDialog extends Component<
         <CreateNewOrganization
           formControlRef={this.formControlRef}
           onOrganizationInfoChange={info => (this.organizationData = info)}
-        ></CreateNewOrganization>
+        />
         <Submit
           variant="outlined"
           onClick={() => this.handleCreateClick()}

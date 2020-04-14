@@ -14,7 +14,7 @@ import React, {
 } from 'react';
 import {Inject} from 'react-ts-di';
 
-import {DialogService} from '../../../services';
+import {DialogPool, DialogService} from '../../../services';
 
 interface CommonDialogProps {
   dialogID?: string;
@@ -34,6 +34,9 @@ function withDialog(
 @observer
 export class CommonDialog extends Component<CommonDialogProps> {
   @Inject
+  private dialogPool!: DialogPool;
+
+  @Inject
   private dialogService!: DialogService;
 
   handleClose(isClose: boolean, dialogID: string): void {
@@ -49,7 +52,7 @@ export class CommonDialog extends Component<CommonDialogProps> {
       return <></>;
     }
 
-    const {dialogs} = this.dialogService;
+    const {dialogs} = this.dialogPool;
     const config = dialogs.get(dialogID);
     const {isShow, content} = config!;
 

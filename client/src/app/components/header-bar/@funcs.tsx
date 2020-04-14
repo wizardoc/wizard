@@ -104,6 +104,10 @@ export class Funcs extends Component<Partial<RouteComponentProps>> {
     this.props.history!.push('/center/messages');
   }
 
+  componentDidMount(): void {
+    console.info(this.notifyService.unreadMessageCount);
+  }
+
   render(): ReactNode {
     const {userInfo, isLogin} = this.userService;
 

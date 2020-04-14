@@ -15,3 +15,4 @@ export * from './release-banner';
 export * from './pen';
 export * from './footer';
 export * from './message-center';
+export * from './overview';

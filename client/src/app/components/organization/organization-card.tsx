@@ -9,14 +9,10 @@ import {Inject} from 'react-ts-di';
 import {OrganizationCardData, Time} from '../../services';
 
 import {HeaderOwner} from './header-owner';
-import {OrganizationActions} from './organization-actions';
+// import {OrganizationActions} from './organization-actions';
 import {OrganizationCardInfo} from './organization-card-info';
 
-export interface OrganizationActionHandlerProps {
-  onOrganizationRemove(name: string): void;
-}
-
-export interface OrganizationCardProps extends OrganizationActionHandlerProps {
+export interface OrganizationCardProps {
   organizationCardData: OrganizationCardData;
   seqIndex: number;
 }
@@ -36,27 +32,35 @@ export class OrganizationCard extends Component<OrganizationCardProps> {
   @Inject
   time!: Time;
 
+  // async handleOrganizationRemove(
+  //   name: string,
+  //   delayDuration: number,
+  // ): Promise<void> {
+  //   this.isMounted = false;
+
+  //   await this.time.sleep(delayDuration / Time.Second);
+
+  //   this.props.onOrganizationRemove(name);
+  // }
+
   render(): ReactNode {
-    const {organizationCardData, seqIndex, onOrganizationRemove} = this.props;
+    const {organizationCardData, seqIndex} = this.props;
     const delayDuration = seqIndex * 300;
 
     return (
       <Grow in={this.isMounted} timeout={delayDuration}>
         <CardWrapper>
-          <HeaderOwner ownerInfo={organizationCardData.ownerInfo}></HeaderOwner>
-          <OrganizationCardInfo
+          <HeaderOwner
+            ownerInfo={organizationCardData.ownerInfo}
+            organizeName={organizationCardData.organizeName}
+          />
+          <OrganizationCardInfo organizationCardData={organizationCardData} />
+          {/* <OrganizationActions
+            onOrganizationRemove={(name: string) =>
+              this.handleOrganizationRemove(name, delayDuration)
+            }
             organizationCardData={organizationCardData}
-          ></OrganizationCardInfo>
-          <OrganizationActions
-            onOrganizationRemove={async name => {
-              this.isMounted = false;
-
-              await this.time.sleep(delayDuration / Time.Second);
-
-              onOrganizationRemove(name);
-            }}
-            organizationCardData={organizationCardData}
-          ></OrganizationActions>
+          /> */}
         </CardWrapper>
       </Grow>
     );

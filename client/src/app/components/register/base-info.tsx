@@ -73,8 +73,6 @@ export class BaseInfo extends Component<BaseInfoProps & PartViewProps> {
     await this.dialogService.loading(async () => {
       const validRes = await this.userService.validBaseInfo(this.baseInfoData!);
 
-      console.info(validRes);
-
       emptyAssert(validRes, validRes => (isValid = validRes));
     });
 

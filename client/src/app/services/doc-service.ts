@@ -1,14 +1,13 @@
 import {Inject, Injectable} from 'react-ts-di';
 
 import {ContributorInfo} from '../components';
-import {DOC_API} from '../constant';
 
-import {HTTP, Expectable} from './http';
+import {HTTP} from './http';
 
 @Injectable()
 export class DocService {
   @Inject
-  private http!: HTTP;
+  http!: HTTP;
 
   private readonly usernames: string[] = [
     'HaoDaWang',
@@ -17,8 +16,10 @@ export class DocService {
     'XyyF',
   ];
 
-  getAboutWizard(): Expectable<string> {
-    return this.http.get(DOC_API.WIZARD);
+  getAboutWizard(): string {
+    // return await this.http.get(DOC_API.WIZARD);
+
+    return '';
   }
 
   getContributorAvatars(): ContributorInfo[] {

@@ -64,8 +64,8 @@ const AppBarWrapper = styled(AppBar)<AppBarWrapperProps>`
   ${props => props.isFixed && 'top: 0;position: sticky !important;'}
 ` as ComponentType<AppBarProps & AppBarWrapperProps>;
 
-@observer
 @withRouter
+@observer
 class THeaderBar extends Component<HeaderBarProps> {
   @Inject
   private drawerService!: DrawerService;

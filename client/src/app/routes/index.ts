@@ -4,3 +4,4 @@ export * from './user-route';
 export * from './public-space-route';
 export * from './team-route';
 export * from './center-route';
+export * from './overview-route';

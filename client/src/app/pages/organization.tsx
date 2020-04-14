@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import {withRouter, RouteComponentProps} from 'react-router-dom';
 
 import {
-  NewOrganizationDialog,
+  NewOrganizationCard,
   OrganizationCard,
   PageContent,
   PageHeader,
@@ -95,7 +95,7 @@ export class Organization extends Component<
   layout: string = 'column';
 
   async handleNewOrganizationClick(): Promise<void> {
-    await this.dialogService.open(NewOrganizationDialog, {
+    await this.dialogService.open(NewOrganizationCard, {
       title: '创建自己的组织 :)',
       isClickAwayClose: true,
     });
@@ -125,7 +125,7 @@ export class Organization extends Component<
         seqIndex={index}
         organizationCardData={data}
         key={data.organizeName}
-        onOrganizationRemove={name => this.handleOrganizationRemove(name)}
+        // onOrganizationRemove={name => this.handleOrganizationRemove(name)}
       />
     ));
 

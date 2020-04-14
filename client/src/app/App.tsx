@@ -7,7 +7,7 @@ import {BrowserRouter} from 'react-router-dom';
 import {Inject} from 'react-ts-di';
 
 import {CommonDialog, OptionalTip, Profile} from './components';
-import {DialogService, DrawerService, OptionalTipService} from './services';
+import {DrawerService, DialogPool, OptionalTipService} from './services';
 import {TipStore} from './store';
 import {GlobalStyle, ThemeProvider, styledTheme, theme} from './theme';
 import {Drawer} from './ui';
@@ -22,7 +22,7 @@ class TApp extends Component<WithSnackbarProps> {
   tipStore!: TipStore;
 
   @Inject
-  dialogService!: DialogService;
+  dialogPool!: DialogPool;
 
   @Inject
   optionalTipService!: OptionalTipService;
@@ -32,12 +32,6 @@ class TApp extends Component<WithSnackbarProps> {
 
   render(): React.ReactNode {
     const {options, isShow, currentDrawer} = this.drawerService;
-
-    let dialogs: string[] = [];
-
-    for (const dialogID of this.dialogService.dialogs.keys()) {
-      dialogs.push(dialogID);
-    }
 
     return (
       <ThemeProvider theme={styledTheme}>
@@ -50,7 +44,7 @@ class TApp extends Component<WithSnackbarProps> {
               </Drawer>
             )}
             {/* Dialog is render by service here */}
-            {dialogs.map(dialogID => (
+            {Array.from(this.dialogPool.dialogs.keys()).map(dialogID => (
               <CommonDialog key={dialogID} dialogID={dialogID}></CommonDialog>
             ))}
             <GlobalStyle />

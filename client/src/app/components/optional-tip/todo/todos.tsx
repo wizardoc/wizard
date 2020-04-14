@@ -45,7 +45,7 @@ export class Todos extends Component<Partial<RouteComponentProps>> {
           description="不用及时处理的事件都在这里"
           title="待办事项"
           icon={<WorkIcon />}
-        ></DrawerHeader>
+        />
         <Items>{items}</Items>
       </Wrapper>
     );

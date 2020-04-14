@@ -7,7 +7,7 @@ import {
   useResError,
 } from './@attach-interceptor';
 import {getData, requestType, errorCatcher} from './interceptors';
-import {ContentType, HTTPMethod, HttpClient, Expectable} from './http-client';
+import {ContentType, HTTPMethod, HttpClient, Response} from './http-client';
 
 export interface PostPayload<T = unknown> {
   [index: string]: T;
@@ -19,7 +19,7 @@ useResError(errorCatcher);
 
 @Injectable()
 export class HTTP extends HttpClient {
-  get<R = void, T = {}>(path: string, data?: T): Expectable<R> {
+  get<R = any, T = {}>(path: string, data?: T): Response<R> {
     return this.create<T, R>('SimpleHTTPMethod', {
       method: 'GET',
       path,
@@ -27,36 +27,36 @@ export class HTTP extends HttpClient {
     }).Do();
   }
 
-  post<R = void, T = {}>(
+  post<R = any, T = {}>(
     path: string,
     data?: T,
     contentType?: ContentType,
-  ): Expectable<R> {
+  ): Response<R> {
     return this.complexRequest('POST', path, data, contentType);
   }
 
-  put<R = void, T = {}>(
+  put<R = any, T = {}>(
     path: string,
     data?: T,
     contentType?: ContentType,
-  ): Expectable<R> {
+  ): Response<R> {
     return this.complexRequest('PUT', path, data, contentType);
   }
 
-  delete<R = void, T = {}>(
+  delete<R = any, T = {}>(
     path: string,
     data?: T,
     contentType?: ContentType,
-  ): Expectable<R> {
+  ): Response<R> {
     return this.complexRequest('DELETE', path, data, contentType);
   }
 
-  private complexRequest<R = void, T = {}>(
+  private complexRequest<R = any, T = {}>(
     method: HTTPMethod,
     path: string,
     data?: T,
     contentType?: ContentType,
-  ): Expectable<R> {
+  ): Response<R> {
     return this.create<T, R>('ComplexHTTPMethod', {
       method,
       path,

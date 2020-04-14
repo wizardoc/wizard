@@ -1,14 +1,11 @@
 import {Inject, Injectable} from 'react-ts-di';
+import {observable} from 'mobx';
 
-import {HTTP} from '../http';
+import {HTTP, ResValueArea} from '../http';
 import {User} from '../user';
 
 import {OrganizationAPI} from './@organization-service.api';
-import {
-  OrganizationNames,
-  OrganizationCardData,
-  AllOrganization,
-} from './organization-service.dto';
+import {OrganizationCardData} from './organization-service.dto';
 
 @Injectable()
 export class OrganizationService {
@@ -21,44 +18,52 @@ export class OrganizationService {
   @Inject
   private apis!: OrganizationAPI;
 
+  @observable
+  private _organizations: OrganizationCardData[] = [];
+
+  get organizations(): OrganizationCardData[] {
+    return this._organizations;
+  }
+
   async getAllNames(): Promise<string[]> {
-    const {data} = await this.http
-      .get<OrganizationNames>(this.apis.allName)
-      .expect(() => '网络错误');
+    const result = await this.http.get(this.apis.allName);
 
-    if (!data) {
-      return [];
-    }
-
-    return data.organizeNames;
+    return result
+      .expect(() => '获取组织名称失败')
+      .success(data => data?.organizeNames ?? []).data;
   }
 
   async getAllJoinOrganization(): Promise<OrganizationCardData[]> {
-    const {data} = await this.http
-      .get<AllOrganization>(this.apis.all)
-      .expect(() => '获取组织信息失败');
+    const result = await this.http.get(this.apis.all);
 
-    if (!data) {
-      return [];
-    }
+    const {data} = result
+      .expect(() => '获取组织信息失败')
+      .success(data => data?.organizations ?? []);
 
-    return data.organizations;
+    // init organizations
+    this._organizations = data;
+
+    return data;
   }
 
   async createOrganization(name: string, description: string): Promise<void> {
-    await this.http
-      .post(this.apis.new, {
+    (
+      await this.http.post(this.apis.new, {
         organizeName: name,
         username: this.user.userInfo?.username,
         organizeDescription: description,
       })
-      .expect(() => '创建组织失败');
+    ).expect(() => '创建组织失败');
+
+    await this.getAllJoinOrganization();
   }
 
-  removeOrganization(name: string): Promise<void> {
-    return this.http
-      .delete(this.apis.remove(name))
-      .expect(() => '删除组织失败');
+  async removeOrganization(name: string): Promise<ResValueArea> {
+    const result = await this.http.delete(this.apis.remove(name));
+
+    return result
+      .expect(() => '删除组织失败')
+      .success(() => this.getAllJoinOrganization());
   }
 
   // without username
@@ -83,12 +88,15 @@ export class OrganizationService {
     return names.includes(organizationName);
   }
 
-  joinOrganization(organizeName: string, username: string): Promise<void> {
-    return this.http
-      .post(this.apis.join, {
-        organizeName,
-        username,
-      })
-      .expect(() => '加入组织失败');
+  async joinOrganization(
+    organizeName: string,
+    username: string,
+  ): Promise<void> {
+    const result = await this.http.post(this.apis.join, {
+      organizeName,
+      username,
+    });
+
+    result.expect(() => '加入组织失败');
   }
 }

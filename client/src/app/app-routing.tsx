@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import {RouterService, Layout, TabService, HeaderType} from './services';
 import {PageNotFound} from './pages/page-not-found';
 import {isString} from './utils';
-import {FloatingPop, Footer, SharePop, HeaderBar} from './components';
+import {Footer, SharePop, HeaderBar} from './components';
 
 interface WrapperProps {
   isHideFooter: boolean;
@@ -15,7 +15,8 @@ interface WrapperProps {
 }
 
 const Wrapper = styled.div<WrapperProps>`
-  height: ${props => (props.isFull ? props.theme.heightOmitHeader : 'fit-content')};
+  height: ${props =>
+    props.isFull ? props.theme.heightOmitHeader : 'fit-content'};
   min-height: ${props =>
     props.isHideHeader ? '100%' : props.theme.heightOmitHeader};
   position: relative;
@@ -108,7 +109,7 @@ export class AppRouting extends Component {
             {wrapper(
               <>
                 <RenderComponent />
-                <FloatingPop />
+                {/* <FloatingPop /> */}
                 <SharePop />
                 <Footer />
               </>,
@@ -118,7 +119,7 @@ export class AppRouting extends Component {
         'no-header': wrapper(
           <>
             <RenderComponent />
-            <FloatingPop />
+            {/* <FloatingPop /> */}
             <SharePop />
             <Footer />
           </>,
@@ -129,7 +130,7 @@ export class AppRouting extends Component {
             {wrapper(
               <>
                 <RenderComponent />
-                <FloatingPop />
+                {/* <FloatingPop /> */}
                 <SharePop />
               </>,
             )}

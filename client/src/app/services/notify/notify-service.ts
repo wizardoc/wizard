@@ -1,10 +1,10 @@
 import {Injectable, Inject} from 'react-ts-di';
-import {observable} from 'mobx';
+import {observable, computed} from 'mobx';
 
 import {traverse} from 'src/app/utils';
 
 import {NotifyMessage, MessageService} from '../message';
-import {Expectable} from '../http';
+import {ResValueArea} from '../http';
 import {Subject, NotifyMessageObserver} from '../observer';
 
 interface MessageTable {
@@ -22,11 +22,15 @@ export class NotifyService extends MessageService
     return this.getMessages('isDelete', true);
   }
 
+  @computed
   get unreadMessageCount(): number {
     console.info(this.messageTable);
-    console.info(Object.keys(this.messageTable));
-
     return this.getMessages('isRead', false).length;
+  }
+
+  @computed
+  get ids(): IterableIterator<string> {
+    return observable.map(this.messageTable).keys();
   }
 
   @Inject
@@ -51,19 +55,19 @@ export class NotifyService extends MessageService
     this.messageTable[msg.id] = msg;
   };
 
-  readNotifyMessage(id: string): Expectable<void> {
+  readNotifyMessage(id: string): Promise<ResValueArea> {
     this.findMessage(id).isRead = true;
 
     return this.readMessage(id);
   }
 
-  deleteNotifyMessage(id: string): Expectable<void> {
+  deleteNotifyMessage(id: string): Promise<ResValueArea> {
     this.findMessage(id).isDelete = true;
 
     return this.deleteMessage(id);
   }
 
-  revokeMessage(id: string): Expectable<void> {
+  revokeMessage(id: string): Promise<ResValueArea> {
     this.findMessage(id).isDelete = false;
 
     return this.revokeMessage(id);
@@ -73,15 +77,9 @@ export class NotifyService extends MessageService
     P extends keyof NotifyMessage,
     V extends NotifyMessage[P]
   >(prop: P, tag: V): NotifyMessage[] {
-    console.info(
-      Object.keys(this.messageTable)
-        .map(id => this.messageTable[id])
-        .filter(msg => msg[prop] === tag),
+    return Array.from(observable.map(this.messageTable).values()).filter(
+      msg => msg[prop] === tag,
     );
-
-    return Object.keys(this.messageTable)
-      .map(id => this.messageTable[id])
-      .filter(msg => msg[prop] === tag);
   }
 
   private findMessage(id: string): NotifyMessage {

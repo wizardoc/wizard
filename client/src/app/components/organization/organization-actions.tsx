@@ -2,7 +2,7 @@ import {CardActions, IconButton, Tooltip} from '@material-ui/core';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import React, {Component, ReactNode} from 'react';
-import PowerOffIcon from '@material-ui/icons/PowerOff';
+// import PowerOffIcon from '@material-ui/icons/PowerOff';
 import {Inject} from 'react-ts-di';
 
 import {
@@ -12,7 +12,7 @@ import {
   OrganizationService,
 } from '../../services';
 
-import {OrganizationActionHandlerProps} from './organization-card';
+// import {OrganizationActionHandlerProps} from './organization-card';
 
 interface Action {
   tip: string;
@@ -21,7 +21,7 @@ interface Action {
   handler(...args: unknown[]): void;
 }
 
-interface OrganizationActionsProps extends OrganizationActionHandlerProps {
+interface OrganizationActionsProps {
   organizationCardData: OrganizationCardData;
 }
 
@@ -47,34 +47,34 @@ export class OrganizationActions extends Component<OrganizationActionsProps> {
       handler: this.handleQuitOrgClick,
       isHide: this.isOwner,
     },
-    {
-      tip: '删除组织',
-      icon: <PowerOffIcon></PowerOffIcon>,
-      handler: () =>
-        this.handleRemoveOrgClick(this.props.organizationCardData.organizeName),
-      isHide: !this.isOwner,
-    },
+    // {
+    //   tip: '删除组织',
+    //   icon: <PowerOffIcon></PowerOffIcon>,
+    //   // handler: () =>
+    //   // this.handleRemoveOrgClick(this.props.organizationCardData.organizeName),
+    //   isHide: !this.isOwner,
+    // },
   ];
 
   handleInviteUserClick(): void {}
 
   handleQuitOrgClick(): void {}
 
-  handleRemoveOrgClick(name: string): void {
-    this.dialogService.confirm(
-      '删除组织',
-      `确认要删除 ${name} 吗？`,
-      async () => {
-        try {
-          await this.organizationService.removeOrganization(name);
-        } catch (e) {
-          console.error(e);
-        }
+  // handleRemoveOrgClick(name: string): void {
+  //   this.dialogService.confirm(
+  //     '删除组织',
+  //     `确认要删除 ${name} 吗？`,
+  //     async () => {
+  //       try {
+  //         await this.organizationService.removeOrganization(name);
+  //       } catch (e) {
+  //         console.error(e);
+  //       }
 
-        this.props.onOrganizationRemove(name);
-      },
-    );
-  }
+  //       this.props.onOrganizationRemove(name);
+  //     },
+  //   );
+  // }
 
   render(): ReactNode {
     return (

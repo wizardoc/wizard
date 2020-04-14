@@ -1,11 +1,10 @@
 export * from './cache';
-export * from './dialog-service';
+export * from './dialog';
 export * from './doc-service';
 export * from './error-manager';
 export * from './jwt-service';
 export * from './markdown';
 export * from './optional-tip-service';
-export * from './organization-service';
 export * from './toast';
 export * from './drawer-service';
 export * from './time';
@@ -20,3 +19,4 @@ export * from './message';
 export * from './notify';
 export * from './user';
 export * from './observer';
+export * from './organization';

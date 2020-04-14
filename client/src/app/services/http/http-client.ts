@@ -13,22 +13,36 @@ interface ServerConfig {
 
 type Request<R> = () => R;
 
+export type Response<R> = Promise<ResValueArea<R>>;
+
 type Requests<R> = {
   [index in HttpType]: Request<R>;
 };
 
 interface Doer<R> {
-  Do(): Expectable<R>;
+  Do(): Response<R>;
 }
+
+export type ResValueArea<R = any> = Expectable<R> & Successable<R> & Result<R>;
 
 export type ExpectableCB = (err: AxiosError | undefined) => string | void;
 
 export interface Expectable<R> {
-  expect(cb?: ExpectableCB): Promise<R extends void ? void : Result<R>>;
+  expect: OnExpect<R>;
 }
 
-export interface Result<R> {
+export type OnExpect<R> = (cb?: ExpectableCB) => ResValueArea<R>;
+
+export interface Successable<R> {
+  success: OnSuccess<R>;
+}
+
+export type OnSuccess<R = any> = (cb: OnSuccessCB<R>) => ResValueArea<R>;
+export type OnSuccessCB<R, T = any> = (data: R | undefined) => T;
+
+export interface Result<R> extends Successable<R> {
   data?: R;
+  ok: boolean;
 }
 
 export type ExpectFn = () => string | void;
@@ -92,31 +106,48 @@ export class HttpClient {
     };
   }
 
-  private Do<R>(request: Request<R>): Expectable<R> {
+  private Do<R>(request: Request<R>): Response<R> {
     let err: AxiosError | undefined;
     let data: R | undefined;
 
-    const expect = async (
-      cb?: ExpectableCB,
-    ): Promise<R extends void ? void : Result<R>> => {
+    const sendRequest = async (): Promise<ResValueArea<R>> => {
       try {
         data = await request();
       } catch (e) {
         err = e;
       }
 
-      const errMsg = (cb || (() => {}))(err);
+      const valueArea: ResValueArea<R> = {
+        data,
+        ok: !!err,
+        success: onSuccuss,
+        expect: onExpect,
+      };
+      const that = this;
 
-      // 抛出 caller 希望抛出的错误信息
-      // else 吞并异常
-      if (errMsg && err) {
-        this.toast.error(errMsg);
+      function onSuccuss(cb: OnSuccessCB<R>): ResValueArea {
+        return {
+          ...valueArea,
+          data: err ? data : cb(data),
+        };
       }
 
-      return {data} as any;
+      function onExpect(cb: ExpectableCB): ResValueArea {
+        const errMsg = (cb || (() => {}))(err);
+
+        // 抛出 caller 希望抛出的错误信息
+        // else 吞并异常
+        if (errMsg && err) {
+          that.toast.error(errMsg);
+        }
+
+        return valueArea;
+      }
+
+      return valueArea;
     };
 
-    return {expect};
+    return sendRequest();
   }
 
   private join(path: string): string {

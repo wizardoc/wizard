@@ -1,6 +1,5 @@
 import {Injectable} from 'react-ts-di';
-
-import {Group} from 'src/app/utils';
+import {Group} from '@wizardoc/http-utils';
 
 @Injectable()
 @Group('/organization')
@@ -13,7 +12,5 @@ export class OrganizationAPI {
 
   join = '/join';
 
-  remove(name: string): string {
-    return `/remove/${name}`;
-  }
+  remove = (name: string): string => `/remove/${name}`;
 }

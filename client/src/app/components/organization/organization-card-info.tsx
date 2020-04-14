@@ -20,7 +20,7 @@ interface OrganizationNameProps {
 
 const Cover = styled.div`
   width: 100%;
-  height: 194px;
+  height: 100px;
   background-color: ${props => props.theme.white};
   display: flex;
   justify-content: center;

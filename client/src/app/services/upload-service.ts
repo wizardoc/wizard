@@ -106,15 +106,11 @@ export class UploadService {
   }
 
   private async getQiniuToken(): Promise<void> {
-    const {data} = await this.httpService
-      .get<string>(UPLOAD_API.getToken)
-      .expect(() => '获取 QiNiu Token 失败');
+    const result = await this.httpService.get<string>(UPLOAD_API.getToken);
 
-    if (!data) {
-      return;
-    }
-
-    this._token = data;
+    result
+      .expect(() => '获取 QiNiu Token 失败')
+      .success(data => (this._token = data ?? ''));
   }
 
   get percent(): number {
