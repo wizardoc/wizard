@@ -18,3 +18,4 @@ export * from './view-way';
 export * from './catalog';
 export * from './search';
 export * from './menu';
+export * from './breadcrumbs';
