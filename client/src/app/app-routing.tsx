@@ -3,7 +3,13 @@ import {Inject} from 'react-ts-di';
 import {Switch, Route, Redirect, RouteComponentProps} from 'react-router-dom';
 import styled from 'styled-components';
 
-import {RouterService, Layout, TabService, HeaderType} from './services';
+import {
+  RouterService,
+  Layout,
+  TabService,
+  HeaderType,
+  RouteComponent,
+} from './services';
 import {PageNotFound} from './pages/page-not-found';
 import {isString} from './utils';
 import {Footer, SharePop, HeaderBar} from './components';
@@ -25,6 +31,7 @@ const Wrapper = styled.div<WrapperProps>`
 
 /**
  * 整个 App 的 Route 渲染组件，通过解析 routerService 的 routes 渲染和处理所有的 routes
+ * 渲染 && 处理子路由 -> 处理额外参数
  * @author Younccat
  */
 export class AppRouting extends Component {
@@ -35,11 +42,24 @@ export class AppRouting extends Component {
   tabService!: TabService;
 
   render(): ReactNode {
-    const routeComponents = this.routerService.routes.map(route => (
+    const routeComponents = this.renderComponents();
+
+    return (
+      <Suspense fallback="正在加载中...">
+        <Switch>
+          {routeComponents}
+          <Route component={PageNotFound} />
+        </Switch>
+      </Suspense>
+    );
+  }
+
+  private renderComponents(): ReactNode {
+    return this.routerService.routes.map(route => (
       <Route
         path={route.path}
         exact={route.exact}
-        render={(props: RouteComponentProps<any>) => {
+        render={(props: RouteComponentProps<any>): ReactNode => {
           // process activated guard
           if (route.activatedGuard) {
             const activatedGuard = new route.activatedGuard();
@@ -55,34 +75,37 @@ export class AppRouting extends Component {
           }
 
           return this.renderProcessor(
+            !!route.isNest,
             route.layout,
             route.redirect,
             route.component,
             route.headerType,
             route.isFullContainer,
+            route.father,
           );
         }}
       />
     ));
-
-    return (
-      <Suspense fallback="正在加载中...">
-        <Switch>
-          {routeComponents}
-          <Route component={PageNotFound} />
-        </Switch>
-      </Suspense>
-    );
   }
 
   private renderProcessor(
+    isNest: boolean,
     layout: Layout,
     redirect?: string,
     component?: ComponentType<RouteComponentProps<any>> | ComponentType<any>,
     headerType: HeaderType = 'fixed',
     isFullContainer?: boolean,
+    father?: RouteComponent,
   ): ReactNode {
-    const RenderComponent = component as ComponentType<unknown>;
+    const Father = father as ComponentType;
+    const Component = component as ComponentType;
+    const renderComponent = isNest ? (
+      <Father>
+        <Component />
+      </Father>
+    ) : (
+      <Component />
+    );
 
     // process render
     if (component) {
@@ -102,14 +125,13 @@ export class AppRouting extends Component {
       );
 
       const RENDER_COMPONENT: RenderComponent = {
-        limpidity: <RenderComponent />,
+        limpidity: renderComponent,
         normal: (
           <>
             {header}
             {wrapper(
               <>
-                <RenderComponent />
-                {/* <FloatingPop /> */}
+                {renderComponent}
                 <SharePop />
                 <Footer />
               </>,
@@ -118,8 +140,7 @@ export class AppRouting extends Component {
         ),
         'no-header': wrapper(
           <>
-            <RenderComponent />
-            {/* <FloatingPop /> */}
+            {renderComponent}
             <SharePop />
             <Footer />
           </>,
@@ -129,8 +150,7 @@ export class AppRouting extends Component {
             {header}
             {wrapper(
               <>
-                <RenderComponent />
-                {/* <FloatingPop /> */}
+                {renderComponent}
                 <SharePop />
               </>,
             )}

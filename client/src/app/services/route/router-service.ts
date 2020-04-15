@@ -39,7 +39,23 @@ export class RouterService {
       }))
       .concat(
         routes
-          .map(route => this.preparseRoutes(route.children || [], route))
+          .map(route =>
+            this.preparseRoutes(
+              // attach children
+              (route.children ?? []).map(child => ({
+                father: route.component,
+                ...child,
+                ...(child.isNest
+                  ? {
+                      isFullContainer: route.isFullContainer,
+                      headerType: route.headerType,
+                      layout: route.layout,
+                    }
+                  : {}),
+              })),
+              route,
+            ),
+          )
           .flat(),
       );
   }

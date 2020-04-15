@@ -76,7 +76,7 @@ export class OrganizationCardInfo extends Component<OrganizationCardInfoProps> {
     return (
       <>
         <OrganizationCover
-          title="Paella dish"
+          title={organizeName}
           onMouseEnter={() => this.toggleIsFull()}
           onMouseLeave={() => this.toggleIsFull()}
         >

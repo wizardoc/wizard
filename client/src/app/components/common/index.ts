@@ -14,3 +14,4 @@ export * from './overview-title';
 export * from './transition-fab';
 export * from './fab-card';
 export * from './default';
+export * from './side-bar';
