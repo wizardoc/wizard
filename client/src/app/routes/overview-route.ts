@@ -7,6 +7,10 @@ const OverviewOrganization = lazy(
   import('../pages/overview'),
   'OverviewOrganization',
 );
+const OverviewOrganizationEdit = lazy(
+  import('../pages/overview'),
+  'OrganizationEditPage',
+);
 
 export const OverviewRoutes: Routes = [
   {
@@ -16,9 +20,14 @@ export const OverviewRoutes: Routes = [
     children: [
       {
         path: '/organization',
-        layout: 'no-footer',
         isNest: true,
         component: OverviewOrganization,
+        children: [
+          {
+            path: '/edit',
+            component: OverviewOrganizationEdit,
+          },
+        ],
       },
     ],
   },

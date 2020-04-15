@@ -5,6 +5,9 @@ import {
   Link,
   Typography,
 } from '@material-ui/core';
+import styled from 'styled-components';
+
+import {withTheme, ThemeComponentProps} from 'src/app/theme';
 
 interface ParsedBreadcrumbsItem extends BreadcrumbsItem {
   route: string;
@@ -21,24 +24,51 @@ export interface BreadcrumbsRules {
 }
 
 export interface BreadcrumbsProps {
-  root?: string;
   rules: BreadcrumbsRules;
+  staticColor?: string;
+  activeColor?: string;
+  divisionColor?: string;
 }
+
+interface ColorTextProps {
+  color: string;
+}
+
+const ColorText = styled.div<ColorTextProps>`
+  width: fit-content;
+  height: fit-content;
+
+  > * {
+    color: ${props => props.color} !important;
+  }
+`;
 
 const ROUTE_DIVISION = '/';
 
+@withTheme
 @withRouter
 export class Breadcrumbs extends Component<
-  BreadcrumbsProps & Partial<RouteComponentProps>
+  BreadcrumbsProps & Partial<RouteComponentProps & ThemeComponentProps>
 > {
   render(): ReactNode {
+    const {
+      theme,
+      staticColor = theme!.grayTextColor,
+      activeColor = theme!.black,
+      divisionColor = theme!.black,
+    } = this.props;
+
     const renderBreadcrumbsItems = this.convertToBreadcrumbsItem().map(
       ({isActive = true, route, text, icon = <></>}) => {
         const renderItem = (children: ReactElement): ReactElement =>
           isActive ? (
-            <Link href={route}>{children}</Link>
+            <ColorText color={staticColor}>
+              <Link href={route}>{children}</Link>
+            </ColorText>
           ) : (
-            <Typography color="textPrimary">{children}</Typography>
+            <ColorText color={activeColor}>
+              <Typography color="textPrimary">{children}</Typography>
+            </ColorText>
           );
 
         return renderItem(
@@ -50,7 +80,11 @@ export class Breadcrumbs extends Component<
       },
     );
 
-    return <MaterialBreadcrumbs>{renderBreadcrumbsItems}</MaterialBreadcrumbs>;
+    return (
+      <ColorText color={divisionColor} {...this.props}>
+        <MaterialBreadcrumbs>{renderBreadcrumbsItems}</MaterialBreadcrumbs>
+      </ColorText>
+    );
   }
 
   private parseCurrentRoute(): string[] {

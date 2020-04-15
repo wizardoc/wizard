@@ -69,6 +69,7 @@ export const styledTheme = {
   mainPrimaryColor: '#5241cb',
   lightBlue: '#3451ff',
   flatYellow: '#fdcb6e',
+  coffeeGray: '#535c68',
 
   // variables
   heightOmitHeader: 'calc(100% - 48px)',

@@ -30,34 +30,34 @@ export class RouterService {
    * @param parent 父级的 route 数据
    */
   preparseRoutes(routes: Routes, {path, layout}: Route): ParsedRoute[] {
-    return routes
-      .map(route => ({
-        ...this.defaultRoutes,
-        ...route,
-        path: path + route.path,
-        layout: route.layout || layout || 'normal',
-      }))
-      .concat(
-        routes
-          .map(route =>
-            this.preparseRoutes(
-              // attach children
-              (route.children ?? []).map(child => ({
-                father: route.component,
-                ...child,
-                ...(child.isNest
-                  ? {
-                      isFullContainer: route.isFullContainer,
-                      headerType: route.headerType,
-                      layout: route.layout,
-                    }
-                  : {}),
-              })),
-              route,
-            ),
-          )
-          .flat(),
-      );
+    const parentRoutes = routes.map(route => ({
+      ...this.defaultRoutes,
+      ...route,
+      path: path + route.path,
+      layout: route.layout || layout || 'normal',
+    }));
+
+    return parentRoutes.concat(
+      parentRoutes
+        .map(route =>
+          this.preparseRoutes(
+            // attach children
+            (route.children ?? []).map(child => ({
+              father: route.component,
+              ...child,
+              ...(child.isNest
+                ? {
+                    isFullContainer: route.isFullContainer,
+                    headerType: route.headerType,
+                    layout: route.layout,
+                  }
+                : {}),
+            })),
+            route,
+          ),
+        )
+        .flat(),
+    );
   }
 
   get routes(): ParsedRoute[] {

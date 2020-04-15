@@ -14,8 +14,9 @@ import {OverviewTitle, TransitionFab, FabCard, Default} from '../common';
 
 const Wrapper = styled.div`
   width: 100%;
+  height: 100%;
   background: ${props => props.theme.shallowGrayBlue};
-  padding: 20px 40px;
+  padding: 20px 40px 20px 70px;
   box-sizing: border-box;
   position: relative;
   overflow: scroll;
