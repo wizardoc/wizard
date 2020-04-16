@@ -17,17 +17,17 @@ export const OverviewRoutes: Routes = [
     path: '/overview',
     layout: 'no-footer',
     component: OverviewCenter,
+    redirect: '/overview/organization',
     children: [
       {
         path: '/organization',
         isNest: true,
         component: OverviewOrganization,
-        children: [
-          {
-            path: '/edit',
-            component: OverviewOrganizationEdit,
-          },
-        ],
+      },
+      {
+        path: '/organization/edit',
+        isNest: true,
+        component: OverviewOrganizationEdit,
       },
     ],
   },

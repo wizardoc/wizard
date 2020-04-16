@@ -61,7 +61,6 @@ export class RouterService {
   }
 
   get routes(): ParsedRoute[] {
-    console.info('aa');
     return this.parsedRoutes;
   }
 }

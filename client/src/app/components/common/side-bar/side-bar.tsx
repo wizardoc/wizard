@@ -51,10 +51,4 @@ export class SideBar extends Component<
       </Wrapper>
     );
   }
-
-  componentDidMount(): void {
-    const {history, items} = this.props;
-
-    history!.push(items[0].route);
-  }
 }

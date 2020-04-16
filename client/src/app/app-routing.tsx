@@ -99,15 +99,9 @@ export class AppRouting extends Component {
     isFullContainer?: boolean,
     father?: RouteComponent,
   ): ReactNode {
-    const Father = father as ComponentType;
-    const Component = component as ComponentType;
-    const renderComponent = isNest ? (
-      <Father>
-        <Component />
-      </Father>
-    ) : (
-      <Component />
-    );
+    if (redirect) {
+      return this.redirect(redirect);
+    }
 
     // process render
     if (component) {
@@ -115,6 +109,15 @@ export class AppRouting extends Component {
         [k in Layout]: ReactNode;
       };
 
+      const Father = father as ComponentType;
+      const Component = component as ComponentType;
+      const renderComponent = isNest ? (
+        <Father>
+          <Component />
+        </Father>
+      ) : (
+        <Component />
+      );
       const header = <HeaderBar isFixed={headerType === 'fixed'} />;
       const wrapper = (children: ReactNode): ReactNode => (
         <Wrapper
@@ -167,7 +170,7 @@ export class AppRouting extends Component {
       return <PageNotFound />;
     }
 
-    return this.redirect(redirect!);
+    throw new Error('Make sure the component field exists');
   }
 
   private redirect(path: string): ReactNode {
