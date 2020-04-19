@@ -3,7 +3,7 @@ import {Inject, Injectable} from 'react-ts-di';
 
 import {BaseInfoData} from '../../components';
 import {Optional} from '../../types/type-utils';
-import {emptyAssert} from '../../utils';
+import {emptyAssert, genSync, SyncPair} from '../../utils';
 import {HTTP} from '../http';
 import {DialogService} from '../dialog';
 import {JWT} from '../jwt-service';
@@ -34,13 +34,13 @@ export type RegisterData = Optional<ParsedRegisterData>;
 @Injectable()
 export class User {
   @Inject
-  private http!: HTTP;
+  http!: HTTP;
 
   @Inject
-  private jwt!: JWT;
+  jwt!: JWT;
 
   @Inject
-  private dialog!: DialogService;
+  dialog!: DialogService;
 
   @Inject
   messageService!: MessageService;
@@ -54,9 +54,13 @@ export class User {
   userInfo: UserBaseInfo | undefined;
 
   @observable
-  isLogin: boolean = false;
+  _isLogin: boolean = false;
+
+  syncPair: SyncPair;
 
   constructor() {
+    this.syncPair = genSync();
+
     if (this.jwt.isExist) {
       // 刷新时带上 JWT 拿到用户的信息
       this.initUserInfo();
@@ -66,7 +70,7 @@ export class User {
   @action
   setUserInfo(userInfo: UserBaseInfo): void {
     this.userInfo = userInfo;
-    this.isLogin = true;
+    this._isLogin = true;
   }
 
   @action
@@ -76,13 +80,15 @@ export class User {
 
       result
         .expect(() => '获取用户信息失败')
-        .success(data =>
+        .success(data => {
           emptyAssert(data, data => {
             this.setUserInfo(data.userInfo);
             // initialize websocket
             this.messageService.initWebSocket();
-          }),
-        );
+          });
+
+          this.syncPair.unlock();
+        });
     });
   }
 
@@ -108,9 +114,12 @@ export class User {
     return result.expect(() => '获取验证结果失败').data?.isValid;
   }
 
-  @computed
-  get getIsLogin(): boolean {
-    return this.isLogin;
+  isInit(): Promise<void> {
+    return this.syncPair.lock;
+  }
+
+  get isLogin(): boolean {
+    return this._isLogin;
   }
 
   @computed
@@ -149,7 +158,7 @@ export class User {
 
     // reset userData
     this.userInfo = undefined;
-    this.isLogin = false;
+    this._isLogin = false;
   }
 
   async updateAvatar(avatar: string): Promise<void> {
