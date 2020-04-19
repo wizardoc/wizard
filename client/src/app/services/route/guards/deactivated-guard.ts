@@ -2,9 +2,13 @@ import {RouteComponentProps} from 'react-router-dom';
 
 import {Constructable} from 'src/app/types/type-utils';
 
-import {Route} from '../route';
+import {Route, OriginGuard} from '../route';
 
 export type DeactivatedGuardConstructor = Constructable<DeactivatedGuard>;
+
+export type OriginDeactivatedGuardConstructor = OriginGuard<
+  DeactivatedGuardConstructor
+>;
 
 export interface DeactivatedGuard {
   canDeactivate(

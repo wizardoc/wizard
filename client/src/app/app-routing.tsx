@@ -2,14 +2,15 @@ import React, {Component, ReactNode, Suspense, ComponentType} from 'react';
 import {Inject} from 'react-ts-di';
 import {Switch, Route, Redirect, RouteComponentProps} from 'react-router-dom';
 import styled from 'styled-components';
+import {observer} from 'mobx-react';
+import {observable} from 'mobx';
 
 import {
-  RouterService,
-  Layout,
-  TabService,
-  HeaderType,
-  RouteComponent,
-} from './services';
+  Route as AppRoute,
+  OriginActivatedGuardConstructor,
+} from 'src/app/services';
+
+import {RouterService, Layout, TabService} from './services';
 import {PageNotFound} from './pages/page-not-found';
 import {isString} from './utils';
 import {Footer, SharePop, HeaderBar} from './components';
@@ -28,6 +29,77 @@ const Wrapper = styled.div<WrapperProps>`
   position: relative;
   ${props => !props.isHideFooter && 'padding-bottom: 360px;'}
 `;
+
+export const guardWrapper = (
+  Wrapper: ComponentType,
+  route: AppRoute,
+  props: RouteComponentProps,
+): ComponentType => {
+  @observer
+  class GuardWrapper extends Component {
+    @observable
+    targetView: ReactNode = (<div>123</div>);
+
+    render(): ReactNode {
+      return this.targetView;
+    }
+
+    async componentDidMount(): Promise<void> {
+      const [ok, stuff] = await this.processActiveGuard(route, props);
+
+      if (!ok) {
+        this.targetView = stuff;
+
+        return;
+      }
+
+      this.targetView = (
+        <Wrapper {...this.props} {...(stuff as object)}></Wrapper>
+      );
+    }
+
+    private async processActiveGuard(
+      route: AppRoute,
+      props: RouteComponentProps,
+    ): Promise<[boolean, ReactNode | object]> {
+      let injectProps = {};
+
+      for (const ActiveGuard of route.activatedGuard ?? []) {
+        const {
+          isOrigin,
+          guard: Guard,
+        } = ActiveGuard as OriginActivatedGuardConstructor;
+        const activatedGuard = new Guard();
+        let eachInjectProps = {};
+        const injector = (props?: object): void => {
+          eachInjectProps = props ?? {};
+        };
+        const canActive = await activatedGuard.canActivated(
+          route,
+          props,
+          injector,
+        );
+
+        // compose props
+        if (isOrigin) {
+          injectProps = {...injectProps, ...eachInjectProps};
+        }
+
+        if (isString(canActive)) {
+          return [false, <Redirect to={canActive} />];
+        }
+
+        if (!canActive) {
+          return [false, <PageNotFound />];
+        }
+      }
+
+      return [true, injectProps];
+    }
+  }
+
+  return GuardWrapper;
+};
 
 /**
  * 整个 App 的 Route 渲染组件，通过解析 routerService 的 routes 渲染和处理所有的 routes
@@ -61,44 +133,27 @@ export class AppRouting extends Component {
       <Route
         path={route.path}
         exact={route.exact}
-        render={(props: RouteComponentProps<any>): ReactNode => {
-          // process activated guard
-          if (route.activatedGuard) {
-            const activatedGuard = new route.activatedGuard();
-            const canActive = activatedGuard.canActivated(route, props);
-
-            if (isString(canActive)) {
-              return this.redirect(canActive);
-            }
-
-            if (!canActive) {
-              return <PageNotFound />;
-            }
-          }
-
-          return this.renderProcessor(
-            !!route.isNest,
-            route.layout,
-            route.redirect,
-            route.component,
-            route.headerType,
-            route.isFullContainer,
-            route.father,
-          );
-        }}
+        render={(props: RouteComponentProps): ReactNode =>
+          this.renderProcessor(route, props)
+        }
       />
     ));
   }
 
   private renderProcessor(
-    isNest: boolean,
-    layout: Layout,
-    redirect?: string,
-    component?: ComponentType<RouteComponentProps<any>> | ComponentType<any>,
-    headerType: HeaderType = 'fixed',
-    isFullContainer?: boolean,
-    father?: RouteComponent,
+    route: AppRoute,
+    props: RouteComponentProps,
   ): ReactNode {
+    const {
+      redirect,
+      component,
+      headerType = 'fixed',
+      father,
+      isNest,
+      isFullContainer,
+      layout = 'normal',
+    } = route;
+
     if (redirect) {
       return this.redirect(redirect);
     }
@@ -110,7 +165,8 @@ export class AppRouting extends Component {
       };
 
       const Father = father as ComponentType;
-      const Component = component as ComponentType;
+      guardWrapper(component as ComponentType, route, props);
+      const Component = guardWrapper(component as ComponentType, route, props);
       const renderComponent = isNest ? (
         <Father>
           <Component />

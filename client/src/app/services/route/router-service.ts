@@ -1,7 +1,13 @@
 import {Omit} from 'src/app/types/type-utils';
 import * as AppRoutes from 'src/app/routes';
 
-import {Route, Routes, ParsedRoute} from './route';
+import {Route, Routes, ParsedRoute, OriginGuard} from './route';
+import {
+  ActivatedGuardConstructor,
+  DeactivatedGuardConstructor,
+  OriginActivatedGuardConstructor,
+  OriginDeactivatedGuardConstructor,
+} from './guards';
 
 const STUB_ROUTE: Route = {path: ''};
 
@@ -52,12 +58,39 @@ export class RouterService {
                     layout: route.layout,
                   }
                 : {}),
+              activatedGuard: this.composeGuards(
+                'activatedGuard',
+                route,
+                child,
+              ) as OriginActivatedGuardConstructor[],
+              deactivatedGuard: this.composeGuards(
+                'deactivatedGuard',
+                route,
+                child,
+              ) as OriginDeactivatedGuardConstructor[],
             })),
             route,
           ),
         )
         .flat(),
     );
+  }
+
+  private composeGuards(
+    type: string,
+    parent: Route,
+    child: Route,
+  ): OriginGuard<ActivatedGuardConstructor | DeactivatedGuardConstructor>[] {
+    return [
+      ...this.attachTag(parent[type], 'father'),
+      ...this.attachTag(child[type], 'origin'),
+    ];
+  }
+
+  private attachTag<
+    T extends ActivatedGuardConstructor | DeactivatedGuardConstructor
+  >(target: T[], tag: 'origin' | 'father'): OriginGuard<T>[] {
+    return (target ?? []).map(guard => ({isOrigin: tag === 'origin', guard}));
   }
 
   get routes(): ParsedRoute[] {

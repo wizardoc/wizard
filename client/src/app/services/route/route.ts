@@ -1,7 +1,12 @@
 import {ComponentType} from 'react';
 import {RouteComponentProps} from 'react-router-dom';
 
-import {ActivatedGuardConstructor, DeactivatedGuardConstructor} from './guards';
+import {
+  ActivatedGuardConstructor,
+  DeactivatedGuardConstructor,
+  OriginDeactivatedGuardConstructor,
+  OriginActivatedGuardConstructor,
+} from './guards';
 
 export type Routes = Route[];
 
@@ -28,11 +33,24 @@ export interface Route {
    * 当 Component 为空时，会自动填充 404
    */
   component?: RouteComponent;
-  activatedGuard?: ActivatedGuardConstructor;
-  deactivatedGuard?: DeactivatedGuardConstructor;
+  activatedGuard?: (
+    | ActivatedGuardConstructor
+    | OriginActivatedGuardConstructor
+  )[];
+  deactivatedGuard?: (
+    | DeactivatedGuardConstructor
+    | OriginDeactivatedGuardConstructor
+  )[];
   children?: Routes;
 }
 
 export interface ParsedRoute extends Route {
   layout: Layout;
+}
+
+export interface OriginGuard<
+  T extends ActivatedGuardConstructor | DeactivatedGuardConstructor
+> {
+  isOrigin: boolean;
+  guard: T;
 }

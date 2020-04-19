@@ -1,9 +1,10 @@
 import {lazy} from 'src/app/utils';
 
 import {Routes} from '../services';
+import {Home} from '../pages/home';
 
 /** Lazy load */
-const Home = lazy(import('../pages/home'), 'Home');
+// const Home = lazy(import('../pages/home'), 'Home');
 
 const Organization = lazy(import('../pages/organization'), 'Organization');
 
