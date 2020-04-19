@@ -69,6 +69,7 @@ export const styledTheme = {
   mainPrimaryColor: '#5241cb',
   lightBlue: '#3451ff',
   flatYellow: '#fdcb6e',
+  flatGray: '#f5f5f5',
   coffeeGray: '#535c68',
 
   // variables
