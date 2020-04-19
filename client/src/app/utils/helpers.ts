@@ -1,3 +1,5 @@
+import qs from 'qs';
+
 /**
  * 遍历数组的方法，用来执行一些带有副作用的方法，当回调函数返回 false 时 break
  * @params arr 目标数组
@@ -15,8 +17,8 @@ export class Pipe<T = any> {
   private constructor(private val: T) {}
 
   next(cb: (v: T) => T, condition?: (v: T) => boolean): Pipe {
-    if((condition ?? (() => {}))(this.value)) {
-    this.val = cb(this.val);
+    if ((condition ?? (() => {}))(this.value)) {
+      this.val = cb(this.val);
     }
 
     return this;
@@ -26,8 +28,8 @@ export class Pipe<T = any> {
     return this.val;
   }
 
-  toString():T {
-    return this.val
+  toString(): T {
+    return this.val;
   }
 
   static from<T>(val: T): Pipe<T> {
@@ -37,4 +39,8 @@ export class Pipe<T = any> {
   get value(): T {
     return this.val;
   }
+}
+
+export function parseQuery(query: string): any {
+  return qs.parse(query.trim().replace(/^\?/, ''));
 }

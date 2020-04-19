@@ -3,6 +3,7 @@ export * from './svg-generator';
 export * from './storage';
 export * from './MIME';
 export * from './markdown';
+export * from './sync';
 export * from './typeof';
 export * from './viewport-listener';
 export * from './import';
