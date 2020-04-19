@@ -13,9 +13,9 @@ export type OriginActivatedGuardConstructor = OriginGuard<
 export type PropsInjector = (props: object) => void;
 
 export interface ActivatedGuard {
-  canActivated<T>(
+  canActivated(
     route: Route,
-    props: RouteComponentProps<T>,
+    props: RouteComponentProps<any>,
     inject: PropsInjector,
   ): boolean | Route['path'] | Promise<boolean | Route['path']>;
 }
