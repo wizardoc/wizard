@@ -43,6 +43,12 @@ const ColorText = styled.div<ColorTextProps>`
   }
 `;
 
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const ROUTE_DIVISION = '/';
 
 @withTheme
@@ -72,10 +78,10 @@ export class Breadcrumbs extends Component<
           );
 
         return renderItem(
-          <>
+          <Wrapper>
             {icon}
             {text}
-          </>,
+          </Wrapper>,
         );
       },
     );
