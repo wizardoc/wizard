@@ -113,20 +113,15 @@ interface StartedProps extends RouteComponentProps {}
 @observer
 class TStarted extends Component<StartedProps> {
   @Inject
-  private userService!: User;
+  userService!: User;
 
   @observable
   isMounted = false;
 
   handleGetStartClick(): void {
-    const {isLogin} = this.userService;
     const {history} = this.props;
 
-    if (isLogin) {
-      history.push('/doc');
-    } else {
-      history.push('/user/login');
-    }
+    history.push('/overview');
   }
 
   render(): ReactNode {

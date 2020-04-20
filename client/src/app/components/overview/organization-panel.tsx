@@ -4,6 +4,7 @@ import {Inject} from 'react-ts-di';
 import styled from 'styled-components';
 import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
+import {withRouter, RouteComponentProps} from 'react-router-dom';
 
 import {OrganizationService} from 'src/app/services';
 import {withTheme, ThemeComponentProps} from 'src/app/theme';
@@ -15,7 +16,7 @@ import {OverviewTitle, TransitionFab, FabCard, Default} from '../common';
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  background: ${props => props.theme.shallowGrayBlue};
+  background: ${props => props.theme.flatGray};
   padding: 20px 40px 20px 70px;
   box-sizing: border-box;
   position: relative;
@@ -52,17 +53,28 @@ const DefaultText = styled.span`
   margin-bottom: 70px;
 `;
 
+@withRouter
 @withTheme
 @observer
-export class OrganizationPanel extends Component<Partial<ThemeComponentProps>> {
+export class OrganizationPanel extends Component<
+  Partial<ThemeComponentProps & RouteComponentProps>
+> {
   @Inject
   organizationService!: OrganizationService;
+
+  handleOrganizationCardClick(): void {
+    this.props.history!.push('organization/docs');
+  }
 
   render(): ReactNode {
     const {theme} = this.props;
     const organizationCards = this.organizationService.organizations.map(
       (info, index) => (
-        <OrganizationCard organizationCardData={info} seqIndex={index} />
+        <OrganizationCard
+          organizationCardData={info}
+          seqIndex={index}
+          onCardClick={() => this.handleOrganizationCardClick()}
+        />
       ),
     );
 

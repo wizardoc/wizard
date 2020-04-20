@@ -12,6 +12,7 @@ import {colorGenerator} from '../../utils';
 
 interface OrganizationCardInfoProps {
   organizationCardData: OrganizationCardData;
+  onContentClick?(): void;
 }
 
 interface OrganizationNameProps {
@@ -71,6 +72,7 @@ export class OrganizationCardInfo extends Component<OrganizationCardInfoProps> {
   render(): ReactNode {
     const {
       organizationCardData: {organizeName, description, createTime, joinTime},
+      onContentClick = (): void => {},
     } = this.props;
 
     return (
@@ -80,7 +82,7 @@ export class OrganizationCardInfo extends Component<OrganizationCardInfoProps> {
           onMouseEnter={() => this.toggleIsFull()}
           onMouseLeave={() => this.toggleIsFull()}
         >
-          <Cover>
+          <Cover onClick={onContentClick}>
             <ColorBlock isFull={this.isFull} color={this.color}>
               <OrganizationName isFull={this.isFull}>
                 {organizeName}

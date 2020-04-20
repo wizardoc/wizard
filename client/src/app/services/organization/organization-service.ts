@@ -1,11 +1,17 @@
 import {Inject, Injectable} from 'react-ts-di';
 import {observable} from 'mobx';
 
-import {HTTP, ResValueArea} from '../http';
+import {SyncPair, genSync, traverse} from 'src/app/utils';
+
+import {HTTP, ResValueArea, noop} from '../http';
 import {User} from '../user';
 
 import {OrganizationAPI} from './@organization-service.api';
 import {OrganizationCardData} from './organization-service.dto';
+
+export interface EditPayload {
+  [key: string]: any;
+}
 
 @Injectable()
 export class OrganizationService {
@@ -21,8 +27,46 @@ export class OrganizationService {
   @observable
   private _organizations: OrganizationCardData[] = [];
 
+  private syncPair: SyncPair;
+
+  constructor() {
+    this.syncPair = genSync();
+    this.getAllJoinOrganization();
+  }
+
   get organizations(): OrganizationCardData[] {
     return this._organizations;
+  }
+
+  isInit(): Promise<void> {
+    return this.syncPair.lock;
+  }
+
+  async edit(id: string, payload: EditPayload): Promise<ResValueArea> {
+    const index = this._organizations.findIndex(
+      ({id: originId}) => originId === id,
+    );
+    const payloadKeys = Object.keys(payload);
+
+    if (!index) {
+      throw new Error(`Cannot find the organization which id is ${id}`);
+    }
+
+    // check diff
+    for (const key of Object.keys(payload)) {
+      if (this._organizations[index][key] === payload[key]) {
+        return noop;
+      }
+    }
+
+    const organizationDup = {...this._organizations[index], ...payload};
+    const result = await this.http.put(this.apis.edit(id), organizationDup);
+
+    return result.success(() => {
+      traverse(payloadKeys, key => {
+        this._organizations[index][key] = payload[key];
+      });
+    });
   }
 
   async getAllNames(): Promise<string[]> {
@@ -38,10 +82,11 @@ export class OrganizationService {
 
     const {data} = result
       .expect(() => '获取组织信息失败')
-      .success(data => data?.organizations ?? []);
+      .pipe(data => data?.organizations ?? []);
 
     // init organizations
     this._organizations = data;
+    this.syncPair.unlock();
 
     return data;
   }

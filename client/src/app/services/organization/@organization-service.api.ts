@@ -12,5 +12,7 @@ export class OrganizationAPI {
 
   join = '/join';
 
+  edit = (id: string): string => `/edit/${id}`;
+
   remove = (name: string): string => `/remove/${name}`;
 }

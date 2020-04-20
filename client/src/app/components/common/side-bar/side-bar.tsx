@@ -14,12 +14,10 @@ export interface SideBarProps {
   onItemClick?(item: SideBarItem): void;
 }
 
-export type View = 'organization' | 'messages' | 'checker';
-
 const Wrapper = styled.div`
   width: 250px;
   height: 100%;
-  box-shadow: 0 0 100px ${props => props.theme.deepGray};
+  box-shadow: ${props => props.theme.flatShadow};
   z-index: 1;
   flex-shrink: 0;
 `;

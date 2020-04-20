@@ -15,6 +15,7 @@ import {OrganizationCardInfo} from './organization-card-info';
 export interface OrganizationCardProps {
   organizationCardData: OrganizationCardData;
   seqIndex: number;
+  onCardClick?(): void;
 }
 
 const CardWrapper = styled(Card)`
@@ -32,19 +33,12 @@ export class OrganizationCard extends Component<OrganizationCardProps> {
   @Inject
   time!: Time;
 
-  // async handleOrganizationRemove(
-  //   name: string,
-  //   delayDuration: number,
-  // ): Promise<void> {
-  //   this.isMounted = false;
-
-  //   await this.time.sleep(delayDuration / Time.Second);
-
-  //   this.props.onOrganizationRemove(name);
-  // }
-
   render(): ReactNode {
-    const {organizationCardData, seqIndex} = this.props;
+    const {
+      organizationCardData,
+      seqIndex,
+      onCardClick = (): void => {},
+    } = this.props;
     const delayDuration = seqIndex * 300;
 
     return (
@@ -53,14 +47,12 @@ export class OrganizationCard extends Component<OrganizationCardProps> {
           <HeaderOwner
             ownerInfo={organizationCardData.ownerInfo}
             organizeName={organizationCardData.organizeName}
+            id={organizationCardData.id}
           />
-          <OrganizationCardInfo organizationCardData={organizationCardData} />
-          {/* <OrganizationActions
-            onOrganizationRemove={(name: string) =>
-              this.handleOrganizationRemove(name, delayDuration)
-            }
+          <OrganizationCardInfo
+            onContentClick={onCardClick}
             organizationCardData={organizationCardData}
-          /> */}
+          />
         </CardWrapper>
       </Grow>
     );

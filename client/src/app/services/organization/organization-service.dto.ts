@@ -1,6 +1,7 @@
 import {UserBaseInfo} from '../user';
 
-export interface OrganizationCardData extends UserBaseInfo {
+export interface OrganizationCardData {
+  id: string;
   ownerInfo: UserBaseInfo;
   organizeName: string;
   description: string;

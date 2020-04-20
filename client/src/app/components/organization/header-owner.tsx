@@ -5,6 +5,7 @@ import React, {Component, ComponentType, ReactNode} from 'react';
 import styled from 'styled-components';
 import {observer} from 'mobx-react';
 import {Inject} from 'react-ts-di';
+import {withRouter, RouteComponentProps} from 'react-router-dom';
 
 import {withTheme, ThemeComponentProps} from 'src/app/theme';
 import {Menu} from 'src/app/ui';
@@ -20,6 +21,7 @@ import {Avatar} from '../common';
 interface HeaderOwnerProps {
   ownerInfo: UserBaseInfo;
   organizeName: string;
+  id: string;
 }
 
 interface OrganizationAction {
@@ -32,10 +34,11 @@ const PrimaryAvatar = styled.div`
   height: 42px;
 ` as ComponentType<AvatarProps>;
 
+@withRouter
 @withTheme
 @observer
 export class HeaderOwner extends Component<
-  HeaderOwnerProps & Partial<ThemeComponentProps>
+  HeaderOwnerProps & Partial<ThemeComponentProps & RouteComponentProps>
 > {
   @Inject
   organizationService!: OrganizationService;
@@ -57,7 +60,11 @@ export class HeaderOwner extends Component<
     },
   ];
 
-  handleEditOrganizationClick(): void {}
+  handleEditOrganizationClick(): void {
+    const {history, id} = this.props;
+
+    history!.push(`organization/edit/${id}`);
+  }
 
   async handleRemoveOrganizationClick(): Promise<void> {
     const {organizeName} = this.props;

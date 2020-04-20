@@ -34,6 +34,12 @@ const breadcrumbsRules: BreadcrumbsRules = {
   '/overview/organization': {
     text: '组织概览',
   },
+  '/overview/organization/edit': {
+    text: '编辑组织',
+  },
+  '/overview/organization/docs': {
+    text: '文档概览',
+  },
 };
 
 @withTheme

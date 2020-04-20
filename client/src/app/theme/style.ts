@@ -47,7 +47,7 @@ export const styledTheme = {
   grayTextColor: 'rgba(0, 0, 0, 0.54)',
   shallowShadow: '0 1px 3px rgba(26,26,26,.1)',
   baseShadow:
-    '0px 1px 5px 0px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 3px 1px -2px rgba(0,0,0,0.12);',
+    '0px 1px 5px 0px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 3px 1px -2px rgba(0,0,0,0.12)',
   darkWhite: 'rgb(214, 211, 205)',
   darkGray: 'rgb(186, 181, 171)',
   shallowGrayBlue: '#f7f9fc',
@@ -70,6 +70,7 @@ export const styledTheme = {
   lightBlue: '#3451ff',
   flatYellow: '#fdcb6e',
   flatGray: '#f5f5f5',
+  flatShadow: '6px 0 6px rgba(0,0,0,.1)',
   coffeeGray: '#535c68',
 
   // variables

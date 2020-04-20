@@ -23,7 +23,10 @@ interface Doer<R> {
   Do(): Response<R>;
 }
 
-export type ResValueArea<R = any> = Expectable<R> & Successable<R> & Result<R>;
+export type ResValueArea<R = any> = Expectable<R> &
+  Successable<R> &
+  Result<R> &
+  Pipable<R>;
 
 export type ExpectableCB = (err: AxiosError | undefined) => string | void;
 
@@ -35,6 +38,10 @@ export type OnExpect<R> = (cb?: ExpectableCB) => ResValueArea<R>;
 
 export interface Successable<R> {
   success: OnSuccess<R>;
+}
+
+export interface Pipable<R> {
+  pipe: OnSuccess<R>;
 }
 
 export type OnSuccess<R = any> = (cb: OnSuccessCB<R>) => ResValueArea<R>;
@@ -122,8 +129,16 @@ export class HttpClient {
         ok: !!err,
         success: onSuccuss,
         expect: onExpect,
+        pipe,
       };
       const that = this;
+
+      function pipe(cb: OnSuccessCB<R>): ResValueArea {
+        return {
+          ...valueArea,
+          data: cb(data),
+        };
+      }
 
       function onSuccuss(cb: OnSuccessCB<R>): ResValueArea {
         return {
@@ -156,3 +171,12 @@ export class HttpClient {
     return `${this.addr}${parsedPath}`;
   }
 }
+
+const noopFn: any = () => {};
+export const noop: ResValueArea = {
+  success: noopFn,
+  expect: noopFn,
+  data: undefined,
+  ok: false,
+  pipe: noopFn,
+};

@@ -14,7 +14,8 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-class THome extends Component {
+@RouterAnimation
+export class Home extends Component {
   render(): ReactNode {
     return (
       <Wrapper>
@@ -45,5 +46,3 @@ class THome extends Component {
 
   componentWillUpdate(): void {}
 }
-
-export const Home = RouterAnimation(THome);
