@@ -9350,6 +9350,11 @@ junk@^1.0.1:
   resolved "https://registry.npm.taobao.org/junk/download/junk-1.0.3.tgz#87be63488649cbdca6f53ab39bec9ccd2347f592"
   integrity sha1-h75jSIZJy9ym9Tqzm+yczSNH9ZI=
 
+keycode-js@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.npm.taobao.org/keycode-js/download/keycode-js-2.0.3.tgz#0ef559be057847aae6c520ce03577f4a12f7e257"
+  integrity sha1-DvVZvgV4R6rmxSDOA1d/ShL34lc=
+
 keygrip@~1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/keygrip/-/keygrip-1.1.0.tgz#871b1681d5e159c62a445b0c74b615e0917e7226"
