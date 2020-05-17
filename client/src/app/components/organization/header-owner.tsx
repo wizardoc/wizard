@@ -8,7 +8,8 @@ import {Inject} from 'react-ts-di';
 import {withRouter, RouteComponentProps} from 'react-router-dom';
 
 import {withTheme, ThemeComponentProps} from 'src/app/theme';
-import {Menu} from 'src/app/ui';
+import {Menu, MenuItem} from 'src/app/ui';
+import {PermissionValues} from 'src/app/services/permission';
 
 import {
   UserBaseInfo,
@@ -22,11 +23,7 @@ interface HeaderOwnerProps {
   ownerInfo: UserBaseInfo;
   organizeName: string;
   id: string;
-}
-
-interface OrganizationAction {
-  text: string;
-  handler(): void;
+  permissions: PermissionValues[];
 }
 
 const PrimaryAvatar = styled.div`
@@ -49,16 +46,25 @@ export class HeaderOwner extends Component<
   @Inject
   confirmDialog!: ConfirmDialogService;
 
-  organizationActions: OrganizationAction[] = [
+  organizationActions: MenuItem[] = [
     {
       text: '删除组织',
+      permission: PermissionValues.ORG_DELETE,
       handler: () => this.handleRemoveOrganizationClick(),
     },
     {
       text: '编辑组织',
+      permission: PermissionValues.ORG_EDIT,
       handler: () => this.handleEditOrganizationClick(),
     },
+    {
+      text: '邀请成员',
+      permission: PermissionValues.ORG_INVITE,
+      handler: () => this.handleInviteMemberClick(),
+    },
   ];
+
+  handleInviteMemberClick(): void {}
 
   handleEditOrganizationClick(): void {
     const {history, id} = this.props;
@@ -84,14 +90,18 @@ export class HeaderOwner extends Component<
   }
 
   render(): ReactNode {
-    const {ownerInfo, theme} = this.props;
+    const {ownerInfo, theme, permissions} = this.props;
     const {primaryColor, white} = theme!;
 
     return (
       <CardHeader
         avatar={
           <PrimaryAvatar>
-            <Avatar bgColor={primaryColor} color={white} />
+            <Avatar
+              bgColor={primaryColor}
+              color={white}
+              lnk={ownerInfo.avatar}
+            />
           </PrimaryAvatar>
         }
         title={ownerInfo.displayName}
@@ -103,6 +113,7 @@ export class HeaderOwner extends Component<
                 <MoreVertIcon />
               </IconButton>
             }
+            permissions={permissions}
             menuItems={this.organizationActions}
           />
         }

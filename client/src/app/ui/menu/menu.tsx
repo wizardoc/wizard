@@ -18,13 +18,18 @@ import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 import styled from 'styled-components';
 
+import {PermissionValues} from 'src/app/services/permission';
+
 export interface MenuItem {
   text: string;
+  isHide?: boolean;
+  permission?: PermissionValues;
   handler(): void;
 }
 
 export interface MenuProps {
   bind: ReactNode;
+  permissions?: PermissionValues[];
   menuItems?: MenuItem[];
 }
 
@@ -49,16 +54,26 @@ export class Menu extends Component<
   }
 
   render(): ReactNode {
-    const {bind, menuItems = []} = this.props;
+    const {bind, menuItems = [], permissions} = this.props;
     const bindEle = bind as ReactElement;
     const renderBind = cloneElement(bindEle, {
       ...bindEle.props,
       ref: this.bindRef,
       onClick: (e: MouseEvent) => this.handleBindClick(e),
     });
-    const renderMenuItems = menuItems.map(({text, handler}) => (
-      <StyledMaterialMenuItem onClick={handler}>{text}</StyledMaterialMenuItem>
-    ));
+    const renderMenuItems = menuItems.map(
+      ({text, isHide, permission, handler}) =>
+        isHide ||
+        !(permission !== undefined && permissions?.includes(permission)) ? (
+          <></>
+        ) : (
+          <StyledMaterialMenuItem key={text} onClick={handler}>
+            {text}
+          </StyledMaterialMenuItem>
+        ),
+    );
+
+    console.info(permissions);
 
     return (
       <>
