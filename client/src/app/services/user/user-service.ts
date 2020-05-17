@@ -9,7 +9,12 @@ import {DialogService} from '../dialog';
 import {JWT} from '../jwt-service';
 import {MessageService} from '../message';
 
-import {UserBaseInfo, UserInfoDTO, ValidResult} from './user-service.dto';
+import {
+  UserBaseInfo,
+  UserInfoDTO,
+  ValidResult,
+  SearchNameResult,
+} from './user-service.dto';
 import {UserServiceAPI} from './@user-service.api';
 
 interface UserInfoAvatarPart {
@@ -159,6 +164,12 @@ export class User {
     // reset userData
     this.userInfo = undefined;
     this._isLogin = false;
+  }
+
+  async searchByName(name: string): Promise<SearchNameResult> {
+    const result = await this.http.get(this.api.searchName, {username: name});
+
+    return result.data;
   }
 
   async updateAvatar(avatar: string): Promise<void> {

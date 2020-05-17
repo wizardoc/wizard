@@ -2,7 +2,7 @@ import {Card, Grow} from '@material-ui/core';
 import {CardProps} from '@material-ui/core/Card';
 import {observable} from 'mobx';
 import {observer} from 'mobx-react';
-import React, {Component, ComponentType, ReactNode} from 'react';
+import React, {ComponentType, ReactNode, PureComponent} from 'react';
 import styled from 'styled-components';
 import {Inject} from 'react-ts-di';
 
@@ -26,12 +26,18 @@ const CardWrapper = styled(Card)`
 ` as ComponentType<CardProps>;
 
 @observer
-export class OrganizationCard extends Component<OrganizationCardProps> {
+export class OrganizationCard extends PureComponent<OrganizationCardProps> {
   @observable
   isMounted = false;
 
   @Inject
   time!: Time;
+
+  constructor(prop: OrganizationCardProps) {
+    super(prop);
+
+    console.info('w');
+  }
 
   render(): ReactNode {
     const {
@@ -45,6 +51,7 @@ export class OrganizationCard extends Component<OrganizationCardProps> {
       <Grow in={this.isMounted} timeout={delayDuration}>
         <CardWrapper>
           <HeaderOwner
+            permissions={organizationCardData.permissions}
             ownerInfo={organizationCardData.ownerInfo}
             organizeName={organizationCardData.organizeName}
             id={organizationCardData.id}
@@ -59,6 +66,7 @@ export class OrganizationCard extends Component<OrganizationCardProps> {
   }
 
   componentDidMount(): void {
+    console.info('ismounted');
     this.isMounted = true;
   }
 }

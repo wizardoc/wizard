@@ -17,7 +17,7 @@ import {Avatar} from '../common';
 
 import {IconFunc, IconFuncs} from './@icon-funcs';
 
-const AvatarWrapper = styled.div`
+const StyledAvatar = styled(Avatar)`
   width: 35px !important;
   height: 35px !important;
   margin-left: 20px;
@@ -116,9 +116,7 @@ export class Funcs extends Component<Partial<RouteComponentProps>> {
         <IconFuncs iconFuncs={this.iconFuncs} />
         {isLogin && (
           <UserInfo onClick={() => this.handleAvatarClick()}>
-            <AvatarWrapper>
-              <Avatar></Avatar>
-            </AvatarWrapper>
+            <StyledAvatar></StyledAvatar>
             <UserName>{userInfo!.displayName}</UserName>
           </UserInfo>
         )}

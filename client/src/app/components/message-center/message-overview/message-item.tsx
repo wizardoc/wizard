@@ -33,6 +33,11 @@ const SendTime = styled.div`
   font-size: 13px;
 `;
 
+const StyledAvatar = styled(Avatar)`
+  width: 40px;
+  height: 40px;
+`;
+
 export class MessageItem extends Component<MessageItemProps> {
   @Inject
   timeService!: Time;
@@ -50,7 +55,7 @@ export class MessageItem extends Component<MessageItemProps> {
 
     return (
       <Wrapper>
-        <Avatar lnk={avatar} size="40px"></Avatar>
+        <StyledAvatar lnk={avatar}></StyledAvatar>
         <UserInfoWrapper>
           <UserName>{username}</UserName>
           <SendTime>{this.sendTime}</SendTime>

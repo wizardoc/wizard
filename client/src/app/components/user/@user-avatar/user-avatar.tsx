@@ -24,9 +24,9 @@ const Wrapper = styled.div`
   overflow: hidden;
 `;
 
-const AvatarBigger = styled.div`
-  width: 150px;
-  height: 150px;
+const AvatarBigger = styled(Avatar)`
+  width: 150px !important;
+  height: 150px !important;
   cursor: pointer;
 `;
 
@@ -117,9 +117,7 @@ export class UserAvatar extends Component {
           onMouseLeave={() => this.handleAvatarMouseLeave()}
           onMouseOver={() => this.handleAvatarMouseHover()}
         >
-          <AvatarBigger>
-            <Avatar></Avatar>
-          </AvatarBigger>
+          <AvatarBigger></AvatarBigger>
           <EditTag hover={this.isAvatarHover}>
             <BarWrapper>
               <InsertPhotoIcon></InsertPhotoIcon>

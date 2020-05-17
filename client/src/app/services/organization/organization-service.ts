@@ -35,6 +35,8 @@ export class OrganizationService {
   }
 
   get organizations(): OrganizationCardData[] {
+    console.info(this._organizations);
+
     return this._organizations;
   }
 
@@ -48,7 +50,7 @@ export class OrganizationService {
     );
     const payloadKeys = Object.keys(payload);
 
-    if (!index) {
+    if (!~index) {
       throw new Error(`Cannot find the organization which id is ${id}`);
     }
 
@@ -85,7 +87,10 @@ export class OrganizationService {
       .pipe(data => data?.organizations ?? []);
 
     // init organizations
-    this._organizations = data;
+    this._organizations = data.map((organization: OrganizationCardData) => ({
+      ...organization,
+      isOwner: organization.ownerInfo.username === this.user.userInfo!.username,
+    }));
     this.syncPair.unlock();
 
     return data;

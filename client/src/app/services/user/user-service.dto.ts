@@ -23,3 +23,5 @@ export interface UserBaseInfo {
 export interface ValidResult {
   isValid: boolean;
 }
+
+export type SearchNameResult = UserBaseInfo[];

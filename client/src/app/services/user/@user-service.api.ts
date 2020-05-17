@@ -8,5 +8,6 @@ export class UserServiceAPI {
   login = '/login';
   info = '/info';
   validBaseInfo = '/valid/info/base';
-  updateAvatar = '/user/avatar';
+  updateAvatar = '/avatar';
+  searchName = '/name/search';
 }

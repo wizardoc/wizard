@@ -2,15 +2,16 @@ import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 import {withRouter, RouteComponentProps} from 'react-router-dom';
 import {Inject} from 'react-ts-di';
+import {Container} from '@material-ui/core';
 
-import {BaseEditCard} from 'src/app/components';
+import {BaseEditCard, MemberOverview} from 'src/app/components';
 import {OrganizationService, OrganizationCardData} from 'src/app/services';
 
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   background: ${props => props.theme.flatGray};
-  padding: 20px 40px 20px 70px;
+  padding: 0 40px 20px 70px;
   box-sizing: border-box;
   position: relative;
   overflow: scroll;
@@ -19,6 +20,7 @@ const Wrapper = styled.div`
 const Title = styled.div`
   color: ${props => props.theme.titleColor};
   font-size: 22px;
+  margin-top: 20px;
 `;
 
 const CardWrapper = styled.div`
@@ -41,10 +43,23 @@ export class OrganizationEditPage extends Component<
 
     return (
       <Wrapper>
-        <Title>基本信息</Title>
-        <CardWrapper>
-          <BaseEditCard organizationInfo={organizationInfo} />
-        </CardWrapper>
+        <Container>
+          <Title>基本信息</Title>
+          <CardWrapper>
+            <BaseEditCard organizationInfo={organizationInfo} />
+          </CardWrapper>
+          {organizationInfo.isOwner && (
+            <>
+              <Title>成员管理</Title>
+              <CardWrapper>
+                <MemberOverview
+                  organizeName={organizationInfo.organizeName}
+                  members={organizationInfo.members}
+                ></MemberOverview>
+              </CardWrapper>
+            </>
+          )}
+        </Container>
       </Wrapper>
     );
   }

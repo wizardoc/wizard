@@ -11,23 +11,14 @@ import {
   Toast,
 } from 'src/app/services';
 
+import {SubTitle, Group} from '../@common';
+
 const Wrapper = styled(Card)`
   padding: 20px;
 `;
 
-const SubTitle = styled.div`
-  font-size: 14px;
-  margin-bottom: 12px;
-`;
-
 const StyledTextField = styled(TextField)`
   width: 250px;
-`;
-
-const Group = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 20px 0;
 `;
 
 const RenameButton = styled(Button)`

@@ -16,12 +16,9 @@ export interface AvatarProps extends AvatarWrapperProps {
 interface AvatarWrapperProps {
   bgColor?: string;
   color?: string;
-  size?: string;
 }
 
 const AvatarWrapper = styled(MaterialAvatar)<AvatarWrapperProps>`
-  width: ${props => props.size} !important;
-  height: ${props => props.size} !important;
   background: ${props => props.bgColor} !important;
   color: ${props => props.color} !important;
 ` as ComponentType<AvatarWrapperProps & MaterialAvatarProps>;
@@ -38,16 +35,20 @@ export class Avatar extends Component<
   regexUtils!: RegexUtils;
 
   render(): ReactNode {
-    const {theme, lnk, size = '100%'} = this.props;
-    const {bgColor = theme!.avatarBgGray, color = theme!.fontGray} = this.props;
+    const {
+      theme,
+      lnk,
+      bgColor = theme!.avatarBgGray,
+      color = theme!.fontGray,
+    } = this.props;
     const {avatar} = this.userService;
-    const srcProps = this.regexUtils.validURL(avatar) ? {src: avatar} : {};
     const src = lnk ?? avatar;
+    const srcProps = this.regexUtils.validURL(avatar) ? {src} : {};
 
     return (
       <AvatarWrapper
+        {...this.props}
         src={src}
-        size={size}
         {...srcProps}
         bgColor={bgColor}
         color={color}

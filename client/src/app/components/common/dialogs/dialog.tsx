@@ -54,6 +54,9 @@ export class CommonDialog extends Component<CommonDialogProps> {
 
     const {dialogs} = this.dialogPool;
     const config = dialogs.get(dialogID);
+
+    console.info(config);
+
     const {isShow, content} = config!;
 
     if (!config || !content) {

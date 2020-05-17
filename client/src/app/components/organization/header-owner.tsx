@@ -16,8 +16,10 @@ import {
   OrganizationService,
   Toast,
   ConfirmDialogService,
+  DialogService,
 } from '../../services';
 import {Avatar} from '../common';
+import {InviteMemberDialog} from '../overview';
 
 interface HeaderOwnerProps {
   ownerInfo: UserBaseInfo;
@@ -46,6 +48,9 @@ export class HeaderOwner extends Component<
   @Inject
   confirmDialog!: ConfirmDialogService;
 
+  @Inject
+  dialogService!: DialogService;
+
   organizationActions: MenuItem[] = [
     {
       text: '删除组织',
@@ -64,7 +69,15 @@ export class HeaderOwner extends Component<
     },
   ];
 
-  handleInviteMemberClick(): void {}
+  handleInviteMemberClick(): void {
+    this.dialogService.open(InviteMemberDialog, {
+      title: '邀请',
+      isClickAwayClose: true,
+      componentProps: {
+        organizeName: this.props.organizeName,
+      },
+    });
+  }
 
   handleEditOrganizationClick(): void {
     const {history, id} = this.props;
