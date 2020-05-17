@@ -73,8 +73,6 @@ export class Menu extends Component<
         ),
     );
 
-    console.info(permissions);
-
     return (
       <>
         {renderBind}

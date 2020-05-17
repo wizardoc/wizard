@@ -35,8 +35,6 @@ export class OrganizationService {
   }
 
   get organizations(): OrganizationCardData[] {
-    console.info(this._organizations);
-
     return this._organizations;
   }
 

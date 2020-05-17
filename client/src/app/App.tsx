@@ -22,8 +22,6 @@ class DialogEntry extends Component {
   dialogPool!: DialogPool;
 
   render(): ReactNode {
-    console.info(Array.from(this.dialogPool.dialogs.values()));
-
     return Array.from(this.dialogPool.dialogs.keys()).map(dialogID => (
       <CommonDialog key={dialogID} dialogID={dialogID}></CommonDialog>
     ));
@@ -66,8 +64,6 @@ class TApp extends Component<WithSnackbarProps> {
   tipStore!: TipStore;
 
   render(): React.ReactNode {
-    console.info('top render');
-
     return (
       <ThemeProvider theme={styledTheme}>
         <BrowserRouter>

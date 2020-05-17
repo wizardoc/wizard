@@ -151,8 +151,6 @@ export class Organization extends Component<
   }
 
   async handleLayoutChange(value: string): Promise<void> {
-    console.info(value);
-
     if (!value) {
       return;
     }

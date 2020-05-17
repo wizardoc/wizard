@@ -24,7 +24,6 @@ export class NotifyService extends MessageService
 
   @computed
   get unreadMessageCount(): number {
-    console.info(this.messageTable);
     return this.getMessages('isRead', false).length;
   }
 

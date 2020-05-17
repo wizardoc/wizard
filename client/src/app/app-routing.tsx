@@ -127,8 +127,6 @@ export class AppRouting extends Component {
   }
 
   private renderComponents(): ReactNode {
-    console.info(this.routerService.routes);
-
     return this.routerService.routes.map(route => (
       <Route
         path={route.path}

@@ -33,12 +33,6 @@ export class OrganizationCard extends PureComponent<OrganizationCardProps> {
   @Inject
   time!: Time;
 
-  constructor(prop: OrganizationCardProps) {
-    super(prop);
-
-    console.info('w');
-  }
-
   render(): ReactNode {
     const {
       organizationCardData,
@@ -66,7 +60,6 @@ export class OrganizationCard extends PureComponent<OrganizationCardProps> {
   }
 
   componentDidMount(): void {
-    console.info('ismounted');
     this.isMounted = true;
   }
 }

@@ -154,9 +154,6 @@ export class ScalableBox extends Component<ScalableBoxProps> {
   handleBoxMouseMove(e: MouseEvent<HTMLDivElement>): void {
     const {clientX, clientY} = e;
     const {x, y} = this.pressPosition;
-
-    console.info(clientX, clientY);
-
     const DIRECTION_DISPATCHER = {
       leftTop: [x - clientX, y - clientY],
       rightTop: [clientX - x, y - clientY],

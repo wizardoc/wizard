@@ -88,8 +88,6 @@ class THeaderBar extends Component<HeaderBarProps> {
       isFixed,
     } = this.props;
 
-    console.info(isFixed);
-
     return (
       <AppBarWrapper position="static" isFixed={isFixed}>
         <Toolbar variant="dense">
