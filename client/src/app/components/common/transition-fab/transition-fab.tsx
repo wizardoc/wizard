@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 import {createPortal} from 'react-dom';
-import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 
 import {withTheme, ThemeComponentProps} from 'src/app/theme';
 import {Time} from 'src/app/services';

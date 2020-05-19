@@ -1,7 +1,7 @@
 import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 import React, {Component, ReactNode} from 'react';
-import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 import styled from 'styled-components';
 
 import {RouterAnimation} from '../animations';

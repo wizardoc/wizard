@@ -1,6 +1,6 @@
 import {omit} from 'lodash';
 import {action, observable} from 'mobx';
-import {Inject, Injectable} from 'react-ts-di';
+import {Inject, Injectable} from '@wizardoc/injector';
 
 import {CalledOptionalTipInfo, OptionalTipInfo} from '../components';
 import {TODO_API} from '../constant';

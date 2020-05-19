@@ -1,13 +1,14 @@
-import Koa, { Context } from 'koa';
-import Router from 'koa-router';
+import {NestFactory} from '@nestjs/core';
 
-const app = new Koa();
-const router = new Router();
+import {AppModule} from './app.module';
+import {GlobalErrorFilter} from './filters';
 
-router.get('*', (context: Context) => {
-  context.body = 'hello';
-});
+async function bootstrap(): Promise<void> {
+  const app = await NestFactory.create(AppModule);
 
-app.use(router.routes());
+  app.useGlobalFilters(new GlobalErrorFilter());
 
-export { app };
+  await app.listen(3000);
+}
+
+bootstrap();

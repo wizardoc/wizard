@@ -14,8 +14,8 @@ import {TypographyProps} from '@material-ui/core/Typography';
 import {observer} from 'mobx-react';
 import React, {Component, ComponentType, ReactNode} from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {Inject} from 'react-ts-di';
-// import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
+// import {Inject} from '@wizardoc/injector';
 import styled from 'styled-components';
 
 import Wizard from '../../assets/static/wizard-white.jpg';

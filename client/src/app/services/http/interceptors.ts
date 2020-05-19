@@ -1,9 +1,8 @@
 import {AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios';
 import * as QS from 'qs';
+import {ContentType} from '@wizardoc/http-request';
 
 import {LocalStorage} from '../../utils';
-
-import {ContentType} from './http-client';
 
 interface DataInterface {
   data: unknown;

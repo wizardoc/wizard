@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {TextField, Button} from '@material-ui/core';
 import {observable} from 'mobx';
 import {observer} from 'mobx-react';
-import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 import {KEY_ENTER, KEY_RETURN} from 'keycode-js';
 
 import {User, SearchNameResult} from 'src/app/services';

@@ -1,9 +1,10 @@
-import {Injectable, Inject} from 'react-ts-di';
+import {Injectable, Inject} from '@wizardoc/injector';
+import {ResValueArea} from '@wizardoc/http-request';
 
 import {emptyAssert} from 'src/app/utils';
 
 import {JWT} from '../jwt-service';
-import {HTTP, ResValueArea} from '../http';
+import {HTTP} from '../http';
 import {Subject} from '../observer';
 
 import {

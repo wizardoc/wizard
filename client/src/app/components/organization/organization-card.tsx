@@ -4,7 +4,7 @@ import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 import React, {ComponentType, ReactNode, PureComponent} from 'react';
 import styled from 'styled-components';
-import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 
 import {OrganizationCardData, Time} from '../../services';
 

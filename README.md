@@ -157,7 +157,7 @@ Wizard 的架构在这部分上借鉴了 `Angular`，组件之间的通信通过
 用 `@Injectable` 装饰表明它是一个 Service，下面是一个 Toast 服务，它的功能是弹出一个轻提示。
 
 ```typescript
-import {Injectable} from 'react-ts-di';
+import {Injectable} from '@wizardoc/injector';
 
 import {TipStore} from '../store';
 import {InjectStore} from '../utils';

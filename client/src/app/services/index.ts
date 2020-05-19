@@ -1,3 +1,4 @@
+export * from './http';
 export * from './cache';
 export * from './dialog';
 export * from './doc-service';
@@ -13,10 +14,10 @@ export * from './tab-service';
 export * from './regex';
 export * from './todo-service';
 export * from './upload-service';
-export * from './http';
 export * from './message';
 export * from './notify';
 export * from './user';
 export * from './observer';
 export * from './organization';
 export * from './route';
+export * from './permission';

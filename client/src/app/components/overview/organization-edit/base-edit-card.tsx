@@ -1,7 +1,7 @@
 import React, {Component, ReactNode, ChangeEvent} from 'react';
 import {Card, TextField, Button} from '@material-ui/core';
 import styled from 'styled-components';
-import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 

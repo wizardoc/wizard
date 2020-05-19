@@ -1,5 +1,5 @@
 import React, {ComponentType, Component, ReactNode, createRef} from 'react';
-import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 
 import {Time} from '../services';
 

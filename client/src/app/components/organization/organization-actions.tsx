@@ -3,7 +3,7 @@ import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import React, {Component, ReactNode} from 'react';
 // import PowerOffIcon from '@material-ui/icons/PowerOff';
-import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 
 import {
   User,

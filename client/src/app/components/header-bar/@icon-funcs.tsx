@@ -1,7 +1,7 @@
 import React, {Component, ReactNode} from 'react';
 import {IconButton, Tooltip} from '@material-ui/core';
 import {observer} from 'mobx-react';
-import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 
 import {User} from 'src/app/services';
 

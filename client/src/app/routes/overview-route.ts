@@ -34,7 +34,7 @@ export const OverviewRoutes: Routes = [
         activatedGuard: [OrganizationEditGuard],
       },
       {
-        path: '/organization/docs',
+        path: '/organization/docs/:id',
         isNest: true,
         component: OverviewDocs,
       },

@@ -1,7 +1,7 @@
 import React, {Component, ReactNode} from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import styled from 'styled-components';
-import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 
 import {TabService, User} from 'src/app/services';
 

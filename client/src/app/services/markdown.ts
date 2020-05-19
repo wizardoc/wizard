@@ -1,4 +1,4 @@
-import {Inject, Injectable} from 'react-ts-di';
+import {Inject, Injectable} from '@wizardoc/injector';
 
 import {CacheService} from './cache';
 
@@ -47,9 +47,9 @@ export class Markdown {
 
   private parseMD(content: string): Root {
     // traverse
-    const titles = (content.match(/(?:^|\n|\s)(#+\s.+)/g) || []).map(
-      (cap: string) => cap.trim(),
-    );
+    const titles = (
+      content.match(/(?:^|\n|\s)(#+\s.+)/g) || []
+    ).map((cap: string) => cap.trim());
     const getNodeInfo = (title: string): NodeInfo => {
       let nodeInfo = {
         text: '',

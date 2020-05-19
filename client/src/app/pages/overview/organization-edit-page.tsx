@@ -1,7 +1,7 @@
 import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 import {withRouter, RouteComponentProps} from 'react-router-dom';
-import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 import {Container} from '@material-ui/core';
 
 import {BaseEditCard, MemberOverview} from 'src/app/components';

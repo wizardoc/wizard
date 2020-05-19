@@ -1,0 +1,91 @@
+import {AxiosStatic} from 'axios';
+
+import {Interceptor} from './attach-interceptor';
+
+interface ServerConfigSetter {
+  setConfig(target: ServerConfigInfo): void;
+}
+
+export interface IConfigure {
+  serverConfigure: ServerConfigSetter;
+  interceptor: Interceptor;
+}
+
+export interface ServerConfigInfo {
+  baseUrl: string;
+  port: number;
+  protocol: string;
+  mode: string;
+}
+
+export class ServerConfig {
+  private config: ServerConfigInfo | undefined;
+
+  // constructor() {
+  // this._config = {} as any;
+  // }
+
+  // tslint:disable-next-line:adjacent-overload-signatures
+
+  setConfig = (target: ServerConfigInfo | undefined): void => {
+    console.info('www');
+    this.config = target;
+  };
+
+  getConfig(): ServerConfigInfo | undefined {
+    return this.config;
+  }
+
+  getBaseURL(): string {
+    this.checkConfig();
+
+    const {baseUrl, port, mode} = this.config!;
+
+    return `${baseUrl}:${port === 80 ? '' : port}/${
+      mode === 'dev' ? 'apis/' : ''
+    }`;
+  }
+
+  getAbsPath(): string {
+    this.checkConfig();
+
+    return `${this.config!.protocol}://${this.getBaseURL()}`;
+  }
+
+  checkConfig(): void | never {
+    if (!this.config) {
+      throw new Error('The config of server is undefined. ');
+    }
+  }
+}
+
+export class Configure {
+  private _serverConfig = new ServerConfig();
+
+  constructor(private axios: AxiosStatic) {}
+
+  create(): IConfigure {
+    return {
+      serverConfigure: this.getServerConfigSetter(),
+      interceptor: this.getInterceptor(),
+    };
+  }
+
+  getServerConfigInfo(): ServerConfigInfo | undefined {
+    return this._serverConfig.getConfig();
+  }
+
+  private getInterceptor(): Interceptor {
+    return new Interceptor(this.axios);
+  }
+
+  private getServerConfigSetter(): ServerConfigSetter {
+    return {
+      setConfig: this._serverConfig.setConfig,
+    };
+  }
+
+  get serverConfig(): ServerConfig {
+    return this._serverConfig;
+  }
+}

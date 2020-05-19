@@ -1,7 +1,7 @@
 import React, {Component, ReactNode, ComponentType} from 'react';
 import styled from 'styled-components';
 import {IconButton, Tooltip} from '@material-ui/core';
-import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 
 import {DraftService} from '../../../services';
 

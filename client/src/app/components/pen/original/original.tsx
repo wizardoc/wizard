@@ -3,7 +3,7 @@ import {Editor, EditorState, DraftStyleMap, RichUtils} from 'draft-js';
 import {observer} from 'mobx-react';
 import {observable} from 'mobx';
 import styled from 'styled-components';
-import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 
 import {DraftService, DraftEvent} from '../../../services';
 

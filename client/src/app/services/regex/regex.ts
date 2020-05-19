@@ -1,4 +1,4 @@
-import {Injectable} from 'react-ts-di';
+import {Injectable} from '@wizardoc/injector';
 
 /**
  * Regular Expression service, provide some validation tool and regex constants

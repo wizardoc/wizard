@@ -19,7 +19,7 @@ export class Injector {
     };
   };
 
-  Inject = <T = any>(target: Service<T>, key: string) => {
+  Inject = (target: any, key: string) => {
     const type: Constructor = Reflect.getMetadata('design:type', target, key);
 
     target[key] = this.extract(type);
@@ -51,6 +51,15 @@ export class Injector {
   };
 
   private createInstance<T = any>(Constructor: Service<T>): T {
+    // The key may from parent class
+    if (Constructor.key) {
+      const instance = this.classPool.get(Constructor.key);
+
+      if (instance instanceof Constructor) {
+        return instance;
+      }
+    }
+
     const params: Service<T>[] =
       Reflect.getMetadata('design:paramtypes', Constructor) ?? [];
 
@@ -68,9 +77,7 @@ export class Injector {
       }
     });
 
-    return Constructor.key
-      ? this.classPool.get(Constructor.key)
-      : new Constructor(...deps);
+    return new Constructor(...deps);
   }
 
   private genKey<T>(constructor: Service<T>): Symbol {

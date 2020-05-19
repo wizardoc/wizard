@@ -1,15 +1,14 @@
-import Axios, {AxiosError} from 'axios';
-import {Inject} from 'react-ts-di';
+import {AxiosError, AxiosStatic} from 'axios';
 
-import ServerConfig from '../../.config/server-config.json';
-import {Toast} from '../toast';
+// import ServerConfig from '../../.config/server-config.json';
+// import {Toast} from '../toast';
 
-interface ServerConfig {
-  baseUrl: string;
-  port: number;
-  protocol: string;
-  mode: string;
-}
+// interface ServerConfig {
+//   baseUrl: string;
+//   port: number;
+//   protocol: string;
+//   mode: string;
+// }
 
 type Request<R> = () => R;
 
@@ -35,6 +34,11 @@ export interface Expectable<R> {
 }
 
 export type OnExpect<R> = (cb?: ExpectableCB) => ResValueArea<R>;
+
+export type ExpectErrorInteractProcessor = (
+  errMsg: string,
+  err: AxiosError,
+) => void;
 
 export interface Successable<R> {
   success: OnSuccess<R>;
@@ -65,31 +69,30 @@ interface DispatchPayload<T> {
   contentType?: ContentType;
 }
 
+export interface HTTPClientOptions {
+  addr: string;
+  axios: AxiosStatic;
+  catcher: ExpectErrorInteractProcessor;
+}
+
 export enum ContentType {
   Form = 'application/x-www-form-urlencoded',
 }
 
-const {baseUrl, port, protocol, mode} = ServerConfig as ServerConfig;
+// const {baseUrl, port, protocol, mode} = ServerConfig as ServerConfig;
 
-export function getBaseURL(): string {
-  return `${baseUrl}:${port === 80 ? '' : port}/${
-    mode === 'dev' ? 'apis/' : ''
-  }`;
-}
+// export function getBaseURL(): string {
+//   return `${baseUrl}:${port === 80 ? '' : port}/${
+//     mode === 'dev' ? 'apis/' : ''
+//   }`;
+// }
 
-export function getAbsPath(): string {
-  return `${protocol}://${getBaseURL()}`;
-}
+// export function getAbsPath(): string {
+//   return `${protocol}://${getBaseURL()}`;
+// }
 
 export class HttpClient {
-  private addr: string;
-
-  @Inject
-  private toast!: Toast;
-
-  constructor() {
-    this.addr = getAbsPath();
-  }
+  constructor(private options: HTTPClientOptions) {}
 
   protected create<T, R>(type: HttpType, payload: DispatchPayload<T>): Doer<R> {
     const {path, data, contentType, method} = payload;
@@ -97,13 +100,13 @@ export class HttpClient {
 
     const requests: Requests<R> = {
       ComplexHTTPMethod: () =>
-        Axios[lowerCaseMethod]<R>(this.join(path), data || {}, {
+        this.options.axios[lowerCaseMethod]<R>(this.join(path), data || {}, {
           headers: {
             'Content-Type': contentType || ContentType.Form,
           },
         }),
       SimpleHTTPMethod: () =>
-        Axios[lowerCaseMethod]<R>(this.join(path), {
+        this.options.axios[lowerCaseMethod]<R>(this.join(path), {
           params: data,
         }),
     };
@@ -117,6 +120,7 @@ export class HttpClient {
     let err: AxiosError | undefined;
     let data: R | undefined;
 
+    // Error catcher 重构
     const sendRequest = async (): Promise<ResValueArea<R>> => {
       try {
         data = await request();
@@ -148,12 +152,12 @@ export class HttpClient {
       }
 
       function onExpect(cb: ExpectableCB): ResValueArea {
-        const errMsg = (cb || (() => {}))(err);
+        const errMsg = cb(err);
 
         // 抛出 caller 希望抛出的错误信息
         // else 吞并异常
         if (errMsg && err) {
-          that.toast.error(errMsg);
+          that.options.catcher(errMsg, err);
         }
 
         return valueArea;
@@ -168,7 +172,7 @@ export class HttpClient {
   private join(path: string): string {
     const parsedPath = path.replace(/^\/(.*)/, (_, cap) => cap);
 
-    return `${this.addr}${parsedPath}`;
+    return `${this.options.addr}${parsedPath}`;
   }
 }
 

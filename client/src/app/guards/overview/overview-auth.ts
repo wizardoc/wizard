@@ -1,4 +1,4 @@
-import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 
 import {ActivatedGuard, User, Toast} from 'src/app/services';
 

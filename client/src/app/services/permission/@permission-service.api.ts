@@ -1,5 +1,5 @@
 import {Group} from '@wizardoc/http-utils';
-import {Injectable} from 'react-ts-di';
+import {Injectable} from '@wizardoc/injector';
 
 @Injectable()
 @Group('/permission')

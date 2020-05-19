@@ -1,4 +1,4 @@
-import {Injectable} from 'react-ts-di';
+import {Injectable} from '@wizardoc/injector';
 
 import {TipStore} from '../store';
 import {InjectStore} from '../utils';

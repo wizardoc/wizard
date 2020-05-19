@@ -2,7 +2,7 @@
 import Button, {ButtonProps} from '@material-ui/core/Button';
 import React, {Component, ComponentType, ReactNode} from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 import styled from 'styled-components';
 import {Zoom} from '@material-ui/core';
 import {observer} from 'mobx-react';

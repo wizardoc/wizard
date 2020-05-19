@@ -4,7 +4,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import React, {Component, ComponentType, ReactNode} from 'react';
 import styled from 'styled-components';
 import {observer} from 'mobx-react';
-import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 import {withRouter, RouteComponentProps} from 'react-router-dom';
 
 import {withTheme, ThemeComponentProps} from 'src/app/theme';

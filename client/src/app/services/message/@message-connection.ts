@@ -1,4 +1,4 @@
-import {Injectable, Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 
 import {MessageServiceAPI} from './message-service.api';
 import {BaseMessage, Message} from './message-service.dto';
@@ -7,7 +7,6 @@ interface EventTable {
   [eventName: string]: Function;
 }
 
-@Injectable()
 export abstract class MessageConnection {
   @Inject
   protected api!: MessageServiceAPI;

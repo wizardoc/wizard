@@ -1,6 +1,6 @@
 import React, {Component, ReactNode} from 'react';
 import {observer} from 'mobx-react';
-import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 import styled from 'styled-components';
 import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
@@ -62,8 +62,8 @@ export class OrganizationPanel extends Component<
   @Inject
   organizationService!: OrganizationService;
 
-  handleOrganizationCardClick(): void {
-    this.props.history!.push('organization/docs');
+  handleOrganizationCardClick(id: string): void {
+    this.props.history!.push(`organization/docs/${id}`);
   }
 
   render(): ReactNode {
@@ -74,7 +74,7 @@ export class OrganizationPanel extends Component<
           key={info.id}
           organizationCardData={info}
           seqIndex={index}
-          onCardClick={() => this.handleOrganizationCardClick()}
+          onCardClick={() => this.handleOrganizationCardClick(info.id)}
         />
       ),
     );

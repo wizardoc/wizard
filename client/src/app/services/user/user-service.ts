@@ -1,5 +1,5 @@
 import {action, computed, observable} from 'mobx';
-import {Inject, Injectable} from 'react-ts-di';
+import {Inject, Injectable} from '@wizardoc/injector';
 
 import {BaseInfoData} from '../../components';
 import {Optional} from '../../types/type-utils';

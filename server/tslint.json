@@ -1,0 +1,17 @@
+{
+  "extends": "@magicspace/configs/tslint-prettier",
+  "rules": {
+    "no-void-expression": false,
+    "no-implicit-dependencies": false,
+    "no-conditional-assignment": false,
+    "no-unused-expression": false,
+    "ordered-imports": false,
+    "no-inferred-empty-object-type": false,
+    "object-literal-sort-keys": false,
+    "no-floating-promises": false,
+    "no-bitwise": false
+  },
+  "linterOptions": {
+    "exclude": ["node_modules/**"]
+  }
+}

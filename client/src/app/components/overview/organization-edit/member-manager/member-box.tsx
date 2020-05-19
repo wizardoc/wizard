@@ -1,7 +1,7 @@
 import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 import AddIcon from '@material-ui/icons/Add';
-import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 
 import {Avatar} from 'src/app/components';
 import {Default} from 'src/app/components/common';

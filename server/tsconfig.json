@@ -1,29 +1,17 @@
 {
   "extends": "../node_modules/@magicspace/configs/tsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
-    "outDir": "dist",
     "module": "commonjs",
-    "target": "es6",
-    "lib": ["es6", "dom", "esnext", "es7"],
-    "sourceMap": true,
-    "allowJs": true,
-    "types": ["node"],
-    "moduleResolution": "node",
-    "rootDir": "src",
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noImplicitAny": true,
     "declaration": true,
-    "importHelpers": true,
-    "strictNullChecks": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "noUnusedLocals": true,
-    "allowSyntheticDefaultImports": true,
+    "removeComments": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "types": ["express"]
   },
-  "exclude": ["node_modules"],
-  "include": ["src/**/*", "index.js"]
+  "exclude": ["node_modules", "dist"]
 }

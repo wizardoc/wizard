@@ -1,12 +1,12 @@
-import {Injectable} from 'react-ts-di';
+import {Injectable} from '@wizardoc/injector';
 import {Group, AbsURL} from '@wizardoc/http-utils';
 
-import {getBaseURL} from '../http';
+import {httpFactory} from '../http';
 
 @Injectable()
 @Group('/message')
 export class MessageServiceAPI {
-  @AbsURL({protocol: 'ws', baseUrl: getBaseURL()})
+  @AbsURL({protocol: 'ws', baseUrl: httpFactory.getServerConfig().getBaseURL()})
   connect = '/connect';
 
   all = '/all';

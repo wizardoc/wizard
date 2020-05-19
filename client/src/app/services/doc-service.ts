@@ -1,4 +1,4 @@
-import {Inject, Injectable} from 'react-ts-di';
+import {Inject, Injectable} from '@wizardoc/injector';
 
 import {ContributorInfo} from '../components';
 

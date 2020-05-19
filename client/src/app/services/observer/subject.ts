@@ -1,4 +1,4 @@
-import {Injectable} from 'react-ts-di';
+import {Injectable} from '@wizardoc/injector';
 
 import {traverse, emptyAssert} from 'src/app/utils';
 

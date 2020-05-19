@@ -1,67 +1,94 @@
-import {Injectable} from 'react-ts-di';
-
 import {
-  useReq,
-  useRes,
+  HTTPRequestFactory,
+  HTTPConfigure,
+  IConfigure,
   ResponseInterceptor,
-  useResError,
-} from './@attach-interceptor';
-import {getData, requestType, errorCatcher} from './interceptors';
-import {ContentType, HTTPMethod, HttpClient, Response} from './http-client';
+  HTTPService,
+} from '@wizardoc/http-request';
+import {Injectable, extract} from '@wizardoc/injector';
 
-export interface PostPayload<T = unknown> {
-  [index: string]: T;
-}
+import ServerConfig from '../../.config/server-config.json';
 
-useReq(requestType);
-useRes(getData as ResponseInterceptor);
-useResError(errorCatcher);
+import {requestType, getData, errorCatcher} from './interceptors';
 
 @Injectable()
-export class HTTP extends HttpClient {
-  get<R = any, T = {}>(path: string, data?: T): Response<R> {
-    return this.create<T, R>('SimpleHTTPMethod', {
-      method: 'GET',
-      path,
-      data,
-    }).Do();
+class HTTPFactory extends HTTPRequestFactory implements HTTPConfigure {
+  configure(consume: IConfigure): void {
+    consume.interceptor
+      .useReq(requestType)
+      .useRes(getData as ResponseInterceptor)
+      .useResError(errorCatcher);
+
+    consume.serverConfigure.setConfig(ServerConfig);
   }
 
-  post<R = any, T = {}>(
-    path: string,
-    data?: T,
-    contentType?: ContentType,
-  ): Response<R> {
-    return this.complexRequest('POST', path, data, contentType);
-  }
-
-  put<R = any, T = {}>(
-    path: string,
-    data?: T,
-    contentType?: ContentType,
-  ): Response<R> {
-    return this.complexRequest('PUT', path, data, contentType);
-  }
-
-  delete<R = any, T = {}>(
-    path: string,
-    data?: T,
-    contentType?: ContentType,
-  ): Response<R> {
-    return this.complexRequest('DELETE', path, data, contentType);
-  }
-
-  private complexRequest<R = any, T = {}>(
-    method: HTTPMethod,
-    path: string,
-    data?: T,
-    contentType?: ContentType,
-  ): Response<R> {
-    return this.create<T, R>('ComplexHTTPMethod', {
-      method,
-      path,
-      data,
-      contentType,
-    }).Do();
+  errorInteract(errMsg: string): void {
+    console.info(errMsg);
   }
 }
+
+@Injectable()
+export class HTTP extends HTTPService {
+  constructor(httpFactory: HTTPFactory) {
+    super(httpFactory.getHTTPClientOptions());
+  }
+}
+
+export const httpFactory = extract(HTTPFactory);
+// import {ContentType, HTTPMethod, HttpClient, Response} from './http-client';
+
+// export interface PostPayload<T = unknown> {
+//   [index: string]: T;
+// }
+
+// // useReq(requestType);
+// // useRes(getData as ResponseInterceptor);
+// // useResError(errorCatcher);
+
+// export class HTTPService extends HttpClient {
+//   get<R = any, T = {}>(path: string, data?: T): Response<R> {
+//     return this.create<T, R>('SimpleHTTPMethod', {
+//       method: 'GET',
+//       path,
+//       data,
+//     }).Do();
+//   }
+
+//   post<R = any, T = {}>(
+//     path: string,
+//     data?: T,
+//     contentType?: ContentType,
+//   ): Response<R> {
+//     return this.complexRequest('POST', path, data, contentType);
+//   }
+
+//   put<R = any, T = {}>(
+//     path: string,
+//     data?: T,
+//     contentType?: ContentType,
+//   ): Response<R> {
+//     return this.complexRequest('PUT', path, data, contentType);
+//   }
+
+//   delete<R = any, T = {}>(
+//     path: string,
+//     data?: T,
+//     contentType?: ContentType,
+//   ): Response<R> {
+//     return this.complexRequest('DELETE', path, data, contentType);
+//   }
+
+//   private complexRequest<R = any, T = {}>(
+//     method: HTTPMethod,
+//     path: string,
+//     data?: T,
+//     contentType?: ContentType,
+//   ): Response<R> {
+//     return this.create<T, R>('ComplexHTTPMethod', {
+//       method,
+//       path,
+//       data,
+//       contentType,
+//     }).Do();
+//   }
+// }

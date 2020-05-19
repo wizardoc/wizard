@@ -1,9 +1,10 @@
-import {Inject, Injectable} from 'react-ts-di';
-import {observable} from 'mobx';
+import {Injectable} from '@wizardoc/injector';
+import {observable, computed} from 'mobx';
+import {ResValueArea, noop} from '@wizardoc/http-request';
 
 import {SyncPair, genSync, traverse} from 'src/app/utils';
 
-import {HTTP, ResValueArea, noop} from '../http';
+import {HTTP} from '../http';
 import {User} from '../user';
 
 import {OrganizationAPI} from './@organization-service.api';
@@ -15,31 +16,34 @@ export interface EditPayload {
 
 @Injectable()
 export class OrganizationService {
-  @Inject
-  private user!: User;
-
-  @Inject
-  private http!: HTTP;
-
-  @Inject
-  private apis!: OrganizationAPI;
-
   @observable
   private _organizations: OrganizationCardData[] = [];
 
   private syncPair: SyncPair;
 
-  constructor() {
+  constructor(
+    private user: User,
+    private http: HTTP,
+    private apis: OrganizationAPI,
+  ) {
     this.syncPair = genSync();
     this.getAllJoinOrganization();
   }
 
-  get organizations(): OrganizationCardData[] {
-    return this._organizations;
-  }
-
   isInit(): Promise<void> {
     return this.syncPair.lock;
+  }
+
+  @computed
+  get organizations(): OrganizationCardData[] {
+    return this._organizations.map((organization: OrganizationCardData) => ({
+      ...organization,
+      isOwner: organization.ownerInfo.username === this.user.userInfo!.username,
+    }));
+  }
+
+  findOrganizationByID(id: string): OrganizationCardData | undefined {
+    return this._organizations.find(({id: originID}) => originID === id);
   }
 
   async edit(id: string, payload: EditPayload): Promise<ResValueArea> {
@@ -85,10 +89,7 @@ export class OrganizationService {
       .pipe(data => data?.organizations ?? []);
 
     // init organizations
-    this._organizations = data.map((organization: OrganizationCardData) => ({
-      ...organization,
-      isOwner: organization.ownerInfo.username === this.user.userInfo!.username,
-    }));
+    this._organizations = data;
     this.syncPair.unlock();
 
     return data;

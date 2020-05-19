@@ -4,7 +4,7 @@ import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 import React, {Component, ComponentType, ReactNode, createRef} from 'react';
 import styled from 'styled-components';
-import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 
 import {FormControl} from '../../ui';
 import {CreateNewOrganization, OrganizationData} from '../register';

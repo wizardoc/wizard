@@ -2,7 +2,7 @@ import {SvgIcon, Badge} from '@material-ui/core';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import React, {Component, ReactNode} from 'react';
 import WorkIcon from '@material-ui/icons/Work';
-import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 import styled from 'styled-components';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {observer} from 'mobx-react';

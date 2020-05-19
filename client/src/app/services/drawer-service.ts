@@ -1,7 +1,7 @@
 import {DrawerProps} from '@material-ui/core/Drawer';
 import {action, computed, observable} from 'mobx';
 import {ReactNode} from 'react';
-import {Inject, Injectable} from 'react-ts-di';
+import {Inject, Injectable} from '@wizardoc/injector';
 
 import {Time} from './time';
 

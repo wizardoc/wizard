@@ -1,4 +1,4 @@
-import {Injectable, Inject} from 'react-ts-di';
+import {Injectable, Inject} from '@wizardoc/injector';
 import {observable} from 'mobx';
 
 import {TODO_API} from '../constant';

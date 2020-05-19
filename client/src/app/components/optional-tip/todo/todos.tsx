@@ -2,7 +2,7 @@ import WorkIcon from '@material-ui/icons/Work';
 import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 import {observer} from 'mobx-react';
-import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 import {RouteComponentProps} from 'react-router-dom';
 
 import {TodoService} from 'src/app/services/todo-service';

@@ -1,6 +1,6 @@
 import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
-import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 
 import {UserModel, Time} from 'src/app/services';
 

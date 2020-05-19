@@ -2,7 +2,7 @@ import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 import {observer} from 'mobx-react';
 import {Button, ListItem, List} from '@material-ui/core';
-import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 
 import {SearchNameResult, ConfirmDialogService} from 'src/app/services';
 import {Default} from 'src/app/components/common';

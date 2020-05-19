@@ -1,5 +1,5 @@
 import {ButtonProps} from '@material-ui/core/Button';
-import {Injectable} from 'react-ts-di';
+import {Injectable} from '@wizardoc/injector';
 import {observable} from 'mobx';
 import {ComponentType} from 'react';
 

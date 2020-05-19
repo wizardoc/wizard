@@ -1,10 +1,10 @@
-import {Injectable, Inject} from 'react-ts-di';
+import {Injectable, Inject} from '@wizardoc/injector';
 import {observable, computed} from 'mobx';
+import {ResValueArea} from '@wizardoc/http-request';
 
 import {traverse} from 'src/app/utils';
 
 import {NotifyMessage, MessageService} from '../message';
-import {ResValueArea} from '../http';
 import {Subject, NotifyMessageObserver} from '../observer';
 
 interface MessageTable {

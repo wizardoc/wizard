@@ -1,4 +1,4 @@
-import {Injectable, Inject} from 'react-ts-di';
+import {Injectable, Inject} from '@wizardoc/injector';
 import {observable} from 'mobx';
 import sha256 from 'crypto-js/sha256';
 import {upload, CompletedResult} from 'qiniu-js';

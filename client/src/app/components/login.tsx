@@ -5,7 +5,7 @@ import {observer} from 'mobx-react';
 import React, {Component, ComponentType, ReactNode, createRef} from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 // import {RouteComponentProps} from 'react-router-dom';
-import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 import styled from 'styled-components';
 
 // import {USER} from '../constant';3ew

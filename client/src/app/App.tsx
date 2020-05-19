@@ -4,7 +4,7 @@ import {observer} from 'mobx-react';
 import {SnackbarProvider, WithSnackbarProps, withSnackbar} from 'notistack';
 import React, {Component, FunctionComponent, ReactNode} from 'react';
 import {BrowserRouter} from 'react-router-dom';
-import {Inject} from 'react-ts-di';
+import {Inject} from '@wizardoc/injector';
 
 import {CommonDialog, OptionalTip, Profile, Default} from './components';
 import {DrawerService, DialogPool, OptionalTipService} from './services';

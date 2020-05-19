@@ -1,6 +1,6 @@
 import {action, observable} from 'mobx';
 import {ComponentType} from 'react';
-import {Inject, Injectable} from 'react-ts-di';
+import {Inject, Injectable} from '@wizardoc/injector';
 import UUID from 'uuid';
 
 import {Loading} from '../../components';
