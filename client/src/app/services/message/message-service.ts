@@ -1,7 +1,6 @@
 import {Injectable, Inject} from '@wizardoc/injector';
 import {ResValueArea} from '@wizardoc/http-request';
-
-import {emptyAssert} from 'src/app/utils';
+import {emptyAssert} from '@wizardoc/shared';
 
 import {JWT} from '../jwt-service';
 import {HTTP} from '../http';

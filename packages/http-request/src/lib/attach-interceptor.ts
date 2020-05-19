@@ -50,6 +50,10 @@ type HTTPInterceptors =
 
 type InterceptorArgument = AxiosRequestConfig | AxiosResponse;
 
+interface Constructable<T> {
+  new (...args: any[]): T;
+}
+
 function attach(
   interceptor: AllowInterceptorTypes,
   isError?: boolean,
@@ -82,8 +86,10 @@ export class Interceptor {
     this.useInterceptor = useInterceptors(axios);
   }
 
-  use(interceptors: HTTPInterceptors[]): void {
-    for (const interceptor of interceptors) {
+  use(interceptors: Constructable<HTTPInterceptors>[]): void {
+    for (const Interceptor of interceptors) {
+      const interceptor = new Interceptor();
+
       if (typeAssert<HTTPRequestInterceptor>(interceptor, 'onRequest')) {
         this.useReq(interceptor.onRequest);
       } else if (

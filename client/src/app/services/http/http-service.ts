@@ -8,10 +8,12 @@ import {Injectable, extract} from '@wizardoc/injector';
 
 import ServerConfig from '../../.config/server-config.json';
 
+import {ResErrorCatcher, ResData, RequestType} from './@interceptors';
+
 @Injectable()
 class HTTPFactory extends HTTPRequestFactory implements HTTPConfigure {
   configure(consume: IConfigure): void {
-    consume.interceptor.use([]);
+    consume.interceptor.use([ResErrorCatcher, ResData, RequestType]);
 
     consume.serverConfigure.setConfig(ServerConfig);
   }

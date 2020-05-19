@@ -11,8 +11,7 @@ import React, {
   cloneElement,
 } from 'react';
 import styled from 'styled-components';
-
-import {isArray} from '../../utils';
+import {isArray} from '@wizardoc/shared';
 
 import {IFormControl} from './form-control-type';
 

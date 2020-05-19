@@ -1,9 +1,10 @@
 import {action, computed, observable} from 'mobx';
 import {Inject, Injectable} from '@wizardoc/injector';
+import {emptyAssert} from '@wizardoc/shared';
 
 import {BaseInfoData} from '../../components';
 import {Optional} from '../../types/type-utils';
-import {emptyAssert, genSync, SyncPair} from '../../utils';
+import {genSync, SyncPair} from '../../utils';
 import {HTTP} from '../http';
 import {DialogService} from '../dialog';
 import {JWT} from '../jwt-service';

@@ -1,6 +1,5 @@
 import {Injectable} from '@wizardoc/injector';
-
-import {traverse, emptyAssert} from 'src/app/utils';
+import {traverse, emptyAssert} from '@wizardoc/shared';
 
 import {NotifyMessage, ChatMessage} from '../message';
 

@@ -1,8 +1,9 @@
 import {Injectable} from '@wizardoc/injector';
 import {observable, computed} from 'mobx';
 import {ResValueArea, noop} from '@wizardoc/http-request';
+import {traverse} from '@wizardoc/shared';
 
-import {SyncPair, genSync, traverse} from 'src/app/utils';
+import {SyncPair, genSync} from 'src/app/utils';
 
 import {HTTP} from '../http';
 import {User} from '../user';

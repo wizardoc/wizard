@@ -4,8 +4,7 @@ import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 import React, {Component, ComponentType, ReactNode} from 'react';
 import styled from 'styled-components';
-
-import {isArray} from '../../utils';
+import {isArray} from '@wizardoc/shared';
 
 interface TreeViewItemProps {
   text: string;

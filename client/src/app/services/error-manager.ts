@@ -1,8 +1,40 @@
 import {Inject, Injectable} from '@wizardoc/injector';
 import {isError, isObject} from '@wizardoc/shared';
 
-import {ResError} from './http';
 import {Toast} from './toast';
+
+// interface DataInterface {
+//   data: unknown;
+//   err: ResError;
+// }
+
+// interface Res {
+//   data: DataInterface;
+// }
+
+/** 后端的错误对象 */
+interface ResError {
+  /**
+   * 错误码
+   */
+  code: number;
+  /**
+   * 错误信息，后端抛出的错误信息
+   */
+  msg: string;
+}
+
+/** 后端返回的数据结构 */
+// interface ResData<T> {
+//   /**
+//    * payload 后端返回的数据有效载荷
+//    */
+//   data: T;
+//   /**
+//    * 错误对象
+//    */
+//   err: ResError;
+// }
 
 interface Errors {
   [index: string]: string;
