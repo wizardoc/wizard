@@ -10,7 +10,7 @@
     "dist/**/*"
   ],
   "dependencies": {
-    "@wizardoc/common-utils": "^1.0.2",
+    "@wizardoc/shared": "^1.0.0",
     "reflect-metadata": "^0.1.13"
   },
   "scripts": {

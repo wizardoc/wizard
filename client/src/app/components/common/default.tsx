@@ -1,5 +1,4 @@
 import React, {Component, ReactNode} from 'react';
-
 import {
   isObject,
   isString,
@@ -7,7 +6,7 @@ import {
   isUndefined,
   isNull,
   isArray,
-} from 'src/app/utils';
+} from '@wizardoc/shared';
 
 export interface DefaultProps {
   defaultView?: ReactNode;

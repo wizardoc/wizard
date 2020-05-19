@@ -11,7 +11,8 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
-    "types": ["express"]
+    "types": ["express"],
+    "resolveJsonModule": true
   },
   "exclude": ["node_modules", "dist"]
 }

@@ -1,7 +1,7 @@
 /**
- * The method is used to traverse target array, break when the cb returns false
- * @params arr target array
- * @params fn traverse cb
+ * 遍历数组的方法，用来执行一些带有副作用的方法，当回调函数返回 false 时 break
+ * @params arr 目标数组
+ * @params fn 接收数组元素为参数的回调函数
  */
 export function traverse<T>(arr: T[], fn: (item: T) => boolean | void): void {
   for (const item of arr) {
@@ -11,24 +11,6 @@ export function traverse<T>(arr: T[], fn: (item: T) => boolean | void): void {
   }
 }
 
-/**
- * cp all props of the origin object to target object
- * @param origin origin object
- * @param target target object
- */
-export function cp<T extends any, U extends T>(origin: T, target: U): U {
-  const dup: U = {...target};
-
-  traverse(Object.keys(origin), prop => {
-    dup[prop] = origin[prop];
-  });
-
-  return dup;
-}
-
-/**
- * process values just like functor
- */
 export class Pipe<T = any> {
   private constructor(private val: T) {}
 

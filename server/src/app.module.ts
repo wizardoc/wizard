@@ -1,16 +1,16 @@
-import {Module, NestModule, MiddlewareConsumer} from '@nestjs/common';
+import {Module} from '@nestjs/common';
 
 import {AppController} from './app.controller';
 import {AppService} from './app.service';
-import {ReverseProxyMiddleware} from './middlewares';
+import {HTTP, HTTPFactory} from './services/http-services';
 
 @Module({
   imports: [],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, HTTP, HTTPFactory],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer): void {
-    consumer.apply(ReverseProxyMiddleware).forRoutes('*');
-  }
+export class AppModule {
+  // configure(consumer: MiddlewareConsumer): void {
+  //   consumer.apply(ReverseProxyMiddleware).forRoutes('*');
+  // }
 }

@@ -1,9 +1,8 @@
 import React, {ComponentType, Component, ReactNode, createRef} from 'react';
 import {Inject} from '@wizardoc/injector';
+import {traverse} from '@wizardoc/shared';
 
 import {Time} from '../services';
-
-import {traverse} from './helpers';
 
 /**
  * 调用方通过混入 ViewObservableComponentProps 调用 onObserve 进行监听，

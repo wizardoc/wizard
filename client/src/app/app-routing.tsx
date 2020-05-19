@@ -4,6 +4,7 @@ import {Switch, Route, Redirect, RouteComponentProps} from 'react-router-dom';
 import styled from 'styled-components';
 import {observer} from 'mobx-react';
 import {observable} from 'mobx';
+import {isString} from '@wizardoc/shared';
 
 import {
   Route as AppRoute,
@@ -12,7 +13,6 @@ import {
 
 import {RouterService, Layout, TabService} from './services';
 import {PageNotFound} from './pages/page-not-found';
-import {isString} from './utils';
 import {Footer, SharePop, HeaderBar} from './components';
 
 interface WrapperProps {

@@ -2,22 +2,16 @@ import {
   HTTPRequestFactory,
   HTTPConfigure,
   IConfigure,
-  ResponseInterceptor,
   HTTPService,
 } from '@wizardoc/http-request';
 import {Injectable, extract} from '@wizardoc/injector';
 
 import ServerConfig from '../../.config/server-config.json';
 
-import {requestType, getData, errorCatcher} from './interceptors';
-
 @Injectable()
 class HTTPFactory extends HTTPRequestFactory implements HTTPConfigure {
   configure(consume: IConfigure): void {
-    consume.interceptor
-      .useReq(requestType)
-      .useRes(getData as ResponseInterceptor)
-      .useResError(errorCatcher);
+    consume.interceptor.use([]);
 
     consume.serverConfigure.setConfig(ServerConfig);
   }

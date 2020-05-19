@@ -1,13 +1,17 @@
 import {Controller, Get} from '@nestjs/common';
 
-import {AppService} from './app.service';
+import {HTTP} from './services/http-services';
 
 @Controller('/')
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly http: HTTP) {}
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  async getHello(): Promise<string> {
+    const res = await this.http.get('/doc/wizard');
+
+    console.info(res.data.data);
+
+    return '/';
   }
 }

@@ -6,6 +6,13 @@ import {
   AxiosStatic,
 } from 'axios';
 
+import {
+  HTTPRequestInterceptor,
+  HTTPResponseInterceptor,
+  HTTPRequestErrorCatch,
+  HTTPResponseErrorCatch,
+} from './interceptor';
+
 enum InterceptorType {
   Req = 'request',
   Res = 'response',
@@ -35,6 +42,12 @@ type AllowInterceptorTypes =
   | ResponseErrorCatcher
   | RequestErrorCatcher;
 
+type HTTPInterceptors =
+  | HTTPRequestInterceptor
+  | HTTPResponseInterceptor
+  | HTTPRequestErrorCatch
+  | HTTPResponseErrorCatch;
+
 type InterceptorArgument = AxiosRequestConfig | AxiosResponse;
 
 function attach(
@@ -58,35 +71,46 @@ function useInterceptors(AxiosInstance: AxiosStatic): Use {
   };
 }
 
+function typeAssert<T>(target: any, prop: string): target is T {
+  return target[prop] !== undefined;
+}
+
 export class Interceptor {
-  private use: Use;
+  private useInterceptor: Use;
 
   constructor(axios: AxiosStatic) {
-    this.use = useInterceptors(axios);
+    this.useInterceptor = useInterceptors(axios);
   }
 
-  useReq(...interceptors: RequestInterceptor[]): Interceptor {
-    return this.cascade(() => this.use(interceptors, InterceptorType.Req));
+  use(interceptors: HTTPInterceptors[]): void {
+    for (const interceptor of interceptors) {
+      if (typeAssert<HTTPRequestInterceptor>(interceptor, 'onRequest')) {
+        this.useReq(interceptor.onRequest);
+      } else if (
+        typeAssert<HTTPResponseInterceptor>(interceptor, 'onResponse')
+      ) {
+        this.useRes(interceptor.onResponse);
+      } else if (typeAssert<HTTPRequestErrorCatch>(interceptor, 'catchReq')) {
+        this.useReqError(interceptor.catchReq);
+      } else if (typeAssert<HTTPResponseErrorCatch>(interceptor, 'catchRes')) {
+        this.useResError(interceptor.catchRes);
+      }
+    }
   }
 
-  useRes(...interceptors: ResponseInterceptor[]): Interceptor {
-    return this.cascade(() => this.use(interceptors, InterceptorType.Res));
+  private useReq(...interceptors: RequestInterceptor[]): void {
+    this.useInterceptor(interceptors, InterceptorType.Req);
   }
 
-  useResError(...interceptors: ResponseErrorCatcher[]): Interceptor {
-    return this.cascade(() =>
-      this.use(interceptors, InterceptorType.Res, true),
-    );
+  private useRes(...interceptors: ResponseInterceptor[]): void {
+    this.useInterceptor(interceptors, InterceptorType.Res);
   }
 
-  useReqError(...interceptors: RequestInterceptor[]): Interceptor {
-    return this.cascade(() =>
-      this.use(interceptors, InterceptorType.Req, true),
-    );
+  private useResError(...interceptors: ResponseErrorCatcher[]): void {
+    this.useInterceptor(interceptors, InterceptorType.Res, true);
   }
 
-  private cascade(exec: () => void): Interceptor {
-    exec();
-    return this;
+  private useReqError(...interceptors: RequestErrorCatcher[]): void {
+    this.useInterceptor(interceptors, InterceptorType.Req, true);
   }
 }

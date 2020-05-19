@@ -3,8 +3,7 @@ import {observer} from 'mobx-react';
 import React, {Component, ComponentType, ReactNode, createRef} from 'react';
 import {Inject} from '@wizardoc/injector';
 import styled from 'styled-components';
-
-import {emptyAssert} from 'src/app/utils';
+import {emptyAssert} from '@wizardoc/shared';
 
 import {DialogService, Toast, User, RegexUtils} from '../../services';
 import {

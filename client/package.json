@@ -8,6 +8,7 @@
     "@wizardoc/http-request": "^1.0.0",
     "@wizardoc/http-utils": "^1.0.2",
     "@wizardoc/injector": "^1.0.0",
+    "@wizardoc/shared": "^1.0.0",
     "animate.css": "^3.7.0",
     "arrow-cache": "^1.0.6",
     "autoprefixer": "7.1.6",

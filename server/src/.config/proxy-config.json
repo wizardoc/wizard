@@ -1,6 +1,6 @@
 {
   "baseUrl": "localhost",
-  "port": 3000,
+  "port": 4000,
   "protocol": "http",
   "mode": "prod"
 }

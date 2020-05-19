@@ -5,7 +5,6 @@
   "author": "youncccat <1306036576@qq.com>",
   "license": "MIT",
   "description": "",
-  "private": true,
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -19,6 +18,7 @@
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0",
     "@nestjs/platform-express": "^7.0.0",
+    "@wizardoc/http-request": "^1.0.0",
     "axios": "^0.19.2",
     "express": "^4.17.1",
     "http-proxy-middleware": "^1.0.3",

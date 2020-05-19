@@ -1,6 +1,5 @@
 import {Inject, Injectable} from '@wizardoc/injector';
-
-import {isError, isObject} from '../utils';
+import {isError, isObject} from '@wizardoc/shared';
 
 import {ResError} from './http';
 import {Toast} from './toast';

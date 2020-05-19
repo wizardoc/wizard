@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import {Pipe, isFunction, traverse} from '@wizardoc/common-utils';
+import {Pipe, isFunction, traverse} from '@wizardoc/shared';
 
 const ABS_PATH_KEY = 'abs_path_key';
 const URL_PARAMS_KEY = 'url_params_key';
