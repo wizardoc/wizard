@@ -26,9 +26,9 @@ export type ResponseInterceptor = (
   value: AxiosResponse,
 ) => AxiosResponse | Promise<AxiosResponse>;
 
-export type ResponseErrorCatcher = (err: AxiosError) => void;
+export type ResponseErrorCatcher = (err: AxiosError) => any;
 
-export type RequestErrorCatcher = (err: AxiosError) => void;
+export type RequestErrorCatcher = (err: AxiosError) => any;
 
 export type Use = (
   interceptors: AllowInterceptorTypes[],

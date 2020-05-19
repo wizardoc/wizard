@@ -19,9 +19,11 @@
     "@nestjs/core": "^7.0.0",
     "@nestjs/platform-express": "^7.0.0",
     "@wizardoc/http-request": "^1.0.0",
+    "@wizardoc/shared": "^1.0.0",
     "axios": "^0.19.2",
     "express": "^4.17.1",
     "http-proxy-middleware": "^1.0.3",
+    "qs": "^6.9.4",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.4"

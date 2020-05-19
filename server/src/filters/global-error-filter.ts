@@ -5,21 +5,16 @@ import {
   ArgumentsHost,
   NotFoundException,
 } from '@nestjs/common';
-import {Response} from 'express';
-// import Axios from 'axios';
+
+import {HTTP} from 'src/services';
 
 @Catch(NotFoundException, Error)
 export class GlobalErrorFilter implements ExceptionFilter {
-  catch(exception: HttpException, host: ArgumentsHost): void {
-    const ctx = host.switchToHttp();
-    const res = ctx.getResponse<Response>();
-    // const req = ctx.getRequest<Request>();
-    const statusCode = exception.getStatus();
-    const message = exception.message;
+  constructor(private readonly http: HTTP) {}
 
-    res.json({
-      statusCode,
-      message,
-    });
+  async catch(_exception: HttpException, host: ArgumentsHost): Promise<void> {
+    const {getRequest, getResponse} = host.switchToHttp();
+
+    this.http.proxy(getRequest(), getResponse());
   }
 }

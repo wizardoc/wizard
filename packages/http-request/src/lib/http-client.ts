@@ -1,15 +1,5 @@
 import {AxiosError, AxiosStatic} from 'axios';
 
-// import ServerConfig from '../../.config/server-config.json';
-// import {Toast} from '../toast';
-
-// interface ServerConfig {
-//   baseUrl: string;
-//   port: number;
-//   protocol: string;
-//   mode: string;
-// }
-
 type Request<R> = () => R;
 
 export type Response<R> = Promise<ResValueArea<R>>;
@@ -66,7 +56,7 @@ interface DispatchPayload<T> {
   method: HTTPMethod;
   path: string;
   data?: T;
-  contentType?: ContentType;
+  headers?: any;
 }
 
 export interface HTTPClientOptions {
@@ -95,19 +85,23 @@ export class HttpClient {
   constructor(private options: HTTPClientOptions) {}
 
   protected create<T, R>(type: HttpType, payload: DispatchPayload<T>): Doer<R> {
-    const {path, data, contentType, method} = payload;
+    const {path, data, headers, method} = payload;
     const lowerCaseMethod = method.toLowerCase();
 
     const requests: Requests<R> = {
       ComplexHTTPMethod: () =>
         this.options.axios[lowerCaseMethod]<R>(this.join(path), data || {}, {
           headers: {
-            'Content-Type': contentType || ContentType.Form,
+            'Content-Type': ContentType.Form,
+            ...headers,
           },
         }),
       SimpleHTTPMethod: () =>
         this.options.axios[lowerCaseMethod]<R>(this.join(path), {
           params: data,
+          headers: {
+            ...headers,
+          },
         }),
     };
 
