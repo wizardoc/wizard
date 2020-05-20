@@ -1,26 +1,24 @@
 import {ButtonProps} from '@material-ui/core/Button';
 import {Injectable} from '@wizardoc/injector';
 import {observable} from 'mobx';
-import {ComponentType} from 'react';
+import {ComponentType, ClassAttributes} from 'react';
 
 export type DialogID = string;
 
-export interface DialogConfig {
+export interface DialogConfig<P = any, T = any> {
   isShow: boolean;
   dialogData?: unknown;
-  content: ComponentType;
+  content: ComponentType<P & ClassAttributes<T>>;
   options: DialogOptions;
 }
 
-export interface DialogOptions<
-  T = ParsedActionButtons,
-  P extends object = object
-> {
+export interface DialogOptions<P extends object = object> {
   title: string;
   isClickAwayClose?: boolean;
   isFullScreen?: boolean;
-  actionButtons?: T[];
   componentProps?: P;
+  // 去掉 dialog 模版
+  hasTemplate?: boolean;
 }
 
 export interface ParsedActionButtons extends BaseActionButtons {
@@ -44,5 +42,9 @@ export interface ActionButtons extends BaseActionButtons {
 @Injectable()
 export class DialogPool {
   @observable
-  dialogs = new Map<DialogID, DialogConfig>();
+  dialogs = observable.map<DialogID, DialogConfig>();
+
+  constructor() {
+    (window as any).dialogs = this.dialogs;
+  }
 }

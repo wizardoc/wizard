@@ -5,6 +5,7 @@ import {
   ArgumentsHost,
   NotFoundException,
 } from '@nestjs/common';
+import {Request, Response} from 'express';
 
 import {HTTP} from 'src/services';
 
@@ -14,7 +15,9 @@ export class GlobalErrorFilter implements ExceptionFilter {
 
   async catch(_exception: HttpException, host: ArgumentsHost): Promise<void> {
     const {getRequest, getResponse} = host.switchToHttp();
+    const req = getRequest<Request>();
+    const res = getResponse<Response>();
 
-    this.http.proxy(getRequest(), getResponse());
+    this.http.proxySend(req, res);
   }
 }

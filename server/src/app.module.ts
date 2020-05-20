@@ -2,7 +2,7 @@ import {Module} from '@nestjs/common';
 
 import {AppController} from './app.controller';
 import {AppService} from './app.service';
-import {HTTP, HTTPFactory} from './services/http-services';
+import {HTTP, HTTPFactory} from './services';
 
 @Module({
   imports: [],

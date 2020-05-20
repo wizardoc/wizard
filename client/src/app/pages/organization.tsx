@@ -160,7 +160,7 @@ export class Organization extends Component<
     this.layout = value;
     this.organizationCards = [];
 
-    await this.time.sleep(0);
+    await this.time.sleep();
 
     this.organizationCards = dup;
   }

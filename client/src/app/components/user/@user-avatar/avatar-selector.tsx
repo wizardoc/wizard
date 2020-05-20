@@ -3,12 +3,22 @@ import {observer} from 'mobx-react';
 import React, {Component, ReactNode, createRef} from 'react';
 import styled from 'styled-components';
 import {findDOMNode} from 'react-dom';
+import {Inject} from '@wizardoc/injector';
 
-import {DialogComponentProps} from 'src/app/services';
+import {
+  DialogComponentProps,
+  ActionDialog,
+  Toast,
+  User,
+  UploadService,
+  ParsedActionButtons,
+  DialogService,
+  Time,
+} from 'src/app/services';
 
 import {ImagePreview} from '../../common';
 
-import {Point, ScalableBox, BaseSize} from './scalable-box';
+import {ScalableBox, BaseSize} from './scalable-box';
 
 interface AvatarSelectorProps {
   file: File;
@@ -19,9 +29,9 @@ const Wrapper = styled.div`
 `;
 
 @observer
-export class AvatarSelector extends Component<
-  AvatarSelectorProps & Partial<DialogComponentProps>
-> {
+export class AvatarSelector
+  extends Component<AvatarSelectorProps & Partial<DialogComponentProps>>
+  implements ActionDialog {
   @observable
   dataUrl: string = '';
 
@@ -30,10 +40,41 @@ export class AvatarSelector extends Component<
     width: 0,
     height: 0,
   };
+
+  @observable
+  isLoading = true;
+
+  @Inject
+  dialogService!: DialogService;
+
+  @Inject
+  toast!: Toast;
+
+  @Inject
+  userService!: User;
+
+  @Inject
+  uploadService!: UploadService;
+
+  @Inject
+  time!: Time;
+
   previewRef = createRef<ImagePreview>();
 
-  handleBlockMove(points: Point[]): void {
-    this.props.close!(points);
+  actionButtons(): ParsedActionButtons[] {
+    return [
+      {
+        text: '取消',
+        cb: () => this.props.close!(),
+      },
+      {
+        text: '确认',
+        cb: () => this.handleSelectBoxClose(this.props.file),
+        props: {
+          color: 'primary',
+        },
+      },
+    ];
   }
 
   render(): ReactNode {
@@ -41,11 +82,7 @@ export class AvatarSelector extends Component<
 
     return (
       <Wrapper>
-        <ScalableBox
-          previewSize={this.previewSize}
-          img={this.dataUrl}
-          onBlockMove={points => this.handleBlockMove(points)}
-        />
+        <ScalableBox previewSize={this.previewSize} img={this.dataUrl} />
         <ImagePreview
           ref={this.previewRef}
           onReadEnd={(dataUrl: string) => (this.dataUrl = dataUrl)}
@@ -75,5 +112,21 @@ export class AvatarSelector extends Component<
         height,
       };
     }, 1000);
+  }
+
+  async handleSelectBoxClose(file: File): Promise<void> {
+    try {
+      await this.dialogService.loading(async () => {
+        const {url} = await this.uploadService.upload(file);
+
+        await this.userService.updateAvatar(url);
+
+        this.toast.success('上传成功！');
+      });
+    } catch (e) {
+      this.toast.error('上传失败');
+    }
+
+    this.props.close!();
   }
 }

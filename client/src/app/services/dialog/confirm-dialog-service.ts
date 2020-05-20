@@ -30,27 +30,16 @@ export class ConfirmDialogService extends DialogService {
     onSureClick,
   }: ConfirmDialogConfig): Promise<DialogRef> {
     const {sureText, cancelText} = this.parseConfirmOptions(options);
-    const cbify = (func?: Function): boolean => {
-      const caller = (): void => {};
-
-      (func || caller)();
-
-      return true;
-    };
 
     return this.open(ConfirmDialog, {
       title,
       componentProps: {
         content,
+        onCancelClick,
+        onSureClick,
+        sureText,
+        cancelText,
       },
-      actionButtons: [
-        {
-          text: sureText,
-          cb: () => cbify(onSureClick),
-          props: {color: 'primary'},
-        },
-        {text: cancelText, cb: () => cbify(onCancelClick)},
-      ],
     });
   }
 

@@ -57,6 +57,7 @@ export class ErrorManager {
     1009: '删除组织失败',
     1010: '该用户不存在',
     3001: '创建资源失败',
+    4000: '参数错误',
     4001: '尚无该权限，请重新登录',
     4002: '账户异常',
     4003: '该用户已被禁止',
@@ -66,7 +67,7 @@ export class ErrorManager {
     NetworkError: '网络错误',
   };
 
-  getErrorMessage(errorCode: number | string): string {
+  getErrorMessage(errorCode: number | string): string | undefined {
     return this.ERRORS[errorCode];
   }
 
@@ -86,10 +87,14 @@ export class ErrorManager {
       this.toast.error(this.getErrorMessageBySystem(query.message));
     } else if (isObject(query)) {
       // 后端抛出的 error msg
-      this.toast.error(this.getErrorMessage(query.code) || query.msg);
+      this.toast.error(this.getErrorMessage(query.code) ?? query.msg);
     } else {
       // 只根据 code 来匹配错误（向后兼容）
-      this.toast.error(this.getErrorMessage(query));
+      const msg = this.getErrorMessage(query);
+
+      if (msg) {
+        this.toast.error(msg);
+      }
     }
   }
 }

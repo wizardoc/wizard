@@ -8,6 +8,7 @@ import {
   HTTPService,
   HTTPClientOptions,
   ServerConfig,
+  ErrorOperates,
 } from './lib';
 
 export interface IHTTPService {
@@ -53,7 +54,7 @@ export abstract class HTTPRequestFactory {
     return new HTTPService(this.getHTTPClientOptions());
   }
 
-  abstract errorInteract(errMsg: string, err: AxiosError): void;
+  abstract errorInteract(errMsg: string | ErrorOperates, err: AxiosError): void;
 
   getHTTPClientOptions(): HTTPClientOptions {
     const serverConfigure = this.getServerConfigure();

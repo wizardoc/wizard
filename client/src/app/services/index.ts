@@ -21,3 +21,4 @@ export * from './observer';
 export * from './organization';
 export * from './route';
 export * from './permission';
+export * from './category';

@@ -1,6 +1,6 @@
 import {Controller, Get} from '@nestjs/common';
 
-import {HTTP} from './services/http-services';
+import {HTTP} from './services';
 
 @Controller('/')
 export class AppController {

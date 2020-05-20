@@ -7,10 +7,15 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 30px;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
 `;
 
-export class Loading extends Component {
+export class NormalLoading extends Component {
   render(): ReactNode {
     return (
       <Wrapper>

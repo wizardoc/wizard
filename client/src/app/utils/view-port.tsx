@@ -122,7 +122,7 @@ export function viewObservable<P>(
       async handleWrapperObserve(
         cb: IntersectionObserverCallback,
       ): Promise<void> {
-        await this.time.sleep(0);
+        await this.time.sleep();
 
         const {current} = this.wrapperRef;
 

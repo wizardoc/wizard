@@ -12,12 +12,16 @@ interface Doer<R> {
   Do(): Response<R>;
 }
 
+export enum ErrorOperates {
+  GLOBAL_PROCESS,
+}
+
 export type ResValueArea<R = any> = Expectable<R> &
   Successable<R> &
   Result<R> &
   Pipable<R>;
 
-export type ExpectableCB = (err: AxiosError | undefined) => string | void;
+export type ExpectableCB = (err: AxiosError) => string | ErrorOperates | void;
 
 export interface Expectable<R> {
   expect: OnExpect<R>;
@@ -146,12 +150,14 @@ export class HttpClient {
       }
 
       function onExpect(cb: ExpectableCB): ResValueArea {
-        const errMsg = cb(err);
+        if (err) {
+          const errMsg = cb(err);
 
-        // 抛出 caller 希望抛出的错误信息
-        // else 吞并异常
-        if (errMsg && err) {
-          that.options.catcher(errMsg, err);
+          // 抛出 caller 希望抛出的错误信息
+          // else 吞并异常
+          if (errMsg) {
+            that.options.catcher(errMsg, err);
+          }
         }
 
         return valueArea;

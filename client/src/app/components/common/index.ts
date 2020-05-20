@@ -1,7 +1,6 @@
 export * from './image-preview';
 export * from './page-header';
 export * from './tree-view';
-export * from './loading';
 export * from './md-render';
 export * from './fab';
 export * from './dialogs';
@@ -15,3 +14,4 @@ export * from './transition-fab';
 export * from './fab-card';
 export * from './default';
 export * from './side-bar';
+export * from './loading';

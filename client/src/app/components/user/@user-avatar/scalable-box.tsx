@@ -8,7 +8,7 @@ type Direction = 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom';
 interface ScalableBoxProps {
   img?: string;
   previewSize: BaseSize;
-  onBlockMove(data: Point[]): void;
+  onBlockMove?(data: Point[]): void;
 }
 
 export interface Point {
@@ -42,6 +42,7 @@ const Wrapper = styled.div<ScalableWrapperProps>`
   left: ${props => props.x - 1}px;
   top: ${props => props.y - 1}px;
   z-index: 2;
+  border: 1px solid white;
 `;
 
 const MoveWrapper = styled.div`
@@ -123,7 +124,7 @@ export class ScalableBox extends Component<ScalableBoxProps> {
   };
 
   spurt(): void {
-    const {onBlockMove} = this.props;
+    const {onBlockMove = (): void => {}} = this.props;
     const {x, y} = this.movePosition;
     const {width, height} = this.boxSize;
     const [resultX, resultY] = [x - 1, y - 1];

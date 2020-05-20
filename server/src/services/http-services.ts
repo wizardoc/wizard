@@ -4,6 +4,7 @@ import {
   IConfigure,
   HTTPService,
   ResValueArea,
+  OnSuccessCB,
 } from '@wizardoc/http-request';
 import {Injectable} from '@nestjs/common';
 import {Request, Response} from 'express';
@@ -33,11 +34,7 @@ export class HTTP extends HTTPService {
     super(httpFactory.getHTTPClientOptions());
   }
 
-  async proxy(
-    req: Request,
-    res: Response,
-    onResData?: (res: ResValueArea) => ResValueArea,
-  ): Promise<ResValueArea | undefined> {
+  async proxy(req: Request, res: Response): Promise<ResValueArea | undefined> {
     const method = req.method.toLowerCase();
 
     if (!this.allowHTTPMethods.includes(method)) {
@@ -54,10 +51,27 @@ export class HTTP extends HTTPService {
       req.body,
       req.headers,
     )) as ResValueArea;
-    const parsedData = (onResData ?? (() => result))(result);
 
-    res.send(parsedData.data);
+    return result;
+  }
 
-    return parsedData;
+  async proxySend(
+    req: Request,
+    res: Response,
+    onData?: OnSuccessCB<any>,
+  ): Promise<void> {
+    const parsedOnData = onData ?? ((data: any): any => data);
+    const result = await this.proxy(req, res);
+
+    if (result) {
+      result
+        .expect(({response}) => {
+          // console.info(result.data);
+          res.status(response!.status).send(response?.data ?? undefined);
+        })
+        .success(data => {
+          res.send(parsedOnData(data));
+        });
+    }
   }
 }

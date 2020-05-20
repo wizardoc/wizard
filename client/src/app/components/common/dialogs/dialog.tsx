@@ -6,29 +6,21 @@ import {
   DialogTitle,
 } from '@material-ui/core';
 import {observer} from 'mobx-react';
-import React, {
-  Component,
-  ComponentType,
-  FunctionComponent,
-  ReactNode,
-} from 'react';
+import React, {Component, ReactNode, createRef} from 'react';
 import {Inject} from '@wizardoc/injector';
+import {observable} from 'mobx';
 
-import {DialogPool, DialogService} from '../../../services';
+import {
+  DialogPool,
+  DialogService,
+  ParsedActionButtons,
+  ActionDialog,
+  Time,
+} from '../../../services';
+import {Default} from '../default';
 
 interface CommonDialogProps {
   dialogID?: string;
-}
-
-function withDialog(
-  Content: ComponentType,
-  componentProps: any,
-): ComponentType {
-  return class extends Component {
-    render(): ReactNode {
-      return <Content {...componentProps}></Content>;
-    }
-  };
 }
 
 @observer
@@ -39,9 +31,31 @@ export class CommonDialog extends Component<CommonDialogProps> {
   @Inject
   private dialogService!: DialogService;
 
+  @Inject
+  private time!: Time;
+
+  private contentRef = createRef<any>();
+
+  @observable
+  actionButtons: ParsedActionButtons[] = [];
+
   handleClose(isClose: boolean, dialogID: string): void {
     if (isClose) {
       this.dialogService.kill(dialogID);
+    }
+  }
+
+  async componentDidMount(): Promise<void> {
+    const isActionDialog = (target: any): target is ActionDialog =>
+      !!target.actionButtons;
+
+    // The content will mounted after dialog
+    await this.time.sleep();
+
+    const {current} = this.contentRef;
+
+    if (current && isActionDialog(current)) {
+      this.actionButtons = current.actionButtons();
     }
   }
 
@@ -54,49 +68,44 @@ export class CommonDialog extends Component<CommonDialogProps> {
 
     const {dialogs} = this.dialogPool;
     const config = dialogs.get(dialogID);
-    const {isShow, content} = config!;
+    const {isShow, content: Content} = config!;
 
-    if (!config || !content) {
+    if (!config || !Content) {
       return <></>;
     }
 
     const {
       title,
-      actionButtons = [],
       componentProps,
       isFullScreen,
       isClickAwayClose,
+      hasTemplate = true,
     } = config.options;
-    const Footer: FunctionComponent = () => {
-      if (!actionButtons.length) {
-        return <></>;
-      }
-
-      return (
-        <DialogActions>
-          {actionButtons.map(({text, cb, props = {}}) => (
-            <Button {...props} key={text} onClick={cb}>
-              {text}
-            </Button>
-          ))}
-        </DialogActions>
-      );
-    };
-
-    const Content = withDialog(content, componentProps);
+    // const Content = withDialog(content, componentProps);
+    const renderContent = (
+      <Content ref={this.contentRef} {...componentProps}></Content>
+    );
 
     return (
-      <Dialog
-        fullScreen={!!isFullScreen}
-        open={isShow}
-        onClose={() => this.handleClose(!!isClickAwayClose, dialogID)}
-      >
-        {title && <DialogTitle>{title}</DialogTitle>}
-        <DialogContent>
-          <Content></Content>
-        </DialogContent>
-        <Footer></Footer>
-      </Dialog>
+      <Default condition={() => !hasTemplate} defaultView={renderContent}>
+        <Dialog
+          fullScreen={!!isFullScreen}
+          open={isShow}
+          onClose={() => this.handleClose(!!isClickAwayClose, dialogID)}
+        >
+          {title && <DialogTitle>{title}</DialogTitle>}
+          <DialogContent>{renderContent}</DialogContent>
+          <Default condition={() => !this.actionButtons.length}>
+            <DialogActions>
+              {this.actionButtons.map(({text, cb, props = {}}) => (
+                <Button {...props} key={text} onClick={cb}>
+                  {text}
+                </Button>
+              ))}
+            </DialogActions>
+          </Default>
+        </Dialog>
+      </Default>
     );
   }
 }

@@ -7,7 +7,7 @@ import React, {Component, ReactNode} from 'react';
 import {Inject} from '@wizardoc/injector';
 import styled from 'styled-components';
 
-import {DialogService, Toast, User, UploadService} from '../../../services';
+import {DialogService, Toast} from '../../../services';
 import {Upload} from '../../../ui';
 import {isImage} from '../../../utils';
 import {Avatar} from '../../common';
@@ -59,13 +59,7 @@ export class UserAvatar extends Component {
   toast!: Toast;
 
   @Inject
-  userService!: User;
-
-  @Inject
   dialogService!: DialogService;
-
-  @Inject
-  uploadService!: UploadService;
 
   @observable
   isAvatarHover = false;
@@ -89,18 +83,6 @@ export class UserAvatar extends Component {
     }
 
     const dialogRef = await this.dialogService.open(AvatarSelector, {
-      actionButtons: [
-        {
-          text: '取消',
-        },
-        {
-          text: '确认',
-          cb: () => this.handleSelectBoxClose(file),
-          props: {
-            color: 'primary',
-          },
-        },
-      ],
       title: '选择头像',
       componentProps: {file},
     });
@@ -129,17 +111,5 @@ export class UserAvatar extends Component {
         </Wrapper>
       </Upload>
     );
-  }
-
-  async handleSelectBoxClose(file: File): Promise<void> {
-    try {
-      const {url} = await this.uploadService.upload(file);
-
-      await this.userService.updateAvatar(url);
-
-      this.toast.success('上传成功！');
-    } catch (e) {
-      this.toast.error('上传失败');
-    }
   }
 }
