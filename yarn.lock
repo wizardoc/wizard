@@ -2063,13 +2063,6 @@
   resolved "https://registry.npm.taobao.org/@types/anymatch/download/@types/anymatch-1.3.1.tgz?cache=0&sync_timestamp=1580841236934&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fanymatch%2Fdownload%2F%40types%2Fanymatch-1.3.1.tgz#336badc1beecb9dacc38bea2cf32adf627a8421a"
   integrity sha1-M2utwb7sudrMOL6izzKt9ieoQho=
 
-"@types/axios@^0.14.0":
-  version "0.14.0"
-  resolved "https://registry.npmjs.org/@types/axios/-/axios-0.14.0.tgz#ec2300fbe7d7dddd7eb9d3abf87999964cafce46"
-  integrity sha1-7CMA++fX3d1+udOr+HmZlkyvzkY=
-  dependencies:
-    axios "*"
-
 "@types/babel__core@^7.1.0":
   version "7.1.6"
   resolved "https://registry.npm.taobao.org/@types/babel__core/download/@types/babel__core-7.1.6.tgz?cache=0&sync_timestamp=1582658518274&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fbabel__core%2Fdownload%2F%40types%2Fbabel__core-7.1.6.tgz#16ff42a5ae203c9af1c6e190ed1f30f83207b610"
@@ -2993,6 +2986,33 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
+"@wizardoc/common-utils@^1.0.2":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@wizardoc/common-utils/-/common-utils-1.0.3.tgz#63aa5d654faa427f7570231f05a4b91414ff70ba"
+  integrity sha512-2o7K3qJ8D1op9Rm6EAo1+7hLBWSoo/WmcVOB4I1yML2JeE6/YGtl/8mdTB0ksuecjBn2uw5dfvnQoi1tlmRONA==
+
+"@wizardoc/http-request@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@wizardoc/http-request/-/http-request-1.0.0.tgz#ca70cc145a28a6a5313abb5a7908ace3de8911c8"
+  integrity sha512-HbMUknnBmM65JsWhSyRLBtuHKk4BUozXsxVGfatPQkiVFf38t8A8FSiLek/G2NFIPqAKjUZFkShlay6XxZgVWw==
+  dependencies:
+    axios "^0.19.2"
+
+"@wizardoc/http-utils@^1.0.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@wizardoc/http-utils/-/http-utils-1.1.2.tgz#0c7370a14a14c8abaf180c196d1e1f3f7242783c"
+  integrity sha512-4I06iZvfLMKxuJLcxbFmOGHEgu5ta0OOAx5G3JILmmGvLqvbl2BnH2bxELIIZLVdbIqveLhP9nNKE/Znnb/2lg==
+  dependencies:
+    "@wizardoc/common-utils" "^1.0.2"
+    reflect-metadata "^0.1.13"
+
+"@wizardoc/injector@^1.0.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@wizardoc/injector/-/injector-1.2.0.tgz#2b75ac88d5e703e9e121d3405b62e34292a4bbe6"
+  integrity sha512-UkwqCB61NNch7udkva8swv21elnOlT3MmlZycQnlfj5zw7kteQnvLD+x1OCuuBYGRckv3l3rwWxVypxX7AjGHw==
+  dependencies:
+    reflect-metadata "^0.1.13"
+
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "https://registry.npm.taobao.org/@xtuc/ieee754/download/@xtuc/ieee754-1.2.0.tgz#eef014a3145ae477a1cbc00cd1e552336dceb790"
@@ -3586,7 +3606,7 @@ aws4@^1.8.0:
   resolved "https://registry.npm.taobao.org/aws4/download/aws4-1.9.1.tgz?cache=0&sync_timestamp=1578958301021&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Faws4%2Fdownload%2Faws4-1.9.1.tgz#7e33d8f7d449b3f673cd72deb9abdc552dbe528e"
   integrity sha1-fjPY99RJs/ZzzXLeuavcVS2+Uo4=
 
-axios@*, axios@0.19.2, axios@^0.19.0, axios@^0.19.2:
+axios@0.19.2, axios@^0.19.0, axios@^0.19.2:
   version "0.19.2"
   resolved "https://registry.npm.taobao.org/axios/download/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
   integrity sha1-PqNsXYgY0NX4qKl6bTa4bNwAyyc=
@@ -16290,9 +16310,9 @@ websocket-driver@>=0.5.1:
     websocket-extensions ">=0.1.1"
 
 websocket-extensions@>=0.1.1:
-  version "0.1.3"
-  resolved "https://registry.npm.taobao.org/websocket-extensions/download/websocket-extensions-0.1.3.tgz#5d2ff22977003ec687a4b87073dfbbac146ccf29"
-  integrity sha1-XS/yKXcAPsaHpLhwc9+7rBRszyk=
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.4.tgz#7f8473bc839dfd87608adb95d7eb075211578a42"
+  integrity sha512-OqedPIGOfsDlo31UNwYbCFMSaO9m9G/0faIHj5/dZFDMFqPTcx6UwqyOy3COEaEOg/9VsGIpdqn62W5KhoKSpg==
 
 whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.3:
   version "1.0.5"
