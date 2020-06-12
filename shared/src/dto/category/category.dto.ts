@@ -5,6 +5,7 @@ export interface Category {
   cover: string;
   createTime: number;
   lastModifyTime: number;
+  userID: string;
 }
 
 export interface Categories {

@@ -69,7 +69,9 @@ export class Breadcrumbs extends Component<
         const renderItem = (children: ReactElement): ReactElement =>
           isActive ? (
             <ColorText color={staticColor}>
-              <Link href={route}>{children}</Link>
+              <Link onClick={() => this.props.history!.push(route)}>
+                {children}
+              </Link>
             </ColorText>
           ) : (
             <ColorText color={activeColor}>

@@ -4,6 +4,8 @@ export const MIME = {
   JPEG: 'image/jpeg',
 };
 
+export type MIMEType = keyof typeof MIME;
+
 export function isImage(MIMEType: string): boolean {
   return [MIME.PNG, MIME.JPEG, MIME.JPEG].includes(MIMEType);
 }

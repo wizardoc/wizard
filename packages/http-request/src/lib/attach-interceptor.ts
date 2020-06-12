@@ -89,17 +89,18 @@ export class Interceptor {
   use(interceptors: Constructable<HTTPInterceptors>[]): void {
     for (const Interceptor of interceptors) {
       const interceptor = new Interceptor();
+      const bindThis = (method: Function) => method.bind(interceptor);
 
       if (typeAssert<HTTPRequestInterceptor>(interceptor, 'onRequest')) {
-        this.useReq(interceptor.onRequest);
+        this.useReq(bindThis(interceptor.onRequest));
       } else if (
         typeAssert<HTTPResponseInterceptor>(interceptor, 'onResponse')
       ) {
-        this.useRes(interceptor.onResponse);
+        this.useRes(bindThis(interceptor.onResponse));
       } else if (typeAssert<HTTPRequestErrorCatch>(interceptor, 'catchReq')) {
-        this.useReqError(interceptor.catchReq);
+        this.useReqError(bindThis(interceptor.catchReq));
       } else if (typeAssert<HTTPResponseErrorCatch>(interceptor, 'catchRes')) {
-        this.useResError(interceptor.catchRes);
+        this.useResError(bindThis(interceptor.catchRes));
       }
     }
   }

@@ -69,8 +69,8 @@ export class HTTP extends HTTPService {
           // console.info(result.data);
           res.status(response!.status).send(response?.data ?? undefined);
         })
-        .success(data => {
-          res.send(parsedOnData(data));
+        .success(payload => {
+          res.send({data: parsedOnData(payload.data)});
         });
     }
   }

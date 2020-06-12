@@ -6,7 +6,7 @@ interface FileInputable {
   value: unknown;
 }
 
-interface UploadProps {
+export interface UploadProps {
   onAfterRead(file: File): void;
 }
 

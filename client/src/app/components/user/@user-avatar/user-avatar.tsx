@@ -8,9 +8,7 @@ import {Inject} from '@wizardoc/injector';
 import styled from 'styled-components';
 
 import {DialogService, Toast} from '../../../services';
-import {Upload} from '../../../ui';
-import {isImage} from '../../../utils';
-import {Avatar} from '../../common';
+import {Avatar, ImageUpload} from '../../common';
 
 import {AvatarSelector} from './avatar-selector';
 
@@ -73,15 +71,6 @@ export class UserAvatar extends Component {
   }
 
   async handleUploadAfterRead(file: File): Promise<void> {
-    if (!file) {
-      return;
-    }
-
-    if (!isImage(file.type)) {
-      this.toast.error('请选择 png/jpg 的头像');
-      return;
-    }
-
     const dialogRef = await this.dialogService.open(AvatarSelector, {
       title: '选择头像',
       componentProps: {file},
@@ -94,7 +83,7 @@ export class UserAvatar extends Component {
 
   render(): ReactNode {
     return (
-      <Upload onAfterRead={(file: File) => this.handleUploadAfterRead(file)}>
+      <ImageUpload onAfterRead={file => this.handleUploadAfterRead(file)}>
         <Wrapper
           onMouseLeave={() => this.handleAvatarMouseLeave()}
           onMouseOver={() => this.handleAvatarMouseHover()}
@@ -109,7 +98,7 @@ export class UserAvatar extends Component {
             {this.isAvatarHover && <Typography>更换头像</Typography>}
           </EditTag>
         </Wrapper>
-      </Upload>
+      </ImageUpload>
     );
   }
 }

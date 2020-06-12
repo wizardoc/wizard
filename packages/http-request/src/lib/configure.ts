@@ -28,7 +28,6 @@ export class ServerConfig {
   // tslint:disable-next-line:adjacent-overload-signatures
 
   setConfig = (target: ServerConfigInfo | undefined): void => {
-    console.info('www');
     this.config = target;
   };
 

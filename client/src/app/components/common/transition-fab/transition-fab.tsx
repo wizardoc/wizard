@@ -14,8 +14,6 @@ interface TransitionFabProps extends ColorFabProps {
   timeout?: number;
   // 激活时的背景颜色
   activeColor?: string;
-  // 激活时的 Fab 颜色
-  activeFabColor?: string;
   // 激活时的图标
   activeIcon?: ReactNode;
   // 未激活时的图标
@@ -108,7 +106,7 @@ export class TransitionFab extends Component<
   TransitionFabProps & Partial<ThemeComponentProps>
 > {
   @observable
-  isOpen = false;
+  isOpen = true;
 
   @Inject
   time!: Time;

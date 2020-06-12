@@ -1,0 +1,15 @@
+{
+  "extends": "../../client/tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "lib": ["dom", "esnext"],
+    "outDir": "dist",
+    "types": ["node"],
+    "declaration": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules/**/*"]
+}

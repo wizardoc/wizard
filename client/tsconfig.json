@@ -37,7 +37,8 @@
     "webpack",
     "jest",
     "src/setupTests.ts",
-    "images.d.ts"
+    "images.d.ts",
+    "dist"
   ],
   "include": ["src/**/*", "src/ssr/@index-ssr.tsx"]
 }

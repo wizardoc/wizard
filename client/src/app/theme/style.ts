@@ -71,6 +71,7 @@ export const styledTheme = {
   flatYellow: '#fdcb6e',
   flatGray: '#f5f5f5',
   flatShadow: '6px 0 6px rgba(0,0,0,.1)',
+  flatDark: '#181a1b',
   coffeeGray: '#535c68',
 
   // variables

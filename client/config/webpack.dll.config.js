@@ -12,7 +12,7 @@ module.exports = {
       'react-router-dom',
       'react-material-ui-form-validator',
       'react-transition-group',
-      'react-ts-di',
+      '@wizardoc/injector',
       'rxjs',
       'styled-components',
       'uuid',

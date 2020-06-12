@@ -2,10 +2,15 @@ import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 import {Button} from '@material-ui/core';
 import {Inject} from '@wizardoc/injector';
+import {withRouter, RouteComponentProps} from 'react-router-dom';
 
 import {DialogService} from 'src/app/services';
 
 import {CreateCategoryDialog} from './category';
+
+interface RouteParams {
+  id: string;
+}
 
 const Wrapper = styled.div`
   width: 100%;
@@ -13,14 +18,20 @@ const Wrapper = styled.div`
   padding: 10px 0;
 `;
 
-export class OverviewDocsHeader extends Component {
+@withRouter
+export class OverviewDocsHeader extends Component<
+  Partial<RouteComponentProps<RouteParams>>
+> {
   @Inject
   dialogService!: DialogService;
 
   handleCreateCategoryClick(): void {
     this.dialogService.open(CreateCategoryDialog, {
       isClickAwayClose: true,
-      title: '创建组织',
+      title: '创建分类',
+      componentProps: {
+        organizationID: this.props.match!.params.id,
+      },
     });
   }
 

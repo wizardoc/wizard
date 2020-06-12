@@ -28,13 +28,18 @@ export interface Rule {
   required?: boolean;
 }
 
+export interface FormElementComponentProps {
+  name: string;
+  onChange(...value: any[]): void;
+}
+
 export interface Rules {
   [index: string]: Rule;
 }
 
 interface FormControlProps {
   rules: Rules;
-  onFormDataChange(formData: unknown): void;
+  onFormDataChange(formData: any): void;
 }
 
 interface ErrorHelpMessageProps {
@@ -139,7 +144,7 @@ export class FormControl extends Component<FormControlProps>
       /** 用户自定义 validator */
       const userValidator = rule.validator || ((): void => {});
       const validator: Validator = required
-        ? (_rule: Rule, value: string, cb: (errMsg?: string) => void): void => {
+        ? (_rule: Rule, value: any, cb: (errMsg?: string) => void): void => {
             const throwErrMsg = errMsg || `${name} 不能为空`;
 
             if (!value || value === '') {
@@ -150,17 +155,13 @@ export class FormControl extends Component<FormControlProps>
           }
         : userValidator;
       const originListener = part.props[listenerName] || ((): void => {});
-      const sysListener = (e: unknown): void => {
-        originListener(e);
+      const sysListener = (value: any, args: any[]): void => {
+        originListener(value, ...args);
 
         isError = false;
         this.validators[name].isError = false;
 
-        validator(
-          rule,
-          (e as ChangeEvent<HTMLInputElement>).target.value,
-          errorThrower,
-        );
+        validator(rule, value, errorThrower);
 
         if (!isError) {
           setErrMsg();
@@ -169,19 +170,20 @@ export class FormControl extends Component<FormControlProps>
 
       // 封装 onChange
       const listeners = {
-        onChange: (e: ChangeEvent): void => {
+        [listenerName]: sysListener,
+        onChange: (v: unknown, ...args: any[]): void => {
+          const value =
+            (v as ChangeEvent<HTMLInputElement>)?.target?.value ?? v;
+
           if (listenerName === 'onChange') {
-            sysListener(e);
+            sysListener(value, args);
           }
 
           // 附上数据
-          this.fieldInfos[name] = (e as ChangeEvent<
-            HTMLInputElement
-          >).target.value;
+          this.fieldInfos[name] = value;
 
           onFormDataChange(this.fieldInfos);
         },
-        ...(listenerName === 'onChange' ? {} : {[listenerName]: sysListener}),
       };
 
       part = cloneElement(child, {
