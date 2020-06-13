@@ -4,6 +4,7 @@ import {Interceptor} from './attach-interceptor';
 
 interface ServerConfigSetter {
   setConfig(target: ServerConfigInfo): void;
+  setDevPrefix(prefix: string): void;
 }
 
 export interface IConfigure {
@@ -20,6 +21,7 @@ export interface ServerConfigInfo {
 
 export class ServerConfig {
   private config: ServerConfigInfo | undefined;
+  private prefix: string = 'apis';
 
   // constructor() {
   // this._config = {} as any;
@@ -29,6 +31,10 @@ export class ServerConfig {
 
   setConfig = (target: ServerConfigInfo | undefined): void => {
     this.config = target;
+  };
+
+  setDevPrefix = (prefix: string) => {
+    this.prefix = prefix;
   };
 
   getConfig(): ServerConfigInfo | undefined {
@@ -41,7 +47,7 @@ export class ServerConfig {
     const {baseUrl, port, mode} = this.config!;
 
     return `${baseUrl}:${port === 80 ? '' : port}/${
-      mode === 'dev' ? 'apis/' : ''
+      mode === 'dev' ? `${this.prefix}/` : ''
     }`;
   }
 
@@ -81,6 +87,7 @@ export class Configure {
   private getServerConfigSetter(): ServerConfigSetter {
     return {
       setConfig: this._serverConfig.setConfig,
+      setDevPrefix: this._serverConfig.setDevPrefix,
     };
   }
 
