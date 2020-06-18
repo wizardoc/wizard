@@ -1,7 +1,7 @@
 import React, {Component, ReactNode, createRef} from 'react';
 import styled from 'styled-components';
 
-import {viewObservable, ViewObservableComponentProps} from 'src/app/utils';
+import {viewObservable, ViewObservableComponent} from 'src/app/utils';
 
 import {GraphicAnimation} from './graphic-content';
 
@@ -20,29 +20,26 @@ interface GraphicContentStandardProps extends GraphicAnimation {
 }
 
 @viewObservable()
-export class GraphicContentStandard extends Component<
-  GraphicContentStandardProps & Partial<ViewObservableComponentProps>
-> {
+export class GraphicContentStandard
+  extends Component<GraphicContentStandardProps>
+  implements ViewObservableComponent {
   private contentStandardRef = createRef<HTMLDivElement>();
 
-  componentDidMount(): void {
+  onObserve(entries: IntersectionObserverEntry[]): void {
     const {fadeInClass, showRatio} = this.props;
+    const {current} = this.contentStandardRef;
 
-    this.props.onObserve!(entry => {
-      const {current} = this.contentStandardRef;
+    if (!current) {
+      return;
+    }
 
-      if (!current) {
+    if (entries[0].intersectionRatio > showRatio) {
+      if (Array.prototype.includes.call(current.classList, fadeInClass)) {
         return;
       }
 
-      if (entry[0].intersectionRatio > showRatio) {
-        if (Array.prototype.includes.call(current.classList, fadeInClass)) {
-          return;
-        }
-
-        current.classList.add(fadeInClass);
-      }
-    });
+      current.classList.add(fadeInClass);
+    }
   }
 
   render(): ReactNode {

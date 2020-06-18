@@ -4,18 +4,13 @@ import React, {Component, ComponentType, ReactNode} from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {Inject} from '@wizardoc/injector';
 import styled from 'styled-components';
-import {Zoom} from '@material-ui/core';
 import {observer} from 'mobx-react';
-import {observable} from 'mobx';
 
-import GithubPng from 'src/app/assets/static/github.png';
+// import GithubPng from 'src/app/assets/static/github.png';
 
-import Main from '../../assets/static/main_code.svg';
+import Main from '../../assets/static/main.png';
 import {User} from '../../services';
 import {ReleaseBanner} from '../release-banner';
-
-import {SkewBlock} from './@skew-block';
-import {KnowledgeCard} from './knowledge-card';
 
 // import {GithubBtn} from './@github-btn';
 
@@ -28,13 +23,14 @@ const StartPanel = styled.div`
   height: 700px;
   display: flex;
   justify-content: space-around;
-  background: ${props => props.theme.white};
+  background: ${props => props.theme.primaryColor};
 `;
 
 const BaseButton = styled(Button)`
-  height: 35px !important;
-  width: 150px !important;
-  border-radius: 1000px !important;
+  height: 44px !important;
+  width: 200px !important;
+  background: ${props => props.theme.white} !important;
+  color: ${props => props.theme.primaryColor} !important;
 ` as ComponentType<ButtonProps>;
 
 const GetStarted = styled(BaseButton)`
@@ -43,12 +39,11 @@ const GetStarted = styled(BaseButton)`
   &:hover {
     background-color: rgba(255, 255, 255, 0.5) !important;
   } */
-  margin-left: 35px !important;
 ` as ComponentType<ButtonProps>;
 
-const GitHubLnk = styled(BaseButton)`
-  background: ${props => props.theme.secondaryColor} !important;
-` as ComponentType<ButtonProps>;
+// const GitHubLnk = styled(BaseButton)`
+//   background: ${props => props.theme.secondaryColor} !important;
+// ` as ComponentType<ButtonProps>;
 
 const StartedWrapper = styled.div`
   display: flex;
@@ -58,7 +53,7 @@ const StartedWrapper = styled.div`
 
 const WizardTitle = styled.p`
   font-size: 30px;
-  color: ${props => props.theme.titleColor};
+  color: ${props => props.theme.white};
   margin: 0;
 `;
 
@@ -66,7 +61,7 @@ const Description = styled.p`
   width: 500px;
   margin-top: 30px;
   line-height: 40px;
-  color: ${props => props.theme.subTitleColor};
+  color: ${props => props.theme.shallowGray};
 `;
 
 const WizardDescription = styled.div`
@@ -92,36 +87,23 @@ const MainImgWrapper = styled.div`
   z-index: 1;
 `;
 
-const Circle = styled.div`
-  width: 200px;
-  height: 200px;
-  position: absolute;
-  top: 800px;
-  left: -100px;
-  z-index: 1;
-  border-radius: 50%;
-  background: ${props => props.theme.mainSecondaryColor};
-`;
+// const GitHubIcon = styled.img`
+//   width: 20px;
+//   margin-right: 5px;
+// `;
 
-const GitHubIcon = styled.img`
-  width: 20px;
-  margin-right: 5px;
-`;
+interface StartedProps {}
 
-interface StartedProps extends RouteComponentProps {}
-
+@withRouter
 @observer
-class TStarted extends Component<StartedProps> {
+export class Started extends Component<
+  StartedProps & Partial<RouteComponentProps>
+> {
   @Inject
   userService!: User;
 
-  @observable
-  isMounted = false;
-
   handleGetStartClick(): void {
-    const {history} = this.props;
-
-    history.push('/overview');
+    this.props.history!.push('/overview');
   }
 
   render(): ReactNode {
@@ -131,17 +113,16 @@ class TStarted extends Component<StartedProps> {
           <WizardDescription>
             <DescriptionContainer>
               <ReleaseBanner tag="NEW"></ReleaseBanner>
-              <WizardTitle>与知识管理相结合的文档管理平台</WizardTitle>
+              <WizardTitle>文档也可以是知识分享的途径</WizardTitle>
               <Description>
-                开源免费的文档管理平台，管理 API 文档，前端组件文档，markdown
-                文档的绝佳平台，为技术服务，技术分享知识分享平台。赶紧创建自己的第一个
-                wizard 组织吧！
+                所有文档 Cloud 化，丰富的 Markdown
+                语法，轻松的交流体验，开源免费的绝佳文档管理平台
               </Description>
               <StartedWrapper>
-                <GitHubLnk variant="contained" color="secondary">
+                {/* <GitHubLnk variant="contained" color="secondary">
                   <GitHubIcon src={GithubPng} />
                   GitHub
-                </GitHubLnk>
+                </GitHubLnk> */}
                 <GetStarted
                   variant="contained"
                   color="primary"
@@ -153,24 +134,11 @@ class TStarted extends Component<StartedProps> {
               </StartedWrapper>
             </DescriptionContainer>
           </WizardDescription>
-          <Zoom in={this.isMounted}>
-            <MainImgWrapper>
-              <MainImg src={Main} />
-            </MainImgWrapper>
-          </Zoom>
+          <MainImgWrapper>
+            <MainImg src={Main} />
+          </MainImgWrapper>
         </StartPanel>
-        <Circle></Circle>
-        <SkewBlock></SkewBlock>
-        <KnowledgeCard />
       </Wrapper>
     );
   }
-
-  componentDidMount(): void {
-    setTimeout(() => {
-      this.isMounted = true;
-    }, 500);
-  }
 }
-
-export const Started = withRouter(TStarted);

@@ -4,6 +4,7 @@ import {withRouter, RouteComponentProps} from 'react-router-dom';
 
 interface WizardTabProps {
   tabs: WizardTabConfig[];
+  baseLineColor?: string;
   onTabChange?(config: WizardTabConfig): void;
 }
 
@@ -31,15 +32,18 @@ export class WizardTab extends Component<
   currentTabIndex: number = 0;
 
   render(): ReactNode {
-    const tabs = this.props.tabs.map(tab => <Tab label={tab.text} />);
+    const {baseLineColor = 'primary', tabs} = this.props;
+    const parsedTabs = tabs.map(tab => <Tab label={tab.text} />);
 
     return (
       <Tabs
+        {...this.props}
         value={this.currentTabIndex}
-        indicatorColor="secondary"
+        indicatorColor={baseLineColor}
+        textColor={baseLineColor}
         onChange={(_, index) => this.handleTabChange(index)}
       >
-        {tabs}
+        {parsedTabs}
       </Tabs>
     );
   }

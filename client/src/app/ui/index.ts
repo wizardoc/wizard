@@ -20,3 +20,4 @@ export * from './search';
 export * from './menu';
 export * from './breadcrumbs';
 export * from './popover';
+export * from './filter';

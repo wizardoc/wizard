@@ -2,10 +2,12 @@ import React, {Component, ReactNode, ReactElement} from 'react';
 import {withRouter, RouteComponentProps} from 'react-router-dom';
 import {
   Breadcrumbs as MaterialBreadcrumbs,
+  BreadcrumbsProps as MaterialBreadcrumbsProps,
   Link,
   Typography,
 } from '@material-ui/core';
 import styled from 'styled-components';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 
 import {withTheme, ThemeComponentProps} from 'src/app/theme';
 
@@ -23,7 +25,7 @@ export interface BreadcrumbsRules {
   [route: string]: BreadcrumbsItem;
 }
 
-export interface BreadcrumbsProps {
+export interface BreadcrumbsProps extends MaterialBreadcrumbsProps {
   rules: BreadcrumbsRules;
   staticColor?: string;
   activeColor?: string;
@@ -34,9 +36,26 @@ interface ColorTextProps {
   color: string;
 }
 
+interface StyledSeparatorProps {
+  color: string;
+}
+
 const ColorText = styled.div<ColorTextProps>`
   width: fit-content;
   height: fit-content;
+
+  > * {
+    color: ${props => props.color} !important;
+    font-size: 13px !important;
+  }
+`;
+
+const StyledLink = styled(Link)`
+  cursor: pointer !important;
+`;
+
+const StyledSeparator = styled.div<StyledSeparatorProps>`
+  display: flex;
 
   > * {
     color: ${props => props.color} !important;
@@ -62,6 +81,7 @@ export class Breadcrumbs extends Component<
       staticColor = theme!.grayTextColor,
       activeColor = theme!.black,
       divisionColor = theme!.black,
+      separator = <KeyboardArrowRightIcon />,
     } = this.props;
 
     const renderBreadcrumbsItems = this.convertToBreadcrumbsItem().map(
@@ -69,9 +89,9 @@ export class Breadcrumbs extends Component<
         const renderItem = (children: ReactElement): ReactElement =>
           isActive ? (
             <ColorText color={staticColor}>
-              <Link onClick={() => this.props.history!.push(route)}>
+              <StyledLink onClick={() => this.props.history!.push(route)}>
                 {children}
-              </Link>
+              </StyledLink>
             </ColorText>
           ) : (
             <ColorText color={activeColor}>
@@ -89,8 +109,15 @@ export class Breadcrumbs extends Component<
     );
 
     return (
-      <ColorText color={divisionColor} {...this.props}>
-        <MaterialBreadcrumbs>{renderBreadcrumbsItems}</MaterialBreadcrumbs>
+      <ColorText color={divisionColor} {...(this.props as ColorTextProps)}>
+        <MaterialBreadcrumbs
+          {...this.props}
+          separator={
+            <StyledSeparator color={staticColor}>{separator}</StyledSeparator>
+          }
+        >
+          {renderBreadcrumbsItems}
+        </MaterialBreadcrumbs>
       </ColorText>
     );
   }

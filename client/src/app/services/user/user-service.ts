@@ -4,7 +4,7 @@ import {emptyAssert} from '@wizardoc/shared';
 
 import {BaseInfoData} from '../../components';
 import {Optional} from '../../types/type-utils';
-import {genSync, SyncPair} from '../../utils';
+import {genSync, SyncPair, INIT_PAGE} from '../../utils';
 import {HTTP} from '../http';
 import {DialogService} from '../dialog';
 import {JWT} from '../jwt-service';
@@ -167,8 +167,11 @@ export class User {
     this._isLogin = false;
   }
 
-  async searchByName(name: string): Promise<SearchNameResult> {
-    const result = await this.http.get(this.api.searchName, {username: name});
+  async searchByName(name: string, page?: number): Promise<SearchNameResult> {
+    const result = await this.http.get(this.api.searchName, {
+      searchName: name,
+      page: page ?? INIT_PAGE,
+    });
 
     return result.data;
   }

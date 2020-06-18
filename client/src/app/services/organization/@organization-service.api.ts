@@ -12,6 +12,10 @@ export class OrganizationAPI {
 
   join = '/join';
 
+  invite = '/invite';
+
+  accept = (token: string): string => `/accept/${token}`;
+
   edit = (id: string): string => `/edit/${id}`;
 
   remove = (name: string): string => `/remove/${name}`;

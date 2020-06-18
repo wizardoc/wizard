@@ -12,12 +12,14 @@ const OverviewOrganizationEdit = lazy(
   import('../pages/overview'),
   'OrganizationEditPage',
 );
+
+const MessageCenter = lazy(import('../pages/message-center'), 'MessageCenter');
 const OverviewDocs = lazy(import('../pages/overview'), 'OverviewDocs');
 
 export const OverviewRoutes: Routes = [
   {
     path: '/overview',
-    layout: 'no-footer',
+    layout: 'limpidity',
     component: OverviewCenter,
     redirect: '/overview/organization',
     activatedGuard: [OverviewAuthGuard],
@@ -37,6 +39,12 @@ export const OverviewRoutes: Routes = [
         path: '/organization/docs/:id',
         isNest: true,
         component: OverviewDocs,
+      },
+      {
+        path: '/messages',
+        component: MessageCenter,
+        isNest: true,
+        layout: 'limpidity',
       },
     ],
   },

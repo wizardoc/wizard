@@ -22,3 +22,4 @@ export * from './organization';
 export * from './route';
 export * from './permission';
 export * from './category';
+export * from './arrow-cache';

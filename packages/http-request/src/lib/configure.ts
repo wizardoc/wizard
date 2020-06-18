@@ -47,7 +47,7 @@ export class ServerConfig {
     const {baseUrl, port, mode} = this.config!;
 
     return `${baseUrl}:${port === 80 ? '' : port}/${
-      mode === 'dev' ? `${this.prefix}/` : ''
+      mode === 'dev' ? `${this.prefix}` : ''
     }`;
   }
 

@@ -1,25 +1,22 @@
 import React, {Component, ReactNode, ComponentType} from 'react';
 import styled from 'styled-components';
-import {Typography, Button, ButtonProps} from '@material-ui/core';
+import {Button, ButtonProps} from '@material-ui/core';
 import RestoreFromTrashIcon from '@material-ui/icons/RestoreFromTrash';
+import {Inject} from '@wizardoc/injector';
 
 import {Search} from 'src/app/ui';
+import {DialogService} from 'src/app/services';
 
-const Wrapper = styled.div``;
+import {SendMessageDialog} from './@send-message-dialog';
 
-const SearchWrapper = styled.div`
-  width: 100%;
+const Wrapper = styled.div`
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin-top: 50px;
+  justify-content: space-between;
 `;
 
-const Title = styled(Typography)`
-  color: ${props => props.theme.titleColor};
-  margin-right: 15px !important;
-  white-space: pre;
-  font-size: 20px !important;
+const StyledSearch = styled(Search)`
+  height: 35px;
 `;
 
 const FuncBanner = styled.div`
@@ -41,18 +38,18 @@ const Trash = styled(BaseButton)`
 ` as ComponentType<ButtonProps>;
 
 export class MessageHeader extends Component {
+  @Inject
+  dialogService!: DialogService;
+
   render(): ReactNode {
     return (
       <Wrapper>
-        <SearchWrapper>
-          <Title>Message Center</Title>
-          <Search
-            placeholder="搜索消息"
-            onSearch={(content: string) => this.handleSearchClick(content)}
-          />
-        </SearchWrapper>
         <FuncBanner>
-          <SendMessage variant="contained" color="primary">
+          <SendMessage
+            onClick={() => this.handleSendMessageClick()}
+            variant="contained"
+            color="primary"
+          >
             发送消息
           </SendMessage>
           <Trash variant="contained">
@@ -60,8 +57,19 @@ export class MessageHeader extends Component {
             垃圾篓
           </Trash>
         </FuncBanner>
+        <StyledSearch
+          placeholder="搜索消息"
+          onSearch={content => this.handleSearchClick(content)}
+        />
       </Wrapper>
     );
+  }
+
+  handleSendMessageClick(): void {
+    this.dialogService.open(SendMessageDialog, {
+      title: '发送消息',
+      isClickAwayClose: true,
+    });
   }
 
   handleSearchClick(_content: string): void {}

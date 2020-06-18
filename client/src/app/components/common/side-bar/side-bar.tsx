@@ -1,4 +1,4 @@
-import React, {Component, ReactNode, ReactElement} from 'react';
+import React, {Component, ReactNode, ReactElement, ComponentType} from 'react';
 import styled from 'styled-components';
 import {List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
 import {withRouter, RouteComponentProps} from 'react-router-dom';
@@ -7,20 +7,46 @@ export interface SideBarItem {
   icon: ReactElement;
   text: string;
   route: string;
+  iconColor?: string;
+  textColor?: string;
 }
 
-export interface SideBarProps {
+export interface SideBarProps extends StyledListItemProps {
   items: SideBarItem[];
   onItemClick?(item: SideBarItem): void;
 }
 
+interface StyledListItemProps {
+  separateMargin?: string;
+}
+
+const genColorfulItem = (Wrapper: ComponentType): any => styled(Wrapper)<any>`
+  ${props =>
+    props.color &&
+    `
+  > * {
+    color: ${props.color} !important;
+  }
+`}
+`;
+
 const Wrapper = styled.div`
-  width: 250px;
-  height: 100%;
-  box-shadow: ${props => props.theme.flatShadow};
+  width: 100%;
+  height: fit-content;
   z-index: 1;
   flex-shrink: 0;
 `;
+
+const StyledListItem = styled(ListItem)<StyledListItemProps>`
+  ${props =>
+    props.separateMargin &&
+    `
+    margin-top: ${props.separateMargin} !important;
+  `}
+`;
+
+const StyledListItemIcon = genColorfulItem(ListItemIcon);
+const StyledListItemText = genColorfulItem(ListItemText);
 
 @withRouter
 export class SideBar extends Component<
@@ -34,13 +60,19 @@ export class SideBar extends Component<
   }
 
   render(): ReactNode {
-    const {items} = this.props;
+    const {items, separateMargin} = this.props;
 
     const renderItems = items.map(item => (
-      <ListItem button onClick={() => this.handleListItemClick(item)}>
-        <ListItemIcon>{item.icon}</ListItemIcon>
-        <ListItemText primary={item.text}></ListItemText>
-      </ListItem>
+      <StyledListItem
+        separateMargin={separateMargin}
+        button
+        onClick={() => this.handleListItemClick(item)}
+      >
+        <StyledListItemIcon color={item.iconColor}>
+          {item.icon}
+        </StyledListItemIcon>
+        <StyledListItemText primary={item.text}></StyledListItemText>
+      </StyledListItem>
     ));
 
     return (

@@ -16,3 +16,5 @@ export * from './default';
 export * from './side-bar';
 export * from './loading';
 export * from './upload';
+export * from './default-view';
+export * from './loadmore';

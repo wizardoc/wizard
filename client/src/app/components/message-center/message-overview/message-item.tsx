@@ -2,13 +2,16 @@ import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 import {Inject} from '@wizardoc/injector';
 
-import {UserModel, Time} from 'src/app/services';
+import {UserModel, Time, MessageTag as MessageTagValue} from 'src/app/services';
 
 import {Avatar} from '../../common';
+
+import {MessageTag} from './@message-tag';
 
 interface MessageItemProps {
   from: UserModel;
   sendTime: number;
+  tag: MessageTagValue;
 }
 
 const Wrapper = styled.div`
@@ -26,6 +29,11 @@ const UserName = styled.div`
   font-weight: 600;
   color: ${props => props.theme.titleColor};
   font-size: 18px;
+`;
+
+const Header = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const SendTime = styled.div`
@@ -51,13 +59,17 @@ export class MessageItem extends Component<MessageItemProps> {
   render(): ReactNode {
     const {
       from: {avatar, username},
+      tag,
     } = this.props;
 
     return (
       <Wrapper>
         <StyledAvatar lnk={avatar}></StyledAvatar>
         <UserInfoWrapper>
-          <UserName>{username}</UserName>
+          <Header>
+            <UserName>{username}</UserName>
+            <MessageTag tag={tag}></MessageTag>
+          </Header>
           <SendTime>{this.sendTime}</SendTime>
         </UserInfoWrapper>
       </Wrapper>

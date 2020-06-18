@@ -3,11 +3,10 @@ import {
   HTTPConfigure,
   IConfigure,
   HTTPService,
-  ErrorOperates,
   AxiosError,
 } from '@wizardoc/http-request';
 import {Injectable, extract, Inject} from '@wizardoc/injector';
-import {RequestPayloadParser, isNumber} from '@wizardoc/shared';
+import {RequestPayloadParser} from '@wizardoc/shared';
 
 import ServerConfig from '../../.config/server-config.json';
 import {ErrorManager} from '../error-manager';
@@ -34,18 +33,16 @@ class HTTPFactory extends HTTPRequestFactory implements HTTPConfigure {
     consume.serverConfigure.setConfig(ServerConfig);
   }
 
-  errorInteract(errMsg: ErrorOperates | string, err: AxiosError): void {
-    if (isNumber(errMsg)) {
-      this.errorManager.spurtError(err);
-
-      return;
-    }
-
+  errorInteract(errMsg: string, err: AxiosError): void {
     const result = this.errorManager.getErrorMessage(
       err.response?.data.err?.code,
     );
 
     this.toast.error(result ?? errMsg);
+
+    if (!result && !errMsg) {
+      this.errorManager.spurtError(err);
+    }
   }
 }
 

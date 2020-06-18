@@ -8,6 +8,8 @@ type Requests<R> = {
   [index in HttpType]: Request<R>;
 };
 
+type ErrorMessage = string | ErrorOperates | void;
+
 interface Doer<R> {
   Do(): Response<R>;
 }
@@ -21,7 +23,7 @@ export type ResValueArea<R = any> = Expectable<R> &
   Result<R> &
   Pipable<R>;
 
-export type ExpectableCB = (err: AxiosError) => string | ErrorOperates | void;
+export type ExpectableCB = (err: AxiosError) => ErrorMessage;
 
 export interface Expectable<R> {
   expect: OnExpect<R>;
@@ -30,7 +32,7 @@ export interface Expectable<R> {
 export type OnExpect<R> = (cb?: ExpectableCB) => ResValueArea<R>;
 
 export type ExpectErrorInteractProcessor = (
-  errMsg: string,
+  errMsg: ErrorMessage,
   err: AxiosError,
 ) => void;
 
@@ -155,7 +157,7 @@ export class HttpClient {
 
           // 抛出 caller 希望抛出的错误信息
           // else 吞并异常
-          if (errMsg) {
+          if (errMsg !== undefined || errMsg !== null) {
             that.options.catcher(errMsg, err);
           }
         }

@@ -1,7 +1,7 @@
 import React, {ReactNode, Component, createRef} from 'react';
 import styled from 'styled-components';
 
-import {viewObservable, ViewObservableComponentProps} from 'src/app/utils';
+import {viewObservable, ViewObservableComponent} from 'src/app/utils';
 
 import {GraphicAnimation} from './graphic-content';
 
@@ -20,29 +20,26 @@ const Title = styled.h2`
 `;
 
 @viewObservable()
-export class GraphicTitle extends Component<
-  GraphicTitleProps & Partial<ViewObservableComponentProps>
-> {
+export class GraphicTitle extends Component<GraphicTitleProps>
+  implements ViewObservableComponent {
   private titleRef = createRef<HTMLDivElement>();
 
-  componentDidMount(): void {
+  onObserve(entries: IntersectionObserverEntry[]): void {
     const {showRatio, fadeInClass} = this.props;
 
-    this.props.onObserve!(entry => {
-      const {current} = this.titleRef;
+    const {current} = this.titleRef;
 
-      if (!current) {
+    if (!current) {
+      return;
+    }
+
+    if (entries[0].intersectionRatio > showRatio) {
+      if (Array.prototype.includes.call(current.classList, fadeInClass)) {
         return;
       }
 
-      if (entry[0].intersectionRatio > showRatio) {
-        if (Array.prototype.includes.call(current.classList, fadeInClass)) {
-          return;
-        }
-
-        current.classList.add(fadeInClass);
-      }
-    });
+      current.classList.add(fadeInClass);
+    }
   }
 
   render(): ReactNode {

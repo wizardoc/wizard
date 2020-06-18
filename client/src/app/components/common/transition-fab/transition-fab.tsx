@@ -106,7 +106,7 @@ export class TransitionFab extends Component<
   TransitionFabProps & Partial<ThemeComponentProps>
 > {
   @observable
-  isOpen = true;
+  isOpen = false;
 
   @Inject
   time!: Time;

@@ -2,6 +2,8 @@ import {Injectable, Inject} from '@wizardoc/injector';
 import {ResValueArea} from '@wizardoc/http-request';
 import {emptyAssert} from '@wizardoc/shared';
 
+import {INIT_PAGE} from 'src/app/utils';
+
 import {JWT} from '../jwt-service';
 import {HTTP} from '../http';
 import {Subject} from '../observer';
@@ -11,6 +13,7 @@ import {
   Message,
   MessageType,
   Messages,
+  SendMessagePayload,
 } from './message-service.dto';
 import {MessageConnection} from './@message-connection';
 import {MessageServiceAPI} from './message-service.api';
@@ -37,21 +40,21 @@ export class MessageService extends MessageConnection {
 
   onOpen(): void {
     if (!this.jwt.JWTString) {
-      console.error('Connot find jwt for create websocket');
+      console.error('Cannot find jwt for create websocket');
 
       return;
     }
 
     // send jwt to BE for storage user id and establish map between user and connection
     this.sendMessage(BaseMessageType.INIT, this.jwt.JWTString);
-    this.dispatchMessage();
+    this.loadMessage();
   }
 
   onClose(): void {}
 
   onMessage(msg: Message): void {
     const distributor: ContainerDistributor = {
-      [MessageType.NOTIFY]: () => this.subject.notifyChatMessageObserver(msg),
+      [MessageType.NOTIFY]: () => this.subject.notifyNotifyMessageObserver(msg),
       [MessageType.CHAT]: () => this.subject.notifyChatMessageObserver(msg),
     };
 
@@ -59,6 +62,27 @@ export class MessageService extends MessageConnection {
   }
 
   onConnectionInit(): void {}
+
+  newMessage(payload: SendMessagePayload): Promise<ResValueArea> {
+    return this.http.post(this.api.send, payload);
+  }
+
+  async loadMessage(page?: number): Promise<Messages | undefined> {
+    const result = await this.http.get<Messages>(this.api.all, {
+      page: page ?? INIT_PAGE,
+    });
+
+    return result
+      .expect(() => {})
+      .success(data => {
+        emptyAssert(data, ({notifies, chats}) => {
+          this.subject.notifyChatMessageAppendedObserver(chats);
+          this.subject.notifyNotifyMessageAppendedObserver(notifies);
+        });
+
+        return data;
+      }).data;
+  }
 
   protected readMessage(id: string): Promise<ResValueArea> {
     return this.http.put(this.api.read(id));
@@ -70,16 +94,5 @@ export class MessageService extends MessageConnection {
 
   protected revokeMessage(id: string): Promise<ResValueArea> {
     return this.http.delete(this.api.revoke(id));
-  }
-
-  private async dispatchMessage(): Promise<void> {
-    const result = await this.http.get<Messages>(this.api.all);
-
-    result.success(data =>
-      emptyAssert(data, ({notifies, chats}) => {
-        this.subject.notifyChatMessageAppendedObserver(chats);
-        this.subject.notifyNotifyMessageAppendedObserver(notifies);
-      }),
-    );
   }
 }

@@ -53,19 +53,14 @@ export class NewOrganizationCard extends Component<NewOrganizationCardProps> {
     const {organizationName, organizationDescription} = this.organizationData;
     const {onCreateClick = (): void => {}} = this.props;
 
-    try {
-      await this.organizationService.newOrganization(
-        organizationName,
-        organizationDescription!,
-      );
-    } catch (e) {
-      this.toast.error('组织已存在!');
+    const result = await this.organizationService.newOrganization(
+      organizationName,
+      organizationDescription!,
+    );
 
-      return;
-    }
+    result?.success(() => this.toast.success('创建成功！'));
 
     onCreateClick(this.organizationData);
-    this.toast.success('创建组织成功!');
   }
 
   render(): ReactNode {

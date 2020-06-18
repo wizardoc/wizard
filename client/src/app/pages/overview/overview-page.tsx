@@ -5,7 +5,7 @@ import {observer} from 'mobx-react';
 import {Breadcrumbs, BreadcrumbsRules} from 'src/app/ui';
 import {withTheme, ThemeComponentProps} from 'src/app/theme';
 
-import {OverviewSide} from '../../components';
+import {OverviewSide, OverviewHeader} from '../../components';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -18,18 +18,23 @@ const ViewPlace = styled(Wrapper)`
 `;
 
 const BreadcrumbsWrapper = styled.div`
-  height: 70px;
+  height: 42px;
   display: flex;
+  flex-shrink: 0;
   align-items: center;
-  background: ${props => props.theme.coffeeGray};
+  background: ${props => props.theme.white};
   padding: 0 70px;
   z-index: 1;
+  box-shadow: ${props => props.theme.shallowShadow};
+  border-top: 1px solid #eeeeee;
 `;
 
 const breadcrumbsRules: BreadcrumbsRules = {
   '/overview': {
     text: '概览',
-    isActive: false,
+  },
+  '/overview/messages': {
+    text: '消息中心',
   },
   '/overview/organization': {
     text: '组织概览',
@@ -52,12 +57,12 @@ export class OverviewPage extends Component<Partial<ThemeComponentProps>> {
       <Wrapper>
         <OverviewSide />
         <ViewPlace>
+          <OverviewHeader />
           <BreadcrumbsWrapper>
             <Breadcrumbs
               rules={breadcrumbsRules}
-              activeColor={theme!.white}
-              staticColor={theme!.white}
-              divisionColor={theme!.white}
+              activeColor={theme!.black}
+              staticColor={theme!.deepFlatGray}
             />
           </BreadcrumbsWrapper>
           {this.props.children}

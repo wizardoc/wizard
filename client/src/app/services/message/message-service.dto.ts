@@ -10,6 +10,17 @@ export enum MessageType {
   NOTIFY,
 }
 
+export enum MessageTag {
+  SYSTEM,
+  PERSONAL,
+  INVITE,
+}
+
+export interface MessageInvitePayload {
+  organizeName: string;
+  inviteToken: string;
+}
+
 // used for transmission
 export interface BaseMessage<T = any> {
   payload: T;
@@ -19,6 +30,7 @@ export interface BaseMessage<T = any> {
 export interface MessageMain {
   title: string;
   body: string;
+  payload: unknown;
 }
 
 // parsed message
@@ -30,6 +42,7 @@ export interface Message {
   messageType: number;
   isRead: boolean;
   isDelete: boolean;
+  tag: MessageTag;
 }
 
 type DispatchedMessage = Omit<Message, 'messageType'>;
@@ -41,4 +54,10 @@ export interface ChatMessage extends DispatchedMessage {}
 export interface Messages {
   notifies: NotifyMessage[];
   chats: ChatMessage[];
+}
+
+export interface SendMessagePayload {
+  to: string;
+  title: string;
+  body: string;
 }

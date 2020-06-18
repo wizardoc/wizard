@@ -13,11 +13,13 @@ export interface UserInfoDTO {
 }
 
 export interface UserBaseInfo {
+  id: string;
   displayName: string;
   username: string;
   password: string;
   email: string;
   avatar: string;
+  intro: string;
 }
 
 export interface ValidResult {

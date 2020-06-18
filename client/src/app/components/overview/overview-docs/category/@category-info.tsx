@@ -13,6 +13,10 @@ const Wrapper = styled(Card)`
   padding: 10px;
 `;
 
+const StyledText = styled(Typography)`
+  font-size: 13px !important;
+`;
+
 const InfoItem = styled.div`
   color: ${props => props.theme.grayTextColor} !important;
 `;
@@ -31,7 +35,7 @@ export class CategoryInfo extends Component<CategoryInfoProps> {
     ];
     const renderInfos = infos.map(text => (
       <InfoItem key={text}>
-        <Typography>{text}</Typography>
+        <StyledText>{text}</StyledText>
       </InfoItem>
     ));
 

@@ -2,9 +2,12 @@ import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 import {withRouter, RouteComponentProps} from 'react-router-dom';
 import {Inject} from '@wizardoc/injector';
-import {Container} from '@material-ui/core';
 
-import {BaseEditCard, MemberOverview} from 'src/app/components';
+import {
+  BaseEditCard,
+  MemberOverview,
+  OrganizationFunction,
+} from 'src/app/components';
 import {OrganizationService, OrganizationCardData} from 'src/app/services';
 
 const Wrapper = styled.div`
@@ -19,12 +22,26 @@ const Wrapper = styled.div`
 
 const Title = styled.div`
   color: ${props => props.theme.titleColor};
-  font-size: 22px;
+  font-size: 18px;
   margin-top: 20px;
+`;
+
+const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 const CardWrapper = styled.div`
   margin-top: 20px;
+`;
+
+const BaseEditCardWrapper = styled.div`
+  flex: 2;
+  margin-right: 20px;
+`;
+
+const MemberManagerCardWrapper = styled.div`
+  flex: 3;
 `;
 
 interface OrganizationEditPageProps {
@@ -44,21 +61,25 @@ export class OrganizationEditPage extends Component<
     return (
       <Wrapper>
         <Container>
-          <Title>基本信息</Title>
-          <CardWrapper>
-            <BaseEditCard organizationInfo={organizationInfo} />
-          </CardWrapper>
-          {organizationInfo.isOwner && (
-            <>
-              <Title>成员管理</Title>
-              <CardWrapper>
-                <MemberOverview
-                  organizeName={organizationInfo.organizeName}
-                  members={organizationInfo.members}
-                ></MemberOverview>
-              </CardWrapper>
-            </>
-          )}
+          <BaseEditCardWrapper>
+            <Title>基本信息</Title>
+            <CardWrapper>
+              <BaseEditCard organizationInfo={organizationInfo} />
+            </CardWrapper>
+            <Title>组织功能</Title>
+            <CardWrapper>
+              <OrganizationFunction organizationID={organizationInfo.id} />
+            </CardWrapper>
+          </BaseEditCardWrapper>
+          <MemberManagerCardWrapper>
+            <Title>成员管理</Title>
+            <CardWrapper>
+              <MemberOverview
+                organizeName={organizationInfo.organizeName}
+                members={organizationInfo.members}
+              ></MemberOverview>
+            </CardWrapper>
+          </MemberManagerCardWrapper>
         </Container>
       </Wrapper>
     );

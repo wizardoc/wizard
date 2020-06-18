@@ -5,13 +5,19 @@ import styled from 'styled-components';
 import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
 import {withRouter, RouteComponentProps} from 'react-router-dom';
+import {observable} from 'mobx';
 
-import {OrganizationService} from 'src/app/services';
+import {
+  OrganizationService,
+  User,
+  OrganizationCardData,
+} from 'src/app/services';
 import {withTheme, ThemeComponentProps} from 'src/app/theme';
 import DefaultImg from 'src/app/assets/static/rabbit.png';
+import {Search, FilterItem, Filter} from 'src/app/ui';
 
 import {OrganizationCard, NewOrganizationCard} from '../organization';
-import {OverviewTitle, TransitionFab, FabCard, Default} from '../common';
+import {TransitionFab, FabCard, Default} from '../common';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -53,6 +59,28 @@ const DefaultText = styled.span`
   margin-bottom: 70px;
 `;
 
+const StyledSearchBox = styled(Search)`
+  width: 350px;
+  height: 35px;
+`;
+
+const SearchWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+enum FilterItemValues {
+  ALL = 'all',
+  OWN = 'own',
+}
+
+const filterItems: FilterItem[] = [
+  {text: '全部', value: FilterItemValues.ALL},
+  {text: '我的组织', value: FilterItemValues.OWN},
+];
+
 @withRouter
 @withTheme
 @observer
@@ -62,26 +90,60 @@ export class OrganizationPanel extends Component<
   @Inject
   organizationService!: OrganizationService;
 
+  @Inject
+  userService!: User;
+
+  @observable
+  organizations: OrganizationCardData[] = [];
+
   handleOrganizationCardClick(id: string): void {
     this.props.history!.push(`organization/docs/${id}`);
   }
 
+  handleSearchClick(_text: string): void {}
+
+  handleFilterChange(value: string): void {
+    if (value === FilterItemValues.ALL) {
+      this.organizations = this.organizationService.organizations;
+
+      return;
+    }
+
+    this.organizations = this.organizationService.organizations.filter(
+      ({ownerInfo}) =>
+        ownerInfo.username === this.userService.userInfo?.username,
+    );
+  }
+
+  async componentDidMount(): Promise<void> {
+    await this.organizationService.isInit();
+
+    this.organizations = this.organizationService.organizations;
+  }
+
   render(): ReactNode {
     const {theme} = this.props;
-    const organizationCards = this.organizationService.organizations.map(
-      (info, index) => (
-        <OrganizationCard
-          key={info.id}
-          organizationCardData={info}
-          seqIndex={index}
-          onCardClick={() => this.handleOrganizationCardClick(info.id)}
-        />
-      ),
-    );
+    const organizationCards = this.organizations.map((info, index) => (
+      <OrganizationCard
+        key={info.id}
+        organizationCardData={info}
+        seqIndex={index}
+        onCardClick={() => this.handleOrganizationCardClick(info.id)}
+      />
+    ));
 
     return (
       <Wrapper>
-        <OverviewTitle>组织概览</OverviewTitle>
+        <SearchWrapper>
+          <Filter
+            onChange={value => this.handleFilterChange(value)}
+            items={filterItems}
+          ></Filter>
+          <StyledSearchBox
+            onSearch={(text: string) => this.handleSearchClick(text)}
+            placeholder="搜索组织"
+          />
+        </SearchWrapper>
         <Default
           condition={() => !organizationCards.length}
           defaultView={

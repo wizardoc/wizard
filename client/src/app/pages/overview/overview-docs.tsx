@@ -11,14 +11,14 @@ import {
   OverviewDocCards,
   TransitionFab,
   CreateDocumentCard,
-  Default,
   FetchData,
   FetchDataComponentProps,
+  DefaultView,
 } from 'src/app/components';
 import {withTheme, ThemeComponentProps} from 'src/app/theme';
 import {CategoryService} from 'src/app/services';
 
-import EmptyCategory from '../../assets/static/default_categories.png';
+import EmptyCategory from '../../assets/static/man.svg';
 
 interface RouteParams {
   id: string;
@@ -38,24 +38,6 @@ const AddDocumentButton = styled(TransitionFab)`
   position: absolute !important;
   right: 30px;
   bottom: 50px;
-`;
-
-const DefaultView = styled.div`
-  width: 100%;
-  height: 70%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const EmptyCategoryImg = styled.img`
-  width: 100px;
-`;
-
-const EmptyText = styled.div`
-  color: ${props => props.theme.grayTextColor};
-  margin-top: 10px;
 `;
 
 @FetchData(
@@ -85,17 +67,13 @@ export class OverviewDocs extends Component<
     return (
       <Wrapper>
         <OverviewDocsHeader />
-        <Default
-          defaultView={
-            <DefaultView>
-              <EmptyCategoryImg src={EmptyCategory} />
-              <EmptyText>暂无文档</EmptyText>
-            </DefaultView>
-          }
+        <DefaultView
+          defaultImg={EmptyCategory}
+          text="快来创建你的第一个分类吧！"
           condition={() => this.categoryService.isEmpty(match!.params.id)}
         >
           <OverviewDocCards categories={data!} />
-        </Default>
+        </DefaultView>
         <AddDocumentButton
           icon={<AddIcon />}
           activeIcon={<CloseIcon />}

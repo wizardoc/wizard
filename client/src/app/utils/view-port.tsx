@@ -12,6 +12,13 @@ export interface ViewObservableComponentProps {
   onObserve(cb: IntersectionObserverCallback): void;
 }
 
+export interface ViewObservableComponent {
+  onObserve(
+    entries: IntersectionObserverEntry[],
+    observer: IntersectionObserver,
+  ): void;
+}
+
 export interface ParsedViewObservableOptions {
   /**
    * reality 表示 “是否接近真实” 的，intersectionObserver 会在每次刚进入页面时触发一次回调，
@@ -95,6 +102,8 @@ export function viewObservable<P>(
 
       wrapperRef = createRef<HTMLDivElement>();
 
+      observerRef = createRef<ViewObservableComponent>();
+
       parsedOptions: ParsedViewObservableOptions;
 
       constructor(props: P) {
@@ -109,14 +118,17 @@ export function viewObservable<P>(
       render(): ReactNode {
         return (
           <div ref={this.wrapperRef}>
-            <Wrapper
-              {...this.props}
-              onObserve={(cb: IntersectionObserverCallback) =>
-                this.handleWrapperObserve(cb)
-              }
-            ></Wrapper>
+            <Wrapper ref={this.observerRef} {...this.props}></Wrapper>
           </div>
         );
+      }
+
+      componentDidMount(): void {
+        const instance = this.observerRef.current;
+
+        if (isViewObservableComponent(instance)) {
+          this.handleWrapperObserve(instance.onObserve.bind(instance));
+        }
       }
 
       async handleWrapperObserve(
@@ -138,4 +150,10 @@ export function viewObservable<P>(
 
     return WithObservableComponent;
   };
+}
+
+function isViewObservableComponent(
+  target: any,
+): target is ViewObservableComponent {
+  return !!target.onObserve;
 }

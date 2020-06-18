@@ -1,6 +1,6 @@
 import {Injectable, Inject} from '@wizardoc/injector';
 import {observable, computed} from 'mobx';
-import {ResValueArea} from '@wizardoc/http-request';
+import {ResValueArea, noop} from '@wizardoc/http-request';
 import {traverse} from '@wizardoc/shared';
 
 import {NotifyMessage, MessageService} from '../message';
@@ -35,8 +35,10 @@ export class NotifyService extends MessageService
   subject!: Subject;
 
   // create hash table to find the message faster
-  @observable
   private messageTable: MessageTable = {};
+
+  @observable
+  private notifyMessages: NotifyMessage[] = [];
 
   constructor() {
     super();
@@ -47,14 +49,23 @@ export class NotifyService extends MessageService
     traverse(msgs, msg => {
       this.messageTable[msg.id] = msg;
     });
+
+    this.notifyMessages = this.notifyMessages.concat(msgs);
   };
 
   onNotifyMessage = (msg: NotifyMessage): void => {
     this.messageTable[msg.id] = msg;
+    this.notifyMessages.unshift(msg);
   };
 
-  readNotifyMessage(id: string): Promise<ResValueArea> {
-    this.findMessage(id).isRead = true;
+  async readNotifyMessage(id: string): Promise<ResValueArea> {
+    const msg = this.findMessage(id);
+
+    if (msg.isRead) {
+      return noop;
+    }
+
+    msg.isRead = true;
 
     return this.readMessage(id);
   }
@@ -75,9 +86,7 @@ export class NotifyService extends MessageService
     P extends keyof NotifyMessage,
     V extends NotifyMessage[P]
   >(prop: P, tag: V): NotifyMessage[] {
-    return Array.from(observable.map(this.messageTable).values()).filter(
-      msg => msg[prop] === tag,
-    );
+    return this.notifyMessages.filter(msg => msg[prop] === tag);
   }
 
   private findMessage(id: string): NotifyMessage {

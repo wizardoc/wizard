@@ -1,7 +1,13 @@
 import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 
-import {ActionDialog, ParsedActionButtons} from 'src/app/services';
+import {
+  ActionDialog,
+  ParsedActionButtons,
+  DialogComponentProps,
+} from 'src/app/services';
+
+type Handler = () => void;
 
 interface ConfirmDialogProps {
   content: string;
@@ -13,7 +19,8 @@ interface ConfirmDialogProps {
 
 const Wrapper = styled.div``;
 
-export class ConfirmDialog extends Component<ConfirmDialogProps>
+export class ConfirmDialog
+  extends Component<ConfirmDialogProps & DialogComponentProps>
   implements ActionDialog {
   actionButtons(): ParsedActionButtons[] {
     const {
@@ -21,15 +28,23 @@ export class ConfirmDialog extends Component<ConfirmDialogProps>
       cancelText,
       onSureClick = (): void => {},
       onCancelClick = (): void => {},
+      close,
     } = this.props;
+    const withClose = (handler: Handler): Handler => () => {
+      handler();
+      close();
+    };
 
     return [
       {
         text: sureText,
-        cb: () => onSureClick(),
+        cb: withClose(onSureClick),
         props: {color: 'primary'},
       },
-      {text: cancelText, cb: () => onCancelClick()},
+      {
+        text: cancelText,
+        cb: withClose(onCancelClick),
+      },
     ];
   }
 

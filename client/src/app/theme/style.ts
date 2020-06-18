@@ -27,6 +27,7 @@ export const styledTheme = {
   darkPrimaryColor: '#1565c0',
   green: '#27ae60',
   dark: '#424242',
+  shallowPink: '#ff9ff3',
   shallowPrimaryColor: 'rgba(25, 118, 210, 0.1)',
   highRed: '#e91e63',
   translucentPrimary: 'rgb(25, 118, 210, 0.5)',
@@ -35,6 +36,7 @@ export const styledTheme = {
   shallowGray: '#eeeeee',
   baseGray: '#f7f7f7',
   deepGray: '#cecece',
+  deepFlatGray: '#989898',
   redLinearGradient: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
   spacing: '10px',
   baseBgColor: '#eceff1',
@@ -73,6 +75,7 @@ export const styledTheme = {
   flatShadow: '6px 0 6px rgba(0,0,0,.1)',
   flatDark: '#181a1b',
   coffeeGray: '#535c68',
+  shallowWhite: 'rgba(255,255,255,0.2)',
 
   // variables
   heightOmitHeader: 'calc(100% - 48px)',

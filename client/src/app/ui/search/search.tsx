@@ -1,11 +1,8 @@
-import React, {Component, ReactNode} from 'react';
+import React, {Component, ReactNode, ChangeEvent} from 'react';
 import Paper from '@material-ui/core/Paper';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import styled from 'styled-components';
-import {TextField} from '@material-ui/core';
 import {ArrowCache} from 'arrow-cache';
 import {observable} from 'mobx';
 import {observer} from 'mobx-react';
@@ -16,25 +13,22 @@ const Wrapper = styled(Paper)`
   padding: 2px 4px;
   display: flex;
   align-items: center;
+  border-radius: 10000px !important;
 `;
 
 const StyledIconButton = styled(IconButton)`
   padding: 10px;
 `;
 
-const StyledInputBase = styled(TextField)`
+const StyledInputBase = styled.input`
   margin-left: 10px;
   flex: 1;
-`;
-
-const StyledDivider = styled(Divider)`
-  height: 28px;
-  margin: 4px;
+  border: none;
+  outline: none;
 `;
 
 export interface SearchProps {
   placeholder: string;
-  width?: string;
   onSearch(content: string): void;
 }
 
@@ -57,35 +51,33 @@ export class Search extends Component<SearchProps> {
   }
 
   render(): ReactNode {
-    const {placeholder, width = '100%'} = this.props;
+    const {placeholder} = this.props;
 
     return (
-      <SearchPrompt options={this.options} width={width}>
-        {params => (
-          <Wrapper component="form">
-            <StyledIconButton aria-label="menu">
-              <MenuIcon />
-            </StyledIconButton>
-            <StyledInputBase
-              {...params}
-              placeholder={placeholder}
-              onChange={e => (this.content = e.target.value)}
-              inputProps={{
-                ...params.inputProps,
-                autoComplete: 'new-password',
-                disableUnderline: true,
-              }}
-            />
-            <StyledIconButton
-              aria-label="search"
-              color="primary"
-              onClick={() => this.handlerSearchClick(this.content)}
-            >
-              <SearchIcon />
-            </StyledIconButton>
-            <StyledDivider orientation="vertical" />
-          </Wrapper>
-        )}
+      <SearchPrompt options={this.options}>
+        {params => {
+          console.info(params);
+
+          return (
+            <Wrapper {...this.props}>
+              <StyledIconButton
+                aria-label="search"
+                color="primary"
+                onClick={() => this.handlerSearchClick(this.content)}
+              >
+                <SearchIcon />
+              </StyledIconButton>
+              <StyledInputBase
+                {...params}
+                placeholder={placeholder}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  (this.content = e.target.value)
+                }
+                autoComplete="new-password"
+              />
+            </Wrapper>
+          );
+        }}
       </SearchPrompt>
     );
   }

@@ -18,6 +18,7 @@ export const RootRoutes: Routes = [
     component: Home,
     headerType: 'default',
     isFullContainer: false,
+    layout: 'no-header',
   },
   {
     path: '/organizations',

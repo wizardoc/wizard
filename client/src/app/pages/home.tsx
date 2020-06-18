@@ -8,6 +8,7 @@ import {
   Started,
   ViewBanner,
   GraphicContainer,
+  MainHeaderBar,
 } from '../components';
 
 const Wrapper = styled.div`
@@ -19,6 +20,7 @@ export class Home extends Component {
   render(): ReactNode {
     return (
       <Wrapper>
+        <MainHeaderBar />
         <Started />
         <MainContent />
         <ViewBanner

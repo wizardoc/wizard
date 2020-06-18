@@ -1,12 +1,12 @@
 import {Injectable} from '@wizardoc/injector';
 import {Group, AbsURL} from '@wizardoc/http-utils';
 
-import {httpFactory} from '../http';
+// import {httpFactory} from '../http';
 
 @Injectable()
 @Group('/message')
 export class MessageServiceAPI {
-  @AbsURL({protocol: 'ws', baseUrl: httpFactory.getServerConfig().getBaseURL()})
+  @AbsURL({protocol: 'ws', baseUrl: 'localhost:4000'})
   connect = '/connect';
 
   all = '/all';

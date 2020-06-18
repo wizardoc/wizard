@@ -6,7 +6,7 @@ export interface ReleaseTagProps {
 }
 
 const Wrapper = styled.div`
-  background: ${props => props.theme.primaryColor};
+  background: ${props => props.theme.flatYellow};
   padding: 3px;
   border-radius: 5px;
   color: ${props => props.theme.white};

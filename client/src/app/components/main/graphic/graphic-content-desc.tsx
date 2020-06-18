@@ -1,7 +1,7 @@
 import React, {Component, ReactNode, createRef} from 'react';
 import styled from 'styled-components';
 
-import {viewObservable, ViewObservableComponentProps} from 'src/app/utils';
+import {viewObservable, ViewObservableComponent} from 'src/app/utils';
 
 import {GraphicAnimation} from './graphic-content';
 
@@ -14,29 +14,26 @@ interface GraphicContentDescProps extends GraphicAnimation {
 }
 
 @viewObservable()
-export class GraphicContentDesc extends Component<
-  GraphicContentDescProps & Partial<ViewObservableComponentProps>
-> {
+export class GraphicContentDesc extends Component<GraphicContentDescProps>
+  implements ViewObservableComponent {
   private contentDescRef = createRef<HTMLDivElement>();
 
-  componentDidMount(): void {
+  onObserve(entries: IntersectionObserverEntry[]): void {
     const {showRatio, fadeInClass} = this.props;
 
-    this.props.onObserve!(entry => {
-      const {current} = this.contentDescRef;
+    const {current} = this.contentDescRef;
 
-      if (!current) {
+    if (!current) {
+      return;
+    }
+
+    if (entries[0].intersectionRatio > showRatio) {
+      if (Array.prototype.includes.call(current.classList, fadeInClass)) {
         return;
       }
 
-      if (entry[0].intersectionRatio > showRatio) {
-        if (Array.prototype.includes.call(current.classList, fadeInClass)) {
-          return;
-        }
-
-        current.classList.add(fadeInClass);
-      }
-    });
+      current.classList.add(fadeInClass);
+    }
   }
 
   render(): ReactNode {

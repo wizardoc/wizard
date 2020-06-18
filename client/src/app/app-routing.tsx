@@ -13,7 +13,7 @@ import {
 
 import {RouterService, Layout, TabService} from './services';
 import {PageNotFound} from './pages/page-not-found';
-import {Footer, SharePop, HeaderBar} from './components';
+import {Footer, HeaderBar} from './components';
 
 interface WrapperProps {
   isHideFooter: boolean;
@@ -191,7 +191,6 @@ export class AppRouting extends Component {
             {wrapper(
               <>
                 {renderComponent}
-                <SharePop />
                 <Footer />
               </>,
             )}
@@ -200,19 +199,13 @@ export class AppRouting extends Component {
         'no-header': wrapper(
           <>
             {renderComponent}
-            <SharePop />
             <Footer />
           </>,
         ),
         'no-footer': (
           <>
             {header}
-            {wrapper(
-              <>
-                {renderComponent}
-                <SharePop />
-              </>,
-            )}
+            {wrapper(renderComponent)}
           </>
         ),
       };

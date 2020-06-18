@@ -1,7 +1,7 @@
 import React, {Component, ReactNode, createRef} from 'react';
 import styled from 'styled-components';
 
-import {viewObservable, ViewObservableComponentProps} from 'src/app/utils';
+import {viewObservable, ViewObservableComponent} from 'src/app/utils';
 
 const FadeInImg = styled.img`
   width: 540px;
@@ -15,29 +15,26 @@ interface GraphicImgProps {
 }
 
 @viewObservable()
-export class GraphicImg extends Component<
-  GraphicImgProps & Partial<ViewObservableComponentProps>
-> {
+export class GraphicImg extends Component<GraphicImgProps>
+  implements ViewObservableComponent {
   private graphicImgRef = createRef<HTMLImageElement>();
 
-  componentDidMount(): void {
+  onObserve(entries: IntersectionObserverEntry[]): void {
     const {imgFadeInClass, showRatio} = this.props;
 
-    this.props.onObserve!(entry => {
-      const {current} = this.graphicImgRef;
+    const {current} = this.graphicImgRef;
 
-      if (!current) {
+    if (!current) {
+      return;
+    }
+
+    if (entries[0].intersectionRatio > showRatio) {
+      if (Array.prototype.includes.call(current.classList, imgFadeInClass)) {
         return;
       }
 
-      if (entry[0].intersectionRatio > showRatio) {
-        if (Array.prototype.includes.call(current.classList, imgFadeInClass)) {
-          return;
-        }
-
-        current.classList.add(imgFadeInClass);
-      }
-    });
+      current.classList.add(imgFadeInClass);
+    }
   }
 
   render(): ReactNode {

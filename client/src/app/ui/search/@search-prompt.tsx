@@ -7,17 +7,15 @@ type InputRenderProps = (params: RenderInputParams) => ReactNode;
 export interface SearchPromptProps {
   children: InputRenderProps;
   options: string[];
-  width: string;
 }
 
 @observer
 export class SearchPrompt extends Component<SearchPromptProps> {
   render(): ReactNode {
-    const {children, width, options} = this.props;
+    const {children, options} = this.props;
 
     return (
       <Autocomplete
-        style={{width}}
         options={options}
         renderOption={option => <React.Fragment>{option}</React.Fragment>}
         autoHighlight

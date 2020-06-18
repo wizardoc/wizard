@@ -63,12 +63,12 @@ interface ValidatorInfos {
   [index: string]: ValidatorInfo;
 }
 
-const Wrapper = styled.div`
-  margin: 0 !important;
-  padding: 0 !important;
-  width: fit-content !important;
-  height: fit-content !important;
-`;
+// const Wrapper = styled.div`
+//   margin: 0 !important;
+//   padding: 0 !important;
+//   width: fit-content !important;
+//   height: fit-content !important;
+// `;
 
 const ErrorHelpMessage = styled(FormHelperText)<ErrorHelpMessageProps>`
   ${props => props.hasIcon && 'margin-left: 35px !important;'}
@@ -195,12 +195,12 @@ export class FormControl extends Component<FormControlProps>
       });
 
       return (
-        <Wrapper key={name}>
+        <>
           {part}
           <ErrorHelpMessage id="component-error-text" hasIcon={!!icon}>
             {(this.errorManager[name] || {}).errMsg}
           </ErrorHelpMessage>
-        </Wrapper>
+        </>
       );
     });
 

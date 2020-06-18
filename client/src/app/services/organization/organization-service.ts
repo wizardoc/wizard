@@ -74,12 +74,8 @@ export class OrganizationService {
     });
   }
 
-  async getAllNames(): Promise<string[]> {
-    const result = await this.http.get(this.apis.allName);
-
-    return result
-      .expect(() => '获取组织名称失败')
-      .success(data => data?.organizeNames ?? []).data;
+  getAllNames(): string[] {
+    return this._organizations.map(({organizeName}) => organizeName);
   }
 
   async getAllJoinOrganization(): Promise<OrganizationCardData[]> {
@@ -96,16 +92,19 @@ export class OrganizationService {
     return data;
   }
 
-  async createOrganization(name: string, description: string): Promise<void> {
-    (
-      await this.http.post(this.apis.new, {
-        organizeName: name,
-        username: this.user.userInfo?.username,
-        organizeDescription: description,
-      })
-    ).expect(() => '创建组织失败');
+  async createOrganization(
+    name: string,
+    description: string,
+  ): Promise<ResValueArea> {
+    const result = await this.http.post(this.apis.new, {
+      organizeName: name,
+      username: this.user.userInfo?.username,
+      organizeDescription: description,
+    });
 
     await this.getAllJoinOrganization();
+
+    return result;
   }
 
   async removeOrganization(name: string): Promise<ResValueArea> {
@@ -120,7 +119,7 @@ export class OrganizationService {
   newOrganization(
     name: string,
     description: string,
-  ): Promise<void> | undefined {
+  ): Promise<ResValueArea> | undefined {
     const {userInfo} = this.user;
 
     if (!userInfo) {
@@ -132,10 +131,8 @@ export class OrganizationService {
     return this.createOrganization(name, description);
   }
 
-  async hasExistOrganization(organizationName: string): Promise<boolean> {
-    const names = await this.getAllNames();
-
-    return names.includes(organizationName);
+  hasExistOrganization(organizationName: string): boolean {
+    return this.getAllNames().includes(organizationName);
   }
 
   async joinOrganization(
@@ -148,5 +145,31 @@ export class OrganizationService {
     });
 
     result.expect(() => '加入组织失败');
+  }
+
+  async invite(organizeName: string, username: string): Promise<ResValueArea> {
+    const result = await this.http.put(this.apis.invite, {
+      organizeName,
+      username,
+    });
+
+    return result.expect(() => '发送邀请失败，请检查网络后重试');
+  }
+
+  async acceptInvite(
+    organizeName: string,
+    inviteToken: string,
+  ): Promise<ResValueArea> {
+    const result = await this.http.post(this.apis.accept(inviteToken), {
+      organizeName,
+    });
+
+    return result
+      .expect(() => '接受邀请失败，请稍后重试')
+      .success(data => {
+        this._organizations.unshift(result.data);
+
+        return data;
+      });
   }
 }

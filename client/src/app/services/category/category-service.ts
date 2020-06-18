@@ -40,7 +40,7 @@ export class CategoryService {
   }
 
   isEmpty(organizationID: string): boolean {
-    return !this._categories[organizationID];
+    return !this._categories[organizationID]?.length;
   }
 
   async createCategory(category: Category): Promise<ResValueArea> {
