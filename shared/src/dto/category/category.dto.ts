@@ -5,9 +5,10 @@ export interface Category {
   cover: string;
   createTime: number;
   lastModifyTime: number;
-  userID: string;
+  createUser: string;
+  organizationID: string;
 }
 
 export interface Categories {
-  [organizationID: string]: Category;
+  [organizationID: string]: Category[];
 }
