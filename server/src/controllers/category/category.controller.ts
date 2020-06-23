@@ -1,6 +1,6 @@
 import {Controller} from '@nestjs/common';
 
-import {HTTP} from 'src/services';
+import {HTTP} from '../../services';
 
 @Controller('/category')
 export class CategoryController {

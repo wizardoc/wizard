@@ -64,14 +64,14 @@ export class HTTP extends HTTPService {
     const result = await this.proxy(req, res);
 
     if (result) {
-      result
-        .expect(({response}) => {
-          // console.info(result.data);
-          res.status(response!.status).send(response?.data ?? undefined);
-        })
-        .success(payload => {
-          res.send({data: parsedOnData(payload.data)});
-        });
+      result.expect(({response}) => {
+        // console.info(result.data);
+        res.status(response!.status).send(response?.data ?? undefined);
+      });
+
+      if (result.ok) {
+        res.send({data: await parsedOnData(result.data.data)});
+      }
     }
   }
 }
