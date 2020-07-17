@@ -28,7 +28,7 @@ export class IconFuncs extends Component<IconFuncsProps> {
       ({tooltip, body, handler, isLogin}) =>
         !isLogin ||
         (this.userService.isLogin && (
-          <Tooltip title={tooltip}>
+          <Tooltip key={tooltip} title={tooltip}>
             <IconButton color="inherit" onClick={handler}>
               {body}
             </IconButton>

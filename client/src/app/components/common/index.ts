@@ -18,3 +18,4 @@ export * from './loading';
 export * from './upload';
 export * from './default-view';
 export * from './loadmore';
+export * from './markdown';

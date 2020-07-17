@@ -1,16 +1,15 @@
 import React, {Component, ReactNode, ComponentType} from 'react';
-import {Inject} from '@wizardoc/injector';
 import {Avatar as MaterialAvatar} from '@material-ui/core';
 import styled from 'styled-components';
 import {observer} from 'mobx-react';
 import {AvatarProps as MaterialAvatarProps} from '@material-ui/core/Avatar';
 
-import {User, RegexUtils} from 'src/app/services';
 import {withTheme, ThemeComponentProps} from 'src/app/theme';
 
 export interface AvatarProps extends AvatarWrapperProps {
   // the lnk of avatar
   lnk?: string;
+  username?: string;
 }
 
 interface AvatarWrapperProps {
@@ -28,35 +27,18 @@ const AvatarWrapper = styled(MaterialAvatar)<AvatarWrapperProps>`
 export class Avatar extends Component<
   AvatarProps & Partial<ThemeComponentProps>
 > {
-  @Inject
-  userService!: User;
-
-  @Inject
-  regexUtils!: RegexUtils;
-
   render(): ReactNode {
     const {
       theme,
       lnk,
       bgColor = theme!.avatarBgGray,
       color = theme!.fontGray,
+      username = '',
     } = this.props;
-    const {avatar} = this.userService;
-    const src = lnk ?? avatar;
-
-    // console.info((Regex as any).key);
-
-    const srcProps = this.regexUtils.validURL(avatar) ? {src} : {};
 
     return (
-      <AvatarWrapper
-        {...this.props}
-        src={src}
-        {...srcProps}
-        bgColor={bgColor}
-        color={color}
-      >
-        {src}
+      <AvatarWrapper {...this.props} src={lnk} bgColor={bgColor} color={color}>
+        {username.slice(0, 1)}
       </AvatarWrapper>
     );
   }

@@ -40,7 +40,8 @@ export const styledTheme = {
   redLinearGradient: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
   spacing: '10px',
   baseBgColor: '#eceff1',
-  codeBgColor: '#f8f8f8',
+  codeBgColor: '#23272e',
+  codeFontColor: '#9fa8b7',
   shallowBlue: 'rgba(25, 118, 210, 0.08)',
   articleColor: '#2f2f2f',
   quoteBgColor: 'rgba(255, 218, 121,0.2)',
@@ -48,6 +49,8 @@ export const styledTheme = {
   shallowSecondaryColor: 'rgba(240, 98, 146, 0.1)',
   grayTextColor: 'rgba(0, 0, 0, 0.54)',
   shallowShadow: '0 1px 3px rgba(26,26,26,.1)',
+  codeDarkBg: '#1a1c1d',
+  codeColor: '#9fa6b3',
   baseShadow:
     '0px 1px 5px 0px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 3px 1px -2px rgba(0,0,0,0.12)',
   darkWhite: 'rgb(214, 211, 205)',
@@ -76,6 +79,11 @@ export const styledTheme = {
   flatDark: '#181a1b',
   coffeeGray: '#535c68',
   shallowWhite: 'rgba(255,255,255,0.2)',
+  buttonHoverBg: 'rgba(0, 0, 0, 0.1)',
+  headingColor: '#1a1a1a',
+  flatGrayText: '#c6c6c6',
+  commentColor: '#505050',
+  commentGray: '#8a9aa9',
 
   // variables
   heightOmitHeader: 'calc(100% - 48px)',

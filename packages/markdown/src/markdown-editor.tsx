@@ -4,25 +4,55 @@ import {observer} from 'mobx-react';
 import {observable} from 'mobx';
 import createFluentMarkdownPlugin from 'draft-js-fluent-markdown-plugin';
 
-function findFirstABC(contentBlock, callback) {
-  const text = contentBlock.getText();
+import {Header} from './components';
 
-  if (text.indexOf('abc') > 0) {
-    callback(text.indexOf('abc'), text.indexOf('abc') + 3);
+function findFirstABC(contentBlock, callback, state: ContentState) {
+  const text: string = contentBlock.getText();
+
+  if (text.startsWith('# ')) {
+    callback(2, text.length);
   }
 }
 
-// 标红色
-const ABCSpan = props => {
-  return <span style={{color: 'red'}}>{props.children}</span>;
+const hash = (contentBlock, callback) => {
+  const text: string = contentBlock.getText();
+
+  if (text.startsWith('# ')) {
+    callback(0, 1);
+  }
 };
+
+// 标红色
+const HeaderBlock = props => {
+  return <Header level="1">{props.children}</Header>;
+};
+
+const HashTag = props => <span>{props.children}</span>;
 
 const compositeDecorator = new CompositeDecorator([
   {
     strategy: findFirstABC,
-    component: ABCSpan,
+    component: HeaderBlock,
+  },
+  {
+    strategy: hash,
+    component: HashTag,
   },
 ]);
+
+function foo(contentBlock) {
+  const type = contentBlock.getType();
+
+  console.info(contentBlock);
+
+  return () => ({
+    component: <></>,
+    editable: false,
+    props: {
+      foo: 'bar',
+    },
+  });
+}
 
 @observer
 export class MarkdownEditor extends Component {
@@ -46,7 +76,7 @@ export class MarkdownEditor extends Component {
         editorState={this.editorState}
         onChange={this.handleContentChange.bind(this)}
         spellCheck={true}
-
+        blockRendererFn={a => foo(a)}
         // handleKeyCommand={this.handleKeyCommand.bind(this)}
       />
     );

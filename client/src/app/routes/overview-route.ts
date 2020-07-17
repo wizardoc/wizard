@@ -1,7 +1,7 @@
 import {lazy} from 'src/app/utils';
 
 import {Routes} from '../services';
-import {OverviewAuthGuard, OrganizationEditGuard} from '../guards';
+import {OverviewAuthGuard, OrganizationGuard} from '../guards';
 
 const OverviewCenter = lazy(import('../pages/overview'), 'OverviewPage');
 const OverviewOrganization = lazy(
@@ -33,7 +33,7 @@ export const OverviewRoutes: Routes = [
         path: '/organization/edit/:id',
         isNest: true,
         component: OverviewOrganizationEdit,
-        activatedGuard: [OrganizationEditGuard],
+        activatedGuard: [OrganizationGuard],
       },
       {
         path: '/organization/docs/:id',

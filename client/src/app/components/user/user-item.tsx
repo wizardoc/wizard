@@ -6,12 +6,14 @@ import {
   ListItemText,
 } from '@material-ui/core';
 import {ListItemIconProps} from '@material-ui/core/ListItemIcon';
-import ChromeReaderModeIcon from '@material-ui/icons/ChromeReaderMode';
 import FaceIcon from '@material-ui/icons/Face';
 import HelpIcon from '@material-ui/icons/Help';
 import InfoIcon from '@material-ui/icons/Info';
+import GroupIcon from '@material-ui/icons/Group';
+import DescriptionIcon from '@material-ui/icons/Description';
+import BookmarkIcon from '@material-ui/icons/Bookmark';
+import CallMergeIcon from '@material-ui/icons/CallMerge';
 import SettingsIcon from '@material-ui/icons/Settings';
-import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import React, {
   Component,
   ComponentType,
@@ -20,18 +22,17 @@ import React, {
   ReactNode,
 } from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {Inject} from '@wizardoc/injector';
+import {extract} from '@wizardoc/injector';
 import styled from 'styled-components';
+import MessageIcon from '@material-ui/icons/Message';
 
 import {Toast, User} from '../../services';
-import {ProfileStore} from '../../store';
-import {InjectStore} from '../../utils';
 
 interface ItemMode {
   mode?: 'normal' | 'danger';
 }
 
-interface SettingItem extends ItemMode {
+export interface SettingItem extends ItemMode {
   icon: ReactElement;
   text: string;
   route: string;
@@ -51,65 +52,71 @@ interface UserItemProps extends RouteComponentProps {}
 
 const Wrapper = styled.div``;
 
+export const userItems: SettingItem[] = [
+  {
+    icon: <FaceIcon></FaceIcon>,
+    text: '个人中心',
+    route: '/',
+  },
+  {
+    icon: <MessageIcon></MessageIcon>,
+    text: '消息中心',
+    route: '/message',
+  },
+  {
+    icon: <GroupIcon></GroupIcon>,
+    text: '我的组织',
+    route: '/',
+  },
+  {
+    icon: <DescriptionIcon></DescriptionIcon>,
+    text: '我的文章 & 文档',
+    route: '/',
+  },
+  {
+    icon: <BookmarkIcon></BookmarkIcon>,
+    text: '我的收藏',
+    route: '/',
+  },
+  {
+    icon: <CallMergeIcon></CallMergeIcon>,
+    text: '我的合并请求',
+    route: '/',
+  },
+];
+
+export const systemItems: SettingItem[] = [
+  {
+    icon: <HelpIcon></HelpIcon>,
+    text: '帮助',
+    route: '/',
+  },
+  {
+    icon: <SettingsIcon></SettingsIcon>,
+    text: '设置',
+    route: '/',
+  },
+];
+
+export const dangerItems: SettingItem[] = [
+  {
+    icon: <InfoIcon></InfoIcon>,
+    text: '退出登录',
+    route: '/',
+    mode: 'danger',
+    onClick: () => {
+      extract(User).logout();
+      extract(Toast).success('退出登录成功');
+    },
+  },
+];
+
 const PrimaryListItemIcon = styled(ListItemIcon)<PrimaryListItemIconProps>`
   color: ${({mode, theme}) =>
     mode === 'danger' ? theme.secondaryColor : theme.primaryColor} !important;
 ` as ComponentType<ListItemIconProps & PrimaryListItemIconProps>;
 
 class TUserItem extends Component<UserItemProps> {
-  @Inject
-  private toast!: Toast;
-
-  @Inject
-  private userService!: User;
-
-  @InjectStore(ProfileStore)
-  private profileStore!: ProfileStore;
-
-  private userItems: SettingItem[] = [
-    {
-      icon: <FaceIcon></FaceIcon>,
-      text: '个人中心',
-      route: '/',
-    },
-    {
-      icon: <SupervisorAccountIcon></SupervisorAccountIcon>,
-      text: '我的组织',
-      route: '/',
-    },
-    {
-      icon: <ChromeReaderModeIcon></ChromeReaderModeIcon>,
-      text: '管理文档',
-      route: '/',
-    },
-  ];
-
-  private systemItems: SettingItem[] = [
-    {
-      icon: <HelpIcon></HelpIcon>,
-      text: '帮助',
-      route: '/',
-    },
-    {
-      icon: <SettingsIcon></SettingsIcon>,
-      text: '设置',
-      route: '/',
-    },
-  ];
-
-  private dangerItems: SettingItem[] = [
-    {
-      icon: <InfoIcon></InfoIcon>,
-      text: '退出登录',
-      route: '/',
-      mode: 'danger',
-      onClick: () => {
-        this.userService.logout();
-        this.toast.success('退出登录成功');
-      },
-    },
-  ];
-
   render(): ReactNode {
     const {history} = this.props;
 
@@ -120,7 +127,6 @@ class TUserItem extends Component<UserItemProps> {
             key={text}
             button
             onClick={(): void => {
-              this.profileStore.toggleViewProfilePanel();
               history.push(route);
               onClick();
             }}
@@ -135,11 +141,11 @@ class TUserItem extends Component<UserItemProps> {
     return (
       <Wrapper>
         <Divider></Divider>
-        <Items data={this.userItems}></Items>
+        <Items data={userItems}></Items>
         <Divider></Divider>
-        <Items data={this.systemItems}></Items>
+        <Items data={systemItems}></Items>
         <Divider></Divider>
-        <Items data={this.dangerItems}></Items>
+        <Items data={dangerItems}></Items>
       </Wrapper>
     );
   }

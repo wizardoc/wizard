@@ -10,7 +10,7 @@ import {DrawerHeader} from '../../ui';
 import {InjectStore} from '../../utils';
 
 import {UserAvatar} from './@user-avatar';
-import {UserItem} from './@user-item';
+import {UserItem} from './user-item';
 
 const Wrapper = styled.div``;
 

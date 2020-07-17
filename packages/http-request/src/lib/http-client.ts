@@ -130,7 +130,7 @@ export class HttpClient {
 
       const valueArea: ResValueArea<R> = {
         data,
-        ok: !!err,
+        ok: !err,
         success: onSuccuss,
         expect: onExpect,
         pipe,
@@ -172,6 +172,10 @@ export class HttpClient {
   }
 
   private join(path: string): string {
+    if (path.startsWith('http')) {
+      return path;
+    }
+
     const parsedPath = path.replace(/^\/(.*)/, (_, cap) => cap);
 
     return `${this.options.addr}${parsedPath}`;

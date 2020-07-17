@@ -129,6 +129,7 @@ export class AppRouting extends Component {
   private renderComponents(): ReactNode {
     return this.routerService.routes.map(route => (
       <Route
+        key={route.path}
         path={route.path}
         exact={route.exact}
         render={(props: RouteComponentProps): ReactNode =>

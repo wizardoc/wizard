@@ -7,7 +7,7 @@ import React, {Component, ReactNode} from 'react';
 import {Inject} from '@wizardoc/injector';
 import styled from 'styled-components';
 
-import {DialogService, Toast} from '../../../services';
+import {DialogService, Toast, User} from '../../../services';
 import {Avatar, ImageUpload} from '../../common';
 
 import {AvatarSelector} from './avatar-selector';
@@ -59,6 +59,9 @@ export class UserAvatar extends Component {
   @Inject
   dialogService!: DialogService;
 
+  @Inject
+  userService!: User;
+
   @observable
   isAvatarHover = false;
 
@@ -82,13 +85,15 @@ export class UserAvatar extends Component {
   }
 
   render(): ReactNode {
+    const {username, avatar} = this.userService.userInfo!;
+
     return (
       <ImageUpload onAfterRead={file => this.handleUploadAfterRead(file)}>
         <Wrapper
           onMouseLeave={() => this.handleAvatarMouseLeave()}
           onMouseOver={() => this.handleAvatarMouseHover()}
         >
-          <AvatarBigger></AvatarBigger>
+          <AvatarBigger username={username} lnk={avatar} />
           <EditTag hover={this.isAvatarHover}>
             <BarWrapper>
               <InsertPhotoIcon></InsertPhotoIcon>

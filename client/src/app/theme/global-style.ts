@@ -23,8 +23,10 @@ export const GlobalStyle = createGlobalStyle<{theme: typeof styledTheme}>`
   /* markdown */
   pre {
     background: ${props => props.theme.codeBgColor};
+    color: ${props => props.theme.codeFontColor};
     padding: 15px;
     border-radius: 10px;
+    white-space: pre-wrap;
   }
 
   .md-codespan {
@@ -32,6 +34,10 @@ export const GlobalStyle = createGlobalStyle<{theme: typeof styledTheme}>`
     color: ${props => props.theme.secondaryColor};
     padding: 3px 10px;
     border-radius: 5px;
+  }
+
+  .md-code-fence {
+
   }
 
   .md-heading-wrapper {
@@ -64,7 +70,7 @@ export const GlobalStyle = createGlobalStyle<{theme: typeof styledTheme}>`
 
     & .md-img {
       border-radius: 5px;
-      max-height: 500px;
+      max-width: 100%;
     }
   }
 

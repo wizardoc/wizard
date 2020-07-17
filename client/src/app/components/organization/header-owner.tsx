@@ -111,6 +111,7 @@ export class HeaderOwner extends Component<
         avatar={
           <PrimaryAvatar>
             <Avatar
+              username={ownerInfo.displayName}
               bgColor={primaryColor}
               color={white}
               lnk={ownerInfo.avatar}

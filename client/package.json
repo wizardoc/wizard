@@ -24,6 +24,8 @@
     "highlight.js": "^9.15.9",
     "keycode-js": "^2.0.3",
     "lodash": "^4.17.15",
+    "markdown-it": "^11.0.0",
+    "markdown-it-container": "^3.0.0",
     "marked": "^0.7.0",
     "mobx": "^5.9.4",
     "mobx-react": "^5.4.3",
@@ -55,7 +57,7 @@
     "build": "node scripts/build --scripts-version react-scripts-ts",
     "test": "jest --passWithNoTests",
     "dev": "next",
-    "dll": "webpack --config ./config/webpack.dll.config.js --mode production"
+    "dll": "webpack --config ./config/webpack.dll.config.js --mode development"
   },
   "devDependencies": {
     "@magicspace/configs": "0.1.46",
@@ -65,12 +67,14 @@
     "@types/highlight.js": "^9.12.3",
     "@types/jest": "^24.0.12",
     "@types/lodash": "^4.14.138",
+    "@types/markdown-it": "^10.0.1",
+    "@types/markdown-it-container": "^2.0.3",
     "@types/marked": "^0.6.5",
     "@types/node": "^11.13.7",
     "@types/qiniu-js": "^2.5.0",
     "@types/qs": "^6.5.3",
     "@types/react": "^16.8.14",
-    "@types/react-dom": "^16.8.4",
+    "@types/react-dom": "^16.9.8",
     "@types/react-material-ui-form-validator": "^2.0.2",
     "@types/react-router-dom": "^4.3.2",
     "@types/react-swipeable-views": "^0.13.0",

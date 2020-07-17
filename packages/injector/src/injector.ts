@@ -20,6 +20,7 @@ export class Injector {
   };
 
   Inject = (target: any, key: string) => {
+    console.info(target, key);
     const type: Constructor = Reflect.getMetadata('design:type', target, key);
 
     target[key] = this.extract(type);

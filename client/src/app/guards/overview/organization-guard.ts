@@ -12,7 +12,7 @@ interface RouteParams {
   id: string;
 }
 
-export class OrganizationEditGuard implements ActivatedGuard {
+export class OrganizationGuard implements ActivatedGuard {
   @Inject
   organizationService!: OrganizationService;
 

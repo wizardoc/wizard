@@ -12,7 +12,7 @@ export class Time {
   }
 
   /**
-   * 书面多
+   * 睡眠
    * @param duration 睡眠时间，单位是秒
    */
   sleep(duration?: number): Promise<void> {

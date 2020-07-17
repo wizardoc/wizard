@@ -1,49 +1,76 @@
 import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
+import {observer} from 'mobx-react';
+import {Inject} from '@wizardoc/injector';
 
-import {TreeView} from '../tree-view';
-import {Line} from '../line';
+import {Headings} from 'src/app/services';
+import {CatalogService} from 'src/app/services/catalog-service';
 
 export interface CatalogProps {
-  content: string;
+  headings: Headings;
   title: string;
+}
+
+interface CatalogItemProps {
+  level: number;
+  isActivated: boolean;
 }
 
 const Wrapper = styled.div`
   min-width: 220px;
-  padding: 10px;
-  background: ${props => props.theme.shallowGrayBlue};
-  /* color: rgba(0, 0, 0, 0.87) !important; */
-  box-shadow: ${props => props.theme.baseShadow};
-  font-weight: 300;
+  border-left: 4px solid ${props => props.theme.primaryColor};
+  height: fit-content;
 `;
 
-const Content = styled.div`
-  position: sticky;
-  top: 70px;
-  margin-top: 30px;
-`;
+const Content = styled.div``;
 
 const Title = styled.div`
   font-size: 20px;
-  font-weight: 300;
-  margin: 30px 0;
-  display: flex;
-  justify-content: center;
+  font-weight: 400;
+  margin-left: 10px;
 `;
 
+const CatalogItem = styled.div<CatalogItemProps>`
+  padding: 5px 0px;
+  padding-left: ${props => (props.level - 1) * 10 + 10}px;
+  color: ${props =>
+    props.isActivated ? props.theme.primaryColor : props.theme.titleColor};
+  font-size: 14px;
+  border-radius: 0 3px 3px 0;
+
+  ${props =>
+    props.isActivated &&
+    `
+    font-weight: 500;
+    background: ${props.theme.shallowGray};
+  `}
+`;
+
+@observer
 export class Catalog extends Component<CatalogProps> {
+  @Inject
+  catalogService!: CatalogService;
+
   render(): ReactNode {
-    const {content, title} = this.props;
+    const {title} = this.props;
 
     return (
-      <Wrapper>
+      <Wrapper {...this.props}>
         <Title>{title}</Title>
-        <Line></Line>
-        <Content>
-          <TreeView content={content}></TreeView>
-        </Content>
+        <Content>{this.renderCatalogItems}</Content>
       </Wrapper>
     );
+  }
+
+  private get renderCatalogItems(): any {
+    return this.props.headings.map(({level, content}) => (
+      <CatalogItem
+        isActivated={this.catalogService.currentAnchor?.content === content}
+        key={content + level}
+        level={+level}
+      >
+        {content}
+      </CatalogItem>
+    ));
   }
 }

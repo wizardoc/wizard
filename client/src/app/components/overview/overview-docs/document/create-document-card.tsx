@@ -5,23 +5,19 @@ import {MarkdownEditor} from '@wizardoc/markdown';
 
 import {CoverSelector} from './@cover-selector';
 
-export interface CreateDocumentCardProps {
-  close(): void;
-}
-
-const Wrapper = styled(Card)`
+const EditorWrapper = styled(Card)`
   width: 660px;
   height: 500px;
 `;
 
-export class CreateDocumentCard extends Component<CreateDocumentCardProps> {
+export class CreateDocumentCard extends Component {
   render(): ReactNode {
     return (
       <Container>
         <CoverSelector></CoverSelector>
-        <Wrapper>
+        <EditorWrapper>
           <MarkdownEditor></MarkdownEditor>
-        </Wrapper>
+        </EditorWrapper>
       </Container>
     );
   }

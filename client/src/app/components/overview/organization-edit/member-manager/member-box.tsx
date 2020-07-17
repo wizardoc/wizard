@@ -11,7 +11,8 @@ import {InviteMemberDialog} from './invite-member-dialog';
 
 interface MemberBoxProps {
   avatar?: string;
-  organizeName: string;
+  username?: string;
+  organizeName?: string;
 }
 
 const EmptyAvatar = styled.div`
@@ -44,25 +45,25 @@ export class MemberBox extends Component<MemberBoxProps> {
       title: '邀请',
       isClickAwayClose: true,
       componentProps: {
-        organizeName: this.props.organizeName,
+        organizeName: this.props.organizeName!,
       },
     });
   }
 
   render(): ReactNode {
-    const {avatar} = this.props;
+    const {avatar, username} = this.props;
 
     return (
       <Wrapper>
         <Default
-          condition={() => !avatar}
+          condition={() => avatar === undefined}
           defaultView={
             <EmptyAvatar onClick={() => this.handleInviteMemberClick()}>
               <AddIcon />
             </EmptyAvatar>
           }
         >
-          <StyledAvatar lnk={avatar} />
+          <StyledAvatar username={username ?? ''} lnk={avatar} />
         </Default>
       </Wrapper>
     );

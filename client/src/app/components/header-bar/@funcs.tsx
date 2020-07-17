@@ -1,4 +1,4 @@
-import {SvgIcon, Badge} from '@material-ui/core';
+import {SvgIcon, Badge, Divider} from '@material-ui/core';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import React, {Component, ReactNode} from 'react';
 import WorkIcon from '@material-ui/icons/Work';
@@ -7,6 +7,8 @@ import styled from 'styled-components';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {observer} from 'mobx-react';
 
+import {Popover} from 'src/app/ui';
+
 import {GitHubSvg} from '../../assets';
 import {Links} from '../../constant';
 import {DrawerService, User, NotifyService} from '../../services';
@@ -14,13 +16,13 @@ import {ProfileStore} from '../../store';
 import {InjectStore} from '../../utils';
 import {Todos} from '../optional-tip';
 import {Avatar} from '../common';
+import {userItems, systemItems, dangerItems, SettingItem} from '../user';
 
 import {IconFunc, IconFuncs} from './@icon-funcs';
 
 const StyledAvatar = styled(Avatar)`
   width: 35px !important;
   height: 35px !important;
-  margin-left: 20px;
   font-size: 15px !important;
   cursor: pointer;
 `;
@@ -32,14 +34,42 @@ const Wrapper = styled.div`
 `;
 
 const UserInfo = styled.div`
+  height: 48px;
   display: flex;
   align-items: center;
   cursor: pointer;
+  margin-left: 20px;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    border 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  padding: 0 10px;
+
+  &:hover {
+    background: ${props => props.theme.buttonHoverBg};
+  }
 `;
 
 const UserName = styled.div`
   margin-left: 10px;
 `;
+
+const UserSettings = styled.div``;
+
+const renderUserSettings = (): ReactNode => {
+  const renderItems = (items: SettingItem[]): ReactNode =>
+    items.map(item => <div>{item.text}</div>);
+
+  return (
+    <UserSettings>
+      {renderItems(userItems)}
+      <Divider />
+      {renderItems(systemItems)}
+      <Divider />
+      {renderItems(dangerItems)}
+    </UserSettings>
+  );
+  // const renderContainer = [userItems, systemItems, dangerItems].map(items => items.map(item => <div>{item.text}</div>))
+};
 
 @withRouter
 @observer
@@ -106,15 +136,30 @@ export class Funcs extends Component<Partial<RouteComponentProps>> {
 
   render(): ReactNode {
     const {userInfo, isLogin} = this.userService;
+    const {displayName, avatar} = userInfo ?? {};
 
     return (
       <Wrapper>
         <IconFuncs iconFuncs={this.iconFuncs} />
         {isLogin && (
-          <UserInfo onClick={() => this.handleAvatarClick()}>
-            <StyledAvatar></StyledAvatar>
-            <UserName>{userInfo!.displayName}</UserName>
-          </UserInfo>
+          <Popover
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            trigger="hover"
+            bind={
+              <UserInfo onClick={() => this.handleAvatarClick()}>
+                <StyledAvatar
+                  lnk={avatar}
+                  username={displayName}
+                ></StyledAvatar>
+                <UserName>{displayName}</UserName>
+              </UserInfo>
+            }
+          >
+            {renderUserSettings()}
+          </Popover>
         )}
       </Wrapper>
     );

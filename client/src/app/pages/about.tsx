@@ -10,7 +10,7 @@ import {
   // TreeViewGenerator,
 } from '../components';
 import {DialogService, DocService, Time} from '../services';
-import {Catalog} from '../ui';
+// import {Catalog} from '../ui';
 // import {TreeView} from '../ui';
 
 const Wrapper = styled.div`
@@ -38,7 +38,7 @@ class TAbout extends Component {
   render(): ReactNode {
     return (
       <Wrapper>
-        <Catalog content={this.content} title="关于我们" />
+        {/* <Catalog content={this.content} title="关于我们" /> */}
         <PagePaper
           isMounted={this.isMounted}
           content={this.content}

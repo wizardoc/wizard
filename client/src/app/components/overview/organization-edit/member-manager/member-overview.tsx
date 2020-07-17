@@ -25,8 +25,12 @@ export interface MemberOverviewProps {
 export class MemberOverview extends Component<MemberOverviewProps> {
   render(): ReactNode {
     const {members, organizeName} = this.props;
-    const renderMemberBoxes = members.map(({avatar}) => (
-      <MemberBox avatar={avatar} organizeName={organizeName}></MemberBox>
+    const renderMemberBoxes = members.map(({avatar, displayName}) => (
+      <MemberBox
+        username={displayName}
+        avatar={avatar}
+        organizeName={organizeName}
+      />
     ));
 
     return (

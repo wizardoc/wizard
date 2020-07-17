@@ -23,3 +23,6 @@ export * from './route';
 export * from './permission';
 export * from './category';
 export * from './arrow-cache';
+export * from './document';
+export * from './markdown-service';
+export * from './catalog-service';

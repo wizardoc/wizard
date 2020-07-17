@@ -37,7 +37,7 @@ export class HeaderBar extends Component<HeaderBarProps> {
       <AppBarWrapper position="static" isFixed={isFixed}>
         <Toolbar variant="dense">
           <Row>
-            <Logo></Logo>
+            <Logo />
           </Row>
           <HeaderBarTabs />
           <HeaderSearch />

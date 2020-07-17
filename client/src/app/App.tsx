@@ -87,7 +87,6 @@ class TApp extends Component<WithSnackbarProps> {
     const {enqueueSnackbar} = this.props;
 
     this.tipStore.tipQueue = enqueueSnackbar;
-
     // this.optionalTipService.push({
     //   name: '验证邮箱',
     //   description: '验证邮箱后，wizard 会把每次的更改推送发送到你邮箱哦',

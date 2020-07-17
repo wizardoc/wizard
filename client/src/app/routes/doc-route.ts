@@ -1,9 +1,11 @@
 import {lazy} from 'src/app/utils';
 
 import {Routes} from '../services';
+import {OrganizationGuard} from '../guards';
 
-const Pen = lazy(import('../pages/pen'), 'PenPage');
+const Pen = lazy(import('../pages/write'), 'WritePage');
 const Doc = lazy(import('../pages/doc'), 'Doc');
+const Detail = lazy(import('../pages/document-detail'), 'DocumentDetail');
 
 export const DocumentRoutes: Routes = [
   {
@@ -12,8 +14,15 @@ export const DocumentRoutes: Routes = [
     component: Doc,
     children: [
       {
-        path: '/markdown',
+        path: '/:id/write',
         component: Pen,
+        layout: 'limpidity',
+        activatedGuard: [OrganizationGuard],
+      },
+      {
+        path: '/detail/:id',
+        component: Detail,
+        layout: 'no-footer',
       },
     ],
   },

@@ -1,8 +1,9 @@
 {
-  "extends": "../../node_modules/@magicspace/configs/tsconfig.json",
   "compilerOptions": {
+    "target": "ES5",
     "rootDir": "src",
     "lib": ["dom", "esnext"],
+    "module": "commonjs",
     "outDir": "dist",
     "types": ["node"],
     "declaration": true,

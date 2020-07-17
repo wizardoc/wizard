@@ -33,7 +33,7 @@ export class WizardTab extends Component<
 
   render(): ReactNode {
     const {baseLineColor = 'primary', tabs} = this.props;
-    const parsedTabs = tabs.map(tab => <Tab label={tab.text} />);
+    const parsedTabs = tabs.map(tab => <Tab key={tab.text} label={tab.text} />);
 
     return (
       <Tabs

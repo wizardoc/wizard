@@ -1,16 +1,14 @@
 import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
-import AddIcon from '@material-ui/icons/Add';
-import CloseIcon from '@material-ui/icons/Close';
 import {Inject} from '@wizardoc/injector';
 import {withRouter, RouteComponentProps} from 'react-router-dom';
 import {Category} from '@wizardoc/shared';
+import {Fab} from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
 
 import {
   OverviewDocsHeader,
   OverviewDocCards,
-  TransitionFab,
-  CreateDocumentCard,
   FetchData,
   FetchDataComponentProps,
   DefaultView,
@@ -34,9 +32,9 @@ const Wrapper = styled.div`
   overflow: scroll;
 `;
 
-const AddDocumentButton = styled(TransitionFab)`
-  position: absolute !important;
-  right: 30px;
+const WriteDocumentButton = styled(Fab)`
+  position: fixed !important;
+  right: 50px;
   bottom: 50px;
 `;
 
@@ -60,9 +58,14 @@ export class OverviewDocs extends Component<
   @Inject
   categoryService!: CategoryService;
 
+  handleWriteDocumentClick(): void {
+    const {match, history} = this.props;
+
+    history!.push(`/document/${match!.params.id}/write`);
+  }
+
   render(): ReactNode {
-    const {theme, match, data} = this.props;
-    const {secondaryColor, flatYellow, flatDark} = theme!;
+    const {match, data} = this.props;
 
     return (
       <Wrapper>
@@ -74,15 +77,12 @@ export class OverviewDocs extends Component<
         >
           <OverviewDocCards categories={data!} />
         </DefaultView>
-        <AddDocumentButton
-          icon={<AddIcon />}
-          activeIcon={<CloseIcon />}
-          activeFabColor={flatYellow}
-          activeColor={flatDark}
-          coverColor={secondaryColor}
+        <WriteDocumentButton
+          onClick={() => this.handleWriteDocumentClick()}
+          color="primary"
         >
-          {close => <CreateDocumentCard close={close} />}
-        </AddDocumentButton>
+          <EditIcon></EditIcon>
+        </WriteDocumentButton>
       </Wrapper>
     );
   }

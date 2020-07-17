@@ -1,6 +1,8 @@
 import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 
+import {Avatar} from '../common';
+
 export interface ContributorInfo {
   username: string;
   addr: string;
@@ -15,11 +17,6 @@ const AvatarBox = styled.div`
   margin: 0 10px;
   box-sizing: content-box;
   overflow: hidden;
-`;
-
-const Avatar = styled.img`
-  width: 100%;
-  height: 100%;
 `;
 
 const ContributorName = styled.div`
@@ -38,7 +35,7 @@ export class ContributorAvatar extends Component<ContributorAvatarProps> {
     return (
       <Wrapper>
         <AvatarBox>
-          <Avatar src={addr}></Avatar>
+          <Avatar lnk={addr} username={username} />
         </AvatarBox>
         <ContributorName>{username}</ContributorName>
       </Wrapper>
