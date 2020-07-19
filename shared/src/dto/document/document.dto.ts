@@ -1,7 +1,8 @@
-export interface RawDocument extends CommonDocumentFields {
+export interface RawDocument extends Omit<CommonDocumentFields, 'headings'> {
   categoryID?: string;
   organizationID: string;
   userID: string;
+  headings: string;
 }
 
 export interface Document extends CommonDocumentFields {
@@ -9,14 +10,32 @@ export interface Document extends CommonDocumentFields {
   organizationInfo: OrganizationInfo;
 }
 
+export interface HeadingObject {
+  level: number;
+  content: string;
+}
+
+export interface NewDocumentData {
+  content: string;
+  headings: Headings;
+  title: string;
+  cover: string;
+  categoryID?: string;
+  organizationID: string;
+  isPublic: boolean;
+}
+
+export type Headings = HeadingObject[];
+
 interface CommonDocumentFields {
   createTime: number;
   lastModifyTime: number;
   contributors: undefined;
   readCount: number;
   commentCount: number;
-  path: string;
+  content: string;
   title: string;
+  headings: Headings;
   cover: string;
   isPublic: boolean;
 }
