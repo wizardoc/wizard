@@ -22,8 +22,8 @@ interface WrapperProps {
 }
 
 const Wrapper = styled.div<WrapperProps>`
-  height: ${props =>
-    props.isFull ? props.theme.heightOmitHeader : 'fit-content'};
+  /* height: ${props =>
+    props.isFull ? props.theme.heightOmitHeader : 'fit-content'}; */
   min-height: ${props =>
     props.isHideHeader ? '100%' : props.theme.heightOmitHeader};
   position: relative;

@@ -46,12 +46,12 @@ const StyledCatalog = styled(Catalog)`
   margin-top: 40px;
 `;
 
-@FetchData(
-  async (
-    {extract},
-    props: MarkdownContentProps & RouteComponentProps<RouteParams>,
-  ) => extract(MarkdownService).render(props.path, props.match.params.id),
-)
+// @FetchData(
+//   async (
+//     {extract},
+//     props: MarkdownContentProps & RouteComponentProps<RouteParams>,
+//   ) => extract(MarkdownService).render(props.path, props.match.params.id),
+// )
 export class MarkdownContent extends Component<
   MarkdownContentProps & Partial<FetchDataComponentProps<RenderAssets>>
 > {
@@ -59,8 +59,15 @@ export class MarkdownContent extends Component<
   markdownService!: MarkdownService;
 
   render(): ReactNode {
-    const {title, author, organizationInfo, data} = this.props;
-    const {content, headings} = data!;
+    const {
+      title,
+      author,
+      organizationInfo,
+      data,
+      headings,
+      content,
+    } = this.props;
+    // const {content, headings} = data!;
 
     return (
       <Wrapper>
@@ -76,6 +83,6 @@ export class MarkdownContent extends Component<
   }
 
   componentDidMount(): void {
-    this.markdownService.registerAnchor(this.props.data!.headings);
+    this.markdownService.registerAnchor(this.props.headings);
   }
 }

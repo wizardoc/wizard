@@ -16,3 +16,4 @@ export * from './pen';
 export * from './footer';
 export * from './message-center';
 export * from './overview';
+export * from './community';

@@ -55,14 +55,13 @@ export class CategoryCoverUpload extends Component<
   @observable
   previewSrc: string | undefined;
 
-  handleReadEnd(file: File): void {
+  async handleReadEnd(file: File): Promise<void> {
     const {onChange = (): void => {}} = this.props;
+    const dataURL = await parseFile2DataURL(file);
 
-    parseFile2DataURL(file, dataURL => {
-      this.previewSrc = dataURL;
+    this.previewSrc = dataURL;
 
-      onChange(dataURL, file);
-    });
+    onChange(dataURL, file);
   }
 
   render(): ReactNode {

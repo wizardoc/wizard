@@ -23,11 +23,13 @@ export interface NewDocumentData {
   categoryID?: string;
   organizationID: string;
   isPublic: boolean;
+  excerpt: string;
 }
 
 export type Headings = HeadingObject[];
 
 interface CommonDocumentFields {
+  id: string;
   createTime: number;
   lastModifyTime: number;
   contributors: undefined;
@@ -38,6 +40,7 @@ interface CommonDocumentFields {
   headings: Headings;
   cover: string;
   isPublic: boolean;
+  excerpt: string;
 }
 
 interface AuthorInfo {

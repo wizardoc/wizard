@@ -84,6 +84,8 @@ export const styledTheme = {
   flatGrayText: '#c6c6c6',
   commentColor: '#505050',
   commentGray: '#8a9aa9',
+  flatBlack: '#212121',
+  excerptGray: '#888888',
 
   // variables
   heightOmitHeader: 'calc(100% - 48px)',

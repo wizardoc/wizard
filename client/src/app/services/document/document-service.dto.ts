@@ -1,14 +1,5 @@
 import {UserModel} from '../user';
 
-export interface NewDocumentData {
-  path: string;
-  title: string;
-  cover: string;
-  categoryID?: string;
-  organizationID: string;
-  isPublic: boolean;
-}
-
 export interface DocumentComment {
   id: string;
   content: string;

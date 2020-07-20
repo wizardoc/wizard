@@ -12,7 +12,8 @@
     "baseUrl": "./",
     "incremental": true,
     "types": ["express"],
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "noUnusedLocals": false
   },
   "exclude": ["node_modules", "dist"]
 }

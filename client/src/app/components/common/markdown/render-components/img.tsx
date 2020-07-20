@@ -11,6 +11,7 @@ const Wrapper = styled.div`
 `;
 
 const StyledImage = styled.img`
+  width: 100%;
   border-radius: 5px;
   max-width: 100%;
 `;

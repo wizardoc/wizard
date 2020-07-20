@@ -36,20 +36,19 @@ export class ImagePreview extends Component<ImagePreviewProps> {
     );
   }
 
-  componentDidMount(): void {
+  async componentDidMount(): Promise<void> {
     const {file, onReadEnd} = this.props;
+    const dataURL = await parseFile2DataURL(file);
 
-    parseFile2DataURL(file, dataURL => {
+    if (onReadEnd && dataURL) {
       this.previewSrc = dataURL;
 
-      if (onReadEnd) {
-        onReadEnd(dataURL);
-      }
-    });
+      onReadEnd(this.previewSrc);
+    }
   }
 }
 
-export function parseFile2DataURL(file: File, onReadEnd: onReadEnd): void {
+export function parseFile2DataURL(file: File): Promise<string | undefined> {
   if (!isImage(file.type)) {
     throw new Error('The file MIME type must be png or jpg');
   }
@@ -58,11 +57,16 @@ export function parseFile2DataURL(file: File, onReadEnd: onReadEnd): void {
 
   fileReader.readAsDataURL(file);
 
-  fileReader.addEventListener('loadend', () => {
-    const {result} = fileReader;
+  return new Promise(resolve => {
+    fileReader.addEventListener('loadend', () => {
+      const {result} = fileReader;
 
-    if (isString(result)) {
-      onReadEnd(result);
-    }
+      if (isString(result)) {
+        // onReadEnd(result);
+        resolve(result);
+      }
+
+      resolve(undefined);
+    });
   });
 }

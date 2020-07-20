@@ -1,6 +1,7 @@
 import {action, computed, observable} from 'mobx';
 import {Inject, Injectable} from '@wizardoc/injector';
 import {emptyAssert} from '@wizardoc/shared';
+import {ArrowCache} from 'arrow-cache';
 
 import {BaseInfoData} from '../../components';
 import {Optional} from '../../types/type-utils';
@@ -37,34 +38,36 @@ export type ParsedRegisterData = UserBaseInfo & OrganizationInfo;
 
 export type RegisterData = Optional<ParsedRegisterData>;
 
+const UserInfoNoop = {
+  id: '',
+  displayName: '',
+  username: '',
+  password: '',
+  email: '',
+  avatar: '',
+  intro: '',
+};
+
 @Injectable()
 export class User {
-  @Inject
-  http!: HTTP;
-
-  @Inject
-  jwt!: JWT;
-
-  @Inject
-  dialog!: DialogService;
-
-  @Inject
-  messageService!: MessageService;
-
-  @Inject
-  api!: UserServiceAPI;
-
   registerData: RegisterData = {};
 
   @observable
-  userInfo: UserBaseInfo | undefined;
+  userInfo: UserBaseInfo = UserInfoNoop;
 
   @observable
-  _isLogin: boolean = false;
+  _isLogin = false;
 
   syncPair: SyncPair;
 
-  constructor() {
+  constructor(
+    private http: HTTP,
+    private jwt: JWT,
+    private dialog: DialogService,
+    private messageService: MessageService,
+    private api: UserServiceAPI,
+    private arrowCache: ArrowCache,
+  ) {
     this.syncPair = genSync();
 
     if (this.jwt.isExist) {
@@ -163,7 +166,7 @@ export class User {
     this.jwt.remove();
 
     // reset userData
-    this.userInfo = undefined;
+    this.userInfo = UserInfoNoop;
     this._isLogin = false;
   }
 
@@ -181,7 +184,7 @@ export class User {
 
     result.expect(() => '更新头像失败');
 
-    this.userInfo!.avatar = avatar;
+    this.userInfo.avatar = avatar;
   }
 
   private saveToken({jwt, userInfo}: LoginResData): void {

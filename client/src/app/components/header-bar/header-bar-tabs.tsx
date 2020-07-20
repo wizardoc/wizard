@@ -49,7 +49,11 @@ export class HeaderBarTabs extends Component<Partial<RouteComponentProps>> {
   userService!: User;
 
   render(): ReactNode {
-    const renderTabs = TabConfigs.map(tab => <TabButton>{tab.text}</TabButton>);
+    const renderTabs = TabConfigs.map(tab => (
+      <TabButton onClick={() => this.props.history!.push(tab.route!)}>
+        {tab.text}
+      </TabButton>
+    ));
 
     return <Wrapper>{renderTabs}</Wrapper>;
   }

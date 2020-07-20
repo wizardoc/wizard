@@ -11,6 +11,8 @@ export const GlobalStyle = createGlobalStyle<{theme: typeof styledTheme}>`
 
   body {
     background: ${props => props.theme.white};
+    -webkit-font-smoothing: antialiased;
+
   }
 
   #root {
@@ -69,6 +71,7 @@ export const GlobalStyle = createGlobalStyle<{theme: typeof styledTheme}>`
     align-items: center;
 
     & .md-img {
+      width: 100%;
       border-radius: 5px;
       max-width: 100%;
     }

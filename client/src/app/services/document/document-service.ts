@@ -1,14 +1,10 @@
 import {Injectable} from '@wizardoc/injector';
 import {ResValueArea} from '@wizardoc/http-request';
-import {Document} from '@wizardoc/shared';
+import {Document, NewDocumentData} from '@wizardoc/shared';
 
 import {HTTP} from '../http';
 
-import {
-  NewDocumentData,
-  DocumentComment,
-  CommentStatus,
-} from './document-service.dto';
+import {DocumentComment, CommentStatus} from './document-service.dto';
 import {DocumentAPI} from './@document-service.api';
 
 @Injectable()
@@ -16,15 +12,15 @@ export class DocumentService {
   constructor(private api: DocumentAPI, private http: HTTP) {}
 
   async create(document: NewDocumentData): Promise<ResValueArea> {
-    return this.http.post(this.api.new, document);
+    const result = await this.http.post(this.api.new, document);
+
+    return result.expect(() => '发布失败');
   }
 
-  async detail(): Promise<Document> {
-    const result = await this.http.get(
-      this.api.detail('0f61e015-019b-4c90-bbf2-1e11c25d74cb'),
-    );
+  async detail(id: string): Promise<Document> {
+    const result = await this.http.get(this.api.detail(id));
 
-    return result.data;
+    return result.expect(() => '获取文档信息失败').data;
   }
 
   async fetchContent(link: string): Promise<string> {
@@ -67,5 +63,11 @@ export class DocumentService {
     });
 
     return result.expect(() => '更新评论失败');
+  }
+
+  async all(): Promise<Document[]> {
+    const result = await this.http.get(this.api.all);
+
+    return result.expect(() => '获取文档失败').pipe(data => data ?? []).data;
   }
 }

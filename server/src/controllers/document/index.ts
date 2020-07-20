@@ -1,1 +1,1 @@
-export * from './document-detail.comtroller';
+export * from './document-processor.controller';

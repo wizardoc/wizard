@@ -19,3 +19,4 @@ export * from './upload';
 export * from './default-view';
 export * from './loadmore';
 export * from './markdown';
+export * from './login-permission';

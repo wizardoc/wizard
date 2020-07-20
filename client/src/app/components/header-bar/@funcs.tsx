@@ -1,4 +1,4 @@
-import {SvgIcon, Badge, Divider} from '@material-ui/core';
+import {SvgIcon, Badge, Divider, Button} from '@material-ui/core';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import React, {Component, ReactNode} from 'react';
 import WorkIcon from '@material-ui/icons/Work';
@@ -15,8 +15,7 @@ import {DrawerService, User, NotifyService} from '../../services';
 import {ProfileStore} from '../../store';
 import {InjectStore} from '../../utils';
 import {Todos} from '../optional-tip';
-import {Avatar} from '../common';
-import {userItems, systemItems, dangerItems, SettingItem} from '../user';
+import {Avatar, LoginPermission} from '../common';
 
 import {IconFunc, IconFuncs} from './@icon-funcs';
 
@@ -53,23 +52,19 @@ const UserName = styled.div`
   margin-left: 10px;
 `;
 
-const UserSettings = styled.div``;
+const ButtonGroup = styled.div``;
 
-const renderUserSettings = (): ReactNode => {
-  const renderItems = (items: SettingItem[]): ReactNode =>
-    items.map(item => <div>{item.text}</div>);
+const RegisterButton = styled(Button)`
+  background: ${props => props.theme.white} !important;
+  color: ${props => props.theme.primaryColor} !important;
+  margin-left: 10px !important;
+`;
 
-  return (
-    <UserSettings>
-      {renderItems(userItems)}
-      <Divider />
-      {renderItems(systemItems)}
-      <Divider />
-      {renderItems(dangerItems)}
-    </UserSettings>
-  );
-  // const renderContainer = [userItems, systemItems, dangerItems].map(items => items.map(item => <div>{item.text}</div>))
-};
+const LoginButton = styled(Button)`
+  border-color: ${props => props.theme.white} !important;
+  color: ${props => props.theme.white} !important;
+  margin-left: 12px !important;
+`;
 
 @withRouter
 @observer
@@ -141,26 +136,20 @@ export class Funcs extends Component<Partial<RouteComponentProps>> {
     return (
       <Wrapper>
         <IconFuncs iconFuncs={this.iconFuncs} />
-        {isLogin && (
-          <Popover
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'left',
-            }}
-            trigger="hover"
-            bind={
-              <UserInfo onClick={() => this.handleAvatarClick()}>
-                <StyledAvatar
-                  lnk={avatar}
-                  username={displayName}
-                ></StyledAvatar>
-                <UserName>{displayName}</UserName>
-              </UserInfo>
-            }
-          >
-            {renderUserSettings()}
-          </Popover>
-        )}
+        <LoginPermission
+          loginView={
+            <UserInfo onClick={() => this.handleAvatarClick()}>
+              <StyledAvatar lnk={avatar} username={displayName}></StyledAvatar>
+              <UserName>{displayName}</UserName>
+            </UserInfo>
+          }
+          defaultView={
+            <ButtonGroup>
+              <RegisterButton variant="contained">注册</RegisterButton>
+              <LoginButton variant="outlined">登录</LoginButton>
+            </ButtonGroup>
+          }
+        />
       </Wrapper>
     );
   }

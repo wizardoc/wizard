@@ -49,6 +49,19 @@ export class MarkdownService {
     return renderResult;
   }
 
+  renderToHTML(raw: string): RenderAssets {
+    const headings: Headings = [];
+    const content = markdown.render(raw, headings);
+    const renderResult: RenderAssets = {
+      content,
+      headings,
+    };
+
+    console.warn(headings);
+
+    return renderResult;
+  }
+
   registerAnchor(headings: Headings): void {
     this.catalogService.currentAnchor = headings[0];
 

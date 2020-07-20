@@ -6,6 +6,10 @@ import createFluentMarkdownPlugin from 'draft-js-fluent-markdown-plugin';
 
 import {Header} from './components';
 
+export interface MarkdownEditorProps {
+  onContentChange(content: string): void;
+}
+
 function findFirstABC(contentBlock, callback, state: ContentState) {
   const text: string = contentBlock.getText();
 
@@ -55,14 +59,14 @@ function foo(contentBlock) {
 }
 
 @observer
-export class MarkdownEditor extends Component {
+export class MarkdownEditor extends Component<MarkdownEditorProps> {
   @observable
   private editorState = EditorState.createEmpty(compositeDecorator);
 
   handleContentChange(state: EditorState): void {
     this.editorState = state;
 
-    console.info(state);
+    this.props.onContentChange(state.getCurrentContent().getPlainText());
     console.info(this.editorState.getSelection().getStartOffset());
   }
 

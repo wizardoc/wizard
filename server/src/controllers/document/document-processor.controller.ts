@@ -1,4 +1,4 @@
-import {Controller, Get, Req, Res} from '@nestjs/common';
+import {Controller, Get, Req, Res, Post} from '@nestjs/common';
 import {Request, Response} from 'express';
 import {Document, RawDocument} from '@wizardoc/shared';
 import {omit} from 'lodash';
@@ -6,7 +6,7 @@ import {omit} from 'lodash';
 import {HTTP} from 'src/services';
 
 @Controller('/doc')
-export class DocumentDetailController {
+export class DocumentProcessorController {
   constructor(readonly _http: HTTP) {}
 
   @Get('/detail/:id')
@@ -14,7 +14,7 @@ export class DocumentDetailController {
     this._http.proxySend(req, res, async (document: RawDocument) => {
       const {userID, organizationID} = document;
       const resData = omit(
-        {...document},
+        {...document, headings: JSON.parse(document.headings)},
         'userID',
         'organizationID',
       ) as Document;
@@ -40,5 +40,13 @@ export class DocumentDetailController {
 
       return resData;
     });
+  }
+
+  @Post('/')
+  async create(@Req() req: Request, @Res() res: Response): Promise<void> {
+    console.info(req.body.headings);
+    req.body = {...req.body, headings: JSON.stringify(req.body.headings ?? [])};
+
+    this._http.proxySend(req, res);
   }
 }
