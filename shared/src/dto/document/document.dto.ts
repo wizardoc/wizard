@@ -53,7 +53,7 @@ interface AuthorInfo {
   intro: string;
 }
 
-interface OrganizationInfo {
+export interface OrganizationInfo {
   id: string;
   ownerInfo: AuthorInfo;
   organizeName: string;

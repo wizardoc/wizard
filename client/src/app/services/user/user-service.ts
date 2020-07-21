@@ -2,6 +2,7 @@ import {action, computed, observable} from 'mobx';
 import {Inject, Injectable} from '@wizardoc/injector';
 import {emptyAssert} from '@wizardoc/shared';
 import {ArrowCache} from 'arrow-cache';
+import {ResValueArea} from '@wizardoc/http-request';
 
 import {BaseInfoData} from '../../components';
 import {Optional} from '../../types/type-utils';
@@ -38,7 +39,7 @@ export type ParsedRegisterData = UserBaseInfo & OrganizationInfo;
 
 export type RegisterData = Optional<ParsedRegisterData>;
 
-const UserInfoNoop = {
+const UserInfoNoop: UserBaseInfo = {
   id: '',
   displayName: '',
   username: '',
@@ -46,6 +47,8 @@ const UserInfoNoop = {
   email: '',
   avatar: '',
   intro: '',
+  followOrganizations: [],
+  followUsers: [],
 };
 
 @Injectable()
@@ -185,6 +188,22 @@ export class User {
     result.expect(() => '更新头像失败');
 
     this.userInfo.avatar = avatar;
+  }
+
+  async followOrganization(organizationID: string): Promise<ResValueArea> {
+    const result = await this.http.post(this.api.followOrganization, {
+      organizationID,
+    });
+
+    return result.expect(() => '关注失败，请检查网络后重试');
+  }
+
+  async followUser(userID: string): Promise<ResValueArea> {
+    const result = await this.http.post(this.api.followUser, {
+      userID,
+    });
+
+    return result.expect(() => '关注失败，请检查网络后重试');
   }
 
   private saveToken({jwt, userInfo}: LoginResData): void {

@@ -1,13 +1,16 @@
+import {LazyExoticComponent} from 'react';
+
 import {lazy} from 'src/app/utils';
 
 import {Routes} from '../services';
 
-const Register = lazy(import('../pages/register-page'), 'RegisterPage');
-const Login = lazy(import('../pages/login-page'), 'LoginPage');
-const EmailValidator = lazy(
-  import('../pages/email-validator'),
-  'EmailValidator',
-);
+const LoadUserPage = (name: string): LazyExoticComponent<any> =>
+  lazy(import('../pages/user-pages'), name);
+
+const Register = LoadUserPage('RegisterPage');
+const Login = LoadUserPage('LoginPage');
+const EmailValidator = LoadUserPage('EmailValidator');
+const Detail = LoadUserPage('UserDetailPage');
 
 export const UserRoutes: Routes = [
   {
@@ -25,6 +28,10 @@ export const UserRoutes: Routes = [
       {
         path: '/email-validator',
         component: EmailValidator,
+      },
+      {
+        path: '/detail/:id',
+        component: Detail,
       },
     ],
   },

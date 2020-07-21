@@ -5,9 +5,18 @@ import {Injectable} from '@wizardoc/injector';
 @Group('/user')
 export class UserServiceAPI {
   register = '/register';
+
   login = '/login';
+
   info = '/info';
+
   validBaseInfo = '/valid/info/base';
+
   updateAvatar = '/avatar';
+
   searchName = '/name/search';
+
+  followOrganization = '/focus/organization';
+
+  followUser = '/focus/user';
 }

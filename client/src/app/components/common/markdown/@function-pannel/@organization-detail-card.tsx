@@ -1,11 +1,18 @@
 import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
+import {Button} from '@material-ui/core';
+import GroupAddIcon from '@material-ui/icons/GroupAdd';
+import {Inject} from '@wizardoc/injector';
+import {observable} from 'mobx';
+import {observer} from 'mobx-react';
+import CheckIcon from '@material-ui/icons/Check';
+import {OrganizationInfo} from '@wizardoc/shared';
 
-import {OrganizationCardData} from 'src/app/services';
+import {User} from 'src/app/services';
 import {MemberBox} from 'src/app/components';
 
 export interface OrganizationDetailCardProps {
-  organizationInfo: OrganizationCardData;
+  organizationInfo: OrganizationInfo;
 }
 
 const Wrapper = styled.div`
@@ -35,12 +42,51 @@ const Contributors = styled.div`
   flex-wrap: wrap;
 `;
 
+const FollowButton = styled(Button)``;
+
+@observer
 export class OrganizationDetailCard extends Component<
   OrganizationDetailCardProps
 > {
+  @Inject
+  user!: User;
+
+  @observable
+  isFollowed = false;
+
+  @observable
+  isInOrganization = false;
+
+  constructor(props: OrganizationDetailCardProps) {
+    super(props);
+
+    const {followOrganizations, id} = this.user.userInfo;
+
+    this.isFollowed = !!followOrganizations.find(
+      ({id}) => id === props.organizationInfo.id,
+    );
+    this.isInOrganization = !!props.organizationInfo.members.find(
+      ({id: memberID}) => memberID === id,
+    );
+  }
+
+  async handleFollowOrganizationClick(id: string): Promise<void> {
+    const result = await this.user.followOrganization(id);
+
+    result.success(() => (this.isFollowed = true));
+  }
+
+  get followButtonText(): string {
+    return this.isFollowed ? '已关注' : '关注组织';
+  }
+
+  get followButtonIcon(): ReactNode {
+    return this.isFollowed ? <CheckIcon /> : <GroupAddIcon />;
+  }
+
   render(): ReactNode {
     const {
-      organizationInfo: {organizeName, description, members},
+      organizationInfo: {organizeName, description, members, id},
     } = this.props;
 
     const renderMembers = members.map(({avatar, username}) => (
@@ -53,6 +99,17 @@ export class OrganizationDetailCard extends Component<
         <OrganizeDescription>{description}</OrganizeDescription>
         <FieldName>成员：</FieldName>
         <Contributors>{renderMembers}</Contributors>
+        {this.isInOrganization && (
+          <FollowButton
+            disabled={this.isFollowed}
+            variant="contained"
+            color="primary"
+            startIcon={this.followButtonIcon}
+            onClick={() => this.handleFollowOrganizationClick(id)}
+          >
+            {this.followButtonText}
+          </FollowButton>
+        )}
       </Wrapper>
     );
   }

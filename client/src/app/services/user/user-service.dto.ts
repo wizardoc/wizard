@@ -1,3 +1,5 @@
+import {OrganizationCardData} from '../organization';
+
 export interface UserModel {
   id: string;
   avatar: string;
@@ -20,6 +22,8 @@ export interface UserBaseInfo {
   email: string;
   avatar: string;
   intro: string;
+  followOrganizations: OrganizationCardData[];
+  followUsers: UserBaseInfo[];
 }
 
 export interface ValidResult {

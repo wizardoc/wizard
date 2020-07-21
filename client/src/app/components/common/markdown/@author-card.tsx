@@ -1,9 +1,12 @@
+import CheckIcon from '@material-ui/icons/Check';
 import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 import {Document} from '@wizardoc/shared';
 import AddIcon from '@material-ui/icons/Add';
 import {Button} from '@material-ui/core';
 import {Inject} from '@wizardoc/injector';
+import {observable} from 'mobx';
+import {observer} from 'mobx-react';
 
 import {User} from 'src/app/services';
 
@@ -43,13 +46,39 @@ const InfoContainer = styled.div`
 
 const FollowButton = styled(Button)``;
 
+@observer
 export class AuthorCard extends Component<AuthorCardProps> {
   @Inject
   user!: User;
 
+  @observable
+  isFollowed = false;
+
+  constructor(props: AuthorCardProps) {
+    super(props);
+
+    this.isFollowed = !!this.user.userInfo.followUsers.find(
+      ({id}) => id === props.author.id,
+    );
+  }
+
+  get followButtonText(): string {
+    return this.isFollowed ? '已关注' : '关注作者';
+  }
+
+  get followButtonIcon(): ReactNode {
+    return this.isFollowed ? <CheckIcon /> : <AddIcon />;
+  }
+
+  async handleFollowAuthorClick(id: string): Promise<void> {
+    const result = await this.user.followUser(id);
+
+    result.success(() => (this.isFollowed = true));
+  }
+
   render(): ReactNode {
     const {
-      author: {displayName, avatar, username},
+      author: {displayName, avatar, username, id},
     } = this.props;
     const isSelf = this.user.userInfo.username === username;
 
@@ -64,11 +93,13 @@ export class AuthorCard extends Component<AuthorCardProps> {
         </InfoContainer>
         {!isSelf && (
           <FollowButton
+            disabled={this.isFollowed}
             variant="contained"
             color="primary"
-            startIcon={<AddIcon></AddIcon>}
+            startIcon={this.followButtonIcon}
+            onClick={() => this.handleFollowAuthorClick(id)}
           >
-            关注作者
+            {this.followButtonText}
           </FollowButton>
         )}
       </Wrapper>
