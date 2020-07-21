@@ -1,13 +1,12 @@
 import React, {Component, FunctionComponent, ReactNode} from 'react';
 import styled from 'styled-components';
 
-import {WithSlideProps, withSlide} from '../animations';
-import WandIcon from '../assets/static/wand.png';
-import {Register} from '../components';
-
-import {AccessBox, Wrapper} from './common-style-component/access-wrapper';
-import {CenterLine} from './common-style-component/center';
-import {TipBody, TipText} from './common-style-component/tip';
+import {WithSlideProps, withSlide} from '../../animations';
+import WandIcon from '../../assets/static/wand.png';
+import {Register} from '../../components';
+import {AccessBox, Wrapper} from '../common-style-component/access-wrapper';
+import {CenterLine} from '../common-style-component/center';
+import {TipBody, TipText} from '../common-style-component/tip';
 
 const RegisterBox = styled(AccessBox)``;
 

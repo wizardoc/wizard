@@ -4,13 +4,12 @@ import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 
 // import Wizard from '../assets/static/wizard.png';
-import {WithSlideProps, withSlide} from '../animations';
-import Wand from '../assets/static/wizard-white.jpg';
-import {Login} from '../components';
-
-import {AccessBox, Wrapper} from './common-style-component/access-wrapper';
-import {CenterLine} from './common-style-component/center';
-import {TipBody, TipText} from './common-style-component/tip';
+import {WithSlideProps, withSlide} from '../../animations';
+import Wand from '../../assets/static/wizard-white.jpg';
+import {Login} from '../../components';
+import {AccessBox, Wrapper} from '../common-style-component/access-wrapper';
+import {CenterLine} from '../common-style-component/center';
+import {TipBody, TipText} from '../common-style-component/tip';
 
 const LoginWrapper = styled(Wrapper)`
   display: flex;
