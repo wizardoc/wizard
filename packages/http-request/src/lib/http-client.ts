@@ -1,5 +1,7 @@
 import {AxiosError, AxiosStatic} from 'axios';
 
+import {IHooks, Hooks} from './configure';
+
 type Request<R> = () => R;
 
 export type Response<R> = Promise<ResValueArea<R>>;
@@ -88,7 +90,7 @@ export enum ContentType {
 // }
 
 export class HttpClient {
-  constructor(private options: HTTPClientOptions) {}
+  constructor(private options: HTTPClientOptions, protected hooks?: IHooks) {}
 
   protected create<T, R>(type: HttpType, payload: DispatchPayload<T>): Doer<R> {
     const {path, data, headers, method} = payload;

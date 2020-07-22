@@ -1,15 +1,27 @@
 import {AxiosStatic} from 'axios';
 
 import {Interceptor} from './attach-interceptor';
+import {HTTPMethod, ResValueArea} from './http-client';
 
 interface ServerConfigSetter {
   setConfig(target: ServerConfigInfo): void;
   setDevPrefix(prefix: string): void;
 }
 
+export interface IHooks {
+  beforeRequest(
+    method: HTTPMethod,
+    path: string,
+    data?: any,
+    headers?: any,
+  ): void | Promise<void>;
+  afterResponse(result: ResValueArea): void | Promise<void>;
+}
+
 export interface IConfigure {
   serverConfigure: ServerConfigSetter;
   interceptor: Interceptor;
+  hooks: IHooks;
 }
 
 export interface ServerConfigInfo {
@@ -17,6 +29,12 @@ export interface ServerConfigInfo {
   port: number;
   protocol: string;
   mode: string;
+}
+
+export class Hooks implements IHooks {
+  beforeRequest = () => {};
+
+  afterResponse = () => {};
 }
 
 export class ServerConfig {
@@ -66,6 +84,7 @@ export class ServerConfig {
 
 export class Configure {
   private _serverConfig = new ServerConfig();
+  private _hooks = new Hooks();
 
   constructor(private axios: AxiosStatic) {}
 
@@ -73,7 +92,12 @@ export class Configure {
     return {
       serverConfigure: this.getServerConfigSetter(),
       interceptor: this.getInterceptor(),
+      hooks: this._hooks,
     };
+  }
+
+  getHooks(): IHooks {
+    return this._hooks;
   }
 
   getServerConfigInfo(): ServerConfigInfo | undefined {

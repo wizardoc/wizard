@@ -1,7 +1,6 @@
 import Axios, {AxiosError} from 'axios';
 
 import {
-  ContentType,
   Response,
   IConfigure,
   Configure,
@@ -9,6 +8,8 @@ import {
   HTTPClientOptions,
   ServerConfig,
   ErrorOperates,
+  IHooks,
+  PartialRequestOptions,
 } from './lib';
 
 export interface IHTTPService {
@@ -17,19 +18,19 @@ export interface IHTTPService {
   post<R = any, T = {}>(
     path: string,
     data?: T,
-    contentType?: ContentType,
+    options?: PartialRequestOptions,
   ): Response<R>;
 
   put<R = any, T = {}>(
     path: string,
     data?: T,
-    contentType?: ContentType,
+    options?: PartialRequestOptions,
   ): Response<R>;
 
   delete<R = any, T = {}>(
     path: string,
     data?: T,
-    contentType?: ContentType,
+    options?: PartialRequestOptions,
   ): Response<R>;
 }
 
@@ -51,7 +52,7 @@ export abstract class HTTPRequestFactory {
   }
 
   create(): IHTTPService {
-    return new HTTPService(this.getHTTPClientOptions());
+    return new HTTPService(this.getHTTPClientOptions(), this.getHooks());
   }
 
   abstract errorInteract(errMsg: string | ErrorOperates, err: AxiosError): void;
@@ -64,6 +65,10 @@ export abstract class HTTPRequestFactory {
       axios: Axios,
       catcher: this.errorInteract.bind(this),
     };
+  }
+
+  getHooks(): IHooks {
+    return this.getServerConfigure().getHooks();
   }
 
   // expose config of server
