@@ -78,7 +78,7 @@ export class AuthorCard extends Component<AuthorCardProps> {
 
   render(): ReactNode {
     const {
-      author: {displayName, avatar, username, id},
+      author: {displayName, avatar, username, id, intro},
     } = this.props;
     const isSelf = this.user.userInfo.username === username;
 
@@ -88,7 +88,7 @@ export class AuthorCard extends Component<AuthorCardProps> {
           <StyledAvatar id={id} lnk={avatar} username={displayName} />
           <AuthorInfo>
             <AuthorName>{displayName}</AuthorName>
-            <AuthorIntro>我是 Intro 的占位符</AuthorIntro>
+            <AuthorIntro>{intro}</AuthorIntro>
           </AuthorInfo>
         </InfoContainer>
         {!isSelf && (

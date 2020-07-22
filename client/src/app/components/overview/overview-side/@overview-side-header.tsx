@@ -53,13 +53,13 @@ export class OverviewSideHeader extends Component {
   user!: User;
 
   render(): ReactNode {
-    const {displayName, avatar} = this.user.userInfo ?? {};
+    const {displayName, avatar, intro} = this.user.userInfo ?? {};
 
     return (
       <Wrapper>
         <StyledAvatar lnk={avatar} />
         <UserName>{displayName}</UserName>
-        <UserIntro>这是我的一段描述，哈哈哈</UserIntro>
+        <UserIntro>{intro}</UserIntro>
         <EditUserInfoButton>
           <StyledIconButton>
             <EditIcon />

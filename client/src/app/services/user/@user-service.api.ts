@@ -10,6 +10,8 @@ export class UserServiceAPI {
 
   info = '/info';
 
+  updateInfo = '/info';
+
   validBaseInfo = '/valid/info/base';
 
   updateAvatar = '/avatar';

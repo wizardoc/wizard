@@ -106,6 +106,7 @@ export const guardWrapper = (
  * 渲染 && 处理子路由 -> 处理额外参数
  * @author Younccat
  */
+@observer
 export class AppRouting extends Component {
   @Inject
   routerService!: RouterService;
@@ -113,11 +114,20 @@ export class AppRouting extends Component {
   @Inject
   tabService!: TabService;
 
+  @observable
+  matchRoute: AppRoute = {
+    path: '',
+  };
+
   render(): ReactNode {
     const routeComponents = this.renderComponents();
+    const {layout, headerType} = this.matchRoute;
 
     return (
       <Suspense fallback="正在加载中...">
+        {(layout === 'no-footer' || layout === 'normal') && (
+          <HeaderBar isFixed={headerType === 'fixed'}></HeaderBar>
+        )}
         <Switch>
           {routeComponents}
           <Route component={PageNotFound} />
@@ -146,12 +156,13 @@ export class AppRouting extends Component {
     const {
       redirect,
       component,
-      headerType = 'fixed',
       father,
       isNest,
       isFullContainer,
       layout = 'normal',
     } = route;
+
+    this.matchRoute = route;
 
     if (redirect) {
       return this.redirect(redirect);
@@ -164,7 +175,6 @@ export class AppRouting extends Component {
       };
 
       const Father = father as ComponentType;
-      guardWrapper(component as ComponentType, route, props);
       const Component = guardWrapper(component as ComponentType, route, props);
       const renderComponent = isNest ? (
         <Father>
@@ -173,7 +183,6 @@ export class AppRouting extends Component {
       ) : (
         <Component />
       );
-      const header = <HeaderBar isFixed={headerType === 'fixed'} />;
       const wrapper = (children: ReactNode): ReactNode => (
         <Wrapper
           isHideFooter={layout === 'no-footer'}
@@ -186,16 +195,11 @@ export class AppRouting extends Component {
 
       const RENDER_COMPONENT: RenderComponent = {
         limpidity: renderComponent,
-        normal: (
+        normal: wrapper(
           <>
-            {header}
-            {wrapper(
-              <>
-                {renderComponent}
-                <Footer />
-              </>,
-            )}
-          </>
+            {renderComponent}
+            <Footer />
+          </>,
         ),
         'no-header': wrapper(
           <>
@@ -203,12 +207,7 @@ export class AppRouting extends Component {
             <Footer />
           </>,
         ),
-        'no-footer': (
-          <>
-            {header}
-            {wrapper(renderComponent)}
-          </>
-        ),
+        'no-footer': wrapper(renderComponent),
       };
 
       return RENDER_COMPONENT[layout];

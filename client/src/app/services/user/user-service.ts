@@ -206,6 +206,14 @@ export class User {
     return result.expect(() => '关注失败，请检查网络后重试');
   }
 
+  async updateUserInfo(userInfo: Partial<UserBaseInfo>): Promise<ResValueArea> {
+    const result = await this.http.put(this.api.updateInfo, userInfo, {
+      useHooks: true,
+    });
+
+    return result.expect(() => '更新信息失败，请稍后再试');
+  }
+
   private saveToken({jwt, userInfo}: LoginResData): void {
     this.jwt.save(jwt);
     this.setUserInfo(userInfo);

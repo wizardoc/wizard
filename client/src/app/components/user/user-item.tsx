@@ -22,11 +22,11 @@ import React, {
   ReactNode,
 } from 'react';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {extract} from '@wizardoc/injector';
+import {extract, Inject} from '@wizardoc/injector';
 import styled from 'styled-components';
 import MessageIcon from '@material-ui/icons/Message';
 
-import {Toast, User} from '../../services';
+import {Toast, User, DrawerService} from '../../services';
 
 interface ItemMode {
   mode?: 'normal' | 'danger';
@@ -56,7 +56,7 @@ export const userItems: SettingItem[] = [
   {
     icon: <FaceIcon></FaceIcon>,
     text: '个人中心',
-    route: '/',
+    route: '/user/settings',
   },
   {
     icon: <MessageIcon></MessageIcon>,
@@ -120,6 +120,9 @@ const PrimaryListItemIcon = styled(ListItemIcon)<PrimaryListItemIconProps>`
 export class UserItem extends Component<
   UserItemProps & Partial<RouteComponentProps>
 > {
+  @Inject
+  drawerService!: DrawerService;
+
   render(): ReactNode {
     const {history} = this.props;
 
@@ -131,7 +134,7 @@ export class UserItem extends Component<
             button
             onClick={(): void => {
               history!.push(route);
-
+              this.drawerService.hidden();
               onClick();
             }}
           >

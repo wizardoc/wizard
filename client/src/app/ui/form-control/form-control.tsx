@@ -38,7 +38,7 @@ export interface Rules {
 }
 
 interface FormControlProps {
-  rules: Rules;
+  rules?: Rules;
   onFormDataChange(formData: any): void;
 }
 
@@ -88,7 +88,7 @@ export class FormControl extends Component<FormControlProps>
   private validators: ValidatorInfos = {};
 
   render(): ReactNode {
-    const {children, rules, onFormDataChange} = this.props;
+    const {children, rules = {}, onFormDataChange} = this.props;
 
     if (!children) {
       return <></>;

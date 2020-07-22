@@ -11,13 +11,16 @@ export interface SideBarItem {
   textColor?: string;
 }
 
-export interface SideBarProps extends StyledListItemProps {
+export interface SideBarProps {
   items: SideBarItem[];
+  highlight?: boolean;
+  separateMargin?: string;
   onItemClick?(item: SideBarItem): void;
 }
 
 interface StyledListItemProps {
   separateMargin?: string;
+  highlight?: boolean;
 }
 
 const genColorfulItem = (Wrapper: ComponentType): any => styled(Wrapper)<any>`
@@ -38,11 +41,9 @@ const Wrapper = styled.div`
 `;
 
 const StyledListItem = styled(ListItem)<StyledListItemProps>`
-  ${props =>
-    props.separateMargin &&
-    `
-    margin-top: ${props.separateMargin} !important;
-  `}
+  margin-top: ${props => props.separateMargin} !important;
+  background: ${props =>
+    props.highlight && props.theme.shallowPrimaryColor} !important;
 `;
 
 const StyledListItemIcon = genColorfulItem(ListItemIcon);
@@ -60,13 +61,14 @@ export class SideBar extends Component<
   }
 
   render(): ReactNode {
-    const {items, separateMargin} = this.props;
+    const {items, separateMargin, match, highlight = false} = this.props;
 
     const renderItems = items.map(item => (
       <StyledListItem
         separateMargin={separateMargin}
         button
         onClick={() => this.handleListItemClick(item)}
+        highlight={highlight && match!.path === item.route}
       >
         <StyledListItemIcon color={item.iconColor}>
           {item.icon}

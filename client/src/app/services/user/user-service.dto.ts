@@ -22,6 +22,12 @@ export interface UserBaseInfo {
   email: string;
   avatar: string;
   intro: string;
+  city?: string;
+  companyName?: string;
+  companyTitle?: string;
+  github?: string;
+  blog?: string;
+  payQRCode?: string;
   followOrganizations: OrganizationCardData[];
   followUsers: UserBaseInfo[];
 }

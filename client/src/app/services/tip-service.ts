@@ -1,14 +1,21 @@
 import {action, computed, observable} from 'mobx';
 import {OptionsObject} from 'notistack';
 import {Injectable} from '@wizardoc/injector';
+import UUID from 'uuid';
 
-const MAX_EXIST_DURATION = 5 * 1000;
+const MAX_EXIST_DURATION = 2 * 1000;
 
-type TipQueueItem = 'default' | 'error' | 'success' | 'warning' | 'info';
+export type TipQueueItem = 'error' | 'success' | 'warning' | 'info' | undefined;
 type TipQueueEmitter = (
   message: React.ReactNode,
   options?: OptionsObject | undefined,
 ) => string | number | null | undefined;
+
+interface SnackBarData {
+  id: string;
+  message: string;
+  variant: TipQueueItem;
+}
 
 @Injectable()
 export class TipService {
@@ -17,7 +24,17 @@ export class TipService {
   @observable
   private _isShowTip = false;
 
+  @observable
+  private _snackBars: SnackBarData[] = [];
+
   private deferId: NodeJS.Timeout | undefined;
+
+  private waitRemoveSnackBarCounts = 0;
+
+  @computed
+  get snackBars(): SnackBarData[] {
+    return this._snackBars;
+  }
 
   init(): void {
     if (this.deferId) {
@@ -43,6 +60,13 @@ export class TipService {
     this._isShowTip = false;
   }
 
+  @action
+  removeSnackBar(_: string): void {
+    if (this._snackBars.length === ++this.waitRemoveSnackBarCounts) {
+      this.clearSnackBars();
+    }
+  }
+
   @computed
   get isShowTip(): boolean {
     return this._isShowTip;
@@ -52,9 +76,18 @@ export class TipService {
     this._tipQueueEmitter = emitter;
   }
 
+  showSnackBar(message: string, variant?: TipQueueItem): void {
+    this._snackBars.push({id: UUID.v4(), message, variant});
+  }
+
   addTipToQueue(msg: string, variant?: TipQueueItem): void {
     if (this._tipQueueEmitter) {
       this._tipQueueEmitter(msg, {variant});
     }
+  }
+
+  private clearSnackBars(): void {
+    this.waitRemoveSnackBarCounts = 0;
+    this._snackBars = [];
   }
 }

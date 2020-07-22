@@ -11,6 +11,11 @@ const Register = LoadUserPage('RegisterPage');
 const Login = LoadUserPage('LoginPage');
 const EmailValidator = LoadUserPage('EmailValidator');
 const Detail = LoadUserPage('UserDetailPage');
+const UserSettings = LoadUserPage('UserSettings');
+const UserSettingsBase = LoadUserPage('UserSettingsBase');
+const UserSettingsPhone = LoadUserPage('UserSettingsPhone');
+const UserSettingsEmail = LoadUserPage('UserSettingsEmail');
+const UserSettingsPassword = LoadUserPage('UserSettingsPassword');
 
 export const UserRoutes: Routes = [
   {
@@ -33,6 +38,38 @@ export const UserRoutes: Routes = [
         path: '/detail/:id',
         component: Detail,
         layout: 'normal',
+      },
+      {
+        path: '/settings',
+        component: UserSettings,
+        layout: 'normal',
+        redirect: '/user/settings/base',
+        children: [
+          {
+            path: '/base',
+            component: UserSettingsBase,
+            layout: 'limpidity',
+            isNest: true,
+          },
+          {
+            path: '/phone',
+            component: UserSettingsPhone,
+            layout: 'limpidity',
+            isNest: true,
+          },
+          {
+            path: '/email',
+            component: UserSettingsEmail,
+            layout: 'limpidity',
+            isNest: true,
+          },
+          {
+            path: '/password',
+            component: UserSettingsPassword,
+            layout: 'limpidity',
+            isNest: true,
+          },
+        ],
       },
     ],
   },

@@ -136,7 +136,7 @@ export class Tip extends Component<TipProps> {
     return (
       <Slide
         in={this.tipService.isShowTip}
-        direction="right"
+        direction="down"
         mountOnEnter
         unmountOnExit
       >
@@ -144,7 +144,7 @@ export class Tip extends Component<TipProps> {
           open={true}
           anchorOrigin={{
             vertical: 'bottom',
-            horizontal: 'left',
+            horizontal: 'center',
           }}
         >
           <TipContent {...this.props} onClose={onCloseDup} />

@@ -1,6 +1,6 @@
 import {SvgIcon, Badge, Divider, Button} from '@material-ui/core';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import React, {Component, ReactNode} from 'react';
+import React, {ReactNode, PureComponent} from 'react';
 import WorkIcon from '@material-ui/icons/Work';
 import {Inject} from '@wizardoc/injector';
 import styled from 'styled-components';
@@ -67,7 +67,7 @@ const LoginButton = styled(Button)`
 
 @withRouter
 @observer
-export class Funcs extends Component<Partial<RouteComponentProps>> {
+export class Funcs extends PureComponent<Partial<RouteComponentProps>> {
   @Inject
   userService!: User;
 

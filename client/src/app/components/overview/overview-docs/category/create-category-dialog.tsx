@@ -15,6 +15,7 @@ import {
   CategoryService,
 } from 'src/app/services';
 import {FormControl, Rules} from 'src/app/ui';
+import {objectShallowDiff} from 'src/app/utils';
 
 import {CategoryCoverUpload} from './@category-cover-upload';
 import {CategoryCard} from './category-card';
@@ -93,11 +94,7 @@ export class CreateCategoryDialog
   coverFile: File | undefined;
 
   get isShallowInfoDiff(): boolean {
-    return !Object.keys(this.editCategoryInfo).reduce(
-      (pre, key) =>
-        pre && this.editCategoryInfo[key] === this.defaultCategoryInfo[key],
-      true,
-    );
+    return objectShallowDiff(this.editCategoryInfo, this.defaultCategoryInfo);
   }
 
   actionButtons(): ParsedActionButtons[] {

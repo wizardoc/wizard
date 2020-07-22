@@ -6,7 +6,13 @@ import React, {Component, FunctionComponent, ReactNode} from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import {Inject} from '@wizardoc/injector';
 
-import {CommonDialog, OptionalTip, Default} from './components';
+import {
+  CommonDialog,
+  OptionalTip,
+  Default,
+  SnackBarQueue,
+  BackdropLoading,
+} from './components';
 import {
   DrawerService,
   DialogPool,
@@ -80,6 +86,8 @@ class TApp extends Component<WithSnackbarProps> {
             <OptionalTipEntry />
             {/* <HeaderBar /> */}
             <AppRouting />
+            <SnackBarQueue />
+            <BackdropLoading />
           </MuiThemeProvider>
         </BrowserRouter>
       </ThemeProvider>

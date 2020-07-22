@@ -27,3 +27,4 @@ export * from './document';
 export * from './markdown-service';
 export * from './catalog-service';
 export * from './tip-service';
+export * from './backdrop-service';
