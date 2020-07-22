@@ -11,6 +11,7 @@ import {RequestPayloadParser} from '@wizardoc/shared';
 import ServerConfig from '../../.config/server-config.json';
 import {ErrorManager} from '../error-manager';
 import {Toast} from '../toast';
+import {BackdropService} from '../backdrop-service';
 
 import {ResErrorCatcher, ResData, RequestType} from './@interceptors';
 
@@ -20,17 +21,28 @@ class HTTPFactory extends HTTPRequestFactory implements HTTPConfigure {
   errorManager!: ErrorManager;
 
   @Inject
+  backdropService!: BackdropService;
+
+  @Inject
   toast!: Toast;
 
-  configure(consume: IConfigure): void {
-    consume.interceptor.use([
+  configure({interceptor, serverConfigure, hooks}: IConfigure): void {
+    interceptor.use([
       ResErrorCatcher,
       ResData,
       RequestPayloadParser,
       RequestType,
     ]);
 
-    consume.serverConfigure.setConfig(ServerConfig);
+    serverConfigure.setConfig(ServerConfig);
+
+    hooks.beforeRequest = (): void => {
+      this.backdropService.show();
+    };
+
+    hooks.afterResponse = (): void => {
+      this.backdropService.hide();
+    };
   }
 
   errorInteract(errMsg: string, err: AxiosError): void {
@@ -49,7 +61,7 @@ class HTTPFactory extends HTTPRequestFactory implements HTTPConfigure {
 @Injectable()
 export class HTTP extends HTTPService {
   constructor(httpFactory: HTTPFactory) {
-    super(httpFactory.getHTTPClientOptions());
+    super(httpFactory.getHTTPClientOptions(), httpFactory.getHooks());
   }
 }
 
