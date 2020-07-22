@@ -8,7 +8,7 @@ import {observer} from 'mobx-react';
 import CheckIcon from '@material-ui/icons/Check';
 import {OrganizationInfo} from '@wizardoc/shared';
 
-import {User} from 'src/app/services';
+import {User, OrganizationService} from 'src/app/services';
 import {MemberBox} from 'src/app/components';
 
 export interface OrganizationDetailCardProps {
@@ -51,6 +51,9 @@ export class OrganizationDetailCard extends Component<
   @Inject
   user!: User;
 
+  @Inject
+  organizationService!: OrganizationService;
+
   @observable
   isFollowed = false;
 
@@ -60,13 +63,14 @@ export class OrganizationDetailCard extends Component<
   constructor(props: OrganizationDetailCardProps) {
     super(props);
 
-    const {followOrganizations, id} = this.user.userInfo;
+    const {followOrganizations} = this.user.userInfo;
+    const {id: organizationID, organizeName} = props.organizationInfo;
 
     this.isFollowed = !!followOrganizations.find(
-      ({id}) => id === props.organizationInfo.id,
+      ({id}) => id === organizationID,
     );
-    this.isInOrganization = !!props.organizationInfo.members.find(
-      ({id: memberID}) => memberID === id,
+    this.isInOrganization = this.organizationService.hasExistOrganization(
+      organizeName,
     );
   }
 

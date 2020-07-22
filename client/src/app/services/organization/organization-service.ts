@@ -39,7 +39,7 @@ export class OrganizationService {
   get organizations(): OrganizationCardData[] {
     return this._organizations.map((organization: OrganizationCardData) => ({
       ...organization,
-      isOwner: organization.ownerInfo.username === this.user.userInfo!.username,
+      isOwner: organization.ownerInfo.username === this.user.userInfo.username,
     }));
   }
 

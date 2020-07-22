@@ -85,7 +85,7 @@ export class AuthorCard extends Component<AuthorCardProps> {
     return (
       <Wrapper>
         <InfoContainer>
-          <StyledAvatar lnk={avatar} username={displayName} />
+          <StyledAvatar id={id} lnk={avatar} username={displayName} />
           <AuthorInfo>
             <AuthorName>{displayName}</AuthorName>
             <AuthorIntro>我是 Intro 的占位符</AuthorIntro>

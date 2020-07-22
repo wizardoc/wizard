@@ -17,3 +17,4 @@ export * from './footer';
 export * from './message-center';
 export * from './overview';
 export * from './community';
+export * from './user-detail';

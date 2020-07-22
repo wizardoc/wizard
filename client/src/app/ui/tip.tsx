@@ -16,10 +16,10 @@ import React, {
   ReactNode,
 } from 'react';
 import styled from 'styled-components';
+import {Inject} from '@wizardoc/injector';
 
-import {TipStore} from '../store';
-import {InjectStore} from '../utils';
 import {styledTheme} from '../theme';
+import {TipService} from '../services';
 
 export const enum TipVariant {
   Success,
@@ -119,8 +119,8 @@ export const TipContent: FunctionComponent<TipContentProps> = ({
 
 @observer
 export class Tip extends Component<TipProps> {
-  @InjectStore(TipStore)
-  private tipStore!: TipStore;
+  @Inject
+  private tipService!: TipService;
 
   render(): ReactNode {
     const {onClose} = this.props;
@@ -129,13 +129,13 @@ export class Tip extends Component<TipProps> {
     if (onCloseDup) {
       onCloseDup = e => {
         onClose!(e);
-        this.tipStore.tipToggle();
+        this.tipService.tipToggle();
       };
     }
 
     return (
       <Slide
-        in={this.tipStore.isShowTip}
+        in={this.tipService.isShowTip}
         direction="right"
         mountOnEnter
         unmountOnExit

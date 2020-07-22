@@ -12,10 +12,9 @@ import {Popover} from 'src/app/ui';
 import {GitHubSvg} from '../../assets';
 import {Links} from '../../constant';
 import {DrawerService, User, NotifyService} from '../../services';
-import {ProfileStore} from '../../store';
-import {InjectStore} from '../../utils';
 import {Todos} from '../optional-tip';
 import {Avatar, LoginPermission} from '../common';
+import {Profile} from '../user';
 
 import {IconFunc, IconFuncs} from './@icon-funcs';
 
@@ -110,15 +109,12 @@ export class Funcs extends Component<Partial<RouteComponentProps>> {
     },
   ];
 
-  @InjectStore(ProfileStore)
-  private profileStore!: ProfileStore;
-
   handleGithubIconClick(): void {
     window.open(Links.GitHub);
   }
 
   handleAvatarClick(): void {
-    this.profileStore.toggleViewProfilePanel();
+    this.drawerService.render(<Profile />, {anchor: 'right'});
   }
 
   handleTodoClick(): void {

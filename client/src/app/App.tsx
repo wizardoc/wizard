@@ -6,9 +6,13 @@ import React, {Component, FunctionComponent, ReactNode} from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import {Inject} from '@wizardoc/injector';
 
-import {CommonDialog, OptionalTip, Profile, Default} from './components';
-import {DrawerService, DialogPool, OptionalTipService} from './services';
-import {TipStore} from './store';
+import {CommonDialog, OptionalTip, Default} from './components';
+import {
+  DrawerService,
+  DialogPool,
+  OptionalTipService,
+  TipService,
+} from './services';
 import {GlobalStyle, ThemeProvider, styledTheme, theme} from './theme';
 import {Drawer} from './ui';
 import {InjectStore} from './utils';
@@ -60,8 +64,8 @@ class DrawerEntry extends Component {
 
 @observer
 class TApp extends Component<WithSnackbarProps> {
-  @InjectStore(TipStore)
-  tipStore!: TipStore;
+  @Inject
+  tipService!: TipService;
 
   render(): React.ReactNode {
     return (
@@ -73,7 +77,6 @@ class TApp extends Component<WithSnackbarProps> {
             {/* Dialog is render by service here */}
             <DialogEntry />
             <GlobalStyle />
-            <Profile />
             <OptionalTipEntry />
             {/* <HeaderBar /> */}
             <AppRouting />
@@ -86,7 +89,7 @@ class TApp extends Component<WithSnackbarProps> {
   componentDidMount(): void {
     const {enqueueSnackbar} = this.props;
 
-    this.tipStore.tipQueue = enqueueSnackbar;
+    this.tipService.tipQueue = enqueueSnackbar;
     // this.optionalTipService.push({
     //   name: '验证邮箱',
     //   description: '验证邮箱后，wizard 会把每次的更改推送发送到你邮箱哦',

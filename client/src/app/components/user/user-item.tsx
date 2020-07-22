@@ -48,7 +48,7 @@ interface PrimaryListItemIconProps extends ItemMode {
   mode?: 'normal' | 'danger';
 }
 
-interface UserItemProps extends RouteComponentProps {}
+interface UserItemProps {}
 
 const Wrapper = styled.div``;
 
@@ -116,7 +116,10 @@ const PrimaryListItemIcon = styled(ListItemIcon)<PrimaryListItemIconProps>`
     mode === 'danger' ? theme.secondaryColor : theme.primaryColor} !important;
 ` as ComponentType<ListItemIconProps & PrimaryListItemIconProps>;
 
-class TUserItem extends Component<UserItemProps> {
+@withRouter
+export class UserItem extends Component<
+  UserItemProps & Partial<RouteComponentProps>
+> {
   render(): ReactNode {
     const {history} = this.props;
 
@@ -127,7 +130,8 @@ class TUserItem extends Component<UserItemProps> {
             key={text}
             button
             onClick={(): void => {
-              history.push(route);
+              history!.push(route);
+
               onClick();
             }}
           >
@@ -150,5 +154,3 @@ class TUserItem extends Component<UserItemProps> {
     );
   }
 }
-
-export const UserItem = withRouter(TUserItem);

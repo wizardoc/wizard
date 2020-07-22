@@ -32,6 +32,7 @@ export const UserRoutes: Routes = [
       {
         path: '/detail/:id',
         component: Detail,
+        layout: 'normal',
       },
     ],
   },

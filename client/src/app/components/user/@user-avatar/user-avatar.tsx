@@ -85,7 +85,7 @@ export class UserAvatar extends Component {
   }
 
   render(): ReactNode {
-    const {username, avatar} = this.userService.userInfo!;
+    const {username, avatar} = this.userService.userInfo;
 
     return (
       <ImageUpload onAfterRead={file => this.handleUploadAfterRead(file)}>

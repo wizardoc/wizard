@@ -14,6 +14,6 @@ export class CurrentAvatar extends Component {
   render(): ReactNode {
     const {avatar, userInfo} = this.user;
 
-    return <Avatar lnk={avatar} username={userInfo!.username}></Avatar>;
+    return <Avatar lnk={avatar} username={userInfo.username}></Avatar>;
   }
 }

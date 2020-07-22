@@ -1,5 +1,6 @@
 import {action, computed, observable} from 'mobx';
 import {OptionsObject} from 'notistack';
+import {Injectable} from '@wizardoc/injector';
 
 const MAX_EXIST_DURATION = 5 * 1000;
 
@@ -9,7 +10,8 @@ type TipQueueEmitter = (
   options?: OptionsObject | undefined,
 ) => string | number | null | undefined;
 
-export class TipStore {
+@Injectable()
+export class TipService {
   private _tipQueueEmitter: TipQueueEmitter | undefined;
 
   @observable

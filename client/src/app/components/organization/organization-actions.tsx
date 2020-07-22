@@ -95,7 +95,7 @@ export class OrganizationActions extends Component<OrganizationActionsProps> {
     const {organizationCardData} = this.props;
 
     return (
-      this.user.userInfo!.username === organizationCardData.ownerInfo.username
+      this.user.userInfo.username === organizationCardData.ownerInfo.username
     );
   }
 }
