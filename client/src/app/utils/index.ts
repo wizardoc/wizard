@@ -10,3 +10,4 @@ export * from './import';
 export * from './color-generator';
 export * from './view-port';
 export * from './page';
+export * from './diff';
