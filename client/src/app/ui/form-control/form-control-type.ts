@@ -24,10 +24,10 @@ export namespace Form {
       name: string,
     ) => (_rule, text, cb) => {
       const matcher =
-        text && (isMax ? text.length > length : text.length < length);
+        text && (isMax ? text.length >= length : text.length <= length);
 
       if (matcher) {
-        cb(`${name}的长度不能${isMax ? '多' : '少'}于${length}位`);
+        cb(`${name}的长度必须${isMax ? '少' : '多'}于${length}位`);
       }
     };
 

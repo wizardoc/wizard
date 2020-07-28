@@ -8,7 +8,7 @@ import {Inject} from '@wizardoc/injector';
 import styled from 'styled-components';
 
 import {DialogService, Toast, User} from '../../../services';
-import {Avatar, ImageUpload} from '../../common';
+import {Avatar, ImageUpload, CurrentAvatar} from '../../common';
 
 import {AvatarSelector} from './avatar-selector';
 
@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   overflow: hidden;
 `;
 
-const AvatarBigger = styled(Avatar)`
+const AvatarBigger = styled(CurrentAvatar)`
   width: 150px !important;
   height: 150px !important;
   cursor: pointer;
@@ -93,7 +93,7 @@ export class UserAvatar extends Component {
           onMouseLeave={() => this.handleAvatarMouseLeave()}
           onMouseOver={() => this.handleAvatarMouseHover()}
         >
-          <AvatarBigger username={username} lnk={avatar} />
+          <AvatarBigger />
           <EditTag hover={this.isAvatarHover}>
             <BarWrapper>
               <InsertPhotoIcon></InsertPhotoIcon>

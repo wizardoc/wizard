@@ -1,10 +1,10 @@
 import {AxiosError, AxiosStatic} from 'axios';
 
-import {IHooks, Hooks} from './configure';
+import {IHooks} from './configure';
 
-type Request<R> = () => R;
+type Request<R = any> = () => R;
 
-export type Response<R> = Promise<ResValueArea<R>>;
+export type Response<R = any> = Promise<ResValueArea<R>>;
 
 type Requests<R> = {
   [index in HttpType]: Request<R>;

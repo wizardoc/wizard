@@ -10,7 +10,7 @@ import {withTheme, ThemeComponentProps} from 'src/app/theme';
 export interface AvatarProps extends AvatarWrapperProps {
   // the lnk of avatar
   lnk?: string;
-  username?: string;
+  displayName?: string;
   id?: string;
 }
 
@@ -47,7 +47,7 @@ export class Avatar extends Component<
       lnk,
       bgColor = theme!.avatarBgGray,
       color = theme!.fontGray,
-      username = '',
+      displayName = '',
     } = this.props;
 
     return (
@@ -58,7 +58,7 @@ export class Avatar extends Component<
         bgColor={bgColor}
         color={color}
       >
-        {username.slice(0, 1)}
+        {displayName.slice(0, 1)}
       </AvatarWrapper>
     );
   }

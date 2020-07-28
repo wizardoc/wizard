@@ -85,7 +85,7 @@ export class AuthorCard extends Component<AuthorCardProps> {
     return (
       <Wrapper>
         <InfoContainer>
-          <StyledAvatar id={id} lnk={avatar} username={displayName} />
+          <StyledAvatar id={id} lnk={avatar} displayName={displayName} />
           <AuthorInfo>
             <AuthorName>{displayName}</AuthorName>
             <AuthorIntro>{intro}</AuthorIntro>

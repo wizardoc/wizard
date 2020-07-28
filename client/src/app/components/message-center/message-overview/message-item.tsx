@@ -64,7 +64,7 @@ export class MessageItem extends Component<MessageItemProps> {
 
     return (
       <Wrapper>
-        <StyledAvatar username={username} lnk={avatar}></StyledAvatar>
+        <StyledAvatar displayName={username} lnk={avatar}></StyledAvatar>
         <UserInfoWrapper>
           <Header>
             <UserName>{username}</UserName>

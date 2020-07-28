@@ -23,9 +23,6 @@ export class DocService {
   }
 
   getContributorAvatars(): ContributorInfo[] {
-    return this.usernames.map(username => ({
-      username,
-      addr: `https://avatars.githubusercontent.com/${username}`,
-    }));
+    return [];
   }
 }

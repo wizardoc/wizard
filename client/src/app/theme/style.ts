@@ -88,6 +88,7 @@ export const styledTheme = {
   flatBlack: '#212121',
   excerptGray: '#888888',
   titleGray: '#444',
+  codeBlockShadow: '0 10px 30px 0 rgba(0,0,0,0.4)',
 
   // variables
   heightOmitHeader: 'calc(100% - 48px)',

@@ -8,28 +8,34 @@ import {AccessBox, Wrapper} from '../common-style-component/access-wrapper';
 import {CenterLine} from '../common-style-component/center';
 import {TipBody, TipText} from '../common-style-component/tip';
 
-const RegisterBox = styled(AccessBox)``;
+const RegisterBox = styled(AccessBox)`
+  height: 470px;
+  width: 425px;
+  border-radius: 10px 0 0 10px;
+`;
 
 const Wand = styled.img`
-  width: 200px;
+  width: 130px;
 `;
 
 const WandWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 30px;
+  /* margin-top: 30px; */
 `;
 
 const TipCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
   width: 300px;
-  height: 100%;
+  height: 470px;
   background: ${props => props.theme.primaryColor};
-  border-radius: 10px 0 0 10px;
+  border-radius: 0 10px 10px 0;
 `;
 
 const CardWrapper = styled.div`
-  height: 600px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,6 +46,9 @@ const Card: FunctionComponent = withSlide({
   timeout: 300,
 })(({exitAnimation}: WithSlideProps) => (
   <CardWrapper>
+    <RegisterBox>
+      <Register exitAnimation={exitAnimation} />
+    </RegisterBox>
     <TipCard>
       <WandWrapper>
         <Wand src={WandIcon}></Wand>
@@ -51,9 +60,6 @@ const Card: FunctionComponent = withSlide({
         <TipText>走进魔法世界</TipText>
       </TipBody>
     </TipCard>
-    <RegisterBox>
-      <Register exitAnimation={exitAnimation} />
-    </RegisterBox>
   </CardWrapper>
 ));
 

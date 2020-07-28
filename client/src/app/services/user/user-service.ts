@@ -1,10 +1,9 @@
 import {action, computed, observable} from 'mobx';
-import {Inject, Injectable} from '@wizardoc/injector';
+import {Injectable} from '@wizardoc/injector';
 import {emptyAssert} from '@wizardoc/shared';
 import {ArrowCache} from 'arrow-cache';
-import {ResValueArea} from '@wizardoc/http-request';
+import {ResValueArea, Response} from '@wizardoc/http-request';
 
-import {BaseInfoData} from '../../components';
 import {Optional} from '../../types/type-utils';
 import {genSync, SyncPair, INIT_PAGE} from '../../utils';
 import {HTTP} from '../http';
@@ -35,9 +34,12 @@ interface LoginResData {
   userInfo: UserBaseInfo;
 }
 
-export type ParsedRegisterData = UserBaseInfo & OrganizationInfo;
-
-export type RegisterData = Optional<ParsedRegisterData>;
+export interface RegisterData {
+  displayName: string;
+  username: string;
+  password: string;
+  email: string;
+}
 
 const UserInfoNoop: UserBaseInfo = {
   id: '',
@@ -49,12 +51,11 @@ const UserInfoNoop: UserBaseInfo = {
   intro: '',
   followOrganizations: [],
   followUsers: [],
+  isValidEmail: false,
 };
 
 @Injectable()
 export class User {
-  registerData: RegisterData = {};
-
   @observable
   userInfo: UserBaseInfo = UserInfoNoop;
 
@@ -117,15 +118,6 @@ export class User {
       .ok;
   }
 
-  async validBaseInfo(baseInfo: BaseInfoData): Promise<boolean | undefined> {
-    const result = await this.http.post<ValidResult, BaseInfoData>(
-      this.api.validBaseInfo,
-      baseInfo,
-    );
-
-    return result.expect(() => '获取验证结果失败').data?.isValid;
-  }
-
   isInit(): Promise<void> {
     return this.syncPair.lock;
   }
@@ -139,30 +131,15 @@ export class User {
     return !this.userInfo ? '' : getAvatar(this.userInfo);
   }
 
-  async register(): Promise<void> {
+  async register(registerData: RegisterData): Promise<void> {
     const result = await this.http.post<LoginResData>(
       this.api.register,
-      this.registerData,
+      registerData,
     );
 
     result
       .expect(() => '注册失败')
       .success(data => emptyAssert(data, data => this.saveToken(data)));
-  }
-
-  collectBaseInfo(baseInfo: BaseInfoData): void {
-    this.registerData = {...this.registerData, ...baseInfo};
-  }
-
-  ensureOrganization(
-    organizationName: string,
-    organizationDescription?: string,
-  ): void {
-    this.registerData = {
-      ...this.registerData,
-      organizationName,
-      organizationDescription,
-    };
   }
 
   logout(): void {
@@ -212,6 +189,33 @@ export class User {
     });
 
     return result.expect(() => '更新信息失败，请稍后再试');
+  }
+
+  async sendEmailVerifyCode(email: string): Response {
+    const result = await this.http.post(this.api.sendEmailCode, {email});
+
+    return result.expect(() => '发送验证码失败，请稍后再试');
+  }
+
+  async verifyEmail(email: string, code: string): Response {
+    const result = await this.http.post(this.api.verifyEmail, {email, code});
+
+    return result.expect(() => '验证邮箱失败，请稍后再试');
+  }
+
+  async updateEmail(email: string, code: string): Response {
+    const result = await this.http.put(this.api.updateEmail, {email, code});
+
+    return result.expect(() => '更新邮箱失败，请稍后再试');
+  }
+
+  async updatePassword(originPassword: string, newPassword: string): Response {
+    const result = await this.http.put(this.api.updatePassword, {
+      originPassword,
+      newPassword,
+    });
+
+    return result.expect(() => '更新密码失败，请稍后再试');
   }
 
   private saveToken({jwt, userInfo}: LoginResData): void {

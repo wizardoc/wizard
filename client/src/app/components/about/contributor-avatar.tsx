@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import {Avatar} from '../common';
 
 export interface ContributorInfo {
-  username: string;
+  displayName: string;
   addr: string;
 }
 
@@ -30,14 +30,14 @@ const Wrapper = styled.div``;
 
 export class ContributorAvatar extends Component<ContributorAvatarProps> {
   render(): ReactNode {
-    const {addr, username} = this.props;
+    const {addr, displayName} = this.props;
 
     return (
       <Wrapper>
         <AvatarBox>
-          <Avatar lnk={addr} username={username} />
+          <Avatar lnk={addr} displayName={displayName} />
         </AvatarBox>
-        <ContributorName>{username}</ContributorName>
+        <ContributorName>{displayName}</ContributorName>
       </Wrapper>
     );
   }

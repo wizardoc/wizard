@@ -135,7 +135,10 @@ export class Funcs extends PureComponent<Partial<RouteComponentProps>> {
         <LoginPermission
           loginView={
             <UserInfo onClick={() => this.handleAvatarClick()}>
-              <StyledAvatar lnk={avatar} username={displayName}></StyledAvatar>
+              <StyledAvatar
+                lnk={avatar}
+                displayName={displayName}
+              ></StyledAvatar>
               <UserName>{displayName}</UserName>
             </UserInfo>
           }

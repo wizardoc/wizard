@@ -7,11 +7,11 @@ import styled from 'styled-components';
 import {Inject} from '@wizardoc/injector';
 
 import {FormControl} from '../../ui';
-import {CreateNewOrganization, OrganizationData} from '../register';
+// import {CreateNewOrganization, OrganizationData} from '../register';
 import {OrganizationService, Toast} from '../../services';
 
 interface NewOrganizationCardProps {
-  onCreateClick?(organizationData: OrganizationData): void;
+  onCreateClick?(organizationData: any): void;
 }
 
 const Wrapper = styled.div`
@@ -32,7 +32,7 @@ export class NewOrganizationCard extends Component<NewOrganizationCardProps> {
   organizationService!: OrganizationService;
 
   @observable
-  organizationData!: OrganizationData;
+  organizationData!: any;
 
   @Inject
   toast!: Toast;
@@ -55,7 +55,7 @@ export class NewOrganizationCard extends Component<NewOrganizationCardProps> {
 
     const result = await this.organizationService.newOrganization(
       organizationName,
-      organizationDescription!,
+      organizationDescription,
     );
 
     result?.success(() => this.toast.success('创建成功！'));
@@ -66,10 +66,10 @@ export class NewOrganizationCard extends Component<NewOrganizationCardProps> {
   render(): ReactNode {
     return (
       <Wrapper>
-        <CreateNewOrganization
+        {/* <CreateNewOrganization
           formControlRef={this.formControlRef}
           onOrganizationInfoChange={info => (this.organizationData = info)}
-        />
+        /> */}
         <Submit
           variant="outlined"
           onClick={() => this.handleCreateClick()}

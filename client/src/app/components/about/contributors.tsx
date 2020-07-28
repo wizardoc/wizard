@@ -28,7 +28,7 @@ export class Contributors extends Component {
     const avatars = this.docService
       .getContributorAvatars()
       .map(info => (
-        <ContributorAvatar key={info.username} {...info}></ContributorAvatar>
+        <ContributorAvatar key={info.displayName} {...info}></ContributorAvatar>
       ));
 
     return (

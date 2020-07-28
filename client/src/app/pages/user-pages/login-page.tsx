@@ -29,11 +29,11 @@ const Box = styled.div`
 `;
 
 const TipCard = styled.div`
-  width: 300px;
-  height: 450px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
+  width: 300px;
+  height: 450px;
   align-items: center;
   background: ${props => props.theme.primaryColor};
   border-radius: 0 10px 10px 0;

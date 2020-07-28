@@ -63,15 +63,11 @@ interface ValidatorInfos {
   [index: string]: ValidatorInfo;
 }
 
-// const Wrapper = styled.div`
-//   margin: 0 !important;
-//   padding: 0 !important;
-//   width: fit-content !important;
-//   height: fit-content !important;
-// `;
+const Wrapper = styled.div``;
 
 const ErrorHelpMessage = styled(FormHelperText)<ErrorHelpMessageProps>`
   ${props => props.hasIcon && 'margin-left: 35px !important;'}
+  height: 19px;
   color: red !important;
 ` as ComponentType<FormHelperTextProps & ErrorHelpMessageProps>;
 
@@ -186,21 +182,27 @@ export class FormControl extends Component<FormControlProps>
         },
       };
 
+      const isErrorProp = !['', undefined].includes(
+        (this.errorManager[name] || {}).errMsg,
+      );
+
       part = cloneElement(child, {
         ...part.props,
         ...listeners,
-        error: !['', undefined].includes(
-          (this.errorManager[name] || {}).errMsg,
+        error: isErrorProp,
+        // 一级 children 附加错误处理
+        children: (part.props.children ?? []).map((child: ReactElement) =>
+          cloneElement(child, {...child.props, error: isErrorProp}),
         ),
       });
 
       return (
-        <>
+        <Wrapper {...part.props}>
           {part}
           <ErrorHelpMessage id="component-error-text" hasIcon={!!icon}>
             {(this.errorManager[name] || {}).errMsg}
           </ErrorHelpMessage>
-        </>
+        </Wrapper>
       );
     });
 
@@ -208,16 +210,21 @@ export class FormControl extends Component<FormControlProps>
   }
 
   validate(): boolean {
-    let validateResult = true;
-
-    for (const info of Object.keys(this.validators)) {
-      const {validator, isError} = this.validators[info];
-
-      validator();
-
-      validateResult = validateResult && !isError;
-    }
-
-    return validateResult;
+    return Object.keys(this.validators).reduce(
+      (result, name) => this.validateField(name) && result,
+      true,
+    );
   }
+
+  validateField(name: string): boolean {
+    const {validator, isError} = this.validators[name];
+
+    validator();
+
+    return !isError;
+  }
+}
+
+export interface FormItemProps {
+  name?: string;
 }

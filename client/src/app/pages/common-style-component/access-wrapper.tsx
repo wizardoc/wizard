@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  height: 100%;
+  height: calc(100vh - ${props => props.theme.headerBarHeight});
   width: 100%;
   display: flex;
   justify-content: center;

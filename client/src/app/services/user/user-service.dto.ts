@@ -28,6 +28,7 @@ export interface UserBaseInfo {
   github?: string;
   blog?: string;
   payQRCode?: string;
+  isValidEmail: boolean;
   followOrganizations: OrganizationCardData[];
   followUsers: UserBaseInfo[];
 }

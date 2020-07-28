@@ -12,7 +12,10 @@ export const GlobalStyle = createGlobalStyle<{theme: typeof styledTheme}>`
   body {
     background: ${props => props.theme.white};
     -webkit-font-smoothing: antialiased;
+  }
 
+  pre, code {
+    font-family: consolas, Menlo, monospace, "PingFang SC", "Microsoft YaHei" !important;
   }
 
   #root {

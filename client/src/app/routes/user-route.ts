@@ -9,7 +9,6 @@ const LoadUserPage = (name: string): LazyExoticComponent<any> =>
 
 const Register = LoadUserPage('RegisterPage');
 const Login = LoadUserPage('LoginPage');
-const EmailValidator = LoadUserPage('EmailValidator');
 const Detail = LoadUserPage('UserDetailPage');
 const UserSettings = LoadUserPage('UserSettings');
 const UserSettingsBase = LoadUserPage('UserSettingsBase');
@@ -25,14 +24,12 @@ export const UserRoutes: Routes = [
       {
         path: '/register',
         component: Register,
+        layout: 'normal',
       },
       {
         path: '/login',
         component: Login,
-      },
-      {
-        path: '/email-validator',
-        component: EmailValidator,
+        layout: 'normal',
       },
       {
         path: '/detail/:id',

@@ -139,7 +139,7 @@ export class DocumentCommentItem extends Component<DocumentCommentItemProps> {
         <Card>
           <CommentBody>
             <AvatarContainer>
-              <Avatar lnk={avatar} username={username} />
+              <Avatar lnk={avatar} displayName={username} />
             </AvatarContainer>
             <CommentInfo>
               <CommentInfoHeader>

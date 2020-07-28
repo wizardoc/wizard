@@ -63,7 +63,7 @@ export class MemberBox extends Component<MemberBoxProps> {
             </EmptyAvatar>
           }
         >
-          <StyledAvatar username={username ?? ''} lnk={avatar} />
+          <StyledAvatar displayName={username ?? ''} lnk={avatar} />
         </Default>
       </Wrapper>
     );

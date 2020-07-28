@@ -21,3 +21,4 @@ export * from './loadmore';
 export * from './markdown';
 export * from './login-permission';
 export * from './snack-bar-queue';
+export * from './send-verify-code-button';

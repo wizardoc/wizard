@@ -5,7 +5,7 @@ import {Center} from '../../ui';
 
 const TipHeader = styled.div`
   width: 100%;
-  margin-top: 100px;
+  margin-top: 30px;
   padding: 0 30px;
   box-sizing: border-box;
 `;

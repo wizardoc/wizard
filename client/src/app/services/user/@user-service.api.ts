@@ -21,4 +21,12 @@ export class UserServiceAPI {
   followOrganization = '/focus/organization';
 
   followUser = '/focus/user';
+
+  sendEmailCode = '/email/send/code';
+
+  verifyEmail = '/email/valid';
+
+  updateEmail = '/email/update';
+
+  updatePassword = '/password';
 }
