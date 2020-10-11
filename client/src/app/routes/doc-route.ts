@@ -2,6 +2,7 @@ import {lazy} from 'src/app/utils';
 
 import {Routes} from '../services';
 import {OrganizationGuard} from '../guards';
+import {DocumentCenter} from '../pages/document-pages';
 
 const Pen = lazy(import('../pages/write'), 'WritePage');
 const Doc = lazy(import('../pages/doc'), 'Doc');
@@ -13,6 +14,10 @@ export const DocumentRoutes: Routes = [
     layout: 'no-footer',
     component: Doc,
     children: [
+      {
+        path: '/center',
+        component: DocumentCenter,
+      },
       {
         path: '/:id/write',
         component: Pen,
