@@ -27,6 +27,7 @@
     "markdown-it": "^11.0.0",
     "markdown-it-container": "^3.0.0",
     "marked": "^0.7.0",
+    "material-ui-chip-input": "^1.1.0",
     "mobx": "^5.9.4",
     "mobx-react": "^5.4.3",
     "mobx-utils": "^5.4.0",
