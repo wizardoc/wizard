@@ -66,7 +66,7 @@ export class HTTP extends HTTPService {
     if (result) {
       result.expect(({response}) => {
         // console.info(result.data);
-        res.status(response!.status).send(response?.data ?? undefined);
+        res.status(response.status).send(response?.data ?? undefined);
       });
 
       if (result.ok) {
