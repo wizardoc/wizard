@@ -23,7 +23,7 @@ export class DocumentProcessorController {
         [
           `/user/detail/${userID}`,
           `/organization/detail/${organizationID}`,
-        ].map(api => this._http.get(api, {}, {...req.headers})),
+        ].map(api => this._http.get(api, {}, {headers: req.headers})),
       );
 
       userDetailResult

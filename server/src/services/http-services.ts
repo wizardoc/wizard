@@ -46,11 +46,11 @@ export class HTTP extends HTTPService {
       return undefined;
     }
 
-    const result = (await (this as any)[method](
-      req.url,
-      req.body,
-      req.headers,
-    )) as ResValueArea;
+    console.info(req.url, req.headers);
+
+    const result = (await (this as any)[method](req.url, req.body, {
+      headers: req.headers,
+    })) as ResValueArea;
 
     return result;
   }
