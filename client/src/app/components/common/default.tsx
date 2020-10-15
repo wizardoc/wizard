@@ -7,12 +7,14 @@ import {
   isNull,
   isArray,
 } from '@wizardoc/shared';
+import {observer} from 'mobx-react';
 
 export interface DefaultProps {
   defaultView?: ReactNode;
   condition?(): boolean;
 }
 
+@observer
 export class Default extends Component<DefaultProps> {
   render(): ReactNode {
     const {
