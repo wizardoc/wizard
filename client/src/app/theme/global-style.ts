@@ -18,6 +18,10 @@ export const GlobalStyle = createGlobalStyle<{theme: typeof styledTheme}>`
     font-family: consolas, Menlo, monospace, "PingFang SC", "Microsoft YaHei" !important;
   }
 
+  * {
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  }
+
   #root {
     width: 100%;
     min-width: 100%;
