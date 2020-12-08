@@ -57,6 +57,7 @@
     "start": "node scripts/start --scripts-version react-scripts-ts",
     "build": "node scripts/build --scripts-version react-scripts-ts",
     "test": "jest --passWithNoTests",
+    "lint": "tslint -p ./tsconfig.json",
     "dev": "next",
     "dll": "webpack --config ./config/webpack.dll.config.js --mode development"
   },
