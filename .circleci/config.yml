@@ -2,10 +2,9 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:11.10.1
-    working_directory: ~/wizard-FE
+      - image: circleci/node:latest
     steps:
-      # pull all code from current branch
+      # pull the source code into the workspace_directory
       - checkout
       # install deps
       - run: yarn install
@@ -14,7 +13,42 @@ jobs:
           paths:
             - node_modules
           key: wizard-{{ checksum "package.json" }}
-      # run unit test of browser
+  test:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - restore_cache:
+          key: wizard-{{ checksum "package.json" }}
+        # run jest test cases
       - run: cd ./client && yarn test
-      # lint strict
+  lint:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - restore_cache:
+          key: wizard-{{ checksum "package.json" }}
+        # run lint checker to ensure source code conforms to the convention of tslint
       - run: cd ./client && yarn tslint -p tsconfig.json
+  deploy:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - run: echo hello
+
+# (build <- test & build <- lint) <- deploy
+workflows:
+  tests_and_lint:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - lint:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - test
+            - lint
