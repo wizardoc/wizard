@@ -57,6 +57,7 @@ export class SendVerifyCodeButton extends Component<SendVerifyCodeButtonProps> {
 
     return (
       <Button
+        {...this.props}
         {...buttonProps}
         color={buttonProps?.color ?? 'primary'}
         onClick={() => this.handleSendVerifyCodeClick()}

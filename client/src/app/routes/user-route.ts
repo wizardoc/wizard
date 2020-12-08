@@ -15,6 +15,7 @@ const UserSettingsBase = LoadUserPage('UserSettingsBase');
 const UserSettingsPhone = LoadUserPage('UserSettingsPhone');
 const UserSettingsEmail = LoadUserPage('UserSettingsEmail');
 const UserSettingsPassword = LoadUserPage('UserSettingsPassword');
+const ResetPassword = LoadUserPage('ResetPassword');
 
 export const UserRoutes: Routes = [
   {
@@ -29,6 +30,11 @@ export const UserRoutes: Routes = [
       {
         path: '/login',
         component: Login,
+        layout: 'normal',
+      },
+      {
+        path: '/password/reset',
+        component: ResetPassword,
         layout: 'normal',
       },
       {

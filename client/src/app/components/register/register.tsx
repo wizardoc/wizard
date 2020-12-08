@@ -7,13 +7,7 @@ import {Inject} from '@wizardoc/injector';
 import {Button} from '@material-ui/core';
 
 import {WithSlideProps} from '../../animations';
-import {
-  DialogService,
-  Toast,
-  User,
-  RegexUtils,
-  RegisterData,
-} from '../../services';
+import {Toast, User, RegexUtils, RegisterData} from '../../services';
 import {
   A,
   Title,

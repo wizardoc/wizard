@@ -19,24 +19,24 @@ const Wrapper = styled.div`
 
 const TabConfigs: WizardTabConfig[] = [
   {
-    text: '首页',
-    route: '/home',
+    text: '文档中心',
+    route: '/document/center',
+  },
+  {
+    text: '合并请求',
+    route: '/document/center',
+  },
+  {
+    text: '动态',
+    route: '/community',
+  },
+  {
+    text: '我的',
+    route: '/community',
   },
   {
     text: '社区',
     route: '/community',
-  },
-  {
-    text: '文档中心',
-    route: '/document-center',
-  },
-  {
-    text: '帮助中心',
-    route: '/team/help',
-  },
-  {
-    text: '关于我们',
-    route: '/team/about',
   },
 ];
 

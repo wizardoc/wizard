@@ -24,15 +24,15 @@ const Container = styled(Paper)`
 `;
 
 const Content = styled.div`
-  width: fit-content;
+  width: 700px;
 `;
 
 const StyledTextField = styled(TextField)`
-  width: 544px;
+  width: 100%;
 `;
 
 const StyledInviteMember = styled(InviteMemberBox)`
-  width: 544px;
+  width: 100%;
 `;
 
 export class NewOrganizationPage extends Component {
@@ -49,7 +49,6 @@ export class NewOrganizationPage extends Component {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                variant="filled"
                 label="组织名称"
                 helperText="组织名称用于外部展示，是组织唯一的标识"
               />
@@ -58,7 +57,6 @@ export class NewOrganizationPage extends Component {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                variant="filled"
                 label="描述"
                 helperText="一句话描述你的组织，介绍你的组织"
               />

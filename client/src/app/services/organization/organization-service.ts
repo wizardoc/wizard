@@ -43,6 +43,10 @@ export class OrganizationService {
     }));
   }
 
+  get isNoOrganization(): boolean {
+    return !this._organizations.length;
+  }
+
   findOrganizationByID(id: string): OrganizationCardData | undefined {
     return this._organizations.find(({id: originID}) => originID === id);
   }

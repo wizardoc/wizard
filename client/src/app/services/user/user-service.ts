@@ -4,19 +4,13 @@ import {emptyAssert} from '@wizardoc/shared';
 import {ArrowCache} from 'arrow-cache';
 import {ResValueArea, Response} from '@wizardoc/http-request';
 
-import {Optional} from '../../types/type-utils';
 import {genSync, SyncPair, INIT_PAGE} from '../../utils';
 import {HTTP} from '../http';
 import {DialogService} from '../dialog';
 import {JWT} from '../jwt-service';
 import {MessageService} from '../message';
 
-import {
-  UserBaseInfo,
-  UserInfoDTO,
-  ValidResult,
-  SearchNameResult,
-} from './user-service.dto';
+import {UserBaseInfo, UserInfoDTO, SearchNameResult} from './user-service.dto';
 import {UserServiceAPI} from './@user-service.api';
 
 interface UserInfoAvatarPart {
@@ -216,6 +210,20 @@ export class User {
     });
 
     return result.expect(() => '更新密码失败，请稍后再试');
+  }
+
+  async resetPassword(
+    email: string,
+    code: string,
+    newPassword: string,
+  ): Response {
+    const result = await this.http.put(this.api.resetPassword, {
+      email,
+      code,
+      newPassword,
+    });
+
+    return result.expect(() => '重置密码失败，请稍后再试');
   }
 
   private saveToken({jwt, userInfo}: LoginResData): void {

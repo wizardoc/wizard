@@ -16,7 +16,11 @@ import {Avatar} from '../avatar';
 
 type FetchUserStatus = 'pending' | 'failure' | 'success';
 
-interface UserMetaData {
+export interface UserSearchLineProps {
+  onChange(metadata: UserMetaData[]): void;
+}
+
+export interface UserMetaData {
   info?: UserBaseInfo;
   status: FetchUserStatus;
 }
@@ -53,7 +57,9 @@ const StyledErrorIcon = styled(ErrorIcon)`
 `;
 
 @observer
-export class UserSearchLine extends Component<ChipInputProps> {
+export class UserSearchLine extends Component<
+  UserSearchLineProps & ChipInputProps
+> {
   @Inject
   userService!: User;
 
@@ -68,6 +74,7 @@ export class UserSearchLine extends Component<ChipInputProps> {
     this.userMetaData.push({
       status: 'pending',
     });
+    this.props.onChange(this.userMetaData);
 
     const currentIdx = this.userMetaData.length - 1;
     const users = await this.userService.searchByName(name);
@@ -81,6 +88,7 @@ export class UserSearchLine extends Component<ChipInputProps> {
   handleDeleteUser(idx: number): void {
     this.userNames.splice(idx, 1);
     this.userMetaData.splice(idx, 1);
+    this.props.onChange(this.userMetaData);
   }
 
   chipRenderer({value, handleDelete}: ChipRendererArgs): ReactNode {
@@ -116,6 +124,8 @@ export class UserSearchLine extends Component<ChipInputProps> {
   }
 
   render(): ReactNode {
+    const {onChange} = this.props;
+
     return (
       <ChipInput
         {...this.props}

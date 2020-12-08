@@ -13,6 +13,8 @@
     "incremental": true,
     "types": ["express"],
     "resolveJsonModule": true,
+    "strict": false,
+    "noImplicitAny": false,
     "noUnusedLocals": false
   },
   "exclude": ["node_modules", "dist"]

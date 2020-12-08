@@ -2,13 +2,11 @@ import {AppBar, Toolbar} from '@material-ui/core';
 import {AppBarProps} from '@material-ui/core/AppBar';
 import {observer} from 'mobx-react';
 import React, {Component, ComponentType, ReactNode} from 'react';
-// import {Inject} from '@wizardoc/injector';
 import styled from 'styled-components';
 
 import {Funcs} from './@funcs';
 import {HeaderBarTabs} from './header-bar-tabs';
 import {HeaderSearch} from './@header-search';
-import {Logo} from './logo';
 
 interface AppBarWrapperProps {
   isFixed: boolean;
@@ -36,9 +34,7 @@ export class HeaderBar extends Component<HeaderBarProps> {
     return (
       <AppBarWrapper position="static" isFixed={isFixed}>
         <Toolbar variant="dense">
-          <Row>
-            <Logo />
-          </Row>
+          <Row></Row>
           <HeaderBarTabs />
           <HeaderSearch />
           <Funcs></Funcs>

@@ -29,4 +29,6 @@ export class UserServiceAPI {
   updateEmail = '/email/update';
 
   updatePassword = '/password';
+
+  resetPassword = '/password/reset';
 }
