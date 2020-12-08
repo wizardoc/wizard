@@ -9,7 +9,8 @@
     "no-inferred-empty-object-type": false,
     "object-literal-sort-keys": false,
     "no-floating-promises": false,
-    "no-bitwise": false
+    "no-bitwise": false,
+    "no-redundant-jsdoc": false
   },
   "linterOptions": {
     "exclude": ["node_modules/**"]
