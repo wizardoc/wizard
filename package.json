@@ -16,8 +16,8 @@
     "client:start": "cd client && yarn start",
     "server:start": "cd server && yarn start:dev",
     "bootstrap": "lerna bootstrap",
-    "compile": "tsc -p packages/http-request && tsc -p shared && tsc -p packages/http-utils && tsc -p packages/injector",
-    "prepare": "yarn compile && yarn bootstrap"
+    "compile": "tsc -p packages/http-request && tsc -p shared && tsc -p packages/http-utils && tsc -p packages/injector && tsc -p packages/markdown",
+    "prepare": "yarn bootstrap && yarn compile"
   },
   "dependencies": {
     "prettier": "^1.17.0",
