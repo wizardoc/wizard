@@ -42,7 +42,7 @@ export class InviteMemberDialog extends Component<InviteMemberDialogProps> {
   }
 
   handleSearchInputKeyDown(e: KeyboardEvent<HTMLInputElement>): void {
-    if ([KEY_ENTER, KEY_RETURN].includes(e.keyCode)) {
+    if ([KEY_ENTER, KEY_RETURN].includes(+e.key)) {
       this.handleSearchName();
     }
   }

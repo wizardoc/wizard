@@ -1,0 +1,42 @@
+name: website lint and run test
+on:
+  push:
+    paths:
+      - "client/**"
+  pull_request:
+    paths:
+      - "client/**"
+
+jobs:
+  run-unit-test-and-lint-code:
+    name: lint and run test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: cache deps
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+            path: '**/node_modules'
+            key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: install deps
+        run: yarn install
+
+      - name: run client unit tests use Jest
+        run: yarn test
+        working-directory: client
+
+      - name: run lint in client
+        run: yarn lint
+        working-directory: client
+
+  deploy:
+    name: deploy client
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: trigger deploy script via webhook
+        run: echo deploy
