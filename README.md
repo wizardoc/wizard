@@ -14,17 +14,9 @@ yarn compile
 yarn bootstrap
 ```
 
-Notice: The application using node server as a middleware for forward all request from client and process data of response.
-<br />
+The application using node server as a middleware for forward all request from client and process data of response.
 
->
-
-<div style="display:flex;justify-content: space-between; padding: 10px 0;align-items: center;width: 500px;">
-<div style="width:100px;height: 50px;line-height: 50px;text-align:center;border: 1px solid #3970f5;border-radius:3px;">WEBAPP</div> <div><div><--</div><div>--></div></div>
-<div style="width:100px;height: 50px;line-height: 50px;text-align:center;border: 1px solid #3970f5;border-radius:3px;">Node</div> <div><div><--</div><div>--></div></div>
-<div style="width:100px;height: 50px;line-height: 50px;text-align:center;border: 1px solid #3970f5;border-radius:3px;">Server</div>
-</div>
-<br />
+WEBAPP <---> Node Middleware <---> API Server
 
 So u should start node server before client.
 
