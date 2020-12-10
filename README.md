@@ -24,8 +24,6 @@ The application using node server as a middleware for forward all request from c
 └───────────────────┘          └───────────────────┘          └───────────────────┘
 ```
 
-WEBAPP <---> Node Middleware <---> API Server
-
 So u should start node server before client.
 
 ```bash
