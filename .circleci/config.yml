@@ -7,7 +7,7 @@ jobs:
       # pull the source code into the workspace_directory
       - checkout
       - restore_cache:
-          key: wizard-{{ checksum "package.json" }}
+          key: wizard_modules
       # install deps
       - run: yarn install
       # cache node_modules
@@ -16,7 +16,7 @@ jobs:
             - node_modules
             - ./client/node_modules
             - ./server/node_modules
-          key: wizard-{{ checksum "package.json" }}
+          key: wizard_modules
       # run jest test cases
       - run: cd ./client && yarn test
         # run lint checker to ensure source code conforms to the convention of tslint
