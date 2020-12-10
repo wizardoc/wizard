@@ -2,5 +2,9 @@
   "name": "@wizardoc/shared",
   "version": "1.0.0",
   "main": "dist/index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "qs": "*",
+    "@wizardoc/http-request": "*"
+  }
 }

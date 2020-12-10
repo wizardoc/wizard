@@ -14,7 +14,10 @@
   },
   "scripts": {
     "client:start": "cd client && yarn start",
-    "bootstrap": "lerna bootstrap"
+    "server:start": "cd server && yarn start:dev",
+    "bootstrap": "lerna bootstrap",
+    "compile": "tsc -p packages/http-request && tsc -p shared && tsc -p packages/http-utils && tsc -p packages/injector",
+    "prepare": "yarn compile && yarn bootstrap"
   },
   "dependencies": {
     "prettier": "^1.17.0",
