@@ -36,7 +36,7 @@ module.exports = {
   globals: {
     'ts-jest': {
       tsConfigFile:
-        '/Users/zhanhaozhao/Documents/repositories/wizard/client/tsconfig.test.json',
+        'tsconfig.test.json',
     },
   },
 };

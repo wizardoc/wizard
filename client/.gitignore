@@ -9,10 +9,11 @@
 /static
 
 # config
-src/app/.config
+src/website/.config
 
 # cache
 .cache
+.parcel-cache/**
 
 # misc
 .DS_Store
