@@ -7,11 +7,11 @@ Wizardoc is a WEBAPP for managing documents and knowledge.
 U can just use the following commands quickly launch this project.
 
 ```bash
-# Compile lerna packages
-yarn compile
-
 # Link to client/server
 yarn bootstrap
+
+# Compile lerna packages
+yarn compile
 ```
 
 The application using node server as a middleware for forward all request from client and process data of response.
@@ -19,7 +19,7 @@ The application using node server as a middleware for forward all request from c
 ```shell
 ┌───────────────────┐          ┌───────────────────┐          ┌───────────────────┐
 │                   │  <-----  │                   │  <-----  │                   │
-│       WEBAPP      │          │  Node Middleware  │          │     API Server    │      
+│       WEBAPP      │          │  Node Middleware  │          │     API Server    │
 │                   │  ----->  │                   │  ----->  │                   │
 └───────────────────┘          └───────────────────┘          └───────────────────┘
 ```
