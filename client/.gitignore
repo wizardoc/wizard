@@ -8,9 +8,6 @@
 /build
 /static
 
-# config
-src/website/.config
-
 # cache
 .cache
 .parcel-cache/**

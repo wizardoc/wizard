@@ -8,7 +8,7 @@ on:
       - "client/**"
 
 jobs:
-  run-unit-test-and-lint-code:
+  run-tests-and-lint:
     name: lint and run test
     runs-on: ubuntu-latest
     steps:
@@ -33,10 +33,58 @@ jobs:
         run: yarn lint
         working-directory: client
 
-  deploy:
-    name: deploy client
+  upload-image:
+    name: upload docker image to cloud
+    needs: run-tests-and-lint
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
     steps:
-      - name: trigger deploy script via webhook
-        run: echo deploy
+      - uses: actions/checkout@v2
+
+      - name: cache deps
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+            path: '**/node_modules'
+            key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: install deps
+        run: yarn install
+
+      - name: build client
+        run: yarn build || yarn build
+        working-directory: client
+
+      - name: docker login
+        run: docker login --username=${{ secrets.TENCENT_YUN_USERNAME }} --password ${{ secrets.TENCENT_YUN_PASSWORD }} ccr.ccs.tencentyun.com
+
+      - name: build docker image
+        run: docker build -t wizard_website .
+        working-directory: client
+
+      - name: tag the image & push the image to cloud
+        run: |
+          docker tag $(docker images -q --filter reference=wizard_website) ccr.ccs.tencentyun.com/wizardoc/wizard_website:latest
+          docker push ccr.ccs.tencentyun.com/wizardoc/wizard_website:latest
+
+  pull-image:
+    needs: [upload-image]
+    name: pull image from cloud
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploy website
+        uses: appleboy/ssh-action@master
+        with:
+            host: ${{ secrets.DEPLOY_SERVER_HOST }}
+            username: ${{ secrets.DEPLOY_SERVER_USER }}
+            password: ${{ secrets.DEPLOY_SERVER_PASSWORD }}
+            port: ${{ secrets.DEPLOY_SERVER_SSH_PORT }}
+            script: |
+              docker login --username=${{ secrets.TENCENT_YUN_USERNAME }} --password ${{ secrets.TENCENT_YUN_PASSWORD }} ccr.ccs.tencentyun.com
+              docker stop $(docker ps -q --filter ancestor=ccr.ccs.tencentyun.com/wizardoc/wizard_website)
+              docker rm -f $(docker pas -q -a --filter ancestor=ccr.ccs.tencentyun.com/wizardoc/wizard_website)
+              docker rmi -f $(docker images ancestor=ccr.ccs.tencentyun.com/wizardoc/wizard_website -q)
+              docker pull ccr.ccs.tencentyun.com/wizardoc/wizard_website:latest
+              docker run -d -p 8060:80 ccr.ccs.tencentyun.com/wizardoc/wizard_website:latest
+
