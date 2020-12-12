@@ -15,7 +15,9 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
+    "isolatedModules": true,
     "noImplicitAny": true,
+    "strict": true,
     "importHelpers": true,
     "strictNullChecks": true,
     "esModuleInterop": true,
@@ -25,12 +27,15 @@
     "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "skipLibCheck": true,
     "paths": {
-      "~/*": ["src/app"]
+      "~/*": ["./*"],
+      "website/*": ["src/website/*"]
     }
   },
   "exclude": [
     "node_modules/**/*",
+    "../node_modules/**/*",
     "build",
     "scripts",
     "acceptance-tests",
@@ -40,5 +45,5 @@
     "images.d.ts",
     "dist"
   ],
-  "include": ["src/**/*", "src/ssr/@index-ssr.tsx"]
+  "include": ["src/**/*"]
 }

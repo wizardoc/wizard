@@ -8,11 +8,9 @@
 /build
 /static
 
-# config
-src/app/.config
-
 # cache
 .cache
+.parcel-cache/**
 
 # misc
 .DS_Store

@@ -16,20 +16,20 @@
     "client:start": "cd client && yarn start",
     "server:start": "cd server && yarn start:dev",
     "bootstrap": "lerna bootstrap",
-    "compile": "tsc -p packages/http-request && tsc -p shared && tsc -p packages/http-utils && tsc -p packages/injector",
+    "compile": "tsc -p packages/http-request && tsc -p shared && tsc -p packages/http-utils && tsc -p packages/injector && tsc -p packages/markdown",
     "prepare": "yarn bootstrap && yarn compile"
   },
   "dependencies": {
     "prettier": "^1.17.0",
     "tslint": "5.11.0",
     "tslint-language-service": "0.9.9",
-    "typescript": "^3.7.5"
+    "typescript": "3.8.3"
   },
   "workspaces": {
     "packages": [
-      "client",
       "server",
       "shared",
+      "client",
       "packages/**/*"
     ]
   }

@@ -16,3 +16,5 @@ dist
 
 # dll
 _dll_vendor.js
+
+.DS_Store
