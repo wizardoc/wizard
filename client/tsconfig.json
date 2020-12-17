@@ -9,7 +9,7 @@
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
-    "types": ["node"],
+    "types": ["node", "jest"],
     "moduleResolution": "node",
     "rootDir": "src",
     "forceConsistentCasingInFileNames": true,
