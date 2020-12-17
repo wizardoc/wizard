@@ -20,7 +20,6 @@ export class Injector {
   };
 
   Inject = (target: any, key: string) => {
-    console.info(target, key);
     const type: Constructor = Reflect.getMetadata('design:type', target, key);
 
     target[key] = this.extract(type);
@@ -64,7 +63,7 @@ export class Injector {
     const params: Service<T>[] =
       Reflect.getMetadata('design:paramtypes', Constructor) ?? [];
 
-    const deps = params.map(param => {
+    const deps = params.map((param) => {
       if (param === Constructor) {
         throw new Error('Cannot dependent yourself');
       }
