@@ -6,7 +6,11 @@
   "dependencies": {
     "draft-js": "^0.11.5",
     "draft-js-fluent-markdown-plugin": "^0.1.15",
-    "draft-js-plugins-editor": "^3.0.0"
+    "draft-js-plugins-editor": "^3.0.0",
+    "mobx": "^5.9.4",
+    "mobx-react": "^5.4.3",
+    "react": "^17.0.1",
+    "styled-components": "^4.2.0"
   },
   "devDependencies": {
     "@types/draft-js": "^0.10.40"
