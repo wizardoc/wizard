@@ -37,31 +37,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # - name: cache deps
-      #   uses: actions/cache@v2
-      #   env:
-      #     cache-name: cache-node-modules
-      #   with:
-      #       path: '**/node_modules'
-      #       key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-
-      # - name: install deps
-      #   run: yarn install
-
-      # - name: build server
-      #   run: yarn build
-      #   working-directory: server
-
       - name: docker login
-        run: docker login --username=${{ secrets.TENCENT_YUN_USERNAME }} --password ${{ secrets.TENCENT_YUN_PASSWORD }} ccr.ccs.tencentyun.com
+        run: docker login --username=${{ secrets.TENCENT_YUN_USERNAME }} --password ${{ secrets.TENCENT_YUN_PASSWORD }}
 
       - name: build docker image
         run: docker build -f ./Dockerfile.Server -t wizard_node_middleware .
 
       - name: tag the image & push the image to cloud
         run: |
-          docker tag $(docker images -q --filter reference=wizard_node_middleware) ccr.ccs.tencentyun.com/wizardoc/wizard_node_middleware:latest
-          docker push ccr.ccs.tencentyun.com/wizardoc/wizard_node_middleware:latest
+          docker tag $(docker images -q --filter reference=wizard_node_middleware) younccat/wizard_node_middleware:latest
+          docker push younccat/wizard_node_middleware:latest
 
   pull-image:
     needs: [upload-image]
@@ -77,10 +62,10 @@ jobs:
             port: ${{ secrets.DEPLOY_SERVER_SSH_PORT }}
             script: |
               docker network create wizardoc_net
-              docker login --username=${{ secrets.TENCENT_YUN_USERNAME }} --password ${{ secrets.TENCENT_YUN_PASSWORD }} ccr.ccs.tencentyun.com
-              docker stop $(docker ps -q --filter ancestor=ccr.ccs.tencentyun.com/wizardoc/wizard_node_middleware)
-              docker rm -f $(docker pas -q -a --filter ancestor=ccr.ccs.tencentyun.com/wizardoc/wizard_node_middleware)
-              docker rmi -f $(docker images ancestor=ccr.ccs.tencentyun.com/wizardoc/wizard_node_middleware -q)
-              docker pull ccr.ccs.tencentyun.com/wizardoc/wizard_node_middleware:latest
-              docker run -d --network wizardoc_net --name wizard_node_middleware -p 3000:3000 ccr.ccs.tencentyun.com/wizardoc/wizard_node_middleware:latest
+              docker login --username=${{ secrets.TENCENT_YUN_USERNAME }} --password ${{ secrets.TENCENT_YUN_PASSWORD }}
+              docker stop $(docker ps -q --filter ancestor=younccat/wizard_node_middleware)
+              docker rm -f $(docker pas -q -a --filter ancestor=younccat/wizard_node_middleware)
+              docker rmi -f $(docker images ancestor=younccat/wizard_node_middleware -q)
+              docker pull younccat/wizard_node_middleware:latest
+              docker run -d --network wizardoc_net --name wizard_node_middleware -p 3000:3000 younccat/wizard_node_middleware:latest
 
