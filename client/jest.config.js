@@ -2,10 +2,9 @@ module.exports = {
   collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', '!**/*.d.ts'],
   setupFiles: ['<rootDir>/config/polyfills.js'],
   testMatch: [
-    '<rootDir>/src/**/__tests__/**/*.(j|t)s?(x)',
-    '<rootDir>/src/**/?(*.)(spec|test).(j|t)s?(x)',
+    '<rootDir>/src/test/**/*.spec.ts'
   ],
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
   testURL: 'http://localhost',
   transform: {
     '^.+\\.(js|jsx|mjs)$': 'babel-jest',
@@ -18,7 +17,7 @@ module.exports = {
     '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|ts|tsx)$',
   ],
   moduleNameMapper: {
-    '^react-native$': 'react-native-web',
+    "^~/(.+)$": "<rootDir>/$1"
   },
   moduleFileExtensions: [
     'web.ts',

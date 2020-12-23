@@ -33,7 +33,7 @@ export class DocumentProcessorController {
         });
 
       organizationDetailResult
-        .expect(err => console.error(err.response!.data))
+        .expect(err => console.error(err.response.data))
         .success(payload => {
           resData.organizationInfo = payload.data;
         });
