@@ -3,9 +3,11 @@ on:
   push:
     paths:
       - "client/**"
+      - .github/**
   pull_request:
     paths:
       - "client/**"
+      - .github/**
 
 jobs:
   run-tests-and-lint:
@@ -64,8 +66,8 @@ jobs:
 
       - name: tag the image & push the image to cloud
         run: |
-          docker tag $(docker images -q --filter reference=wizard_website) younccat/wizard_website:latest
-          docker push younccat/wizard_website:latest
+          docker tag $(docker images -q --filter reference=wizard_website) ${{ secrets.WEBSITE_IMAGE_NAME }}
+          docker push ${{ secrets.WEBSITE_IMAGE_NAME }}
 
   pull-image:
     needs: [upload-image]
@@ -82,9 +84,9 @@ jobs:
             script: |
               docker network create wizardoc_net
               docker login --username=${{ secrets.TENCENT_YUN_USERNAME }} --password ${{ secrets.TENCENT_YUN_PASSWORD }}
-              docker stop $(docker ps -q --filter ancestor=younccat/wizard_website)
-              docker rm -f $(docker pas -q -a --filter ancestor=younccat/wizard_website)
-              docker rmi -f $(docker images ancestor=younccat/wizard_website -q)
-              docker pull younccat/wizard_website:latest
-              docker run --name wizard_website --network wizardoc_net -d -p 8060:80 younccat/wizard_website:latest
+              docker stop ${{ secrets.WEBSITE_CONTAINER_NAME }}
+              docker rm -f ${{ secrets.WEBSITE_CONTAINER_NAME }}
+              docker rmi -f ${{ secrets.WEBSITE_IMAGE_NAME }}
+              docker pull ${{ secrets.WEBSITE_IMAGE_NAME }}
+              docker run --name ${{ secrets.WEBSITE_CONTAINER_NAME }} --network wizardoc_net -d -p 8060:80 ${{ secrets.WEBSITE_IMAGE_NAME }}
 

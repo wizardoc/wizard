@@ -3,9 +3,11 @@ on:
   push:
     paths:
       - "server/**"
+      - .github/**
   pull_request:
     paths:
       - "server/**"
+      - .github/**
 
 jobs:
   run-tests-and-lint:
@@ -45,8 +47,8 @@ jobs:
 
       - name: tag the image & push the image to cloud
         run: |
-          docker tag $(docker images -q --filter reference=wizard_node_middleware) younccat/wizard_node_middleware:latest
-          docker push younccat/wizard_node_middleware:latest
+          docker tag $(docker images -q --filter reference=wizard_node_middleware) ${{ secrets.NODE_MIDDLEWARE_IMAGE_NAME }}
+          docker push ${{ secrets.NODE_MIDDLEWARE_IMAGE_NAME }}
 
   pull-image:
     needs: [upload-image]
@@ -63,9 +65,9 @@ jobs:
             script: |
               docker network create wizardoc_net
               docker login --username=${{ secrets.TENCENT_YUN_USERNAME }} --password ${{ secrets.TENCENT_YUN_PASSWORD }}
-              docker stop $(docker ps -q --filter ancestor=younccat/wizard_node_middleware)
-              docker rm -f $(docker pas -q -a --filter ancestor=younccat/wizard_node_middleware)
-              docker rmi -f $(docker images ancestor=younccat/wizard_node_middleware -q)
-              docker pull younccat/wizard_node_middleware:latest
-              docker run -d --network wizardoc_net --name wizard_node_middleware -p 3000:3000 younccat/wizard_node_middleware:latest
+              docker stop ${{ secrets.NODE_MIDDLEWARE_CONTAINER_NAME }}
+              docker rm -f ${{ secrets.NODE_MIDDLEWARE_CONTAINER_NAME }}
+              docker rmi -f ${{ secrets.NODE_MIDDLEWARE_IMAGE_NAME }}
+              docker pull ${{ secrets.NODE_MIDDLEWARE_IMAGE_NAME }}
+              docker run -d --network wizardoc_net --name wizard_node_middleware -p 3000:3000 ${{ secrets.NODE_MIDDLEWARE_IMAGE_NAME }}
 
