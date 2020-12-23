@@ -8,7 +8,10 @@ import {
 import {Injectable, extract, Inject} from '@wizardoc/injector';
 import {RequestPayloadParser} from '@wizardoc/shared';
 
-import ServerConfig from '../../.config/server-config.json';
+import ServerDevConfig from 'website/.config/server-config.dev.json';
+import ServerProdConfig from 'website/.config/server-config.prod.json';
+import {runtimeEnv} from 'website/utils';
+
 import {ErrorManager} from '../error-manager';
 import {Toast} from '../toast';
 import {BackdropService} from '../backdrop-service';
@@ -34,7 +37,9 @@ class HTTPFactory extends HTTPRequestFactory implements HTTPConfigure {
       RequestType,
     ]);
 
-    serverConfigure.setConfig(ServerConfig);
+    serverConfigure.setConfig(
+      runtimeEnv({DEVELOPMENT: ServerDevConfig, PRODUCTION: ServerProdConfig}),
+    );
 
     hooks.beforeRequest = (): void => {
       this.backdropService.show();

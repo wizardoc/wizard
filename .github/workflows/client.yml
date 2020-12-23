@@ -1,4 +1,4 @@
-name: website lint and run test
+name: website lint & run tests & deploy
 on:
   push:
     paths:
@@ -57,15 +57,15 @@ jobs:
         working-directory: client
 
       - name: docker login
-        run: docker login --username=${{ secrets.TENCENT_YUN_USERNAME }} --password ${{ secrets.TENCENT_YUN_PASSWORD }} ccr.ccs.tencentyun.com
+        run: docker login --username=${{ secrets.TENCENT_YUN_USERNAME }} --password ${{ secrets.TENCENT_YUN_PASSWORD }}
 
       - name: build docker image
         run: docker build -f ./Dockerfile.Client -t wizard_website ./client
 
       - name: tag the image & push the image to cloud
         run: |
-          docker tag $(docker images -q --filter reference=wizard_website) ccr.ccs.tencentyun.com/wizardoc/wizard_website:latest
-          docker push ccr.ccs.tencentyun.com/wizardoc/wizard_website:latest
+          docker tag $(docker images -q --filter reference=wizard_website) younccat/wizard_website:latest
+          docker push younccat/wizard_website:latest
 
   pull-image:
     needs: [upload-image]
@@ -80,10 +80,11 @@ jobs:
             password: ${{ secrets.DEPLOY_SERVER_PASSWORD }}
             port: ${{ secrets.DEPLOY_SERVER_SSH_PORT }}
             script: |
-              docker login --username=${{ secrets.TENCENT_YUN_USERNAME }} --password ${{ secrets.TENCENT_YUN_PASSWORD }} ccr.ccs.tencentyun.com
-              docker stop $(docker ps -q --filter ancestor=ccr.ccs.tencentyun.com/wizardoc/wizard_website)
-              docker rm -f $(docker pas -q -a --filter ancestor=ccr.ccs.tencentyun.com/wizardoc/wizard_website)
-              docker rmi -f $(docker images ancestor=ccr.ccs.tencentyun.com/wizardoc/wizard_website -q)
-              docker pull ccr.ccs.tencentyun.com/wizardoc/wizard_website:latest
-              docker run -d -p 8060:80 ccr.ccs.tencentyun.com/wizardoc/wizard_website:latest
+              docker network create wizardoc_net
+              docker login --username=${{ secrets.TENCENT_YUN_USERNAME }} --password ${{ secrets.TENCENT_YUN_PASSWORD }}
+              docker stop $(docker ps -q --filter ancestor=younccat/wizard_website)
+              docker rm -f $(docker pas -q -a --filter ancestor=younccat/wizard_website)
+              docker rmi -f $(docker images ancestor=younccat/wizard_website -q)
+              docker pull younccat/wizard_website:latest
+              docker run --name wizard_website --network wizardoc_net -d -p 8060:80 younccat/wizard_website:latest
 
