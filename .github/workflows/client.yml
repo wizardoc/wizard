@@ -1,12 +1,11 @@
-name: website lint and run test
+name: website lint & run tests & deploy
 on:
-  - push
-  # push:
-  #   paths:
-  #     - "client/**"
-  # pull_request:
-  #   paths:
-  #     - "client/**"
+  push:
+    paths:
+      - "client/**"
+  pull_request:
+    paths:
+      - "client/**"
 
 jobs:
   run-tests-and-lint:
@@ -38,7 +37,7 @@ jobs:
     name: upload docker image to cloud
     needs: run-tests-and-lint
     runs-on: ubuntu-latest
-    # if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v2
 
