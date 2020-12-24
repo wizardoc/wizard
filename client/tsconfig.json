@@ -9,6 +9,7 @@
     "types": ["node", "jest"],
     "moduleResolution": "node",
     "rootDir": "src",
+    "isolatedModules": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "paths": {
