@@ -11,7 +11,7 @@ interface LinkConfig {
 const Wrapper = styled.div`
   width: 100%;
   height: 300px;
-  background: ${props => props.theme.dark};
+  background: ${(props) => props.theme.dark};
   padding: 40px 0;
   box-sizing: border-box;
   display: flex;
@@ -32,8 +32,8 @@ export class FooterPanel extends Component {
   }
 
   private renderLinks(config: LinkConfig): ReactNode {
-    return Object.keys(config).map(key => (
-      <LinkColumn {...config[key]}></LinkColumn>
+    return Object.keys(config).map((key) => (
+      <LinkColumn key={key} {...config[key]}></LinkColumn>
     ));
   }
 }
