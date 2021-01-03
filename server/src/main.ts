@@ -1,7 +1,7 @@
 import {NestFactory} from '@nestjs/core';
 
 import {AppModule} from './app.module';
-import {GlobalErrorFilter} from './filters';
+import {GlobalErrorFilter, TransferRequest} from './filters';
 import {HTTP} from './services';
 
 async function bootstrap(): Promise<void> {
@@ -12,7 +12,10 @@ async function bootstrap(): Promise<void> {
     },
   });
 
-  app.useGlobalFilters(new GlobalErrorFilter(app.select(AppModule).get(HTTP)));
+  app.useGlobalFilters(
+    new TransferRequest(app.select(AppModule).get(HTTP)),
+    new GlobalErrorFilter(),
+  );
 
   await app.listen(3000);
 }

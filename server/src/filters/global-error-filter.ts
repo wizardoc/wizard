@@ -6,18 +6,16 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import {Request, Response} from 'express';
+import {ClientError} from 'graphql-request';
 
-import {HTTP} from 'src/services';
-
-@Catch(NotFoundException, Error)
+@Catch(Error)
 export class GlobalErrorFilter implements ExceptionFilter {
-  constructor(private readonly http: HTTP) {}
+  async catch(
+    {response: {data, err}}: ClientError,
+    host: ArgumentsHost,
+  ): Promise<void> {
+    const res = host.switchToHttp().getResponse<Response>();
 
-  async catch(_exception: HttpException, host: ArgumentsHost): Promise<void> {
-    const {getRequest, getResponse} = host.switchToHttp();
-    const req = getRequest<Request>();
-    const res = getResponse<Response>();
-
-    this.http.proxySend(req, res);
+    res.send({data, err});
   }
 }

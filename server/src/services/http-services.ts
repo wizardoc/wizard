@@ -9,10 +9,15 @@ import {
 import {Injectable} from '@nestjs/common';
 import {Request, Response} from 'express';
 import {RequestPayloadParser} from '@wizardoc/shared';
+import {request} from 'graphql-request';
 
 import ServerConfig from '../.config/proxy-config.json';
 
 import {ResData, ResError} from './interceptors';
+
+interface Variables {
+  [key: string]: any;
+}
 
 @Injectable()
 export class HTTPFactory extends HTTPRequestFactory implements HTTPConfigure {
@@ -30,8 +35,16 @@ export class HTTPFactory extends HTTPRequestFactory implements HTTPConfigure {
 export class HTTP extends HTTPService {
   private allowHTTPMethods = ['options', 'get', 'post', 'delete', 'put'];
 
-  constructor(httpFactory: HTTPFactory) {
+  private readonly GRAPHQL_PATH = 'graphql';
+
+  constructor(private httpFactory: HTTPFactory) {
     super(httpFactory.getHTTPClientOptions());
+  }
+
+  private get graphqlEndpoint() {
+    const {addr} = this.httpFactory.getHTTPClientOptions();
+
+    return `${addr}${this.GRAPHQL_PATH}`;
   }
 
   async proxy(req: Request, res: Response): Promise<ResValueArea | undefined> {
@@ -73,5 +86,10 @@ export class HTTP extends HTTPService {
         res.send({data: await parsedOnData(result.data.data)});
       }
     }
+  }
+
+  // Query data from graphQL server
+  sendQuery(q: string, variables?: Variables) {
+    return request(this.graphqlEndpoint, q, variables);
   }
 }
