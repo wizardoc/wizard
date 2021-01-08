@@ -15,7 +15,9 @@
     "resolveJsonModule": true,
     "strict": false,
     "noImplicitAny": false,
-    "noUnusedLocals": false
+    "noUnusedLocals": false,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
   },
   "exclude": ["node_modules", "dist"]
 }
