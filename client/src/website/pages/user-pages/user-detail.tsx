@@ -15,7 +15,7 @@ export class UserDetailPage extends Component {
   render(): ReactNode {
     return (
       <Wrapper>
-        <UserCard></UserCard>
+        <UserCard />
       </Wrapper>
     );
   }

@@ -51,9 +51,7 @@ export class MessageItem extends Component<MessageItemProps> {
   timeService!: Time;
 
   get sendTime(): string {
-    return this.timeService
-      .new(this.props.sendTime)
-      .format('YYYY-MM-DD hh:mm:ss');
+    return this.timeService.new(this.props.sendTime).format('YYYY-MM-DD hh:mm:ss');
   }
 
   render(): ReactNode {
@@ -64,11 +62,11 @@ export class MessageItem extends Component<MessageItemProps> {
 
     return (
       <Wrapper>
-        <StyledAvatar displayName={username} lnk={avatar}></StyledAvatar>
+        <StyledAvatar displayName={username} lnk={avatar} />
         <UserInfoWrapper>
           <Header>
             <UserName>{username}</UserName>
-            <MessageTag tag={tag}></MessageTag>
+            <MessageTag tag={tag} />
           </Header>
           <SendTime>{this.sendTime}</SendTime>
         </UserInfoWrapper>

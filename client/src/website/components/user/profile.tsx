@@ -31,12 +31,12 @@ export class Profile extends Component {
       //   onClose={toggleViewProfilePanel}
       // >
       <>
-        <DrawerHeader title="个人信息" icon={<HeaderIcon />}></DrawerHeader>
+        <DrawerHeader title="个人信息" icon={<HeaderIcon />} />
         <Wrapper>
           <AvatarWrapper>
-            <UserAvatar></UserAvatar>
+            <UserAvatar />
           </AvatarWrapper>
-          <UserItem></UserItem>
+          <UserItem />
         </Wrapper>
       </>
       // </SwipeableDrawer>

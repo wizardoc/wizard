@@ -1,5 +1,4 @@
 import React, {Component, ReactNode} from 'react';
-// tslint:disable-next-line:import-path-shallowest
 import styled from 'styled-components';
 
 import {RouterAnimation} from '../animations';
@@ -30,7 +29,7 @@ export class Home extends Component {
             {text: '马上加入', primary: true, handler() {}},
             {text: '先去看看', handler() {}},
           ]}
-        ></ViewBanner>
+        />
         <GraphicContainer
           title="这里是标题"
           layout="row"

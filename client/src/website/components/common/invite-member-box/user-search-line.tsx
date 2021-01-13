@@ -57,9 +57,7 @@ const StyledErrorIcon = styled(ErrorIcon)`
 `;
 
 @observer
-export class UserSearchLine extends Component<
-  UserSearchLineProps & ChipInputProps
-> {
+export class UserSearchLine extends Component<UserSearchLineProps & ChipInputProps> {
   @Inject
   userService!: User;
 
@@ -80,9 +78,7 @@ export class UserSearchLine extends Component<
     const users = await this.userService.searchByName(name);
 
     this.userMetaData[currentIdx].info = users[0];
-    this.userMetaData[currentIdx].status = !users.length
-      ? 'failure'
-      : 'success';
+    this.userMetaData[currentIdx].status = !users.length ? 'failure' : 'success';
   }
 
   handleDeleteUser(idx: number): void {
@@ -101,10 +97,7 @@ export class UserSearchLine extends Component<
       const STATUS_DIST_ICON = {
         failure: <StyledErrorIcon />,
         success: (
-          <StyledAvatar
-            displayName={data.info?.displayName}
-            lnk={data.info?.avatar}
-          />
+          <StyledAvatar displayName={data.info?.displayName} lnk={data.info?.avatar} />
         ),
         pending: <StyledCircularProgress />,
       };

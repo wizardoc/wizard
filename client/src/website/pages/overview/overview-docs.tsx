@@ -39,10 +39,7 @@ const WriteDocumentButton = styled(Fab)`
 `;
 
 @FetchData(
-  async (
-    {extract},
-    props: RouteComponentProps<RouteParams>,
-  ): Promise<Category[]> => {
+  async ({extract}, props: RouteComponentProps<RouteParams>): Promise<Category[]> => {
     return extract(CategoryService).getAllCategories(props.match.params.id);
   },
 )
@@ -81,7 +78,7 @@ export class OverviewDocs extends Component<
           onClick={() => this.handleWriteDocumentClick()}
           color="primary"
         >
-          <EditIcon></EditIcon>
+          <EditIcon />
         </WriteDocumentButton>
       </Wrapper>
     );

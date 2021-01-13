@@ -36,8 +36,7 @@ const Title = styled.div<TitleProps>`
   }
 
   ${props =>
-    props.isClick &&
-    `background: ${props.theme.primaryColor} !important;color: white;`}
+    props.isClick && `background: ${props.theme.primaryColor} !important;color: white;`}
 `;
 
 interface SubContentProps extends AnimationExpandMoreIconProps {
@@ -62,9 +61,7 @@ const Row = styled.div`
   align-items: center;
 `;
 
-const AnimationExpandMoreIcon = styled(ExpandMoreIcon)<
-  AnimationExpandMoreIconProps
->`
+const AnimationExpandMoreIcon = styled(ExpandMoreIcon)<AnimationExpandMoreIconProps>`
   cursor: pointer;
   transition: 0.3s all;
   transform: rotate(${props => (props.isSpread ? '180deg ' : '0deg')});
@@ -77,13 +74,7 @@ export class TreeViewItem extends Component<TreeViewItemProps> {
   isSpread = true;
 
   render(): ReactNode {
-    const {
-      index,
-      text,
-      children,
-      onItemClick = (): void => {},
-      isClick,
-    } = this.props;
+    const {index, text, children, onItemClick = (): void => {}, isClick} = this.props;
     const subCount = children && isArray(children) ? children.length : 0;
 
     return (

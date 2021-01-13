@@ -28,7 +28,7 @@ export class Line extends Component<LineProps & Partial<ThemeComponentProps>> {
 
     return (
       <LineWrapper>
-        <InnerLine lineColor={lineColor}></InnerLine>
+        <InnerLine lineColor={lineColor} />
       </LineWrapper>
     );
   }

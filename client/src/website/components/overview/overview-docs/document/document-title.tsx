@@ -14,10 +14,7 @@ export class DocumentTitle extends Component<DocumentTitleProps> {
 
     return (
       <Wrapper>
-        <TextField
-          label="标题"
-          onChange={e => onTitleSelected(e.target.value)}
-        ></TextField>
+        <TextField label="标题" onChange={e => onTitleSelected(e.target.value)} />
       </Wrapper>
     );
   }

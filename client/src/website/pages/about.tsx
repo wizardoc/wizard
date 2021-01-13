@@ -39,11 +39,7 @@ class TAbout extends Component {
     return (
       <Wrapper>
         {/* <Catalog content={this.content} title="关于我们" /> */}
-        <PagePaper
-          isMounted={this.isMounted}
-          content={this.content}
-          title="关于我们"
-        />
+        <PagePaper isMounted={this.isMounted} content={this.content} title="关于我们" />
       </Wrapper>
     );
   }

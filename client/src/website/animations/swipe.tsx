@@ -8,9 +8,7 @@ interface SwipeProps {
   isReverse?: boolean;
 }
 
-export function SwipeAnimation<T = any>(
-  MountedComponent: ComponentType<T>,
-): unknown {
+export function SwipeAnimation<T = any>(MountedComponent: ComponentType<T>): unknown {
   return class extends Component<SwipeProps & T> {
     render(): ReactNode {
       const {isReverse = false} = this.props;

@@ -20,7 +20,8 @@ const Title = styled.h2`
 `;
 
 @viewObservable()
-export class GraphicTitle extends Component<GraphicTitleProps>
+export class GraphicTitle
+  extends Component<GraphicTitleProps>
   implements ViewObservableComponent {
   private titleRef = createRef<HTMLDivElement>();
 

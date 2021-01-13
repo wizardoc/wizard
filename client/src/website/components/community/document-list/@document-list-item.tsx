@@ -71,7 +71,7 @@ export class DocumentListItem extends Component<DocumentListItemProps> {
           </Text>
           <Cover src={cover} />
         </InfoContainer>
-        <Footer></Footer>
+        <Footer />
       </Wrapper>
     );
   }

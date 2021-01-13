@@ -15,7 +15,8 @@ interface GraphicImgProps {
 }
 
 @viewObservable()
-export class GraphicImg extends Component<GraphicImgProps>
+export class GraphicImg
+  extends Component<GraphicImgProps>
   implements ViewObservableComponent {
   private graphicImgRef = createRef<HTMLImageElement>();
 
@@ -40,12 +41,6 @@ export class GraphicImg extends Component<GraphicImgProps>
   render(): ReactNode {
     const {graphicImg} = this.props;
 
-    return (
-      <FadeInImg
-        className="animated"
-        src={graphicImg}
-        ref={this.graphicImgRef}
-      />
-    );
+    return <FadeInImg className="animated" src={graphicImg} ref={this.graphicImgRef} />;
   }
 }

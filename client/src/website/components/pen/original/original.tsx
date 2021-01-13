@@ -57,18 +57,14 @@ export class Original extends Component<OriginalProps> {
       <EditorWrapper>
         <Editor
           customStyleMap={this.draftStyleMap}
-          onChange={(state: EditorState) =>
-            this.handleEditorContentChange(state)
-          }
+          onChange={(state: EditorState) => this.handleEditorContentChange(state)}
           editorState={this.editorState || EditorState.createEmpty()}
-        ></Editor>
+        />
       </EditorWrapper>
     );
   }
 
   private _toggleInlineStyle(style: string): void {
-    this.handleEditorContentChange(
-      RichUtils.toggleBlockType(this.editorState, style),
-    );
+    this.handleEditorContentChange(RichUtils.toggleBlockType(this.editorState, style));
   }
 }

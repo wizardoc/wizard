@@ -108,8 +108,7 @@ export class User {
 
     return result
       .expect(() => '登录失败')
-      .success(data => emptyAssert(data, resData => this.saveToken(resData)))
-      .ok;
+      .success(data => emptyAssert(data, resData => this.saveToken(resData))).ok;
   }
 
   isInit(): Promise<void> {
@@ -126,10 +125,7 @@ export class User {
   }
 
   async register(registerData: RegisterData): Promise<void> {
-    const result = await this.http.post<LoginResData>(
-      this.api.register,
-      registerData,
-    );
+    const result = await this.http.post<LoginResData>(this.api.register, registerData);
 
     result
       .expect(() => '注册失败')
@@ -212,11 +208,7 @@ export class User {
     return result.expect(() => '更新密码失败，请稍后再试');
   }
 
-  async resetPassword(
-    email: string,
-    code: string,
-    newPassword: string,
-  ): Response {
+  async resetPassword(email: string, code: string, newPassword: string): Response {
     const result = await this.http.put(this.api.resetPassword, {
       email,
       code,

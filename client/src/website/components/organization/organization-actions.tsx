@@ -38,12 +38,12 @@ export class OrganizationActions extends Component<OrganizationActionsProps> {
   actions: Action[] = [
     {
       tip: '邀请用户',
-      icon: <GroupAddIcon></GroupAddIcon>,
+      icon: <GroupAddIcon />,
       handler: this.handleInviteUserClick,
     },
     {
       tip: '退出组织',
-      icon: <MeetingRoomIcon></MeetingRoomIcon>,
+      icon: <MeetingRoomIcon />,
       handler: this.handleQuitOrgClick,
       isHide: this.isOwner,
     },
@@ -94,8 +94,6 @@ export class OrganizationActions extends Component<OrganizationActionsProps> {
   get isOwner(): boolean {
     const {organizationCardData} = this.props;
 
-    return (
-      this.user.userInfo.username === organizationCardData.ownerInfo.username
-    );
+    return this.user.userInfo.username === organizationCardData.ownerInfo.username;
   }
 }

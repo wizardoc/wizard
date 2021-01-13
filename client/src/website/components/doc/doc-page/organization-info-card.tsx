@@ -13,6 +13,6 @@ const Wrapper = styled(Card)`
 
 export class OrganizationInfoCard extends Component {
   render(): ReactNode {
-    return <Wrapper></Wrapper>;
+    return <Wrapper />;
   }
 }

@@ -1,9 +1,4 @@
-import {
-  StyleRules,
-  WithStyles,
-  createStyles,
-  withStyles,
-} from '@material-ui/core/styles';
+import {StyleRules, WithStyles, createStyles, withStyles} from '@material-ui/core/styles';
 import React, {Component, ReactNode} from 'react';
 
 const styles = (): StyleRules =>

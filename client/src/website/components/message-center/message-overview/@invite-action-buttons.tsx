@@ -4,11 +4,7 @@ import {Inject} from '@wizardoc/injector';
 import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 
-import {
-  MessageInvitePayload,
-  OrganizationService,
-  Toast,
-} from 'website/services';
+import {MessageInvitePayload, OrganizationService, Toast} from 'website/services';
 
 export interface InviteActionButtonsProps extends MessageInvitePayload {}
 
@@ -34,10 +30,7 @@ export class InviteActionButtons extends Component<InviteActionButtonsProps> {
   async handleAcceptInviteClick(): Promise<void> {
     const {organizeName, inviteToken} = this.props;
 
-    const result = await this.organizationService.acceptInvite(
-      organizeName,
-      inviteToken,
-    );
+    const result = await this.organizationService.acceptInvite(organizeName, inviteToken);
 
     result.success(() => {
       this.toast.success(`欢迎加入 ${organizeName}！🎉🎉🎉`);

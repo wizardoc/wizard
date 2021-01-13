@@ -27,14 +27,12 @@ export class Contributors extends Component {
   render(): ReactNode {
     const avatars = this.docService
       .getContributorAvatars()
-      .map(info => (
-        <ContributorAvatar key={info.displayName} {...info}></ContributorAvatar>
-      ));
+      .map(info => <ContributorAvatar key={info.displayName} {...info} />);
 
     return (
       <Wrapper>
         <h1 className="md-heading">Contributors</h1>
-        <Split></Split>
+        <Split />
         <AvatarsWrapper>{avatars}</AvatarsWrapper>
       </Wrapper>
     );

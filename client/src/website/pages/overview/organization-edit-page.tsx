@@ -3,11 +3,7 @@ import styled from 'styled-components';
 import {withRouter, RouteComponentProps} from 'react-router-dom';
 import {Inject} from '@wizardoc/injector';
 
-import {
-  BaseEditCard,
-  MemberOverview,
-  OrganizationFunction,
-} from 'website/components';
+import {BaseEditCard, MemberOverview, OrganizationFunction} from 'website/components';
 import {OrganizationService, OrganizationCardData} from 'website/services';
 
 const Wrapper = styled.div`
@@ -77,7 +73,7 @@ export class OrganizationEditPage extends Component<
               <MemberOverview
                 organizeName={organizationInfo.organizeName}
                 members={organizationInfo.members}
-              ></MemberOverview>
+              />
             </CardWrapper>
           </MemberManagerCardWrapper>
         </Container>

@@ -84,10 +84,7 @@ export class UserSettingsPassword extends Component {
       content: '确认要修改吗？',
       onSureClick: async () => {
         const {originPassword, newPassword} = this.formData;
-        const result = await this.user.updatePassword(
-          originPassword,
-          newPassword,
-        );
+        const result = await this.user.updatePassword(originPassword, newPassword);
 
         result.success(() => {
           this.toast.success('修改密码成功！');

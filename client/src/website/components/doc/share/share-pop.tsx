@@ -1,9 +1,4 @@
-import {
-  ClickAwayListener,
-  WithStyles,
-  createStyles,
-  withStyles,
-} from '@material-ui/core';
+import {ClickAwayListener, WithStyles, createStyles, withStyles} from '@material-ui/core';
 import {StyleRules} from '@material-ui/core/styles';
 import {action, observable} from 'mobx';
 import {observer} from 'mobx-react';
@@ -139,7 +134,7 @@ export class TSharePop extends Component<SharePopProps> {
     const shareIconNodes = shareIcons.map(
       ({icon, className, clickHandler}: ShareIcon) => (
         <IconWrapper key={icon} className={className} onClick={clickHandler}>
-          <IconImage className={icon}></IconImage>
+          <IconImage className={icon} />
         </IconWrapper>
       ),
     );
@@ -147,11 +142,9 @@ export class TSharePop extends Component<SharePopProps> {
     return (
       <ClickAwayListener onClickAway={() => this.handleClickAway()}>
         <Wrapper>
-          <Shape></Shape>
+          <Shape />
           <div className={target}>
-            <ShareButtonLabel onClick={() => this.menuToggle()}>
-              分享
-            </ShareButtonLabel>
+            <ShareButtonLabel onClick={() => this.menuToggle()}>分享</ShareButtonLabel>
             {shareIconNodes}
           </div>
         </Wrapper>

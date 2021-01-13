@@ -66,13 +66,7 @@ class TipBodyWrapper extends Component<
   OptionalTipProps & WithSlideProps & RouteComponentProps
 > {
   hidden(isExec: boolean): void {
-    const {
-      exitAnimation,
-      route,
-      history,
-      onExecClick,
-      onLaterClick,
-    } = this.props;
+    const {exitAnimation, route, history, onExecClick, onLaterClick} = this.props;
 
     exitAnimation(() => {
       if (isExec) {
@@ -105,7 +99,7 @@ class TipBodyWrapper extends Component<
           <br />
           <Description>{description}</Description>
         </InfoWrapper>
-        <Line></Line>
+        <Line />
         <ActionPlace>
           <Button onClick={() => this.handleActionClick()}>马上去！</Button>
           <Button onClick={() => this.handleLaterClick()}>稍后</Button>
@@ -123,7 +117,7 @@ export class OptionalTip extends Component<OptionalTipProps> {
 
     return (
       <Wrapper>
-        <SlideTipBodyWrapper {...this.props}></SlideTipBodyWrapper>
+        <SlideTipBodyWrapper {...this.props} />
       </Wrapper>
     );
   }

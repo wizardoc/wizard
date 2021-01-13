@@ -16,9 +16,7 @@ export class Time {
    * @param duration 睡眠时间，单位是秒
    */
   sleep(duration?: number): Promise<void> {
-    return new Promise(resolve =>
-      setTimeout(resolve, (duration ?? 0) * Time.Second),
-    );
+    return new Promise(resolve => setTimeout(resolve, (duration ?? 0) * Time.Second));
   }
 
   static readonly Second: TimeUnit = 1000;

@@ -50,7 +50,7 @@ export class CommunityBanner extends Component {
   render(): ReactNode {
     return (
       <Wrapper>
-        <Picture src={GroupImg}></Picture>
+        <Picture src={GroupImg} />
         <Text>
           <Title>加入社区</Title>
           <SubTitle>让知识管理更有趣</SubTitle>

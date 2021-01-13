@@ -28,8 +28,7 @@ const Tab = styled.div<TabProps>`
   width: fit-content;
   cursor: pointer;
   border-bottom: 3px solid;
-  border-color: ${props =>
-    props.isActive ? props.theme.primaryColor : 'transparent'};
+  border-color: ${props => (props.isActive ? props.theme.primaryColor : 'transparent')};
   opacity: ${props => (props.isActive ? 1 : 0.5)};
   margin-right: 15px;
 
@@ -50,9 +49,7 @@ const Tabs = styled.div`
 `;
 
 @withRouter
-export class SwitchBar extends Component<
-  SwitchBarProps & Partial<RouteComponentProps>
-> {
+export class SwitchBar extends Component<SwitchBarProps & Partial<RouteComponentProps>> {
   handleTabClick(route: string): void {
     this.props.history!.push(route);
   }

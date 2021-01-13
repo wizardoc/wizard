@@ -49,10 +49,7 @@ export class TipService {
     this.init();
     this._isShowTip = true;
 
-    this.deferId = setTimeout(
-      () => (this._isShowTip = false),
-      MAX_EXIST_DURATION,
-    );
+    this.deferId = setTimeout(() => (this._isShowTip = false), MAX_EXIST_DURATION);
   }
 
   @action

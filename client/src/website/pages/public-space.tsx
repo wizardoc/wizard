@@ -12,7 +12,7 @@ export class PublicSpace extends Component {
   render(): ReactNode {
     return (
       <Wrapper>
-        <PageHeader title="PUBLIC SPACE"></PageHeader>
+        <PageHeader title="PUBLIC SPACE" />
       </Wrapper>
     );
   }

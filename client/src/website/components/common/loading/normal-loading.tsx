@@ -19,7 +19,7 @@ export class NormalLoading extends Component {
   render(): ReactNode {
     return (
       <Wrapper>
-        <CircularProgress></CircularProgress>
+        <CircularProgress />
         <p>Loading...</p>
       </Wrapper>
     );

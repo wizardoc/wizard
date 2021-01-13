@@ -47,8 +47,7 @@ const WordsCount = styled.div<WordsCountProps>`
   margin-bottom: 20px;
   font-size: 14px;
 
-  color: ${props =>
-    props.overflow ? props.theme.errorRed : props.theme.black};
+  color: ${props => (props.overflow ? props.theme.errorRed : props.theme.black)};
 `;
 
 const MAX_MESSAGE_BODY = 500;
@@ -61,7 +60,8 @@ const messageSenderFormRules: Rules = {
 };
 
 @observer
-export class SendMessageDialog extends Component<DialogComponentProps>
+export class SendMessageDialog
+  extends Component<DialogComponentProps>
   implements ActionDialog {
   @Inject
   private messageService!: MessageService;
@@ -138,9 +138,7 @@ export class SendMessageDialog extends Component<DialogComponentProps>
           />
           <StyledBody
             name="body"
-            onChange={val =>
-              this.handleMessageBodyChange((val as unknown) as string)
-            }
+            onChange={val => this.handleMessageBodyChange((val as unknown) as string)}
             maxLength={MAX_MESSAGE_BODY}
             placeholder="消息内容，500 字以内"
           />

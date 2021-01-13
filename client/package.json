@@ -46,6 +46,7 @@
     "start": "cross-env RUNTIME_ENV=development NODE_PATH=../ parcel public/index.html",
     "build": "cross-env RUNTIME_ENV=production NODE_PATH=../ parcel build public/index.html",
     "lint": "tslint -p ./tsconfig.json",
+    "lint:fix": "tslint --fix -p ./tsconfig.json",
     "test": "jest --passWithNoTests"
   },
   "devDependencies": {
@@ -77,7 +78,7 @@
     "parcel": "^2.0.0-nightly.481",
     "raf": "^3.4.1",
     "ts-jest": "22.0.1",
-    "tslint-react": "^3.2.0"
+    "tslint-react": "^5.0.0"
   },
   "alias": {
     "website": "~/src/website"

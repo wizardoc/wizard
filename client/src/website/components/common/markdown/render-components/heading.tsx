@@ -15,8 +15,6 @@ export class Heading extends Component<HeaderProps> {
   render(): ReactNode {
     const {level, children} = this.props;
 
-    return (
-      <Wrapper>{createElement(`h${level}`, {id: children}, children)}</Wrapper>
-    );
+    return <Wrapper>{createElement(`h${level}`, {id: children}, children)}</Wrapper>;
   }
 }

@@ -44,12 +44,9 @@ export class UtilsBox extends Component {
         {/* text utils */}
         {[...TextUtils, ...ListUtils, ...MarkdownUtils, ...FuncUtils].map(
           ({tip, icon: Icon, style, handler}) => (
-            <Tooltip
-              title={tip}
-              onClick={() => this.handleUtilClick(style, handler)}
-            >
+            <Tooltip title={tip} onClick={() => this.handleUtilClick(style, handler)}>
               <IconButton>
-                <Icon></Icon>
+                <Icon />
               </IconButton>
             </Tooltip>
           ),

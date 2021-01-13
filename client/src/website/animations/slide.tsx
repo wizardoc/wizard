@@ -14,7 +14,7 @@ export interface WithSlideProps {
 
 export function withSlide(options: WithSlideOptions): any {
   // tslint:disable-next-line:only-arrow-functions
-  return function<P extends WithSlideProps>(
+  return function <P extends WithSlideProps>(
     Wrapper: ComponentType<P>,
   ): ComponentType<Exclude<P, keyof WithSlideProps>> {
     @observer
@@ -31,7 +31,7 @@ export function withSlide(options: WithSlideOptions): any {
                 exitAnimation={(cb: Function) => {
                   this.handleExistAnimation(cb);
                 }}
-              ></Wrapper>
+              />
             </div>
           </Slide>
         );

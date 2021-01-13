@@ -23,9 +23,7 @@ interface RouteParams {
 const Wrapper = styled.div``;
 
 @withRouter
-export class WritePage extends Component<
-  Partial<RouteComponentProps<RouteParams>>
-> {
+export class WritePage extends Component<Partial<RouteComponentProps<RouteParams>>> {
   @Inject
   markdownService!: MarkdownService;
 
@@ -73,18 +71,10 @@ export class WritePage extends Component<
   render(): ReactNode {
     return (
       <Container>
-        <CreateDocumentHeader
-          onPublishClick={() => this.handlePublishClick()}
-        />
-        <CoverSelector
-          onCoverSelected={url => this.handleCoverSelected(url)}
-        ></CoverSelector>
-        <DocumentTitle
-          onTitleSelected={title => this.handleTitleSelected(title)}
-        ></DocumentTitle>
-        <MarkdownEditor
-          onContentChange={content => this.handleContentChange(content)}
-        ></MarkdownEditor>
+        <CreateDocumentHeader onPublishClick={() => this.handlePublishClick()} />
+        <CoverSelector onCoverSelected={url => this.handleCoverSelected(url)} />
+        <DocumentTitle onTitleSelected={title => this.handleTitleSelected(title)} />
+        <MarkdownEditor onContentChange={content => this.handleContentChange(content)} />
       </Container>
     );
   }

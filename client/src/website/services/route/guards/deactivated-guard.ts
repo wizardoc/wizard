@@ -6,13 +6,8 @@ import {Route, OriginGuard} from '../route';
 
 export type DeactivatedGuardConstructor = Constructable<DeactivatedGuard>;
 
-export type OriginDeactivatedGuardConstructor = OriginGuard<
-  DeactivatedGuardConstructor
->;
+export type OriginDeactivatedGuardConstructor = OriginGuard<DeactivatedGuardConstructor>;
 
 export interface DeactivatedGuard {
-  canDeactivate(
-    route: Route,
-    props: RouteComponentProps<any>,
-  ): boolean | string;
+  canDeactivate(route: Route, props: RouteComponentProps<any>): boolean | string;
 }

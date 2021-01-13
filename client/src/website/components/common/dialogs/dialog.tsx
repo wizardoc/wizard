@@ -82,9 +82,7 @@ export class CommonDialog extends Component<CommonDialogProps> {
       hasTemplate = true,
     } = config.options;
     // const Content = withDialog(content, componentProps);
-    const renderContent = (
-      <Content ref={this.contentRef} {...componentProps}></Content>
-    );
+    const renderContent = <Content ref={this.contentRef} {...componentProps} />;
 
     return (
       <Default condition={() => !hasTemplate} defaultView={renderContent}>

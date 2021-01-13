@@ -96,9 +96,9 @@ export class UserAvatar extends Component {
           <AvatarBigger />
           <EditTag hover={this.isAvatarHover}>
             <BarWrapper>
-              <InsertPhotoIcon></InsertPhotoIcon>
+              <InsertPhotoIcon />
               &nbsp;|&nbsp;
-              <InsertEmoticonIcon></InsertEmoticonIcon>
+              <InsertEmoticonIcon />
             </BarWrapper>
             {this.isAvatarHover && <Typography>更换头像</Typography>}
           </EditTag>

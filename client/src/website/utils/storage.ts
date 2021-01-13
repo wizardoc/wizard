@@ -6,14 +6,11 @@ class BaseStorage {
   }
 
   setItem(key: string, data: unknown): void {
-    if(!data){
-      return
+    if (!data) {
+      return;
     }
 
-    this.storage.setItem(
-      key,
-      typeof data === 'string' ? data : JSON.stringify(data),
-    );
+    this.storage.setItem(key, typeof data === 'string' ? data : JSON.stringify(data));
   }
 
   getItem<T>(key: string): T | string | undefined {

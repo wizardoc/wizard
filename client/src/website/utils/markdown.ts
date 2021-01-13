@@ -15,8 +15,7 @@ renderer.heading = (_text: string, level: number, raw: string): string =>
   </div>`;
 renderer.text = (text: string) => `<span class="md-text">${text}</span>`;
 
-renderer.codespan = (codespan: string) =>
-  `<span class="md-codespan">${codespan}</span>`;
+renderer.codespan = (codespan: string) => `<span class="md-codespan">${codespan}</span>`;
 
 renderer.blockquote = (quote: string) =>
   `<div class="md-quote-wrapper">

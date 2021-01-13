@@ -14,9 +14,7 @@ export type Layout = 'limpidity' | 'normal' | 'no-header' | 'no-footer';
 
 export type HeaderType = 'default' | 'fixed';
 
-export type RouteComponent =
-  | ComponentType<RouteComponentProps<any>>
-  | ComponentType<any>;
+export type RouteComponent = ComponentType<RouteComponentProps<any>> | ComponentType<any>;
 
 export interface Route {
   path: string;
@@ -33,14 +31,8 @@ export interface Route {
    * 当 Component 为空时，会自动填充 404
    */
   component?: RouteComponent;
-  activatedGuard?: (
-    | ActivatedGuardConstructor
-    | OriginActivatedGuardConstructor
-  )[];
-  deactivatedGuard?: (
-    | DeactivatedGuardConstructor
-    | OriginDeactivatedGuardConstructor
-  )[];
+  activatedGuard?: (ActivatedGuardConstructor | OriginActivatedGuardConstructor)[];
+  deactivatedGuard?: (DeactivatedGuardConstructor | OriginDeactivatedGuardConstructor)[];
   children?: Routes;
 }
 

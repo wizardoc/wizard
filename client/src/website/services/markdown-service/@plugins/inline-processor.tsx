@@ -11,8 +11,6 @@ export function inlineProcessor(markdown: MarkdownIt): void {
   markdown.renderer.rules.code_inline = (tokens, idx) => {
     console.info(tokens[idx]);
 
-    return renderToStaticMarkup(
-      <MDInlineCode>{tokens[idx].content}</MDInlineCode>,
-    );
+    return renderToStaticMarkup(<MDInlineCode>{tokens[idx].content}</MDInlineCode>);
   };
 }

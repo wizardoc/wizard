@@ -5,11 +5,7 @@ import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 import {Inject} from '@wizardoc/injector';
 
-import {
-  DocumentService,
-  DocumentComment,
-  CommentStatus,
-} from 'website/services';
+import {DocumentService, DocumentComment, CommentStatus} from 'website/services';
 
 import {FetchData} from '../../loading';
 
@@ -40,9 +36,7 @@ const Comments = styled.div``;
 
 @FetchData(async (injector, props: RouteComponentProps<RouteParams>) => {
   const documentID = props.match.params.id;
-  const result = await injector
-    .extract(DocumentService)
-    .fetchComments(documentID, 1);
+  const result = await injector.extract(DocumentService).fetchComments(documentID, 1);
 
   return {
     documentID,
@@ -75,9 +69,7 @@ export class DocumentComments extends Component<DocumentCommentsProps> {
     const {documentID} = this.props.data!;
     const renderComments = this.comments.map(comment => (
       <DocumentCommentItem
-        onUpDownClick={status =>
-          this.handleCommentUpDownClick(comment.id, status)
-        }
+        onUpDownClick={status => this.handleCommentUpDownClick(comment.id, status)}
         key={comment.id}
         commentInfo={comment}
       />

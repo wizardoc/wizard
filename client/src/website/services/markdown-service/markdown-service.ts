@@ -68,22 +68,19 @@ export class MarkdownService {
     for (const index of Object.keys(headings)) {
       const heading = headings[index];
 
-      new ViewPortObserver()
-        .ele(document.getElementById(heading.content)!)
-        .listen(() => {
-          const {currentAnchor} = this.catalogService;
-          const currentIndex = headings.findIndex(
-            ({content, level}) =>
-              currentAnchor?.content === content &&
-              currentAnchor.level === level,
-          );
+      new ViewPortObserver().ele(document.getElementById(heading.content)!).listen(() => {
+        const {currentAnchor} = this.catalogService;
+        const currentIndex = headings.findIndex(
+          ({content, level}) =>
+            currentAnchor?.content === content && currentAnchor.level === level,
+        );
 
-          if (Math.abs(currentIndex - +index) !== 1) {
-            return;
-          }
+        if (Math.abs(currentIndex - +index) !== 1) {
+          return;
+        }
 
-          this.catalogService.currentAnchor = heading;
-        });
+        this.catalogService.currentAnchor = heading;
+      });
     }
   }
 }

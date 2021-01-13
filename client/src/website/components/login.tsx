@@ -66,9 +66,7 @@ const LoginTitle = styled(Title)`
 `;
 
 @observer
-export class TLogin extends Component<
-  LoginProps & RouteComponentProps & WithSlideProps
-> {
+export class TLogin extends Component<LoginProps & RouteComponentProps & WithSlideProps> {
   @Inject
   private userService!: User;
 
@@ -121,7 +119,7 @@ export class TLogin extends Component<
             </LoginButton>
           </ActionButtonWrapper>
           <LineWrapper>
-            <Line></Line>
+            <Line />
           </LineWrapper>
           <RegisterLink onClick={() => this.handleRegisterClick()}>
             没注册的点我立即注册

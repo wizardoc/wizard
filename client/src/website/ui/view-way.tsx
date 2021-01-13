@@ -6,6 +6,4 @@ export interface ViewPanelProps {
 }
 
 @withRouter
-export class ViewPanel extends Component<
-  RouteComponentProps & ViewPanelProps
-> {}
+export class ViewPanel extends Component<RouteComponentProps & ViewPanelProps> {}

@@ -64,7 +64,7 @@ export class ColorBlock extends Component<ColorBlockProps> {
     return (
       <>
         <Wrapper layer={layer}>
-          <Block isFull={isFull} color={color} timeout={timeout / 1000}></Block>
+          <Block isFull={isFull} color={color} timeout={timeout / 1000} />
         </Wrapper>
         <ViewerWrapper layer={viewerLayer}>{this.props.children}</ViewerWrapper>
       </>

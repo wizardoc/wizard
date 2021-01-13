@@ -69,7 +69,7 @@ export const PageHeader: FunctionComponent<PageHeaderProps> = props => {
     <Header>
       <Wrapper>
         <Title variant="h5">{title}</Title>
-        {img && <RelatedImg src={img}></RelatedImg>}
+        {img && <RelatedImg src={img} />}
       </Wrapper>
       {fabIcon && (
         <HelpFab onClick={onFabClick} aria-label="edit">

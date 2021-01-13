@@ -14,7 +14,8 @@ interface GraphicContentDescProps extends GraphicAnimation {
 }
 
 @viewObservable()
-export class GraphicContentDesc extends Component<GraphicContentDescProps>
+export class GraphicContentDesc
+  extends Component<GraphicContentDescProps>
   implements ViewObservableComponent {
   private contentDescRef = createRef<HTMLDivElement>();
 

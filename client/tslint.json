@@ -1,5 +1,5 @@
 {
-  "extends": "@magicspace/configs/tslint-prettier",
+  "extends": ["@magicspace/configs/tslint-prettier", "tslint-react"],
   "rules": {
     "no-void-expression": false,
     "no-implicit-dependencies": false,
@@ -10,7 +10,16 @@
     "object-literal-sort-keys": false,
     "no-floating-promises": false,
     "no-bitwise": false,
-    "no-redundant-jsdoc": false
+    "no-redundant-jsdoc": false,
+    "jsx-no-lambda": false,
+    "jsx-no-multiline-js": false,
+    "jsx-key": false,
+    "jsx-self-close": true,
+    "jsx-alignment": false,
+    "jsx-boolean-value": false,
+    "jsx-wrap-multiline": false,
+    "jsx-curly-spacing": false,
+    "jsx-no-bind": false
   },
   "linterOptions": {
     "exclude": ["node_modules/**"]

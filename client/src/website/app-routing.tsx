@@ -6,10 +6,7 @@ import {observer} from 'mobx-react';
 import {observable} from 'mobx';
 import {isString} from '@wizardoc/shared';
 
-import {
-  Route as AppRoute,
-  OriginActivatedGuardConstructor,
-} from 'website/services';
+import {Route as AppRoute, OriginActivatedGuardConstructor} from 'website/services';
 
 import {RouterService, Layout, TabService} from './services';
 import {PageNotFound} from './pages/page-not-found';
@@ -22,10 +19,8 @@ interface WrapperProps {
 }
 
 const Wrapper = styled.div<WrapperProps>`
-  /* height: ${props =>
-    props.isFull ? props.theme.heightOmitHeader : 'fit-content'}; */
-  min-height: ${props =>
-    props.isHideHeader ? '100%' : props.theme.heightOmitHeader};
+  /* height: ${props => (props.isFull ? props.theme.heightOmitHeader : 'fit-content')}; */
+  min-height: ${props => (props.isHideHeader ? '100%' : props.theme.heightOmitHeader)};
   position: relative;
   ${props => !props.isHideFooter && 'padding-bottom: 360px;'}
 `;
@@ -53,9 +48,7 @@ export const guardWrapper = (
         return;
       }
 
-      this.targetView = (
-        <Wrapper {...this.props} {...(stuff as object)}></Wrapper>
-      );
+      this.targetView = <Wrapper {...this.props} {...(stuff as object)} />;
     }
 
     private async processActiveGuard(
@@ -65,20 +58,13 @@ export const guardWrapper = (
       let injectProps = {};
 
       for (const ActiveGuard of route.activatedGuard ?? []) {
-        const {
-          isOrigin,
-          guard: Guard,
-        } = ActiveGuard as OriginActivatedGuardConstructor;
+        const {isOrigin, guard: Guard} = ActiveGuard as OriginActivatedGuardConstructor;
         const activatedGuard = new Guard();
         let eachInjectProps = {};
         const injector = (props?: object): void => {
           eachInjectProps = props ?? {};
         };
-        const canActive = await activatedGuard.canActivated(
-          route,
-          props,
-          injector,
-        );
+        const canActive = await activatedGuard.canActivated(route, props, injector);
 
         // compose props
         if (isOrigin) {
@@ -126,7 +112,7 @@ export class AppRouting extends Component {
     return (
       <Suspense fallback="正在加载中...">
         {(layout === 'no-footer' || layout === 'normal') && (
-          <HeaderBar isFixed={headerType === 'fixed'}></HeaderBar>
+          <HeaderBar isFixed={headerType === 'fixed'} />
         )}
         <Switch>
           {routeComponents}
@@ -149,10 +135,7 @@ export class AppRouting extends Component {
     ));
   }
 
-  private renderProcessor(
-    route: AppRoute,
-    props: RouteComponentProps,
-  ): ReactNode {
+  private renderProcessor(route: AppRoute, props: RouteComponentProps): ReactNode {
     const {
       redirect,
       component,

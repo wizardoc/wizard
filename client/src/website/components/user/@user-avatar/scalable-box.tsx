@@ -128,10 +128,7 @@ export class ScalableBox extends Component<ScalableBoxProps> {
     const {x, y} = this.movePosition;
     const {width, height} = this.boxSize;
     const [resultX, resultY] = [x - 1, y - 1];
-    const [resultWidth, resultHeight] = [
-      width + INIT_BOX_SIZE,
-      height + INIT_BOX_SIZE,
-    ];
+    const [resultWidth, resultHeight] = [width + INIT_BOX_SIZE, height + INIT_BOX_SIZE];
 
     onBlockMove([
       {x: resultX, y: resultY},
@@ -248,9 +245,7 @@ export class ScalableBox extends Component<ScalableBoxProps> {
     this.spurt();
   }
 
-  blockMouseDown(
-    direction: Direction,
-  ): (e: MouseEvent<HTMLDivElement>) => void {
+  blockMouseDown(direction: Direction): (e: MouseEvent<HTMLDivElement>) => void {
     return (e: MouseEvent<HTMLDivElement>): void => {
       const {clientX, clientY} = e;
 
@@ -264,36 +259,25 @@ export class ScalableBox extends Component<ScalableBoxProps> {
   }
 
   render(): ReactNode {
-    const directions: Direction[] = [
-      'leftTop',
-      'leftBottom',
-      'rightTop',
-      'rightBottom',
-    ];
+    const directions: Direction[] = ['leftTop', 'leftBottom', 'rightTop', 'rightBottom'];
     const blocks = directions.map(direction => (
       <ScalableBlock
         key={direction}
         direction={direction}
-        onMouseDown={(e: MouseEvent<HTMLDivElement>) =>
-          this.blockMouseDown(direction)(e)
-        }
-      ></ScalableBlock>
+        onMouseDown={(e: MouseEvent<HTMLDivElement>) => this.blockMouseDown(direction)(e)}
+      />
     ));
 
     return (
       <AvatarSelectorMask
-        onMouseMove={(e: MouseEvent<HTMLDivElement>) =>
-          this.handleBoxMouseMove(e)
-        }
+        onMouseMove={(e: MouseEvent<HTMLDivElement>) => this.handleBoxMouseMove(e)}
         onMouseUp={() => this.handleBoxMouseUp()}
         onMouseLeave={() => this.stop()}
       >
         <MoveWrapper>
           <Wrapper
             onMouseUp={() => this.spurt()}
-            onMouseDown={(e: MouseEvent<HTMLDivElement>) =>
-              this.handleBoxMouseDown(e)
-            }
+            onMouseDown={(e: MouseEvent<HTMLDivElement>) => this.handleBoxMouseDown(e)}
             {...this.boxSize}
             {...this.movePosition}
           >

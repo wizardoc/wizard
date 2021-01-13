@@ -6,8 +6,8 @@ export class Community extends Component {
   render(): ReactNode {
     return (
       <>
-        <CommunityBanner></CommunityBanner>
-        <DocumentList></DocumentList>
+        <CommunityBanner />
+        <DocumentList />
       </>
     );
   }

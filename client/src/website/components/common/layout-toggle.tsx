@@ -24,11 +24,7 @@ export class LayoutToggle extends Component<LayoutToggleProps> {
     const {onChange} = this.props;
 
     return (
-      <Button.Toggle
-        items={this.layouts}
-        defaultValue="column"
-        onChange={onChange}
-      />
+      <Button.Toggle items={this.layouts} defaultValue="column" onChange={onChange} />
     );
   }
 }

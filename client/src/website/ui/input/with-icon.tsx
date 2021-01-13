@@ -31,9 +31,7 @@ const Icon = styled.div<IconProps & FocusIconProps>`
   margin-right: 10px;
 
   > svg {
-    ${props =>
-      props.isFocus &&
-      `color: ${props.focusColor || props.theme.primaryColor};`}
+    ${props => props.isFocus && `color: ${props.focusColor || props.theme.primaryColor};`}
     ${props => (props.iconSize ? `font-size:${props.iconSize}` : '')};
   }
 `;
@@ -61,7 +59,7 @@ export class WithIconInput extends Component<WithIconInputProps> {
           {...this.props}
           onFocus={() => this.toggleIsTextFieldFocus()}
           onBlur={() => this.toggleIsTextFieldFocus()}
-        ></TextField>
+        />
       </Wrapper>
     );
   }

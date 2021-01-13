@@ -29,9 +29,7 @@ export function textProcessor(markdown: MarkdownIt): void {
       return '';
     }
 
-    const result = renderToStaticMarkup(
-      <MDBlockQuote>{blockQuoteContent}</MDBlockQuote>,
-    );
+    const result = renderToStaticMarkup(<MDBlockQuote>{blockQuoteContent}</MDBlockQuote>);
 
     blockQuoteContent = [];
 
@@ -49,9 +47,7 @@ export function textProcessor(markdown: MarkdownIt): void {
 
       env.push({level: +headingLevel, content});
 
-      return renderToStaticMarkup(
-        <Heading level={headingLevel}>{content}</Heading>,
-      );
+      return renderToStaticMarkup(<Heading level={headingLevel}>{content}</Heading>);
     }
 
     const parseInlineElement = (): ReactElement => {

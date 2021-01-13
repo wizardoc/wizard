@@ -14,22 +14,22 @@ const Wrapper = styled.div`
 
 const SideBarItems: SideBarItem[] = [
   {
-    icon: <AssignmentIndIcon></AssignmentIndIcon>,
+    icon: <AssignmentIndIcon />,
     text: '基本信息',
     route: '/user/settings/base',
   },
   {
-    icon: <MailOutlineIcon></MailOutlineIcon>,
+    icon: <MailOutlineIcon />,
     text: '邮箱设置',
     route: '/user/settings/email',
   },
   {
-    icon: <PhonelinkSetupIcon></PhonelinkSetupIcon>,
+    icon: <PhonelinkSetupIcon />,
     text: '绑定手机',
     route: '/user/settings/phone',
   },
   {
-    icon: <VpnKeyIcon></VpnKeyIcon>,
+    icon: <VpnKeyIcon />,
     text: '修改密码',
     route: '/user/settings/password',
   },
@@ -39,7 +39,7 @@ export class UserSettingsSidebar extends Component {
   render(): ReactNode {
     return (
       <Wrapper>
-        <SideBar highlight items={SideBarItems}></SideBar>
+        <SideBar highlight items={SideBarItems} />
       </Wrapper>
     );
   }
