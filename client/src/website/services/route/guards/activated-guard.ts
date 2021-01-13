@@ -6,9 +6,7 @@ import {Route, OriginGuard} from '../route';
 
 export type ActivatedGuardConstructor = Constructable<ActivatedGuard>;
 
-export type OriginActivatedGuardConstructor = OriginGuard<
-  ActivatedGuardConstructor
->;
+export type OriginActivatedGuardConstructor = OriginGuard<ActivatedGuardConstructor>;
 
 export type PropsInjector = (props: object) => void;
 

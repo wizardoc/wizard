@@ -22,7 +22,7 @@ const Wrapper = styled.div`
 const Title = styled.div`
   font-size: 16px;
   font-weight: 400;
-  color: ${(props) => props.theme.darkWhite};
+  color: ${props => props.theme.darkWhite};
 `;
 
 const LinkContainer = styled.div`
@@ -35,7 +35,7 @@ const LinkItem = styled.div`
   margin: 5px 0;
 
   > a {
-    color: ${(props) => props.theme.darkGray};
+    color: ${props => props.theme.darkGray};
     cursor: pointer;
   }
 `;
@@ -46,7 +46,7 @@ export class LinkColumn extends Component<
 > {
   render(): ReactNode {
     const {title, links} = this.props;
-    const renderLinks = links.map((link) => (
+    const renderLinks = links.map(link => (
       <LinkItem key={link.text}>
         <MaterialLink href={link.href}>{link.text}</MaterialLink>
       </LinkItem>

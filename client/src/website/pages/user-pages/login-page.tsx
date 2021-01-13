@@ -61,7 +61,7 @@ class LoginCard extends Component<WithSlideProps> {
         </LoginBox>
         <TipCard>
           <WizardWrapper>
-            <Wizard src={Wand}></Wizard>
+            <Wizard src={Wand} />
           </WizardWrapper>
           <CenterLine>LOGIN</CenterLine>
           <TipBody>
@@ -83,7 +83,7 @@ export class LoginPage extends Component {
 
     return (
       <LoginWrapper>
-        <Card></Card>
+        <Card />
       </LoginWrapper>
     );
   }

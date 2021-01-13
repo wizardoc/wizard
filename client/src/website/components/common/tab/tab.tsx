@@ -26,9 +26,7 @@ export interface WizardTabConfig {
  * @author Younccat
  */
 @withRouter
-export class WizardTab extends Component<
-  WizardTabProps & Partial<RouteComponentProps>
-> {
+export class WizardTab extends Component<WizardTabProps & Partial<RouteComponentProps>> {
   currentTabIndex: number = 0;
 
   render(): ReactNode {

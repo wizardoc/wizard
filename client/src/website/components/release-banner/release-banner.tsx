@@ -28,9 +28,9 @@ export class ReleaseBanner extends Component<ReleaseBannerProps> {
 
     return (
       <Wrapper>
-        <ReleaseTag tag={tag}></ReleaseTag>
+        <ReleaseTag tag={tag} />
         <ReleaseText>Wizard 0.01-beta is released!</ReleaseText>
-        <KeyboardArrowRightIcon></KeyboardArrowRightIcon>
+        <KeyboardArrowRightIcon />
       </Wrapper>
     );
   }

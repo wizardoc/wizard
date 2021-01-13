@@ -31,7 +31,7 @@ export class ImagePreview extends Component<ImagePreviewProps> {
   render(): ReactNode {
     return (
       <Wrapper>
-        <Preview src={this.previewSrc}></Preview>
+        <Preview src={this.previewSrc} />
       </Wrapper>
     );
   }

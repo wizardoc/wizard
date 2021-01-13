@@ -4,10 +4,7 @@ import {Routes} from '../services';
 import {OverviewAuthGuard, OrganizationGuard} from '../guards';
 
 const OverviewCenter = lazy(import('../pages/overview'), 'OverviewPage');
-const OverviewOrganization = lazy(
-  import('../pages/overview'),
-  'OverviewOrganization',
-);
+const OverviewOrganization = lazy(import('../pages/overview'), 'OverviewOrganization');
 const OverviewOrganizationEdit = lazy(
   import('../pages/overview'),
   'OrganizationEditPage',

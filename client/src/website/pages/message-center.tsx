@@ -14,7 +14,7 @@ export class MessageCenter extends Component {
   render(): ReactNode {
     return (
       <Wrapper>
-        <MessageOverview></MessageOverview>
+        <MessageOverview />
       </Wrapper>
     );
   }

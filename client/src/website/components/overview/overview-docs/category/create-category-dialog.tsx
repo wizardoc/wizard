@@ -161,7 +161,7 @@ export class CreateCategoryDialog
           </FormControl>
         </EditWrapper>
         <PreviewWrapper isSpread={this.isSpreadPreview}>
-          <CategoryCard info={this.editCategoryInfo}></CategoryCard>
+          <CategoryCard info={this.editCategoryInfo} />
         </PreviewWrapper>
       </Wrapper>
     );

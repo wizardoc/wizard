@@ -1,10 +1,4 @@
-import {
-  Divider,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-} from '@material-ui/core';
+import {Divider, List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
 import {ListItemIconProps} from '@material-ui/core/ListItemIcon';
 import FaceIcon from '@material-ui/icons/Face';
 import HelpIcon from '@material-ui/icons/Help';
@@ -54,32 +48,32 @@ const Wrapper = styled.div``;
 
 export const userItems: SettingItem[] = [
   {
-    icon: <FaceIcon></FaceIcon>,
+    icon: <FaceIcon />,
     text: '个人中心',
     route: '/user/settings',
   },
   {
-    icon: <MessageIcon></MessageIcon>,
+    icon: <MessageIcon />,
     text: '消息中心',
     route: '/message',
   },
   {
-    icon: <GroupIcon></GroupIcon>,
+    icon: <GroupIcon />,
     text: '我的组织',
     route: '/',
   },
   {
-    icon: <DescriptionIcon></DescriptionIcon>,
+    icon: <DescriptionIcon />,
     text: '我的文章 & 文档',
     route: '/',
   },
   {
-    icon: <BookmarkIcon></BookmarkIcon>,
+    icon: <BookmarkIcon />,
     text: '我的收藏',
     route: '/',
   },
   {
-    icon: <CallMergeIcon></CallMergeIcon>,
+    icon: <CallMergeIcon />,
     text: '我的合并请求',
     route: '/',
   },
@@ -87,12 +81,12 @@ export const userItems: SettingItem[] = [
 
 export const systemItems: SettingItem[] = [
   {
-    icon: <HelpIcon></HelpIcon>,
+    icon: <HelpIcon />,
     text: '帮助',
     route: '/',
   },
   {
-    icon: <SettingsIcon></SettingsIcon>,
+    icon: <SettingsIcon />,
     text: '设置',
     route: '/',
   },
@@ -100,7 +94,7 @@ export const systemItems: SettingItem[] = [
 
 export const dangerItems: SettingItem[] = [
   {
-    icon: <InfoIcon></InfoIcon>,
+    icon: <InfoIcon />,
     text: '退出登录',
     route: '/',
     mode: 'danger',
@@ -117,9 +111,7 @@ const PrimaryListItemIcon = styled(ListItemIcon)<PrimaryListItemIconProps>`
 ` as ComponentType<ListItemIconProps & PrimaryListItemIconProps>;
 
 @withRouter
-export class UserItem extends Component<
-  UserItemProps & Partial<RouteComponentProps>
-> {
+export class UserItem extends Component<UserItemProps & Partial<RouteComponentProps>> {
   @Inject
   drawerService!: DrawerService;
 
@@ -139,7 +131,7 @@ export class UserItem extends Component<
             }}
           >
             <PrimaryListItemIcon mode={mode}>{icon}</PrimaryListItemIcon>
-            <ListItemText primary={text}></ListItemText>
+            <ListItemText primary={text} />
           </ListItem>
         ))}
       </List>
@@ -147,12 +139,12 @@ export class UserItem extends Component<
 
     return (
       <Wrapper>
-        <Divider></Divider>
-        <Items data={userItems}></Items>
-        <Divider></Divider>
-        <Items data={systemItems}></Items>
-        <Divider></Divider>
-        <Items data={dangerItems}></Items>
+        <Divider />
+        <Items data={userItems} />
+        <Divider />
+        <Items data={systemItems} />
+        <Divider />
+        <Items data={dangerItems} />
       </Wrapper>
     );
   }

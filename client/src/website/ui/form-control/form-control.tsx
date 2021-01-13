@@ -15,11 +15,7 @@ import {isArray} from '@wizardoc/shared';
 
 import {IFormControl} from './form-control-type';
 
-export type Validator = (
-  rule: Rule,
-  value: string,
-  cb: (msg?: string) => void,
-) => void;
+export type Validator = (rule: Rule, value: string, cb: (msg?: string) => void) => void;
 
 export interface Rule {
   errMsg?: string;
@@ -72,8 +68,7 @@ const ErrorHelpMessage = styled(FormHelperText)<ErrorHelpMessageProps>`
 ` as ComponentType<FormHelperTextProps & ErrorHelpMessageProps>;
 
 @observer
-export class FormControl extends Component<FormControlProps>
-  implements IFormControl {
+export class FormControl extends Component<FormControlProps> implements IFormControl {
   @observable
   private errorManager: {[index: string]: ErrorInfo} = {};
 
@@ -168,8 +163,7 @@ export class FormControl extends Component<FormControlProps>
       const listeners = {
         [listenerName]: sysListener,
         onChange: (v: unknown, ...args: any[]): void => {
-          const value =
-            (v as ChangeEvent<HTMLInputElement>)?.target?.value ?? v;
+          const value = (v as ChangeEvent<HTMLInputElement>)?.target?.value ?? v;
 
           if (listenerName === 'onChange') {
             sysListener(value, args);

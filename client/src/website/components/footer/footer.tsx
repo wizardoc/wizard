@@ -16,8 +16,8 @@ export class Footer extends Component {
   render(): ReactNode {
     return (
       <Wrapper>
-        <FooterPanel></FooterPanel>
-        <FooterDeclare></FooterDeclare>
+        <FooterPanel />
+        <FooterDeclare />
       </Wrapper>
     );
   }

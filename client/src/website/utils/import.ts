@@ -11,9 +11,6 @@ export function defaultify<T>(
   return loader.then(module => ({default: module[name]}));
 }
 
-export function lazy<T>(
-  loader: Promise<T>,
-  name: string,
-): LazyExoticComponent<any> {
+export function lazy<T>(loader: Promise<T>, name: string): LazyExoticComponent<any> {
   return React.lazy(() => defaultify<T>(loader, name));
 }

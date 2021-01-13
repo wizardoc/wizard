@@ -71,7 +71,7 @@ export class CategoryCoverUpload extends Component<
         <ImageUpload onAfterRead={file => this.handleReadEnd(file)}>
           <CoverSelector>
             {this.previewSrc && <PreviewImg src={this.previewSrc} />}
-            <CameraAltIcon></CameraAltIcon>
+            <CameraAltIcon />
           </CoverSelector>
         </ImageUpload>
       </Wrapper>

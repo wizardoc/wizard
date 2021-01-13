@@ -1,8 +1,7 @@
 import {RuntimeEnv} from '~/src/website/types/environment';
 import {runtimeEnv} from '~/src/website/utils/env';
 
-const changeRuntimeEnv = (env: RuntimeEnv): RuntimeEnv =>
-  (process.env.RUNTIME_ENV = env);
+const changeRuntimeEnv = (env: RuntimeEnv): RuntimeEnv => (process.env.RUNTIME_ENV = env);
 
 describe('runtime environment function utils', () => {
   const OLD_PROCESS_ENV = process.env;

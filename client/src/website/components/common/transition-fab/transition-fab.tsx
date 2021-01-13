@@ -58,11 +58,7 @@ const GroundLayer = styled.div<GroundLayerProps>`
   position: fixed;
   transition: all ${props => props.timeout}ms;
   z-index: 1101;
-  background: radial-gradient(
-    circle,
-    ${props => props.color} 40%,
-    rgba(0, 0, 0, 0) 0
-  );
+  background: radial-gradient(circle, ${props => props.color} 40%, rgba(0, 0, 0, 0) 0);
   transform: scale(0);
 
   ${props =>
@@ -142,11 +138,7 @@ export class TransitionFab extends Component<
           </SlotWrapper>
         )}
         <GroundLayerWrapper>
-          <GroundLayer
-            color={activeColor}
-            timeout={timeout}
-            isFull={this.isOpen}
-          />
+          <GroundLayer color={activeColor} timeout={timeout} isFull={this.isOpen} />
         </GroundLayerWrapper>
         <ColorFab
           activeFabColor={activeFabColor}

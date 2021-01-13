@@ -46,11 +46,7 @@ export class GraphicContainer extends Component<GraphicProps> {
 
     return (
       <Wrapper>
-        <GraphicTitle
-          fadeInClass={fadeInClass}
-          title={title}
-          showRatio={showRatio}
-        />
+        <GraphicTitle fadeInClass={fadeInClass} title={title} showRatio={showRatio} />
         <ContentContainter
           style={{
             flexDirection: layout === 'row' ? 'row' : 'row-reverse',

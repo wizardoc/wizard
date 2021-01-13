@@ -61,26 +61,20 @@ export class Menu extends Component<
       ref: this.bindRef,
       onClick: (e: MouseEvent) => this.handleBindClick(e),
     });
-    const renderMenuItems = menuItems.map(
-      ({text, isHide, permission, handler}) =>
-        isHide ||
-        !(permission !== undefined && permissions?.includes(permission)) ? (
-          <></>
-        ) : (
-          <StyledMaterialMenuItem key={text} onClick={handler}>
-            {text}
-          </StyledMaterialMenuItem>
-        ),
+    const renderMenuItems = menuItems.map(({text, isHide, permission, handler}) =>
+      isHide || !(permission !== undefined && permissions?.includes(permission)) ? (
+        <></>
+      ) : (
+        <StyledMaterialMenuItem key={text} onClick={handler}>
+          {text}
+        </StyledMaterialMenuItem>
+      ),
     );
 
     return (
       <>
         {renderBind}
-        <MaterialMenu
-          open={this.isMenuOpen}
-          anchorEl={this.bindDOM}
-          {...this.props}
-        >
+        <MaterialMenu open={this.isMenuOpen} anchorEl={this.bindDOM} {...this.props}>
           <ClickAwayListener onClickAway={() => this.toggleMenuOpen()}>
             <div onClick={() => this.toggleMenuOpen()}>{renderMenuItems}</div>
           </ClickAwayListener>

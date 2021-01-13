@@ -16,7 +16,7 @@ export class DocRecentUpdateDrawer extends Component {
           title={HEAD_PROMPT}
           icon={<PetsIcon />}
           description="展示近30天的文档修改记录"
-        ></DrawerHeader>
+        />
       </List>
     );
   }

@@ -57,10 +57,7 @@ export class TreeViewGenerator extends Component<TreeViewProps> {
 
     return (
       <TreeView
-        defaultExpanded={[
-          '-1',
-          ...Array.from({length: 3}, (_, v) => v.toString()),
-        ]}
+        defaultExpanded={['-1', ...Array.from({length: 3}, (_, v) => v.toString())]}
         defaultCollapseIcon={<ExpandMoreIcon />}
         defaultExpandIcon={<ChevronRightIcon />}
       >

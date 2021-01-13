@@ -11,6 +11,6 @@ const Wrapper = styled.div`
 
 export class SkewBlock extends Component {
   render(): ReactNode {
-    return <Wrapper></Wrapper>;
+    return <Wrapper />;
   }
 }

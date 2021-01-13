@@ -34,10 +34,10 @@ export class HeaderBar extends Component<HeaderBarProps> {
     return (
       <AppBarWrapper position="static" isFixed={isFixed}>
         <Toolbar variant="dense">
-          <Row></Row>
+          <Row />
           <HeaderBarTabs />
           <HeaderSearch />
-          <Funcs></Funcs>
+          <Funcs />
         </Toolbar>
       </AppBarWrapper>
     );

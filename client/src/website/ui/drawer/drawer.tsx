@@ -16,10 +16,6 @@ export class Drawer extends Component<DrawerProps> {
     const innerProps = omit(this.props, 'renderDrawer');
     const {renderDrawer, children} = this.props;
 
-    return (
-      <SwipeableDrawer {...innerProps}>
-        {renderDrawer || children}
-      </SwipeableDrawer>
-    );
+    return <SwipeableDrawer {...innerProps}>{renderDrawer || children}</SwipeableDrawer>;
   }
 }

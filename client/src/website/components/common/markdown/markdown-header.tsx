@@ -25,7 +25,7 @@ export class MarkdownHeader extends Component<MarkdownHeaderProps> {
     return (
       <Wrapper>
         <CoverWrapper>
-          <HeadCover src={cover}></HeadCover>
+          <HeadCover src={cover} />
         </CoverWrapper>
       </Wrapper>
     );

@@ -18,7 +18,7 @@ export class DocumentCenter extends Component {
   render(): ReactNode {
     return (
       <Wrapper>
-        <SwitchBar title="文档中心" tabs={switchBarTabs}></SwitchBar>
+        <SwitchBar title="文档中心" tabs={switchBarTabs} />
       </Wrapper>
     );
   }

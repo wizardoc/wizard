@@ -69,8 +69,7 @@ const stuffs: Stuff[] = [
 ];
 
 const TipInnerContent = styled(SnackbarContent)<TipInnerContentProps>`
-  background-color: ${({bgcolor, theme}) =>
-    bgcolor || theme.primaryColor} !important;
+  background-color: ${({bgcolor, theme}) => bgcolor || theme.primaryColor} !important;
 ` as ComponentType<SnackbarContentProps & TipInnerContentProps>;
 
 const MessageContent = styled.div`
@@ -92,12 +91,7 @@ export const TipContent: FunctionComponent<TipContentProps> = ({
 
   if (onClose) {
     actions.push(
-      <IconButton
-        key="close"
-        aria-label="Close"
-        color="inherit"
-        onClick={onClose}
-      >
+      <IconButton key="close" aria-label="Close" color="inherit" onClick={onClose}>
         <CloseIcon />
       </IconButton>,
     );
@@ -134,12 +128,7 @@ export class Tip extends Component<TipProps> {
     }
 
     return (
-      <Slide
-        in={this.tipService.isShowTip}
-        direction="down"
-        mountOnEnter
-        unmountOnExit
-      >
+      <Slide in={this.tipService.isShowTip} direction="down" mountOnEnter unmountOnExit>
         <Snackbar
           open={true}
           anchorOrigin={{

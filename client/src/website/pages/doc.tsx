@@ -12,7 +12,7 @@ export class Doc extends Component {
   render(): ReactNode {
     return (
       <Wrapper>
-        <PageHeader title="文档"></PageHeader>
+        <PageHeader title="文档" />
       </Wrapper>
     );
   }

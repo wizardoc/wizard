@@ -69,7 +69,7 @@ export class OverviewSide extends Component {
       <Wrapper>
         <OverviewSideHeader />
         <SideBarWrapper>
-          <SideBar separateMargin="10px" items={sideBarItems}></SideBar>
+          <SideBar separateMargin="10px" items={sideBarItems} />
         </SideBarWrapper>
       </Wrapper>
     );

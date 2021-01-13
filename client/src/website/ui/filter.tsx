@@ -41,9 +41,7 @@ const Wrapper = styled.div`
 
 @withTheme
 @observer
-export class Filter extends Component<
-  FilterProps & Partial<ThemeComponentProps>
-> {
+export class Filter extends Component<FilterProps & Partial<ThemeComponentProps>> {
   @observable
   private activeItem: string;
 

@@ -96,9 +96,7 @@ interface StartedProps {}
 
 @withRouter
 @observer
-export class Started extends Component<
-  StartedProps & Partial<RouteComponentProps>
-> {
+export class Started extends Component<StartedProps & Partial<RouteComponentProps>> {
   @Inject
   userService!: User;
 
@@ -112,7 +110,7 @@ export class Started extends Component<
         <StartPanel>
           <WizardDescription>
             <DescriptionContainer>
-              <ReleaseBanner tag="NEW"></ReleaseBanner>
+              <ReleaseBanner tag="NEW" />
               <WizardTitle>文档也可以是知识分享的途径</WizardTitle>
               <Description>
                 所有文档 Cloud 化，丰富的 Markdown

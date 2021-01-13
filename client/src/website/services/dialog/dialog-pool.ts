@@ -30,9 +30,9 @@ export interface BaseActionButtons {
   props?: ButtonProps;
 }
 
-export type ActionButtonCB<
-  R extends boolean | void | Promise<boolean | void>
-> = (dialogData: unknown) => R;
+export type ActionButtonCB<R extends boolean | void | Promise<boolean | void>> = (
+  dialogData: unknown,
+) => R;
 
 export interface ActionButtons extends BaseActionButtons {
   /** return a bool value to determine whether to throw a value out */

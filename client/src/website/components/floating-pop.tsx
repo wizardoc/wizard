@@ -82,11 +82,7 @@ export class FloatingPop extends Component {
           open={this.isOpenMenu}
         >
           {this.actions.map(({name, icon, tooltipTitle}) => (
-            <SpeedDialAction
-              key={name}
-              icon={icon}
-              tooltipTitle={tooltipTitle || name}
-            />
+            <SpeedDialAction key={name} icon={icon} tooltipTitle={tooltipTitle || name} />
           ))}
         </SpeedDial>
       </Wrapper>

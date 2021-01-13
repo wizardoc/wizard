@@ -120,9 +120,7 @@ export class UserSettingsBase extends Component {
       <Wrapper>
         <SettingTitle>个人信息</SettingTitle>
         <InputContainer>
-          <FormControl
-            onFormDataChange={data => this.handleFormDataChange(data)}
-          >
+          <FormControl onFormDataChange={data => this.handleFormDataChange(data)}>
             {renderTextField}
           </FormControl>
         </InputContainer>

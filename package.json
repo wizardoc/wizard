@@ -24,7 +24,9 @@
     "server:start": "cd server && yarn start:dev",
     "bootstrap": "lerna bootstrap",
     "compile": "tsc -p packages/http-request && tsc -p shared && tsc -p packages/http-utils && tsc -p packages/injector && tsc -p packages/markdown",
-    "prepare": "yarn bootstrap && yarn compile"
+    "prepare": "yarn bootstrap && yarn compile",
+    "prettier-check:client": "prettier --check \"client/src/**/*.{ts,tsx}\"",
+    "prettier-fix:client": "yarn prettier-check:client --write"
   },
   "dependencies": {
   },

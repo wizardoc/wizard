@@ -22,10 +22,10 @@ export class Pen extends Component {
   render(): ReactNode {
     return (
       <Wrapper>
-        <PenHeader></PenHeader>
+        <PenHeader />
         <EditorWrapper>
           <Widget>
-            <Original></Original>
+            <Original />
           </Widget>
           {/* <Widget>
             <Viewer></Viewer>

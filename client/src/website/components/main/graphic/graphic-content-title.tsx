@@ -15,7 +15,8 @@ interface GraphicContentTitleProps extends GraphicAnimation {
 }
 
 @viewObservable()
-export class GraphicContentTitle extends Component<GraphicContentTitleProps>
+export class GraphicContentTitle
+  extends Component<GraphicContentTitleProps>
   implements ViewObservableComponent {
   private contentTitleRef = createRef<HTMLDivElement>();
 

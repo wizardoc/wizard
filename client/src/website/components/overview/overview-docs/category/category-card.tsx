@@ -76,7 +76,7 @@ export class CategoryCard extends Component<CategoryCardProps> {
           </Wrapper>
         }
       >
-        <CategoryInfo info={info}></CategoryInfo>
+        <CategoryInfo info={info} />
       </Popover>
     );
   }

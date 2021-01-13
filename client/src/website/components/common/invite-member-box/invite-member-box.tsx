@@ -58,9 +58,7 @@ export class InviteMemberBox extends Component {
   }
 
   handleInviteButtonClick(): void {
-    this.invitedUser.push(
-      ...this.userMetadata.filter(item => item.status === 'success'),
-    );
+    this.invitedUser.push(...this.userMetadata.filter(item => item.status === 'success'));
   }
 
   handleUserSearchLineChange(metadata: UserMetaData[]): void {
@@ -91,7 +89,7 @@ export class InviteMemberBox extends Component {
               <DefaultInviteText>邀请进入组织的成员在这里！</DefaultInviteText>
             }
           >
-            <InvitedUserList></InvitedUserList>
+            <InvitedUserList />
           </Default>
         </InviteUserPlace>
       </Wrapper>

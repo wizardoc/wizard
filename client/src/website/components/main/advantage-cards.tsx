@@ -18,12 +18,7 @@ export class AdvantageCards extends Component {
     return (
       <Cards>
         {advantageConfigs.map(({title, content, img}) => (
-          <AdvantageCard
-            title={title}
-            key={title}
-            content={content}
-            img={img}
-          />
+          <AdvantageCard title={title} key={title} content={content} img={img} />
         ))}
       </Cards>
     );

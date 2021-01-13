@@ -51,7 +51,7 @@ const Card: FunctionComponent = withSlide({
     </RegisterBox>
     <TipCard>
       <WandWrapper>
-        <Wand src={WandIcon}></Wand>
+        <Wand src={WandIcon} />
       </WandWrapper>
       <CenterLine>REGISTER</CenterLine>
       <TipBody>
@@ -67,7 +67,7 @@ export class RegisterPage extends Component {
   render(): ReactNode {
     return (
       <Wrapper>
-        <Card></Card>
+        <Card />
       </Wrapper>
     );
   }

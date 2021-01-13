@@ -13,12 +13,7 @@ import {
   SnackBarQueue,
   BackdropLoading,
 } from './components';
-import {
-  DrawerService,
-  DialogPool,
-  OptionalTipService,
-  TipService,
-} from './services';
+import {DrawerService, DialogPool, OptionalTipService, TipService} from './services';
 import {GlobalStyle, ThemeProvider, styledTheme, theme} from './theme';
 import {Drawer} from './ui';
 import {InjectStore} from './utils';
@@ -33,7 +28,7 @@ class DialogEntry extends Component {
 
   render(): ReactNode {
     return Array.from(this.dialogPool.dialogs.keys()).map(dialogID => (
-      <CommonDialog key={dialogID} dialogID={dialogID}></CommonDialog>
+      <CommonDialog key={dialogID} dialogID={dialogID} />
     ));
   }
 }
@@ -45,7 +40,7 @@ class OptionalTipEntry extends Component {
 
   render(): ReactNode {
     return this.optionalTipService.tipInfos.map(info => (
-      <OptionalTip key={info.name} {...info}></OptionalTip>
+      <OptionalTip key={info.name} {...info} />
     ));
   }
 }

@@ -59,14 +59,7 @@ export class MarkdownContent extends Component<
   markdownService!: MarkdownService;
 
   render(): ReactNode {
-    const {
-      title,
-      author,
-      organizationInfo,
-      data,
-      headings,
-      content,
-    } = this.props;
+    const {title, author, organizationInfo, data, headings, content} = this.props;
     // const {content, headings} = data!;
 
     return (

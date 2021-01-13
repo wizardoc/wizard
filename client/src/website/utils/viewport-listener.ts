@@ -2,11 +2,7 @@
 export class ViewportListener {
   private io: IntersectionObserver;
 
-  constructor(
-    private dom: Element,
-    cb: any,
-    options?: IntersectionObserverInit,
-  ) {
+  constructor(private dom: Element, cb: any, options?: IntersectionObserverInit) {
     this.io = new IntersectionObserver(cb, options);
   }
 

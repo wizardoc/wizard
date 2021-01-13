@@ -60,7 +60,7 @@ export class NewOrganizationPage extends Component {
                 label="描述"
                 helperText="一句话描述你的组织，介绍你的组织"
               />
-              <StyledInviteMember></StyledInviteMember>
+              <StyledInviteMember />
             </FormControl>
           </Content>
         </Container>

@@ -58,9 +58,7 @@ const PageContent = styled.div`
 `;
 
 @withTheme
-export class PagePaper extends Component<
-  PagePaperProps & Partial<ThemeComponentProps>
-> {
+export class PagePaper extends Component<PagePaperProps & Partial<ThemeComponentProps>> {
   render(): ReactNode {
     const {content, title, isMounted, theme} = this.props;
 
@@ -77,9 +75,9 @@ export class PagePaper extends Component<
         </Banner>
         <PageContent>
           <ContentCard>
-            <MDRender content={content}></MDRender>
+            <MDRender content={content} />
           </ContentCard>
-          <OrganizationInfoCard></OrganizationInfoCard>
+          <OrganizationInfoCard />
         </PageContent>
       </Wrapper>
     );

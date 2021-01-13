@@ -68,11 +68,11 @@ export class PenPage extends Component {
             onBlur={() => this.handleTitleBlur()}
             value={this.title}
             onChange={e => (this.title = e.target.value)}
-          ></Title>
+          />
         </HeaderCover>
         <EditorBody>
-          <UtilsBox></UtilsBox>
-          <Pen></Pen>
+          <UtilsBox />
+          <Pen />
         </EditorBody>
       </Wrapper>
     );

@@ -85,9 +85,7 @@ export class ValidEmailDialog
           label="验证码"
           size="small"
           helperText="我们会发送一封含有验证码的邮件，请注意查收"
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            this.handleVerifyCodeChange(e)
-          }
+          onChange={(e: ChangeEvent<HTMLInputElement>) => this.handleVerifyCodeChange(e)}
           InputLabelProps={{
             shrink: true,
           }}

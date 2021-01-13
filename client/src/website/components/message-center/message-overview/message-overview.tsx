@@ -140,9 +140,7 @@ export class MessageOverview extends Component {
               <Body>
                 <Typography>{main.body}</Typography>
               </Body>
-              {attachComponent && (
-                <Footer>{attachComponent(main.payload)}</Footer>
-              )}
+              {attachComponent && <Footer>{attachComponent(main.payload)}</Footer>}
             </StyledExpansionPanelDetails>
           </StyledExpansionPanel>
         );
@@ -151,7 +149,7 @@ export class MessageOverview extends Component {
 
     return (
       <Wrapper>
-        <MessageHeader></MessageHeader>
+        <MessageHeader />
         <DefaultView
           condition={() => !renderMessages.length}
           defaultImg={DefaultImg}
@@ -162,7 +160,7 @@ export class MessageOverview extends Component {
             loadText="消息加载中..."
             endText="已经没有更多的消息"
             onFetch={() => this.handleMessageLoadMore()}
-          ></StyledLoadMore>
+          />
         </DefaultView>
       </Wrapper>
     );

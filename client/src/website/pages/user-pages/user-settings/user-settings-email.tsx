@@ -84,7 +84,7 @@ export class UserSettingsEmail extends Component {
           {!this.user.userInfo.isValidEmail && (
             <WarnText>请先验证已有邮箱，才能更换邮箱</WarnText>
           )}
-          <UpdateEmail></UpdateEmail>
+          <UpdateEmail />
         </UpdatePlace>
       </Wrapper>
     );

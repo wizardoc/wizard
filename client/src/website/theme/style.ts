@@ -8,9 +8,7 @@ const {
   keyframes,
   ThemeProvider,
   // withTheme: styledWithTheme,
-} = styledComponents as styledComponents.ThemedStyledComponentsModule<
-  IThemeInterface
->;
+} = styledComponents as styledComponents.ThemedStyledComponentsModule<IThemeInterface>;
 
 export interface IThemeInterface {
   [index: string]: string;

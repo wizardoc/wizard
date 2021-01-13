@@ -5,6 +5,6 @@ const Wrapper = styled.div``;
 
 export class OrganizationDetailCard extends Component {
   render(): ReactNode {
-    return <Wrapper></Wrapper>;
+    return <Wrapper />;
   }
 }

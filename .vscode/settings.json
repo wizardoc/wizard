@@ -12,5 +12,6 @@
     "files.insertFinalNewline": false
   },
   "commentTranslate.targetLanguage": "zh",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "cSpell.words": ["defaultify"]
 }

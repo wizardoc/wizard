@@ -13,10 +13,7 @@ export interface ViewObservableComponentProps {
 }
 
 export interface ViewObservableComponent {
-  onObserve(
-    entries: IntersectionObserverEntry[],
-    observer: IntersectionObserver,
-  ): void;
+  onObserve(entries: IntersectionObserverEntry[], observer: IntersectionObserver): void;
 }
 
 export interface ParsedViewObservableOptions {
@@ -66,10 +63,7 @@ export class ViewPortObserver {
 
   listen(cb: IntersectionObserverCallback, isReality?: boolean): void {
     const realCb = isReality
-      ? (
-          entries: IntersectionObserverEntry[],
-          observer: IntersectionObserver,
-        ): void => {
+      ? (entries: IntersectionObserverEntry[], observer: IntersectionObserver): void => {
           if (!this.isInit) {
             this.isInit = true;
 
@@ -118,7 +112,7 @@ export function viewObservable<P>(
       render(): ReactNode {
         return (
           <div ref={this.wrapperRef}>
-            <Wrapper ref={this.observerRef} {...this.props}></Wrapper>
+            <Wrapper ref={this.observerRef} {...this.props} />
           </div>
         );
       }
@@ -131,9 +125,7 @@ export function viewObservable<P>(
         }
       }
 
-      async handleWrapperObserve(
-        cb: IntersectionObserverCallback,
-      ): Promise<void> {
+      async handleWrapperObserve(cb: IntersectionObserverCallback): Promise<void> {
         await this.time.sleep();
 
         const {current} = this.wrapperRef;
@@ -142,9 +134,7 @@ export function viewObservable<P>(
           return;
         }
 
-        new ViewPortObserver()
-          .ele(current)
-          .listen(cb, this.parsedOptions.reality);
+        new ViewPortObserver().ele(current).listen(cb, this.parsedOptions.reality);
       }
     }
 
@@ -152,8 +142,6 @@ export function viewObservable<P>(
   };
 }
 
-function isViewObservableComponent(
-  target: any,
-): target is ViewObservableComponent {
+function isViewObservableComponent(target: any): target is ViewObservableComponent {
   return !!target.onObserve;
 }

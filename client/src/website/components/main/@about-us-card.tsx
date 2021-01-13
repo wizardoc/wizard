@@ -66,9 +66,7 @@ export const AboutUsCard: FunctionComponent = () => {
           </div>
           <div>
             <Title>大道至简的规范文档管理平台</Title>
-            <Typography color="textSecondary">
-              技术驱动，更接近技术的平台
-            </Typography>
+            <Typography color="textSecondary">技术驱动，更接近技术的平台</Typography>
           </div>
         </AboutUsContent>
         <CardActions>

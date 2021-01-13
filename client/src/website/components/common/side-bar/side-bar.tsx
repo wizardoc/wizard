@@ -42,17 +42,14 @@ const Wrapper = styled.div`
 
 const StyledListItem = styled(ListItem)<StyledListItemProps>`
   margin-top: ${props => props.separateMargin} !important;
-  background: ${props =>
-    props.highlight && props.theme.shallowPrimaryColor} !important;
+  background: ${props => props.highlight && props.theme.shallowPrimaryColor} !important;
 `;
 
 const StyledListItemIcon = genColorfulItem(ListItemIcon);
 const StyledListItemText = genColorfulItem(ListItemText);
 
 @withRouter
-export class SideBar extends Component<
-  SideBarProps & Partial<RouteComponentProps>
-> {
+export class SideBar extends Component<SideBarProps & Partial<RouteComponentProps>> {
   handleListItemClick(item: SideBarItem): void {
     const {onItemClick = (): void => {}, history} = this.props;
 
@@ -70,10 +67,8 @@ export class SideBar extends Component<
         onClick={() => this.handleListItemClick(item)}
         highlight={highlight && match!.path === item.route}
       >
-        <StyledListItemIcon color={item.iconColor}>
-          {item.icon}
-        </StyledListItemIcon>
-        <StyledListItemText primary={item.text}></StyledListItemText>
+        <StyledListItemIcon color={item.iconColor}>{item.icon}</StyledListItemIcon>
+        <StyledListItemText primary={item.text} />
       </StyledListItem>
     ));
 

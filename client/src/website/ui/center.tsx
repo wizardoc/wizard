@@ -19,8 +19,8 @@ const CenterLine = styled(Line)``;
 
 export const Center: FunctionComponent<CenterProps> = props => (
   <Wrapper>
-    <CenterLine {...props}></CenterLine>
+    <CenterLine {...props} />
     <Content>{props.children}</Content>
-    <CenterLine {...props}></CenterLine>
+    <CenterLine {...props} />
   </Wrapper>
 );

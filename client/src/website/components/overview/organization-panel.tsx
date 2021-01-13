@@ -7,11 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import {withRouter, RouteComponentProps} from 'react-router-dom';
 import {observable} from 'mobx';
 
-import {
-  OrganizationService,
-  User,
-  OrganizationCardData,
-} from 'website/services';
+import {OrganizationService, User, OrganizationCardData} from 'website/services';
 import {withTheme, ThemeComponentProps} from 'website/theme';
 import DefaultImg from 'website/assets/static/rabbit.png';
 import {Search, FilterItem, Filter} from 'website/ui';
@@ -110,8 +106,7 @@ export class OrganizationPanel extends Component<
     }
 
     this.organizations = this.organizationService.organizations.filter(
-      ({ownerInfo}) =>
-        ownerInfo.username === this.userService.userInfo?.username,
+      ({ownerInfo}) => ownerInfo.username === this.userService.userInfo?.username,
     );
   }
 
@@ -138,7 +133,7 @@ export class OrganizationPanel extends Component<
           <Filter
             onChange={value => this.handleFilterChange(value)}
             items={filterItems}
-          ></Filter>
+          />
           <StyledSearchBox
             onSearch={(text: string) => this.handleSearchClick(text)}
             placeholder="搜索组织"

@@ -33,7 +33,7 @@ export class MessageSwitcher extends Component {
     return (
       <Wrapper>
         <Container>
-          <WizardTab tabs={this.tabs}></WizardTab>
+          <WizardTab tabs={this.tabs} />
         </Container>
       </Wrapper>
     );

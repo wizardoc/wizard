@@ -45,9 +45,7 @@ const Contributors = styled.div`
 const FollowButton = styled(Button)``;
 
 @observer
-export class OrganizationDetailCard extends Component<
-  OrganizationDetailCardProps
-> {
+export class OrganizationDetailCard extends Component<OrganizationDetailCardProps> {
   @Inject
   user!: User;
 
@@ -66,12 +64,8 @@ export class OrganizationDetailCard extends Component<
     const {followOrganizations} = this.user.userInfo;
     const {id: organizationID, organizeName} = props.organizationInfo;
 
-    this.isFollowed = !!followOrganizations.find(
-      ({id}) => id === organizationID,
-    );
-    this.isInOrganization = this.organizationService.hasExistOrganization(
-      organizeName,
-    );
+    this.isFollowed = !!followOrganizations.find(({id}) => id === organizationID);
+    this.isInOrganization = this.organizationService.hasExistOrganization(organizeName);
   }
 
   async handleFollowOrganizationClick(id: string): Promise<void> {

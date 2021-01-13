@@ -25,7 +25,7 @@ export class OverviewHeader extends Component {
   render(): ReactNode {
     return (
       <Wrapper>
-        <WizardTab tabs={HeaderTabs}></WizardTab>
+        <WizardTab tabs={HeaderTabs} />
         <GitHubButton variant="outlined" color="primary">
           <StarRateIcon />
           贡献 Wizardoc

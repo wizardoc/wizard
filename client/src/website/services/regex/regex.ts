@@ -19,10 +19,7 @@ export class Regex {
     return text.replace(regexLiteral, replaceText);
   }
 
-  exec(
-    regexLiteral: Regex.RegexLiteral,
-    text: string,
-  ): RegExpExecArray | undefined {
+  exec(regexLiteral: Regex.RegexLiteral, text: string): RegExpExecArray | undefined {
     return regexLiteral.exec(text) as RegExpExecArray | undefined;
   }
 }

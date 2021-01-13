@@ -1,11 +1,7 @@
 import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 
-import {
-  GraphicContentTitle,
-  GraphicContentStandard,
-  GraphicContentDesc,
-} from './index';
+import {GraphicContentTitle, GraphicContentStandard, GraphicContentDesc} from './index';
 import {GraphicContentInfo} from './graphic';
 
 const Wrapper = styled.div`

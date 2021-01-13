@@ -23,10 +23,10 @@ export class UserCard extends Component {
     return (
       <Wrapper>
         <UserContainer>
-          <Avatar></Avatar>
-          <InfoContainer></InfoContainer>
+          <Avatar />
+          <InfoContainer />
         </UserContainer>
-        <Funcs></Funcs>
+        <Funcs />
       </Wrapper>
     );
   }

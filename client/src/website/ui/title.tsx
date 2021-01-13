@@ -70,10 +70,9 @@ export const Title: FunctionComponent<TitleProps> = props => {
     onBackClick = (): void => {},
     hasBack = false,
   } = props;
-  const reverse = (arr: ReactNode[]): ReactNode[] =>
-    isReverse ? arr.reverse() : arr;
+  const reverse = (arr: ReactNode[]): ReactNode[] => (isReverse ? arr.reverse() : arr);
   const rawNodes = [
-    <Block blockColor={blockColor}></Block>,
+    <Block blockColor={blockColor} />,
     <Text isReverse={isReverse}>{children}</Text>,
   ];
   const sortedNodes = [
@@ -83,7 +82,7 @@ export const Title: FunctionComponent<TitleProps> = props => {
       isReverse={isReverse}
       hasBack={hasBack}
     >
-      <KeyboardArrowLeftButton></KeyboardArrowLeftButton>
+      <KeyboardArrowLeftButton />
     </BackButton>,
   ];
 

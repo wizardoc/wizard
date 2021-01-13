@@ -112,9 +112,7 @@ export class Breadcrumbs extends Component<
       <ColorText color={divisionColor} {...(this.props as ColorTextProps)}>
         <MaterialBreadcrumbs
           {...this.props}
-          separator={
-            <StyledSeparator color={staticColor}>{separator}</StyledSeparator>
-          }
+          separator={<StyledSeparator color={staticColor}>{separator}</StyledSeparator>}
         >
           {renderBreadcrumbsItems}
         </MaterialBreadcrumbs>
@@ -131,9 +129,7 @@ export class Breadcrumbs extends Component<
 
     for (const pos of Object.keys(routeParts)) {
       routes.push(
-        `${ROUTE_DIVISION}${routeParts
-          .slice(0, +pos + 1)
-          .join(ROUTE_DIVISION)}`,
+        `${ROUTE_DIVISION}${routeParts.slice(0, +pos + 1).join(ROUTE_DIVISION)}`,
       );
     }
 

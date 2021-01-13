@@ -5,11 +5,7 @@ import {Inject} from '@wizardoc/injector';
 import {observable} from 'mobx';
 import {observer} from 'mobx-react';
 
-import {
-  OrganizationCardData,
-  OrganizationService,
-  Toast,
-} from 'website/services';
+import {OrganizationCardData, OrganizationService, Toast} from 'website/services';
 
 import {SubTitle, Group} from '../@common';
 
@@ -61,7 +57,9 @@ export class BaseEditCard extends Component<BaseEditCardProps> {
     const {
       organizationInfo: {id},
     } = this.props;
-    const result = await this.organizationService.edit(id, {[fieldName]: val});
+    const result = await this.organizationService.edit(id, {
+      [fieldName]: val,
+    });
 
     result.success(() => {
       this.toast.success('更新成功！');

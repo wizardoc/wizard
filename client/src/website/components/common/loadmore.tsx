@@ -42,7 +42,8 @@ const EndIcon = styled(ToysIcon)`
 
 @viewObservable()
 @observer
-export class LoadMore extends Component<LoadMoreProps>
+export class LoadMore
+  extends Component<LoadMoreProps>
   implements ViewObservableComponent {
   @observable
   private hasData = true;

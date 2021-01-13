@@ -11,8 +11,7 @@ interface MessageTable {
 }
 
 @Injectable()
-export class NotifyService extends MessageService
-  implements NotifyMessageObserver {
+export class NotifyService extends MessageService implements NotifyMessageObserver {
   get messages(): NotifyMessage[] {
     return this.getMessages('isDelete', false);
   }
@@ -82,10 +81,10 @@ export class NotifyService extends MessageService
     return this.revokeMessage(id);
   }
 
-  private getMessages<
-    P extends keyof NotifyMessage,
-    V extends NotifyMessage[P]
-  >(prop: P, tag: V): NotifyMessage[] {
+  private getMessages<P extends keyof NotifyMessage, V extends NotifyMessage[P]>(
+    prop: P,
+    tag: V,
+  ): NotifyMessage[] {
     return this.notifyMessages.filter(msg => msg[prop] === tag);
   }
 

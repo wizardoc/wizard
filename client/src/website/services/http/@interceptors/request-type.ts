@@ -1,7 +1,4 @@
-import {
-  HTTPRequestInterceptor,
-  AxiosRequestConfig,
-} from '@wizardoc/http-request';
+import {HTTPRequestInterceptor, AxiosRequestConfig} from '@wizardoc/http-request';
 import {Inject} from '@wizardoc/injector';
 
 import {JWT} from '../../jwt-service';

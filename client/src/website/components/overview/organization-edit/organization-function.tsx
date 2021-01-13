@@ -4,11 +4,7 @@ import {Card, Button, Typography} from '@material-ui/core';
 import {Inject} from '@wizardoc/injector';
 import {withRouter, RouteComponentProps} from 'react-router-dom';
 
-import {
-  ConfirmDialogService,
-  OrganizationService,
-  Toast,
-} from 'website/services';
+import {ConfirmDialogService, OrganizationService, Toast} from 'website/services';
 
 export interface OrganizationFunctionProps {
   organizationID: string;
@@ -56,9 +52,7 @@ export class OrganizationFunction extends Component<
       title: '提醒信息',
       content: '确定要解散该组织吗？',
       onSureClick: async () => {
-        const result = await this.organizationService.removeOrganization(
-          organizationID,
-        );
+        const result = await this.organizationService.removeOrganization(organizationID);
 
         result.success(() => {
           this.toast.success('解散成功!');
@@ -73,9 +67,7 @@ export class OrganizationFunction extends Component<
       <Wrapper>
         <DescriptionWrapper>
           <Title>解散组织</Title>
-          <Description>
-            解散该组织，将会删除所有该组织的信息，请谨慎选择。
-          </Description>
+          <Description>解散该组织，将会删除所有该组织的信息，请谨慎选择。</Description>
         </DescriptionWrapper>
         <DismissButton
           onClick={() => this.handleDismissClick()}

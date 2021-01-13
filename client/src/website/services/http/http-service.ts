@@ -30,12 +30,7 @@ class HTTPFactory extends HTTPRequestFactory implements HTTPConfigure {
   toast!: Toast;
 
   configure({interceptor, serverConfigure, hooks}: IConfigure): void {
-    interceptor.use([
-      ResErrorCatcher,
-      ResData,
-      RequestPayloadParser,
-      RequestType,
-    ]);
+    interceptor.use([ResErrorCatcher, ResData, RequestPayloadParser, RequestType]);
 
     serverConfigure.setConfig(
       runtimeEnv({DEVELOPMENT: ServerDevConfig, PRODUCTION: ServerProdConfig}),
@@ -51,9 +46,7 @@ class HTTPFactory extends HTTPRequestFactory implements HTTPConfigure {
   }
 
   errorInteract(errMsg: string, err: AxiosError): void {
-    const result = this.errorManager.getErrorMessage(
-      err.response?.data.err?.code,
-    );
+    const result = this.errorManager.getErrorMessage(err.response?.data.err?.code);
 
     this.toast.error(result ?? errMsg);
 

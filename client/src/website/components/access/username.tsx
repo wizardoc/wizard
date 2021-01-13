@@ -5,9 +5,7 @@ import {TextFieldWrapper} from '../register';
 
 import {AccessProps} from './props';
 
-export const UserName: FunctionComponent<
-  AccessProps & TextFieldProps
-> = props => (
+export const UserName: FunctionComponent<AccessProps & TextFieldProps> = props => (
   <TextFieldWrapper
     {...props}
     label="账号"

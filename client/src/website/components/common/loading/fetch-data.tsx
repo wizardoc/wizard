@@ -34,9 +34,7 @@ export function FetchData(
   >(Wrapper: T): T {
     @withRouter
     @observer
-    class FetchDataContainer extends Component<
-      P & Partial<RouteComponentProps>
-    > {
+    class FetchDataContainer extends Component<P & Partial<RouteComponentProps>> {
       @observable
       private data: unknown | undefined;
 
@@ -49,21 +47,16 @@ export function FetchData(
           <Default
             condition={() => isLoading}
             defaultView={
-              parsedOptions.hasLoadingMask && (
-                <InlineLoading isLoading={isLoading} />
-              )
+              parsedOptions.hasLoadingMask && <InlineLoading isLoading={isLoading} />
             }
           >
-            <ParsedWrapper data={this.data} {...this.props}></ParsedWrapper>
+            <ParsedWrapper data={this.data} {...this.props} />
           </Default>
         );
       }
 
       async componentDidMount(): Promise<void> {
-        this.data = await asyncData(
-          injector,
-          this.props as RouteComponentProps,
-        );
+        this.data = await asyncData(injector, this.props as RouteComponentProps);
       }
     }
 

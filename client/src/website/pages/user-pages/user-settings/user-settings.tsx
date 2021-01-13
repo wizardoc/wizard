@@ -31,7 +31,7 @@ export class UserSettings extends Component {
     return (
       <Wrapper>
         <CardContainer>
-          <UserSettingsSidebar></UserSettingsSidebar>
+          <UserSettingsSidebar />
           <Viewer>{this.props.children}</Viewer>
         </CardContainer>
       </Wrapper>

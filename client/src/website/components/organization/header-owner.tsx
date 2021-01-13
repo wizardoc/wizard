@@ -91,9 +91,7 @@ export class HeaderOwner extends Component<
     await this.confirmDialog.confirm({
       content: `确认要删除 ${organizeName} 组织吗？`,
       onSureClick: async () => {
-        const result = await this.organizationService.removeOrganization(
-          organizeName,
-        );
+        const result = await this.organizationService.removeOrganization(organizeName);
 
         result.success(() => {
           this.toast.success(`成功删除${organizeName}`);

@@ -19,9 +19,7 @@ export class EmptyOrganizationPage extends Component {
   render(): ReactNode {
     return (
       <Wrapper>
-        <Button onClick={() => this.handleCreateOrganizationClick()}>
-          创建组织
-        </Button>
+        <Button onClick={() => this.handleCreateOrganizationClick()}>创建组织</Button>
       </Wrapper>
     );
   }

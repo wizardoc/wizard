@@ -53,7 +53,7 @@ export class MessageHeader extends Component {
             发送消息
           </SendMessage>
           <Trash variant="contained">
-            <RestoreFromTrashIcon></RestoreFromTrashIcon>
+            <RestoreFromTrashIcon />
             垃圾篓
           </Trash>
         </FuncBanner>

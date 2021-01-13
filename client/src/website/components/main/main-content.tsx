@@ -17,7 +17,7 @@ export class MainContent extends Component {
     return (
       <Wrapper fixed>
         <AboutUsCard />
-        <AdvantageCards></AdvantageCards>
+        <AdvantageCards />
       </Wrapper>
     );
   }

@@ -85,7 +85,7 @@ export class KnowledgeCard extends Component {
             </Description>
             <GoTo variant="contained">去看看！</GoTo>
           </Knowledge>
-          <PhoneGuide src={PhoneGuideImg}></PhoneGuide>
+          <PhoneGuide src={PhoneGuideImg} />
         </KnowledgeCardWrapper>
       </Wrapper>
     );

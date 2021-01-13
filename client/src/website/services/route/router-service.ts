@@ -87,10 +87,14 @@ export class RouterService {
     ];
   }
 
-  private attachTag<
-    T extends ActivatedGuardConstructor | DeactivatedGuardConstructor
-  >(target: T[], tag: 'origin' | 'father'): OriginGuard<T>[] {
-    return (target ?? []).map(guard => ({isOrigin: tag === 'origin', guard}));
+  private attachTag<T extends ActivatedGuardConstructor | DeactivatedGuardConstructor>(
+    target: T[],
+    tag: 'origin' | 'father',
+  ): OriginGuard<T>[] {
+    return (target ?? []).map(guard => ({
+      isOrigin: tag === 'origin',
+      guard,
+    }));
   }
 
   get routes(): ParsedRoute[] {

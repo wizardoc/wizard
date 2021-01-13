@@ -34,11 +34,7 @@ export class OrganizationCard extends PureComponent<OrganizationCardProps> {
   time!: Time;
 
   render(): ReactNode {
-    const {
-      organizationCardData,
-      seqIndex,
-      onCardClick = (): void => {},
-    } = this.props;
+    const {organizationCardData, seqIndex, onCardClick = (): void => {}} = this.props;
     const delayDuration = seqIndex * 300;
 
     return (

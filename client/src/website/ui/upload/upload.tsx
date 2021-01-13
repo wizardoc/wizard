@@ -47,7 +47,7 @@ export class Upload extends Component<UploadProps> {
           type="file"
           ref={this.uploadRef}
           onChange={(e: ChangeEvent) => this.handleUploadChange(e)}
-        ></UploadInput>
+        />
         <div onClick={() => this.handleUploadBodyClick()}>{children}</div>
       </Wrapper>
     );

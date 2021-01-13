@@ -1,10 +1,4 @@
-import React, {
-  Component,
-  ReactNode,
-  createRef,
-  cloneElement,
-  ReactElement,
-} from 'react';
+import React, {Component, ReactNode, createRef, cloneElement, ReactElement} from 'react';
 import {
   Popover as MaterialPopover,
   PopoverProps as MaterialPopoverProps,

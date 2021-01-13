@@ -152,10 +152,7 @@ export class DocumentCommentItem extends Component<DocumentCommentItemProps> {
             </CommentInfo>
           </CommentBody>
           <CommentFooter>
-            <StyledIconButton
-              isClick={isClickUp}
-              onClick={() => this.handleUpClick()}
-            >
+            <StyledIconButton isClick={isClickUp} onClick={() => this.handleUpClick()}>
               <ThumbUpOutlinedIcon />
               <Count isClick={isClickUp}>{parseCount(up)}</Count>
             </StyledIconButton>
@@ -167,7 +164,7 @@ export class DocumentCommentItem extends Component<DocumentCommentItemProps> {
               <Count isClick={isClickDown}>{parseCount(down)}</Count>
             </StyledIconButton>
             <StyledIconButton>
-              <SmsOutlinedIcon></SmsOutlinedIcon>
+              <SmsOutlinedIcon />
             </StyledIconButton>
           </CommentFooter>
         </Card>

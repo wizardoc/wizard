@@ -59,9 +59,7 @@ const Footer = styled.div`
 
 @withRouter
 @observer
-export class Register extends Component<
-  WithSlideProps & Partial<RouteComponentProps>
-> {
+export class Register extends Component<WithSlideProps & Partial<RouteComponentProps>> {
   @observable
   private registerData: RegisterData | undefined;
 

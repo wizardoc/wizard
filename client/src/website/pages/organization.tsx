@@ -131,17 +131,15 @@ export class Organization extends Component<
 
     return (
       <Wrapper>
-        <Carpet color={theme!.baseGray}></Carpet>
+        <Carpet color={theme!.baseGray} />
         <PageHeader
           img={OrganizationImg}
           onFabClick={() => this.handleNewOrganizationClick()}
           title="组织"
-          fabIcon={<AddIcon></AddIcon>}
+          fabIcon={<AddIcon />}
         />
         <LayoutToggleWrapper>
-          <LayoutToggle
-            onChange={(value: string) => this.handleLayoutChange(value)}
-          />
+          <LayoutToggle onChange={(value: string) => this.handleLayoutChange(value)} />
         </LayoutToggleWrapper>
         <PageContent>
           <CardsWrapper layout={this.layout}>{cards}</CardsWrapper>

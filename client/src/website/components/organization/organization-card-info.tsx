@@ -84,18 +84,12 @@ export class OrganizationCardInfo extends Component<OrganizationCardInfoProps> {
         >
           <Cover onClick={onContentClick}>
             <ColorBlock isFull={this.isFull} color={this.color}>
-              <OrganizationName isFull={this.isFull}>
-                {organizeName}
-              </OrganizationName>
+              <OrganizationName isFull={this.isFull}>{organizeName}</OrganizationName>
             </ColorBlock>
           </Cover>
         </OrganizationCover>
         <CardContent>
-          <DescriptionAround
-            variant="body2"
-            color="textSecondary"
-            component="p"
-          >
+          <DescriptionAround variant="body2" color="textSecondary" component="p">
             {description}
           </DescriptionAround>
           <DateAround>

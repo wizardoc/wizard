@@ -8,11 +8,7 @@ export interface IFormControl {
 
 export namespace Form {
   export namespace Validators {
-    type LengthValidator = (
-      isMax: boolean,
-      length: number,
-      name: string,
-    ) => Validator;
+    type LengthValidator = (isMax: boolean, length: number, name: string) => Validator;
     type CommonLengthValidator = (length: number, name: string) => Validator;
 
     type MaxLengthValidator = CommonLengthValidator;
@@ -23,8 +19,7 @@ export namespace Form {
       length: number,
       name: string,
     ) => (_rule, text, cb) => {
-      const matcher =
-        text && (isMax ? text.length >= length : text.length <= length);
+      const matcher = text && (isMax ? text.length >= length : text.length <= length);
 
       if (matcher) {
         cb(`${name}的长度必须${isMax ? '少' : '多'}于${length}位`);

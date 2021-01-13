@@ -16,5 +16,5 @@ const Wrapper = styled.div`
 `;
 
 export const MDRender: FunctionComponent<MDRenderProps> = ({content}) => (
-  <Wrapper dangerouslySetInnerHTML={{__html: markdown(content)}}></Wrapper>
+  <Wrapper dangerouslySetInnerHTML={{__html: markdown(content)}} />
 );

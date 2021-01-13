@@ -1,11 +1,7 @@
 import React, {Component, ReactNode} from 'react';
 import styled from 'styled-components';
 
-import {
-  ActionDialog,
-  ParsedActionButtons,
-  DialogComponentProps,
-} from 'website/services';
+import {ActionDialog, ParsedActionButtons, DialogComponentProps} from 'website/services';
 
 type Handler = () => void;
 

@@ -22,11 +22,7 @@ export class OrganizationService {
 
   private syncPair: SyncPair;
 
-  constructor(
-    private user: User,
-    private http: HTTP,
-    private apis: OrganizationAPI,
-  ) {
+  constructor(private user: User, private http: HTTP, private apis: OrganizationAPI) {
     this.syncPair = genSync();
     this.getAllJoinOrganization();
   }
@@ -52,9 +48,7 @@ export class OrganizationService {
   }
 
   async edit(id: string, payload: EditPayload): Promise<ResValueArea> {
-    const index = this._organizations.findIndex(
-      ({id: originId}) => originId === id,
-    );
+    const index = this._organizations.findIndex(({id: originId}) => originId === id);
     const payloadKeys = Object.keys(payload);
 
     if (!~index) {
@@ -96,10 +90,7 @@ export class OrganizationService {
     return data;
   }
 
-  async createOrganization(
-    name: string,
-    description: string,
-  ): Promise<ResValueArea> {
+  async createOrganization(name: string, description: string): Promise<ResValueArea> {
     const result = await this.http.post(this.apis.new, {
       organizeName: name,
       username: this.user.userInfo?.username,
@@ -120,10 +111,7 @@ export class OrganizationService {
   }
 
   // without username
-  newOrganization(
-    name: string,
-    description: string,
-  ): Promise<ResValueArea> | undefined {
+  newOrganization(name: string, description: string): Promise<ResValueArea> | undefined {
     const {userInfo} = this.user;
 
     if (!userInfo) {
@@ -139,10 +127,7 @@ export class OrganizationService {
     return this.getAllNames().includes(organizationName);
   }
 
-  async joinOrganization(
-    organizeName: string,
-    username: string,
-  ): Promise<void> {
+  async joinOrganization(organizeName: string, username: string): Promise<void> {
     const result = await this.http.post(this.apis.join, {
       organizeName,
       username,
@@ -160,10 +145,7 @@ export class OrganizationService {
     return result.expect(() => '发送邀请失败，请检查网络后重试');
   }
 
-  async acceptInvite(
-    organizeName: string,
-    inviteToken: string,
-  ): Promise<ResValueArea> {
+  async acceptInvite(organizeName: string, inviteToken: string): Promise<ResValueArea> {
     const result = await this.http.post(this.apis.accept(inviteToken), {
       organizeName,
     });

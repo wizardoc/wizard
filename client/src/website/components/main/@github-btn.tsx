@@ -122,10 +122,7 @@ export class GithubBtn extends Component {
           <GithubIcon />
           <GithubText>Star</GithubText>
         </StarContainer>
-        <CountContainer
-          target="_blank"
-          href="//github.com/wizaaard/wizard/stargazers/"
-        >
+        <CountContainer target="_blank" href="//github.com/wizaaard/wizard/stargazers/">
           123
         </CountContainer>
       </Container>
