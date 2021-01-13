@@ -23,11 +23,11 @@ export class Home extends Component {
         <Started />
         <MainContent />
         <ViewBanner
-          title="基于组织的知识管理"
+          title="基于组织的知识管理title"
           description="团队的知识管理，享受历史追溯，Diff 通知，让更多博主收益其中。"
           actionButtons={[
             {text: '马上加入', primary: true, handler() {}},
-            {text: '先去看看', handler() {}},
+            {text: '先去看看', handler() {   }},
           ]}
         />
         <GraphicContainer
