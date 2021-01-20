@@ -1,17 +1,9 @@
-name: website lint & run tests & deploy
-on:
-  push:
-    paths:
-      - 'client/**'
-      - .github/**
-  pull_request:
-    paths:
-      - 'client/**'
-      - .github/**
+name: node_middleware lint & deploy
+on: push
 
 jobs:
-  run-tests-and-lint:
-    name: lint and run test
+  client-run-tests-and-lint:
+    name: client lint and run test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -31,16 +23,36 @@ jobs:
         run: yarn test
         working-directory: client
 
-      - name: run lint
+      - name: run lint in client
         run: yarn lint
         working-directory: client
 
-      - name: run prettier checker
-        run: yarn prettier-check:client
+  server-run-tests-and-lint:
+    name: server lint and run test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: cache deps
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      - name: install deps
+        run: yarn install
+
+      - name: run lint in server
+        run: yarn lint
+        working-directory: server
 
   upload-image:
     name: upload docker image to cloud
-    needs: run-tests-and-lint
+    needs:
+      - server-run-tests-and-lint
+      - client-run-tests-and-lint
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
     steps:
@@ -65,12 +77,12 @@ jobs:
         run: docker login --username=${{ secrets.TENCENT_YUN_USERNAME }} --password ${{ secrets.TENCENT_YUN_PASSWORD }}
 
       - name: build docker image
-        run: docker build -f ./Dockerfile.Client -t wizard_website ./client
+        run: docker build -t wizard_node_middleware .
 
       - name: tag the image & push the image to cloud
         run: |
-          docker tag $(docker images -q --filter reference=wizard_website) ${{ secrets.WEBSITE_IMAGE_NAME }}
-          docker push ${{ secrets.WEBSITE_IMAGE_NAME }}
+          docker tag $(docker images -q --filter reference=wizard_node_middleware) ${{ secrets.NODE_MIDDLEWARE_IMAGE_NAME }}
+          docker push ${{ secrets.NODE_MIDDLEWARE_IMAGE_NAME }}
 
   pull-image:
     needs: [upload-image]
@@ -87,8 +99,8 @@ jobs:
           script: |
             docker network create wizardoc_net
             docker login --username=${{ secrets.TENCENT_YUN_USERNAME }} --password ${{ secrets.TENCENT_YUN_PASSWORD }}
-            docker stop ${{ secrets.WEBSITE_CONTAINER_NAME }}
-            docker rm -f ${{ secrets.WEBSITE_CONTAINER_NAME }}
-            docker rmi -f ${{ secrets.WEBSITE_IMAGE_NAME }}
-            docker pull ${{ secrets.WEBSITE_IMAGE_NAME }}
-            docker run --name ${{ secrets.WEBSITE_CONTAINER_NAME }} --network wizardoc_net -d -p 8060:80 ${{ secrets.WEBSITE_IMAGE_NAME }}
+            docker stop ${{ secrets.NODE_MIDDLEWARE_CONTAINER_NAME }}
+            docker rm -f ${{ secrets.NODE_MIDDLEWARE_CONTAINER_NAME }}
+            docker rmi -f ${{ secrets.NODE_MIDDLEWARE_IMAGE_NAME }}
+            docker pull ${{ secrets.NODE_MIDDLEWARE_IMAGE_NAME }}
+            docker run -d --network wizardoc_net --name ${{ secrets.NODE_MIDDLEWARE_CONTAINER_NAME }} -p 3000:3000 ${{ secrets.NODE_MIDDLEWARE_IMAGE_NAME }}
