@@ -19,6 +19,7 @@
     "@nestjs/common": "^7.0.0",
     "@nestjs/core": "^7.0.0",
     "@nestjs/platform-express": "^7.0.0",
+    "@nestjs/serve-static": "^2.1.4",
     "@wizardoc/http-request": "^1.0.0",
     "@wizardoc/shared": "^1.0.0",
     "axios": "^0.19.2",

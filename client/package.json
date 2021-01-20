@@ -40,11 +40,11 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "prebuild": "rimraf dist",
+    "prebuild": "rimraf ../server/client-dist",
     "clear:cache": "rimraf .parcel-cache",
     "prestart": "yarn clear:cache",
     "start": "cross-env RUNTIME_ENV=development NODE_PATH=../ parcel public/index.html",
-    "build": "cross-env RUNTIME_ENV=production NODE_PATH=../ parcel build public/index.html",
+    "build": "cross-env RUNTIME_ENV=production NODE_PATH=../ parcel build public/index.html --dist-dir=../server/client-dist",
     "lint": "tslint -p ./tsconfig.json",
     "lint:fix": "tslint --fix -p ./tsconfig.json",
     "test": "jest --passWithNoTests"
