@@ -7,6 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: cache deps
         uses: actions/cache@v2
@@ -32,6 +34,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: cache deps
         uses: actions/cache@v2
@@ -54,9 +58,10 @@ jobs:
       - server-run-tests-and-lint
       - client-run-tests-and-lint
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: cache deps
         uses: actions/cache@v2
