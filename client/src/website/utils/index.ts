@@ -12,7 +12,6 @@ export * from './svg-generator';
 export * from './sync';
 export * from './view-port';
 export * from './viewport-listener';
-export * from './MIME';
 export * from './color-generator';
 export * from './diff';
 export * from './env';
