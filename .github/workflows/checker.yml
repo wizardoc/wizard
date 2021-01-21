@@ -58,6 +58,7 @@ jobs:
       - server-run-tests-and-lint
       - client-run-tests-and-lint
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v2
         with:
