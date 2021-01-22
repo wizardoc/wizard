@@ -63,21 +63,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: cache deps
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-
-      - name: install deps
-        run: yarn install
-
-      - name: build client
-        run: yarn build || yarn build
-        working-directory: client
-
       - name: docker login
         run: docker login --username=${{ secrets.TENCENT_YUN_USERNAME }} --password ${{ secrets.TENCENT_YUN_PASSWORD }}
 
