@@ -3,4 +3,5 @@ doc
 .github
 .vscode
 yarn-error.log
-client
+dist
+.parcel-cache

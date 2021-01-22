@@ -13,6 +13,8 @@ COPY shared ./shared
 
 RUN mkdir server client
 
+RUN ls
+
 COPY client/package.json client/package.json
 COPY server/package.json server/package.json
 
@@ -32,7 +34,7 @@ COPY --from=dep_cache /deps/shared ./shared
 # build client under the server
 WORKDIR /wizardoc/client
 
-RUN yarn build
+RUN yarn build || yarn build
 
 WORKDIR /wizardoc/server
 
