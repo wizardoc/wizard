@@ -57,7 +57,7 @@ jobs:
     needs:
       - server-run-tests-and-lint
       - client-run-tests-and-lint
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v2
