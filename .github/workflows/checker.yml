@@ -57,7 +57,7 @@ jobs:
     needs:
       - server-run-tests-and-lint
       - client-run-tests-and-lint
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
