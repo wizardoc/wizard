@@ -4,4 +4,4 @@ export * from './injector';
 
 export const injector = new Injector();
 
-export const {Injectable, collect, extract, Inject} = injector;
+export const {Injectable, peek, collect, extract, Inject} = injector;
