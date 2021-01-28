@@ -1,4 +1,4 @@
-name: deploy
+name: deploy-website
 on:
   push:
     branches:
@@ -7,9 +7,6 @@ on:
 jobs:
   upload-image:
     name: upload docker image to cloud
-    needs:
-      - server-run-tests-and-lint
-      - client-run-tests-and-lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
