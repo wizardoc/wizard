@@ -1,8 +1,5 @@
-name: node_middleware lint
-on:
-  push:
-    branches-ignore:
-      - master
+name: checker
+on: [push]
 
 jobs:
   client-run-tests-and-lint:
