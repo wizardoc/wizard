@@ -31,10 +31,7 @@ export class Injector {
     }
 
     if (!this.classPool.has(constructor.key)) {
-      this.classPool.set(
-        constructor.key,
-        new (constructor as InstanceType<any>)(),
-      );
+      this.classPool.set(constructor.key, new (constructor as InstanceType<any>)());
     }
 
     return this.classPool.get(constructor.key);
@@ -50,6 +47,10 @@ export class Injector {
     return instance;
   };
 
+  peek = () => {
+    return this.classPool;
+  };
+
   private createInstance<T = any>(Constructor: Service<T>): T {
     // The key may from parent class
     if (Constructor.key) {
@@ -63,7 +64,7 @@ export class Injector {
     const params: Service<T>[] =
       Reflect.getMetadata('design:paramtypes', Constructor) ?? [];
 
-    const deps = params.map((param) => {
+    const deps = params.map(param => {
       if (param === Constructor) {
         throw new Error('Cannot dependent yourself');
       }
