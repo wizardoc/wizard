@@ -5,7 +5,6 @@ import {HTTPMethod, ResValueArea} from './http-client';
 
 interface ServerConfigSetter {
   setConfig(target: ServerConfigInfo): void;
-  setDevPrefix(prefix: string): void;
 }
 
 export interface IHooks {
@@ -28,7 +27,7 @@ export interface ServerConfigInfo {
   baseUrl: string;
   port: number;
   protocol: string;
-  mode: string;
+  prefix?: string;
 }
 
 export class Hooks implements IHooks {
@@ -39,20 +38,9 @@ export class Hooks implements IHooks {
 
 export class ServerConfig {
   private config: ServerConfigInfo | undefined;
-  private prefix: string = 'apis';
-
-  // constructor() {
-  // this._config = {} as any;
-  // }
-
-  // tslint:disable-next-line:adjacent-overload-signatures
 
   setConfig = (target: ServerConfigInfo | undefined): void => {
     this.config = target;
-  };
-
-  setDevPrefix = (prefix: string) => {
-    this.prefix = prefix;
   };
 
   getConfig(): ServerConfigInfo | undefined {
@@ -62,11 +50,9 @@ export class ServerConfig {
   getBaseURL(): string {
     this.checkConfig();
 
-    const {baseUrl, port, mode} = this.config!;
+    const {baseUrl, port, prefix = ''} = this.config!;
 
-    return `${baseUrl}:${port === 80 ? '' : port}/${
-      mode === 'dev' ? `${this.prefix}` : ''
-    }`;
+    return `${baseUrl}:${port === 80 ? '' : port}${prefix}/`;
   }
 
   getAbsPath(): string {
@@ -111,7 +97,6 @@ export class Configure {
   private getServerConfigSetter(): ServerConfigSetter {
     return {
       setConfig: this._serverConfig.setConfig,
-      setDevPrefix: this._serverConfig.setDevPrefix,
     };
   }
 

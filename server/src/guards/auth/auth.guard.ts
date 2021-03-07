@@ -7,7 +7,7 @@ import {GraphQLClientRequest} from 'src/decorators';
 
 @Injectable()
 export class Auth implements CanActivate {
-  constructor(private http: HTTP, private authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
   canActivate(ctx: ExecutionContext): boolean {
     const req = ctx.switchToHttp().getRequest<GraphQLClientRequest>();
