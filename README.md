@@ -31,6 +31,10 @@ So u should start node server before client.
 yarn server:start & yarn client:start
 ```
 
+## Endpoint configs
+
+Each project(Client or Server) has a configuration directory named `.config`, you can update the config files inside the directory to change config of endpoint.
+
 ## 🎯 TroubleShooting
 
 Troubleshooting is process of diagnosing of the source of a problem, here r the problems that may be encountered in the project. If u find anything that's not on record here, u can give us feedback via [Issue](https://github.com/wizardoc/wizard/issues)🐛.
