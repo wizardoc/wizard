@@ -16,9 +16,17 @@ export class GlobalErrorFilter implements ExceptionFilter {
       return;
     }
 
-    const {data, err} = response;
+    // tslint:disable-next-line:no-null-keyword
+    const {data = null, err, error, status} = response;
+    const UnExpectError = {
+      msg: error,
+      status,
+    };
 
     // throw the error that from API server
-    res.send({data, err});
+    res.send({
+      data,
+      err: err ?? UnExpectError,
+    });
   }
 }
