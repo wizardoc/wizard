@@ -9,14 +9,14 @@ import {
 import {Injectable} from '@nestjs/common';
 import {Request, Response} from 'express';
 import {RequestPayloadParser} from '@wizardoc/shared';
-import {request} from 'graphql-request';
 
 import ServerConfig from '../.config/proxy-config.json';
 
 import {ResData, ResError} from './interceptors';
 
-interface Variables {
-  [key: string]: any;
+export interface GraphQLQuery {
+  query: string;
+  variables?: Record<string, any>;
 }
 
 @Injectable()
@@ -41,7 +41,7 @@ export class HTTP extends HTTPService {
     super(httpFactory.getHTTPClientOptions());
   }
 
-  private get graphqlEndpoint() {
+  get graphqlEndpoint() {
     const {addr} = this.httpFactory.getHTTPClientOptions();
 
     return `${addr}${this.GRAPHQL_PATH}`;
@@ -68,11 +68,7 @@ export class HTTP extends HTTPService {
     return result;
   }
 
-  async proxySend(
-    req: Request,
-    res: Response,
-    onData?: OnSuccessCB<any>,
-  ): Promise<void> {
+  async proxySend(req: Request, res: Response, onData?: OnSuccessCB<any>): Promise<void> {
     const parsedOnData = onData ?? ((data: any): any => data);
     const result = await this.proxy(req, res);
 
@@ -86,10 +82,5 @@ export class HTTP extends HTTPService {
         res.send({data: await parsedOnData(result.data.data)});
       }
     }
-  }
-
-  // Query data from graphQL server
-  sendQuery(q: string, variables?: Variables) {
-    return request(this.graphqlEndpoint, q, variables);
   }
 }

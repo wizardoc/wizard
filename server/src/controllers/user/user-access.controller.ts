@@ -1,7 +1,7 @@
 import {Body, Controller, Post, Put} from '@nestjs/common';
-import {gql} from 'graphql-request';
+import {gql, GraphQLClient} from 'graphql-request';
 
-import {HTTP} from 'src/services';
+import {GraphQL} from 'src/decorators';
 
 interface RegisterBody {
   displayName: string;
@@ -17,10 +17,8 @@ interface LoginBody {
 
 @Controller('user')
 export class UserAccessController {
-  constructor(private readonly http: HTTP) {}
-
   @Post('register')
-  register(@Body() registerBody: RegisterBody) {
+  register(@Body() registerBody: RegisterBody, @GraphQL() client: GraphQLClient) {
     const query = gql`
       mutation register($userInfo: CreateUserInfo!) {
         createUser(userInfo: $userInfo) {
@@ -33,11 +31,11 @@ export class UserAccessController {
       }
     `;
 
-    return this.http.sendQuery(query, {userInfo: registerBody});
+    return client.request(query, {userInfo: registerBody});
   }
 
   @Put('login')
-  login(@Body() loginBody: LoginBody) {
+  login(@Body() loginBody: LoginBody, @GraphQL() client: GraphQLClient) {
     const query = gql`
       mutation login($username: String!, $password: String!) {
         login(username: $username, password: $password) {
@@ -54,6 +52,6 @@ export class UserAccessController {
       }
     `;
 
-    return this.http.sendQuery(query, loginBody);
+    return client.request(query, loginBody);
   }
 }
