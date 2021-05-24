@@ -10,7 +10,7 @@
     "build": "cross-env CLIENT_PORT=8060 nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "cross-env CLIENT_PORT=1234 nest start",
-    "start:dev": "nest start --watch",
+    "start:dev": "cross-env CLIENT_PORT=4200 nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "tslint -p ./tsconfig.json"
