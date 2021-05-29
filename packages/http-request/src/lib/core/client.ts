@@ -1,6 +1,6 @@
 import {AxiosError, AxiosStatic} from 'axios';
 
-import {IHooks} from './configure';
+import {ErrorInteractProcessor, ErrorMessage} from './error';
 
 type Request<R = any> = () => R;
 
@@ -10,14 +10,8 @@ type Requests<R> = {
   [index in HttpType]: Request<R>;
 };
 
-type ErrorMessage = string | ErrorOperates | void;
-
 interface Doer<R> {
   Do(): Response<R>;
-}
-
-export enum ErrorOperates {
-  GLOBAL_PROCESS,
 }
 
 export type ResValueArea<R = any> = Expectable<R> &
@@ -32,11 +26,6 @@ export interface Expectable<R> {
 }
 
 export type OnExpect<R> = (cb?: ExpectableCB) => ResValueArea<R>;
-
-export type ExpectErrorInteractProcessor = (
-  errMsg: ErrorMessage,
-  err: AxiosError,
-) => void;
 
 export interface Successable<R> {
   success: OnSuccess<R>;
@@ -70,29 +59,21 @@ interface DispatchPayload<T> {
 export interface HTTPClientOptions {
   addr: string;
   axios: AxiosStatic;
-  catcher: ExpectErrorInteractProcessor;
+  catcher: ErrorInteractProcessor;
 }
 
 export enum ContentType {
   Form = 'application/x-www-form-urlencoded',
 }
 
-// const {baseUrl, port, protocol, mode} = ServerConfig as ServerConfig;
+export interface HTTPClient {
+  create<T, R>(type: HttpType, payload: DispatchPayload<T>): Doer<R>;
+}
 
-// export function getBaseURL(): string {
-//   return `${baseUrl}:${port === 80 ? '' : port}/${
-//     mode === 'dev' ? 'apis/' : ''
-//   }`;
-// }
+export class BrowserClient {
+  constructor(private options: HTTPClientOptions) {}
 
-// export function getAbsPath(): string {
-//   return `${protocol}://${getBaseURL()}`;
-// }
-
-export class HttpClient {
-  constructor(private options: HTTPClientOptions, protected hooks?: IHooks) {}
-
-  protected create<T, R>(type: HttpType, payload: DispatchPayload<T>): Doer<R> {
+  create<T, R>(type: HttpType, payload: DispatchPayload<T>): Doer<R> {
     const {path, data, headers, method} = payload;
     const lowerCaseMethod = method.toLowerCase();
 
@@ -122,7 +103,6 @@ export class HttpClient {
     let err: AxiosError | undefined;
     let data: R | undefined;
 
-    // Error catcher 重构
     const sendRequest = async (): Promise<ResValueArea<R>> => {
       try {
         data = await request();
@@ -157,8 +137,6 @@ export class HttpClient {
         if (err) {
           const errMsg = cb(err);
 
-          // 抛出 caller 希望抛出的错误信息
-          // else 吞并异常
           if (errMsg !== undefined || errMsg !== null) {
             that.options.catcher(errMsg, err);
           }

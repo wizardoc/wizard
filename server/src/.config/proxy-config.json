@@ -1,5 +1,5 @@
 {
-  "baseUrl": "localhost",
+  "baseUrl": "182.254.131.141",
   "port": 4000,
   "protocol": "http",
   "mode": "prod"

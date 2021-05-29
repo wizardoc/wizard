@@ -42,7 +42,7 @@ type AllowInterceptorTypes =
   | ResponseErrorCatcher
   | RequestErrorCatcher;
 
-type HTTPInterceptors =
+export type HTTPInterceptors =
   | HTTPRequestInterceptor
   | HTTPResponseInterceptor
   | HTTPRequestErrorCatch
@@ -50,7 +50,7 @@ type HTTPInterceptors =
 
 type InterceptorArgument = AxiosRequestConfig | AxiosResponse;
 
-interface Constructable<T> {
+export interface Constructable<T> {
   new (...args: any[]): T;
 }
 
@@ -68,9 +68,9 @@ function useInterceptors(AxiosInstance: AxiosStatic): Use {
     isError: boolean,
   ): void => {
     for (const interceptor of interceptors) {
-      (AxiosInstance.interceptors[interceptorType] as AxiosInterceptorManager<
-        T
-      >).use(...(attach(interceptor, isError) as any));
+      (AxiosInstance.interceptors[interceptorType] as AxiosInterceptorManager<T>).use(
+        ...(attach(interceptor, isError) as any),
+      );
     }
   };
 }
@@ -87,15 +87,13 @@ export class Interceptor {
   }
 
   use(interceptors: Constructable<HTTPInterceptors>[]): void {
-    for (const Interceptor of interceptors) {
-      const interceptor = new Interceptor();
+    for (const InterceptorConstructor of interceptors) {
+      const interceptor = new InterceptorConstructor();
       const bindThis = (method: Function) => method.bind(interceptor);
 
       if (typeAssert<HTTPRequestInterceptor>(interceptor, 'onRequest')) {
         this.useReq(bindThis(interceptor.onRequest));
-      } else if (
-        typeAssert<HTTPResponseInterceptor>(interceptor, 'onResponse')
-      ) {
+      } else if (typeAssert<HTTPResponseInterceptor>(interceptor, 'onResponse')) {
         this.useRes(bindThis(interceptor.onResponse));
       } else if (typeAssert<HTTPRequestErrorCatch>(interceptor, 'catchReq')) {
         this.useReqError(bindThis(interceptor.catchReq));

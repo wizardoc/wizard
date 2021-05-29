@@ -1,5 +1,5 @@
-import {HTTPMethod, HttpClient, Response, HttpType} from './http-client';
-import {Hooks} from './configure';
+import {HTTPMethod, Response, HttpType, HTTPClient} from '../core';
+import {RequestHook} from '../module';
 
 export interface PostPayload<T = unknown> {
   [index: string]: T;
@@ -12,7 +12,9 @@ export interface RequestOptions {
 
 export type PartialRequestOptions = Partial<RequestOptions>;
 
-export class HTTPService extends HttpClient {
+export class HTTPService {
+  constructor(private client: HTTPClient, private hooks: RequestHook) {}
+
   get<R = any, T = {}>(
     path: string,
     data?: T,
@@ -45,6 +47,8 @@ export class HTTPService extends HttpClient {
     return this.complexRequest('DELETE', path, data, options);
   }
 
+  // Common request function that is wrapper of all request function, in other words
+  // it can do anything before send real request or intercept response
   private async request<R = any, T = {}>(
     type: HttpType,
     method: HTTPMethod,
@@ -52,29 +56,22 @@ export class HTTPService extends HttpClient {
     data?: T,
     options?: PartialRequestOptions,
   ): Response<R> {
-    const {headers, useHooks} = this.parseRequestOptions(options);
-    const {beforeRequest, afterResponse} = useHooks
-      ? this.hooks ?? new Hooks()
-      : new Hooks();
+    const {beforeRequest, afterResponse} = this.hooks;
 
-    beforeRequest(method, path, data, headers);
+    beforeRequest(method, path, data, options?.headers);
 
-    const result = await this.create<T, R>(type, {
-      method,
-      path,
-      data,
-      headers: headers ?? {},
-    }).Do();
+    const result = await this.client
+      .create<T, R>(type, {
+        method,
+        path,
+        data,
+        headers: options?.headers ?? {},
+      })
+      .Do();
 
     afterResponse(result);
 
     return result;
-  }
-
-  private parseRequestOptions(options?: PartialRequestOptions): RequestOptions {
-    return {
-      ...(options ?? {useHooks: false}),
-    } as RequestOptions;
   }
 
   private complexRequest<R = any, T = {}>(

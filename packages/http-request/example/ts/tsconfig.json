@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "rootDir": "src",
+    "lib": ["dom", "esnext"],
+    "outDir": "dist",
+    "types": ["node"],
+    "declaration": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "emitDecoratorMetadata":true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules/**/*"]
+}
