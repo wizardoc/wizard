@@ -3095,6 +3095,14 @@
   resolved "https://registry.npm.taobao.org/@webpack-cli/serve/download/@webpack-cli/serve-1.2.2.tgz?cache=0&sync_timestamp=1611055691327&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40webpack-cli%2Fserve%2Fdownload%2F%40webpack-cli%2Fserve-1.2.2.tgz#1f8eee44f96524756268f5e3f43e9d943f864d41"
   integrity sha1-H47uRPllJHViaPXj9D6dlD+GTUE=
 
+"@wizardoc/http-request@^1.3.3":
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/@wizardoc/http-request/-/http-request-1.3.4.tgz#dd9b8cf2e4c6be45fa0ea0bfab5732e1216176ee"
+  integrity sha512-4JNYooc/tQJCvhZxRx7rsba435dCIetC5WawEpA/enF7nLDNoMJtLuLsxaTVjdkBOOEiXMxPQXgPI6MRS/RFXg==
+  dependencies:
+    axios "^0.19.2"
+    reflect-metadata "^0.1.13"
+
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "https://registry.npmjs.org/@xtuc/ieee754/-/ieee754-1.2.0.tgz#eef014a3145ae477a1cbc00cd1e552336dceb790"
@@ -12309,9 +12317,9 @@ typescript@4.0.5:
   integrity sha512-ywmr/VrTVCmNTJ6iV2LwIrfG1P+lv6luD8sUJs+2eI9NLGigaN+nUQc13iHqisq7bra9lnmUSYqbJvegraBOPQ==
 
 ua-parser-js@^0.7.18:
-  version "0.7.23"
-  resolved "https://registry.npmjs.org/ua-parser-js/-/ua-parser-js-0.7.23.tgz#704d67f951e13195fbcd3d78818577f5bc1d547b"
-  integrity sha512-m4hvMLxgGHXG3O3fQVAyyAQpZzDOvwnhOTjYz5Xmr7r/+LpkNy3vJXdVRWgd1TkAb7NGROZuSy96CrlNVjA7KA==
+  version "0.7.33"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.33.tgz#1d04acb4ccef9293df6f70f2c3d22f3030d8b532"
+  integrity sha512-s8ax/CeZdK9R/56Sui0WM6y9OFREJarMRHqLB2EwkovemBxNQ+Bqu8GAsUnVcXKgphb++ghr/B2BZx4mahujPw==
 
 uc.micro@^1.0.1, uc.micro@^1.0.5:
   version "1.0.6"
